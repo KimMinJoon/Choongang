@@ -7,6 +7,8 @@ public class test {
 		System.out.println("점심안드세요?");
 		
 		System.out.println("밥 2시에 먹는다면서요 지금 40분 넘었어요");
+		
+		System.out.println("정말 귀찮게 하시네ㅎㅎ");
 
 	}
 

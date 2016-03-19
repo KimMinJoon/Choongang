@@ -1,8 +1,5 @@
-
-
 import java.sql.*;
 import java.util.*;
-
 import javax.sql.*;
 import javax.naming.*;
 
@@ -78,7 +75,7 @@ public class MemberDao {
 				pstmt.close();
 			if (conn != null)
 				conn.close();
-		}	
+		}
 		return result;
 	}
 

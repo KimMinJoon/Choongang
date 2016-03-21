@@ -8,6 +8,11 @@
 </head>
 <body>
 <img alt="" src="http://img03.deviantart.net/9ab9/i/2013/143/d/5/good_view_today_by_swissada-d669qi9.jpg" height="300">
+	<center>
+	추천 게시판 내용이 들어갈 jsp
+	<br>
+	일단 board3이라고 할게요.
+	</center>	
+
 </body>
 </html>
-

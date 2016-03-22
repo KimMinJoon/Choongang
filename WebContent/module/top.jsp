@@ -5,7 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="emp/empscript.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/projectcss.css">
 </head>
 <body>

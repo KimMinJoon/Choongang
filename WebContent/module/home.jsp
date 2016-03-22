@@ -9,11 +9,13 @@
 <body>
 
 	<center>
-	<img alt=""	src="http://www.impacthiringsolutions.com/vistagechairs/wp-content/uploads/2012/08/Candidate_Service_Networking_Strategy_Development.jpg" height="300">
+	<h2> 자바기반 웹개발자 양성과정 </h2>
 	<br>
+	<img alt=""	src="http://www.impacthiringsolutions.com/vistagechairs/wp-content/uploads/2012/08/Candidate_Service_Networking_Strategy_Development.jpg" height="300">
+	<p>
 	처음 나오는 메인 화면 또는 Web_Project를 눌렀을때 나오는 메인화면(최신글, 좋아요 많은 글, 공지사항 등)
 	<br>
-	일단 maiamain이라고 할게요.
+	일단 home이라고 할게요.
 	</center>
 	
 </body>

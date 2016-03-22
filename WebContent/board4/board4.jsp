@@ -7,11 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<img alt=""
-		src="http://cfile23.uf.tistory.com/image/27494B4E51BA8D6B089339"
-		height="300">
+
 	<center>
-		한줄 게시판 내용이 들어갈 jsp <br> 일단 board4이라고 할게요.
+	<img alt="" src="http://cfile23.uf.tistory.com/image/27494B4E51BA8D6B089339" height="300">
+	<p>
+	한줄 게시판 내용이 들어갈 jsp
+	<br>
+	일단 board4이라고 할게요.
 	</center>
 
 </body>

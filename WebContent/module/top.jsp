@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="emp/empscript.js"></script>
-<link rel="stylesheet" type="text/css" href="projectcss.css">
+<link rel="stylesheet" type="text/css" href="../css/projectcss.css">
 </head>
 <body>
 		
@@ -14,8 +14,8 @@
 
 	<table width="100%">
 	<tr>
-	<td width="20%"> <a href="main.jsp">
-	<h2> Web_Project </h2> </a> </td>
+	<td width="20%" align="left">
+	<a href="main.jsp"> <h2> Web_Project </h2> </a> </td>
 	
 	<td width="80%" align="right">
 	<a href="main.jsp?pgm=/member/login.jsp">Login</a>

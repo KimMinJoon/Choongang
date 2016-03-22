@@ -7,15 +7,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-<img alt=""
-		src="http://www.impacthiringsolutions.com/vistagechairs/wp-content/uploads/2012/08/Candidate_Service_Networking_Strategy_Development.jpg"
-		height="300">
 
 	<center>
-	처음나오는 메인 화면 또는
-	Web_Project를 눌렀을때 나오는 메인화면(최신글 공지사항글? 등등)
+	<img alt=""	src="http://www.impacthiringsolutions.com/vistagechairs/wp-content/uploads/2012/08/Candidate_Service_Networking_Strategy_Development.jpg" height="300">
+	<br>
+	처음 나오는 메인 화면 또는 Web_Project를 눌렀을때 나오는 메인화면(최신글, 좋아요 많은 글, 공지사항 등)
 	<br>
 	일단 maiamain이라고 할게요.
 	</center>
+	
 </body>
 </html>

@@ -5,11 +5,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="projectcss.css">
+<style type="text/css">
+font {
+	font-size: 12px;
+	font-family: 나눔고딕;
+	font-weight: bold;
+	color: #353535;
+}
+</style>
 </head>
 <body>
+
 	<hr>
-	<b> Copyright 2016. (name) all rights reserved. </b><br>
-	<b>저희는 이제설, 곽지은, 강진우, 김민준을 팀으로 국비지원 교육 1차프로젝트 개발자들입니다.</b>
+	<font> 저희는 이재설, 곽지은, 강진우, 김민준을 팀으로 국비지원 교육 1차프로젝트 개발자들입니다. </font>
+	
 </body>
 </html>

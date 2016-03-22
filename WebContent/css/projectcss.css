@@ -1,0 +1,40 @@
+/*
+<project의 전체 기본적인 css 파일>
+
+마지막 수정날짜 : 2016-03-22 오전 9:52
+마지막 수정한 사람 : 곽지은 
+*/
+
+@CHARSET "UTF-8";
+h2 {
+	text-align: center;
+	font-family: 나눔고딕;
+}
+td {
+	font-family: 나눔고딕;
+	font-size: 14px;
+}
+input {
+	text-align:"left";
+	font-family: "나눔고딕";
+	font-size: 12px;
+}
+
+.tab {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+.join1 {
+	border-right: solid 1px;
+	text-align: right;
+	font-family: "나눔고딕";
+	font-size: 12px;
+}
+.red {
+	color: red;
+}
+
+a:link {color:black; text-decoration:none}
+a:visited {color:black; text-decoration:none}
+a:active {color:black; text-decoration:none}
+a:hover {color:#8f8f8f;}

@@ -1,10 +1,8 @@
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+package j_member;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
+import java.sql.*;
+import javax.naming.*;
+import javax.sql.*;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -67,7 +65,4 @@ public class J_MemberDao {
 		} // dbClose(rs,pstmt,conn)
 	}
 
-	
-	
-	
 }

@@ -14,11 +14,12 @@
 	일단 board1이라고 할게요.
 	</center>
 	안녕하세요. -->
-	<img alt=""
-		src="http://www.discoverhongkong.com/ca/images/dine-drink/whats-hot/large/bars-with-good-view.jpg"
-		height="300">
 	<center>
-		exchange langauge 사이트입니다. <br> 좋은 외국인친구와 함께 즐거운 만남을 위한 사이트입니다.
+	<img alt="" src="http://www.discoverhongkong.com/ca/images/dine-drink/whats-hot/large/bars-with-good-view.jpg" height="300">
+	<p>
+	exchange langauge 사이트입니다. 
+	<br>
+	좋은 외국인친구와 함께 즐거운 만남을 위한 사이트입니다.
 	</center>
 
 </body>

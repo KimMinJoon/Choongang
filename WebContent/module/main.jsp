@@ -10,13 +10,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="projectcss.css">
+<link rel="stylesheet" type="text/css" href="../css/projectcss.css">
 </head>
 <body>
 	<%
 		String pgm = request.getParameter("pgm");
 		if (pgm == null || pgm == "") {
-			pgm = "mainmain.jsp";
+			pgm = "home.jsp";
 		}
 	%>
 	
@@ -31,7 +31,7 @@
 			<td><jsp:include page="<%=pgm%>" /></td>
 		</tr>
 		<tr>
-			<td class="bottom" colspan="2" height="40"><jsp:include page="bottom.jsp" /></td>
+			<td colspan="2" height="40"><jsp:include page="bottom.jsp" /></td>
 		</tr>
 	</table>
 </body>

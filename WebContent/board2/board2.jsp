@@ -7,8 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<img alt="" src="http://www.pakimag.com/files/2010/12/shandoor-a-good-view-of-lake-water-and-snow-covered-hills.jpeg" height="300">
+
 	<center>
+	<img alt="" src="http://www.pakimag.com/files/2010/12/shandoor-a-good-view-of-lake-water-and-snow-covered-hills.jpeg" height="300">
+	<p>
 	모임 게시판 내용이 들어갈 jsp
 	<br>
 	일단 board2이라고 할게요.

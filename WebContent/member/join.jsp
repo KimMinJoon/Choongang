@@ -22,7 +22,6 @@ joinPro.jsp가 성공하면 회원가입 성공.
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-frm.empno.focus();
 function chk() {
 	if (frm.passwd.value != frm.passwd2.value) {
 		alert("암호를 다시 입력하세요");
@@ -72,11 +71,11 @@ function emailchk() {
 			</tr>
 			<tr height="50">
 				<td class="join1">국적</td>
-				<td><input type="text" name="country"></td>
+				<td><select name="country"> <option> 국적 </option> </select></td>
 			</tr>
 			<tr height="50">
 				<td class="join1">희망언어</td>
-				<td><input type="text" name="lang"></td>
+				<td><select name="lang"> <option> 희망언어 </option> </select></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">

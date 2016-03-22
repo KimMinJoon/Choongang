@@ -4,8 +4,6 @@ import java.sql.*;
 import javax.naming.*;
 import javax.sql.*;
 
-import com.mysql.jdbc.PreparedStatement;
-
 public class J_MemberDao {
 	// 싱글톤 객체 생성을 낭비하지 않기위해
 	private static J_MemberDao instance = new J_MemberDao();

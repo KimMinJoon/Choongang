@@ -8,9 +8,3 @@ create table j_member (
 	l_code varchar2(5),
 	c_code varchar2(5)
 );
-
-create table country_language (
-	code varchar2(10) primary key,
-	c_l varchar2(2) not null,
-	value varchar2(30) not null
-);

@@ -15,34 +15,40 @@ joinPro.jsp가 성공하면 회원가입 성공.
 -->
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="country_language.*, java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-function chk() {
-	if (frm.passwd.value != frm.passwd2.value) {
-		alert("암호를 다시 입력하세요");
-		frm.passwd.value = "";
-		frm.passwd2.value = "";
-		frm.password.focus();
-		return false;
+	function chk() {
+		if (frm.passwd.value != frm.passwd2.value) {
+			alert("암호를 다시 입력하세요");
+			frm.passwd.value = "";
+			frm.passwd2.value = "";
+			frm.password.focus();
+			return false;
+		}
+		return true;
 	}
-	return true;
-}
-function emailchk() {
-	var purl = "../member/emailchk.jsp?m_email=" + frm.email.value;
-	var pname = "emailpopup";
-	var pwidth = 300;
-	var pheight = 200;
-	var pleft = (screen.availWidth - pwidth) / 2;
-	var ptop = (screen.availHeight - pheight) / 2;
-	var poption = "scrollbars=no,status=no,toolbar=no,resizable=0,location=no,menu=no,"
-			+ "width=" + pwidth + ",height=" + pheight + ",left=" + pleft + ",top=" + ptop;
-	window.open(purl, pname, poption);
-}
+	function emailchk() {
+		var purl = "../member/emailchk.jsp?m_email=" + frm.email.value;
+		var pname = "emailpopup";
+		var pwidth = 300;
+		var pheight = 200;
+		var pleft = (screen.availWidth - pwidth) / 2;
+		var ptop = (screen.availHeight - pheight) / 2;
+		var poption = "scrollbars=no,status=no,toolbar=no,resizable=0,location=no,menu=no,"
+				+ "width="
+				+ pwidth
+				+ ",height="
+				+ pheight
+				+ ",left="
+				+ pleft
+				+ ",top=" + ptop;
+		window.open(purl, pname, poption);
+	}
 </script>
 </head>
 <body>
@@ -55,7 +61,7 @@ function emailchk() {
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>이메일</td>
 				<td><input type="text" name="email" required="required">
-				<input type="button" value="중복체크" onclick="emailchk()"></td>
+					<input type="button" value="중복체크" onclick="emailchk()"></td>
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>암호</td>
@@ -71,16 +77,38 @@ function emailchk() {
 			</tr>
 			<tr height="50">
 				<td class="join1">국적</td>
-				<td><select name="country"> <option> 국적 </option> </select></td>
+				<td><select name="country">
+						<%
+							Country_LanguageDao cld = Country_LanguageDao.getInstance();
+							List<Country_Language> list1 = cld.selectList1();
+							for (Country_Language cl1 : list1) {
+						%>
+
+						<option>
+							<%=cl1.getValue()%>
+						</option>
+						<%
+							}
+						%>
+				</select></td>
+
 			</tr>
 			<tr height="50">
 				<td class="join1">희망언어</td>
-				<td><select name="lang"> <option> 희망언어 </option> </select></td>
+				<td><select name="lang">
+						<%
+							List<Country_Language> list2 = cld.selectList2();
+							for (Country_Language cl2 : list2) {
+						%>
+						<option><%=cl2.getValue()%></option>
+						<%
+							}
+						%>
+				</select></td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center">
-				<input type="submit" value="확인"> &nbsp;
-				<input type="button" value="취소" onclick="history.back(-1)">
+				<td colspan="2" align="center"><input type="submit" value="확인">
+					&nbsp; <input type="button" value="취소" onclick="history.back(-1)">
 				</td>
 			</tr>
 		</table>

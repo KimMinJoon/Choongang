@@ -10,7 +10,7 @@ create table j_member (
 );
 
 create table country_language (
-	code number primary key,
-	c_l varchar2(5) not null,
-	value varchar2(5) not null
+	code varchar2(10) primary key,
+	c_l varchar2(2) not null,
+	value varchar2(30) not null
 );

@@ -1,3 +1,10 @@
+/*
+<국가_언어 db 처리하는 Dao.java>
+
+마지막 수정날짜 : 2016-03-24 오전 11:47
+마지막 수정한 사람 : 강진우
+*/
+
 package country_language;
 
 import java.sql.*;

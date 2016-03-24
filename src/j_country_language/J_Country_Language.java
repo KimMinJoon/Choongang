@@ -1,6 +1,6 @@
-package country_language;
+package j_country_language;
 
-public class Country_Language {
+public class J_Country_Language {
 	private String code;
 	private String c_l;
 	private String value;

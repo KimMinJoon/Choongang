@@ -53,6 +53,11 @@ joinPro.jsp가 성공하면 회원가입 성공.
 </head>
 <body>
 
+	<%
+		Country_LanguageDao cld = Country_LanguageDao.getInstance();
+		List<Country_Language> list = cld.selectList(0);
+	%>
+
 	<form action="../member/joinPro.jsp" name="frm" onsubmit="return chk()">
 		<table class="tab" cellpadding="10" align="center">
 			<caption>
@@ -77,34 +82,36 @@ joinPro.jsp가 성공하면 회원가입 성공.
 			</tr>
 			<tr height="50">
 				<td class="join1">국적</td>
-				<td><select name="country">
+				<td><select name="l_code">
+						<option value="0">해당없음</option>
 						<%
-							String c = "c";
-							Country_LanguageDao cld = Country_LanguageDao.getInstance();
-							List<Country_Language> list1 = cld.selectList(c);
-							for (Country_Language cl : list1) {
+							for (Country_Language cl : list) {
+								if (cl.getC_l().equals("c")) {
 						%>
-
-						<option>
+						<option value="cl.getCode()">
 							<%=cl.getValue()%>
 						</option>
 						<%
 							}
+						}
 						%>
 				</select></td>
 
 			</tr>
 			<tr height="50">
 				<td class="join1">희망언어</td>
-				<td><select name="lang">
+				<td><select name="l">
+						<option value="0">해당없음</option>
 						<%
-							String l = "l";
-							List<Country_Language> list2 = cld.selectList(l);
-							for (Country_Language cl : list2) {
+							for (Country_Language cl : list) {
+								if (cl.getC_l().equals("l")) {
 						%>
-						<option><%=cl.getValue()%></option>
+						<option value="cl.getCode()">
+							<%=cl.getValue()%>
+						</option>
 						<%
 							}
+						}
 						%>
 				</select></td>
 			</tr>

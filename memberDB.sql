@@ -8,3 +8,7 @@ create table j_member (
 	l_code varchar2(5),
 	c_code varchar2(5)
 );
+
+select * from j_member;
+
+drop table j_member;

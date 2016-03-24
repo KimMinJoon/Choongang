@@ -4,19 +4,19 @@
 마지막 수정날짜 : 2016-03-22 오전 9:52
 마지막 수정한 사람 : 곽지은 
 */
-
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 @CHARSET "UTF-8";
 h2 {
 	text-align: center;
-	font-family: 나눔고딕;
+	font-family: "Nanum Gothic";
 }
 td {
-	font-family: 나눔고딕;
+	font-family: "Nanum Gothic";
 	font-size: 14px;
 }
 input {
 	text-align:"left";
-	font-family: "나눔고딕";
+	font-family: "Nanum Gothic";
 	font-size: 12px;
 }
 
@@ -27,7 +27,7 @@ input {
 .join1 {
 	border-right: solid 1px;
 	text-align: right;
-	font-family: "나눔고딕";
+	font-family: "Nanum Gothic";
 	font-size: 12px;
 }
 .red {

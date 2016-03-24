@@ -79,13 +79,14 @@ joinPro.jsp가 성공하면 회원가입 성공.
 				<td class="join1">국적</td>
 				<td><select name="country">
 						<%
+							String c = "c";
 							Country_LanguageDao cld = Country_LanguageDao.getInstance();
-							List<Country_Language> list1 = cld.selectList1();
-							for (Country_Language cl1 : list1) {
+							List<Country_Language> list1 = cld.selectList(c);
+							for (Country_Language cl : list1) {
 						%>
 
 						<option>
-							<%=cl1.getValue()%>
+							<%=cl.getValue()%>
 						</option>
 						<%
 							}
@@ -97,10 +98,11 @@ joinPro.jsp가 성공하면 회원가입 성공.
 				<td class="join1">희망언어</td>
 				<td><select name="lang">
 						<%
-							List<Country_Language> list2 = cld.selectList2();
-							for (Country_Language cl2 : list2) {
+							String l = "l";
+							List<Country_Language> list2 = cld.selectList(l);
+							for (Country_Language cl : list2) {
 						%>
-						<option><%=cl2.getValue()%></option>
+						<option><%=cl.getValue()%></option>
 						<%
 							}
 						%>

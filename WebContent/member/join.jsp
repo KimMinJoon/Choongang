@@ -27,7 +27,7 @@ joinPro.jsp가 성공하면 회원가입 성공.
 			alert("암호를 다시 입력하세요");
 			frm.m_passwd.value = "";
 			frm.m_passwd2.value = "";
-			frm.m_password.focus();
+			frm.m_passwd.focus();
 			return false;
 		}
 		return true;

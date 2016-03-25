@@ -7,7 +7,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="j_member.*" errorPage="/error/DBError.jsp"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -32,7 +32,7 @@
 	아이디 : <%=m_email%><br> 
 	사용할 수 없습니다.<p>
 	<form>
-		아이디: <input type="text" name="m_email"><p>
+		아이디: <input type="email" name="m_email" required="required"><p>
 		<input type="submit" value="확인">
 	</form>
 	<%

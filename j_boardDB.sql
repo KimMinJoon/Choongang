@@ -8,7 +8,9 @@ create table j_board (
 	brd_ip varchar2(20) not null, --작성자 ip
 	brd_del_yn char(1) default 'n' check (brd_del_yn in ('y','n')),--도메인무결성
 	brd_reg_date date default sysdate, --게시등록일
-	brd_update_date date  --게시 수정일
+	brd_update_date date,  --게시 수정일
+	m_no number not null, -- m_no과 참조된 외래키
+	
 	
 	--외래키 설정해야될 속성들
 	brd_writer number not null, -- m_no과 참조된 외래키

@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+body {
+	background-color: #212121;
+	font-family: 고딕;
+}
+table {
+	background-color: #A88219; 
+	width: 100%;
+}
+th, td {
+	padding: 10px;
+}
+tr:HOVER { /* 마우스를 올렸을때 색깔이 바뀜 */
+	background-color: #BD5C24;
+	color: #8C8C8C;
+}
+caption {
+	font-size: 20px;
+}

@@ -3,6 +3,7 @@ package j_board;
 import java.sql.Date;
 
 public class J_Board {
+	
 	private int brd_no;
 	private String brd_subject;
 	private String brd_content;

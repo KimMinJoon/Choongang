@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="J_Board">
+
+
+  <resultMap id="J_BoardResult"  type="J_Board">
+    <result property="brd_no"           column="brd_no"/>
+    <result property="brd_subject"           column="brd_subject"/>
+    <result property="brd_content"           column="brd_content"/>
+    <result property="brd_category"           column="brd_category"/>
+    <result property="brd_readcount"           column="brd_readcount"/>
+    <result property="brd_recommend"           column="brd_recommend"/>
+    <result property="brd_ip"           column="brd_ip"/>
+    <result property="brd_reg_date"           column="brd_reg_date"/>
+    <result property="brd_update_date"           column="brd_update_date"/>
+    <result property="brd_del_yn"           column="brd_del_yn"/>
+    <result property="brd_writer"           column="brd_writer"/>
+    <result property="brd_language"           column="brd_language"/>
+    <result property="brd_boardcode"           column="brd_boardcode"/>
+  </resultMap>
+  
+  <select id="selectListJ_Board" parameterType="hashMap" resultMap="J_BoardResult">
+	select * from (select rowNum rn, * from j_board order by brd_no desc) where rn between #{startRow} and #{endRow}
+  </select>
+  
+  
+  
+  <select id="selectTotal" resultType="Integer">
+  	select count(*) from j_board
+  </select>
+  
+  
+  
+  
+</mapper>

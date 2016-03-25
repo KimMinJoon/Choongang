@@ -36,8 +36,11 @@ joinPro.jsp가 성공하면 회원가입 성공.
 		}
 		return true;
 	}
-	
+		
 	function emailchk() {
+		if((frm.m_email.value.indexOf("@")==-1)){
+		  alert("정확한 이메일 형식으로 입력해주세요");
+		} else {
 		var purl = "../member/emailchk.jsp?m_email=" + frm.m_email.value;
 		var pname = "emailpopup";
 		var pwidth = 300;
@@ -47,6 +50,7 @@ joinPro.jsp가 성공하면 회원가입 성공.
 		var poption = "scrollbars=no,status=no,toolbar=no,resizable=0,location=no,menu=no,"
 				+ "width=" + pwidth + ",height=" + pheight + ",left=" + pleft + ",top=" + ptop;
 		window.open(purl, pname, poption);
+		}
 	}
 </script>
 </head>
@@ -65,7 +69,7 @@ joinPro.jsp가 성공하면 회원가입 성공.
 			</caption>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>이메일</td>
-				<td><input type="text" name="m_email" required="required">
+				<td><input type="email" name="m_email" required="required">
 					<input type="button" value="중복체크" onclick="emailchk()"></td>
 			</tr>
 			<tr height="50">
@@ -78,7 +82,7 @@ joinPro.jsp가 성공하면 회원가입 성공.
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>닉네임</td>
-				<td><input type="text" name="m_nick" required="required"></td>
+				<td><input type="text" name="m_nick" required="required" maxlength="10"></td>
 			</tr>
 			<tr height="50">
 				<td class="join1">국적</td>
@@ -118,6 +122,7 @@ joinPro.jsp가 성공하면 회원가입 성공.
 			<tr>
 				<td colspan="2" align="center"><input type="submit" value="확인">
 					&nbsp; <input type="button" value="취소" onclick="history.back(-1)">
+					<input type = "button" value="버튼" onclick="kkk()">
 				</td>
 			</tr>
 		</table>

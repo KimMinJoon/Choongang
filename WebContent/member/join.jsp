@@ -15,7 +15,7 @@ joinPro.jsp가 성공하면 회원가입 성공.
 -->
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="country_language.*, java.util.*"%>
+	pageEncoding="UTF-8" import="j_code.*, java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,17 +23,17 @@ joinPro.jsp가 성공하면 회원가입 성공.
 <title>Insert title here</title>
 <script type="text/javascript">
 	function chk() {
-		if (frm.passwd.value != frm.passwd2.value) {
+		if (frm.m_passwd.value != frm.m_passwd2.value) {
 			alert("암호를 다시 입력하세요");
-			frm.passwd.value = "";
-			frm.passwd2.value = "";
-			frm.password.focus();
+			frm.m_passwd.value = "";
+			frm.m_passwd2.value = "";
+			frm.m_password.focus();
 			return false;
 		}
 		return true;
 	}
 	function emailchk() {
-		var purl = "../member/emailchk.jsp?m_email=" + frm.email.value;
+		var purl = "../member/emailchk.jsp?m_email=" + frm.m_email.value;
 		var pname = "emailpopup";
 		var pwidth = 300;
 		var pheight = 200;
@@ -54,8 +54,8 @@ joinPro.jsp가 성공하면 회원가입 성공.
 <body>
 
 	<%
-		Country_LanguageDao cld = Country_LanguageDao.getInstance();
-		List<Country_Language> list = cld.selectList(0);
+		J_CodeDao jcd = J_CodeDao.getInstance();
+		List<J_Code> list = jcd.selectList(0);
 	%>
 
 	<form action="../member/joinPro.jsp" name="frm" onsubmit="return chk()">
@@ -65,31 +65,31 @@ joinPro.jsp가 성공하면 회원가입 성공.
 			</caption>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>이메일</td>
-				<td><input type="text" name="email" required="required">
+				<td><input type="text" name="m_email" required="required">
 					<input type="button" value="중복체크" onclick="emailchk()"></td>
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>암호</td>
-				<td><input type="password" name="passwd" required="required"></td>
+				<td><input type="password" name="m_passwd" required="required"></td>
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>암호확인</td>
-				<td><input type="password" name="passwd2" required="required"></td>
+				<td><input type="password" name="m_passwd2" required="required"></td>
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>닉네임</td>
-				<td><input type="text" name="nick" required="required"></td>
+				<td><input type="text" name="m_nick" required="required"></td>
 			</tr>
 			<tr height="50">
 				<td class="join1">국적</td>
-				<td><select name="l_code">
+				<td><select name="c_code">
 						<option value="0">해당없음</option>
 						<%
-							for (Country_Language cl : list) {
-								if (cl.getC_l().equals("c")) {
+							for (J_Code jc : list) {
+								if (jc.getC_major().equals("c")) {
 						%>
-						<option value="cl.getCode()">
-							<%=cl.getValue()%>
+						<option value=<%=jc.getC_minor()%>>
+							<%=jc.getC_value()%>
 						</option>
 						<%
 							}
@@ -100,14 +100,14 @@ joinPro.jsp가 성공하면 회원가입 성공.
 			</tr>
 			<tr height="50">
 				<td class="join1">희망언어</td>
-				<td><select name="l">
+				<td><select name="l_code">
 						<option value="0">해당없음</option>
 						<%
-							for (Country_Language cl : list) {
-								if (cl.getC_l().equals("l")) {
+							for (J_Code jc : list) {
+								if (jc.getC_major().equals("l")) {
 						%>
-						<option value="cl.getCode()">
-							<%=cl.getValue()%>
+						<option value=<%=jc.getC_minor()%>>
+							<%=jc.getC_value()%>
 						</option>
 						<%
 							}

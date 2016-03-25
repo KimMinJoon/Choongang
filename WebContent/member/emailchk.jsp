@@ -18,6 +18,7 @@
 <script type="text/javascript">
 	function cl() {
 		opener.frm.m_email.value = "<%=m_email%>";
+		opener.frm.check.value = "true";
 		window.close();
 	}
 </script>

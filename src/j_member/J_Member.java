@@ -5,11 +5,13 @@ import java.sql.Date;
 public class J_Member {
 	private int m_no;
 	private String m_email;
-	private Date m_reg_date;
 	private String m_passwd;
+	private String m_nick;
+	private Date m_reg_date;
 	private String m_del_yn;
-	private String l_code;
 	private String c_code;
+	private String l_code;
+	
 
 	public int getM_no() {
 		return m_no;
@@ -27,20 +29,28 @@ public class J_Member {
 		this.m_email = m_email;
 	}
 
-	public Date getM_reg_date() {
-		return m_reg_date;
-	}
-
-	public void setM_reg_date(Date m_reg_date) {
-		this.m_reg_date = m_reg_date;
-	}
-
 	public String getM_passwd() {
 		return m_passwd;
 	}
 
 	public void setM_passwd(String m_passwd) {
 		this.m_passwd = m_passwd;
+	}
+
+	public String getM_nick() {
+		return m_nick;
+	}
+
+	public void setM_nick(String m_nick) {
+		this.m_nick = m_nick;
+	}
+
+	public Date getM_reg_date() {
+		return m_reg_date;
+	}
+
+	public void setM_reg_date(Date m_reg_date) {
+		this.m_reg_date = m_reg_date;
 	}
 
 	public String getM_del_yn() {
@@ -67,10 +77,9 @@ public class J_Member {
 		this.c_code = c_code;
 	}
 
-	@Override
+	/*@Override
 	public String toString() { // 스프링할때 로그포지라는걸 쓴다 일단 좋은거 설정해주는게 좋습니다.
 		return "J_Member [m_no=" + m_no + ", m_email=" + m_email + ", m_reg_date=" + m_reg_date + ", m_passwd="
 				+ m_passwd + ", m_del_yn=" + m_del_yn + ", l_code=" + l_code + ", c_code=" + c_code + "]";
-	}
-
+	}*/
 }

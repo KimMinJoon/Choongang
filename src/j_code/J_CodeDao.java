@@ -5,20 +5,20 @@
 마지막 수정한 사람 : 강진우
 */
 
-package j_country_language;
+package j_code;
 
 import java.sql.*;
 import java.util.*;
 import javax.naming.*;
 import javax.sql.*;
 
-public class Country_LanguageDao {
-	private static Country_LanguageDao instance = new Country_LanguageDao();
+public class J_CodeDao {
+	private static J_CodeDao instance = new J_CodeDao();
 
-	private Country_LanguageDao() {
+	private J_CodeDao() {
 	}
 
-	public static Country_LanguageDao getInstance() {
+	public static J_CodeDao getInstance() {
 		return instance;
 	}
 
@@ -35,28 +35,28 @@ public class Country_LanguageDao {
 		return conn;
 	}// getConnection
 
-	public List<J_Country_Language> selectList(int cl) {
+	public List<J_Code> selectList(int jc) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<J_Country_Language> list = new ArrayList<>();
-		String sql = "select * from country_language ";
-		String sql2 = " where c_l=?";
+		List<J_Code> list = new ArrayList<>();
+		String sql = "select * from j_code";
+		String sql2 = " where c_major=?";
 		try {
 			conn = getConnection();
-			if (cl != 0) {
+			if (jc != 0) {
 				sql += sql2;
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, cl);
+				pstmt.setInt(1, jc);
 			} else {
 				pstmt = conn.prepareStatement(sql);
 			}
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				J_Country_Language c = new J_Country_Language();
-				c.setCode(rs.getString(1));
-				c.setC_l(rs.getString(2));
-				c.setValue(rs.getString(3));
+				J_Code c = new J_Code();
+				c.setC_major(rs.getString(1));
+				c.setC_minor(rs.getString(2));
+				c.setC_value(rs.getString(3));
 				list.add(c);
 			}
 		} catch (Exception e) {

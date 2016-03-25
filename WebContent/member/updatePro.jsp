@@ -1,12 +1,5 @@
-<!--
-<로그인 처리 jsp>
-
-마지막 수정날짜 : 2016-03-22 오전 10:00
-마지막 수정한 사람 : 곽지은
--->
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="j_member.*" errorPage="/error/DBError.jsp"%>
+	pageEncoding="UTF-8" import="j_member.*" errorPage="/error/DBError.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,21 +11,18 @@
 	<jsp:setProperty property="*" name="mb" />
 	<%
 		J_MemberDao mdo = J_MemberDao.getInstance();
-		int result = mdo.loginChk(mb.getM_email(), mb.getM_passwd());
+		int result = mdo.update(mb);
 		if (result > 0) {
-			session.setAttribute("m_email", mb.getM_email());
-			response.sendRedirect("../module/main.jsp");
-		} else if (result == 0) {
 	%>
 	<script type="text/javascript">
-		alert("암호가 틀렸습니다.");
-		history.go(-1);
+		alert("수정 완료");
+		location.href = "../main.jsp?pgm=/member/mypage.jsp";
 	</script>
 	<%
 		} else {
 	%>
 	<script type="text/javascript">
-		alert("아이디를 확인해주세요.");
+		alert("수정 실패");
 		history.go(-1);
 	</script>
 	<%

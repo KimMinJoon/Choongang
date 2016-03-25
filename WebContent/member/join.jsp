@@ -30,8 +30,13 @@ joinPro.jsp가 성공하면 회원가입 성공.
 			frm.m_passwd.focus();
 			return false;
 		}
+		if(frm.check.value == "false") {
+			alert("아이디 중복확인을 하세요");
+			return false;
+		}
 		return true;
 	}
+	
 	function emailchk() {
 		var purl = "../member/emailchk.jsp?m_email=" + frm.m_email.value;
 		var pname = "emailpopup";
@@ -40,13 +45,7 @@ joinPro.jsp가 성공하면 회원가입 성공.
 		var pleft = (screen.availWidth - pwidth) / 2;
 		var ptop = (screen.availHeight - pheight) / 2;
 		var poption = "scrollbars=no,status=no,toolbar=no,resizable=0,location=no,menu=no,"
-				+ "width="
-				+ pwidth
-				+ ",height="
-				+ pheight
-				+ ",left="
-				+ pleft
-				+ ",top=" + ptop;
+				+ "width=" + pwidth + ",height=" + pheight + ",left=" + pleft + ",top=" + ptop;
 		window.open(purl, pname, poption);
 	}
 </script>
@@ -59,6 +58,7 @@ joinPro.jsp가 성공하면 회원가입 성공.
 	%>
 
 	<form action="../member/joinPro.jsp" name="frm" onsubmit="return chk()">
+	<input type="hidden" name="check" value="false">
 		<table class="tab" cellpadding="10" align="center">
 			<caption>
 				<h2>회원가입</h2>

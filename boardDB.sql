@@ -3,17 +3,17 @@ create table j_board (
 	brd_writer number not null, -- 게시글 작성자
 	brd_subject varchar2(50) not null, -- 게시글 제목
 	brd_content varchar2(4000) not null, -- 게시글내용
-	brd_category varchar2(10) not null, -- 게시판말머리
+	brd_category varchar2(10), -- 게시판말머리
 	brd_readcount number default 0, --읽은 횟수
 	brd_recommend number default 0, --추천받은 수
 	brd_ip varchar2(20) not null, --작성자 ip
-	brd_del_yn char(1) default 'n',
-	code varchar2(10) not null,
+	brd_del_yn char(1) default 'n' check (brd_del_yn in ('y','n')),--도메인무결성
 	boardcode number, --게시판코드 번호
-	brd_reg_date date not null, --게시등록일
-	brd_update_reg_date date not null --게시 수정일
+	brd_reg_date date default sysdate, --게시등록일
+	brd_update_date date  --게시 수정일
 );
 
+drop table j_board;
 create table j_boardcode ( -- 게시판코드 테이블 생성
 	boardcode number primary key,
 	boardname varchar2(10) not null
@@ -23,8 +23,13 @@ create table j_boardcode ( -- 게시판코드 테이블 생성
 ALTER TABLE j_board ADD CONSTRAINT fk_writer
 FOREIGN KEY(brd_writer) REFERENCES j_member(m_no);
 
--- 게시판에 boardcode 외래키 설정
-ALTER TABLE j_board ADD CONSTRAINT fk_boardcode
-FOREIGN KEY(boardcode) REFERENCES j_boardcode(boardcode);
+-- 게시판에 code 외래키 설정
+ALTER TABLE 컨트리 랭귀지 ADD CONSTRAINT fk_code
+FOREIGN KEY(code) REFERENCES 컨트리랭귀지(code);
 
+
+
+
+--boardcode 외래키 설정 삭제 예제
+ALTER TABLE j_board DROP CONSTRAINT fk_boardcode;
 

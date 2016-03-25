@@ -90,6 +90,94 @@ public class J_MemberDao {
 		return result;
 	}
 
+	public int loginChk(String m_email, String m_passwd) throws SQLException {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select m_passwd from j_member where m_email=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m_email);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				String dbPass = rs.getString(1); // ("password")
+				if (dbPass.equals(m_passwd))
+					result = 1; // 일치
+				else
+					result = 0; // 암호가 다름
+			} else
+				result = -1; // 데이터 읽기 실패
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+		return result;
+	}
+
+	public J_Member select(String m_email) throws SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from j_member where m_email = ?";
+		J_Member mem = new J_Member();
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m_email);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				mem.setM_email(rs.getString("m_email"));
+				mem.setM_passwd(rs.getString("m_passwd"));
+				mem.setM_nick(rs.getString("m_nick"));
+				mem.setC_code(rs.getString("c_code"));
+				mem.setL_code(rs.getString("l_code"));
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+		return mem;
+	}
+
+	public int update(J_Member mem) throws SQLException {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "update j_member set m_passwd=?, m_nick=?, c_cod=?, l_code=? where m_email=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mem.getM_passwd());
+			pstmt.setString(2, mem.getM_nick());
+			pstmt.setString(3, mem.getC_code());
+			pstmt.setString(4, mem.getL_code());
+			pstmt.setString(5, mem.getM_email());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+		return result;
+	}
+
 	// conn과 pstmt,그리고 rs를 종료해주는 메서드
 	// 나중에 닫을 때 편하게 사용하면된다!
 	public void dbClose(PreparedStatement pstmt, Connection conn) {

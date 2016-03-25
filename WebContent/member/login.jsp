@@ -25,10 +25,10 @@ loginPro.jsp가 성공하면 로그인 성공. (+로그인 되면 마이페이�
 				<h2>로그인</h2>
 			</caption>
 			<tr>
-				<td><input type="text" name="id" placeholder="아이디" required="required"></td>
+				<td><input type="text" name="m_email" placeholder="이메일" required="required"></td>
 			</tr>
 			<tr>
-				<td><input type="password" name="password" placeholder="비밀번호" required="required"></td>
+				<td><input type="password" name="m_passwd" placeholder="비밀번호" required="required"></td>
 			</tr>
 			<tr>
 				<td align="center"><input type="submit" value="확인"></td>

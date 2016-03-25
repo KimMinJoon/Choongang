@@ -9,6 +9,7 @@ create table j_member (
 	l_code varchar2(30)
 );
 
+
 select * from j_member;
 
-drop table j_member;
+--drop table j_member;

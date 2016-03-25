@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 마이바티스 메뉴얼을 복사한것임 마이바티스 참고 -->
+<configuration>
+	<properties resource="dbconnect.properties" />
+	<typeAliases>
+		<typeAlias type="dao.Dept" alias="Dept" />
+		<typeAlias type="dao.Board" alias="Board" />
+		<typeAlias type="dao.Emp" alias="Emp" />
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="Dept.xml" />
+		<mapper resource="Board.xml" />
+		<mapper resource="Emp.xml" />
+	</mappers>
+</configuration>
+

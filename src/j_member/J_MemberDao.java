@@ -157,7 +157,7 @@ public class J_MemberDao {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "update j_member set m_passwd=?, m_nick=?, c_cod=?, l_code=? where m_email=?";
+		String sql = "update j_member set m_passwd=?, m_nick=?, c_code=?, l_code=? where m_email=?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);

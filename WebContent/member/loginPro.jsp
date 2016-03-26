@@ -20,7 +20,7 @@
 		J_MemberDao mdo = J_MemberDao.getInstance();
 		int result = mdo.loginChk(mb.getM_email(), mb.getM_passwd());
 		if (result > 0) {
-			session.setAttribute("m_email", mb.getM_email());
+			session.setAttribute("m_no", result+"");
 			response.sendRedirect("../module/main.jsp");
 		} else if (result == 0) {
 	%>

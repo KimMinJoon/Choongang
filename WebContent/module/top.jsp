@@ -17,8 +17,8 @@
 					<h2>Web_Project</h2>
 			</a></td>
 			<%
-				String m_email = (String) session.getAttribute("m_email");
-				if (m_email == null || m_email == "") {
+				String m_no = (String) session.getAttribute("m_no");
+				if (m_no == null || m_no == "") {
 			%>
 			<td width="80%" align="right"><a
 				href="main.jsp?pgm=/member/login.jsp">Login</a> &nbsp; <a

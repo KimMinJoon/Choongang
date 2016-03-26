@@ -95,16 +95,16 @@ public class J_MemberDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select m_passwd from j_member where m_email=?";
+		String sql = "select m_no, m_passwd from j_member where m_email=?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, m_email);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				String dbPass = rs.getString(1); // ("password")
+				String dbPass = rs.getString("m_passwd"); // ("password")
 				if (dbPass.equals(m_passwd))
-					result = 1; // 일치
+					result = rs.getInt("m_no"); // 일치
 				else
 					result = 0; // 암호가 다름
 			} else

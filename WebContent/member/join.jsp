@@ -122,7 +122,6 @@ joinPro.jsp가 성공하면 회원가입 성공.
 			<tr>
 				<td colspan="2" align="center"><input type="submit" value="확인">
 					&nbsp; <input type="button" value="취소" onclick="history.back(-1)">
-					<input type = "button" value="버튼" onclick="kkk()">
 				</td>
 			</tr>
 		</table>

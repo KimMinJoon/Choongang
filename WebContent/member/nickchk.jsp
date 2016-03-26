@@ -6,7 +6,7 @@
 	String m_nick = request.getParameter("m_nick");
 	String str = "";
 	J_MemberDao jm = J_MemberDao.getInstance();
-	int result = jm.nickchk(m_nick);
+	int result = jm.nickChk(m_nick);
 	if(result > 0) {
 		str = "FALSE";
 	}else{

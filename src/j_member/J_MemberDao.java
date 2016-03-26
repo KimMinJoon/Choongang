@@ -28,7 +28,7 @@ public class J_MemberDao {
 		return conn;
 	}// getConnection
 
-	public int inchk(String m_email) throws SQLException {
+	public int emailChk(String m_email) throws SQLException {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -38,6 +38,33 @@ public class J_MemberDao {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, m_email);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = 1;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+		return result;
+	}
+	
+	public int nickChk(String m_nick) throws SQLException {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select m_nick from j_member where m_nick = ?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m_nick);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				result = 1;

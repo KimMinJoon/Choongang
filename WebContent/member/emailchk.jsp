@@ -26,7 +26,7 @@
 <body>
 	<%
 		J_MemberDao mdo = J_MemberDao.getInstance();
-		int result = mdo.inchk(m_email);
+		int result = mdo.emailChk(m_email);
 		if (result == 1) {
 	%>
 	아이디 : <%=m_email%><br> 

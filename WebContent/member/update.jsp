@@ -11,9 +11,9 @@
 	<%
 		J_CodeDao jcd = J_CodeDao.getInstance();
 		List<J_Code> list = jcd.selectList(0);
-		String m_email = (String) session.getAttribute("m_email");
+		String m_no = (String) session.getAttribute("m_no");
 		J_MemberDao mdo = J_MemberDao.getInstance();
-		J_Member mb = mdo.select(m_email);
+		J_Member mb = mdo.select(m_no);
 	%>
 	<form action="../member/updatePro.jsp" name="frm">
 		<input type="hidden" name="check" value="false">
@@ -23,7 +23,8 @@
 			</caption>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>이메일</td>
-				<td><label name="m_email"><%=mb.getM_email()%></label></td>
+				<td><input type="hidden" name="m_email" value="<%=mb.getM_email()%>">
+				<label><%=mb.getM_email()%></label></td>
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>암호</td>

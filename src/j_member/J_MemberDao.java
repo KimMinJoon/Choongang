@@ -122,16 +122,16 @@ public class J_MemberDao {
 		return result;
 	}
 
-	public J_Member select(String m_email) throws SQLException {
+	public J_Member select(String m_no) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from j_member where m_email = ?";
+		String sql = "select * from j_member where m_no = ?";
 		J_Member mem = new J_Member();
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m_email);
+			pstmt.setString(1, m_no);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				mem.setM_email(rs.getString("m_email"));

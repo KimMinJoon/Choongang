@@ -21,6 +21,7 @@ joinPro.jsp가 성공하면 회원가입 성공.
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
 	function chk() {
 		if (frm.m_passwd.value != frm.m_passwd2.value) {
@@ -38,8 +39,9 @@ joinPro.jsp가 성공하면 회원가입 성공.
 	}
 		
 	function emailchk() {
-		if((frm.m_email.value.indexOf("@")==-1)){
-		  alert("정확한 이메일 형식으로 입력해주세요");
+		var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;   
+		if(regex.test(frm.m_email.value) === false) {
+			alert("정확한 이메일 형식으로 입력해주세요");
 		} else {
 		var purl = "../member/emailchk.jsp?m_email=" + frm.m_email.value;
 		var pname = "emailpopup";
@@ -52,6 +54,24 @@ joinPro.jsp가 성공하면 회원가입 성공.
 		window.open(purl, pname, poption);
 		}
 	}
+	$(function(){
+	      $('#m_nick').blur(function(){
+	         $.ajax({
+	            type:"POST",
+	            url:"../member/nickchk.jsp",
+	            data:{
+	               "m_nick":$('#m_nick').val()
+	            },
+	            success:function(data){
+	               if($.trim(data)=="TRUE"){
+	                  $('#check').html("사용가능");
+	               }else{
+	                  $('#check').html("사용불가");
+	               }
+	            }
+	         });
+	      });
+	   });
 </script>
 </head>
 <body>
@@ -82,7 +102,9 @@ joinPro.jsp가 성공하면 회원가입 성공.
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>닉네임</td>
-				<td><input type="text" name="m_nick" required="required" maxlength="10"></td>
+				<td><input type="text" name="m_nick" id="m_nick" required="required" maxlength="10">
+				<span id="check"></span>
+				</td>
 			</tr>
 			<tr height="50">
 				<td class="join1">국적</td>

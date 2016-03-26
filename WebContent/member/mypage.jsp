@@ -9,17 +9,21 @@
 <body>
 	
 	<table class="tab" cellpadding="10" align="center">
-	<caption> <h2> Mypage </h2> </caption>
-	<tr>
-	<td class="c"> <a href="main.jsp?pgm=/member/update.jsp" > 회원정보수정 </a> </td>
-	</tr>
-	<tr>
-	<td class="c"> <a href="main.jsp?pgm=/member/friend.jsp" > 친구/관심글 </a> </td>
-	</tr>
-	<tr>
-	<td class="c"> <a href="main.jsp?pgm=/member/message.jsp" > 쪽지함 </a> </td>
-	</tr>
+		<caption> <h2> Mypage </h2> </caption>
+		<tr>
+		<td class="c"> <a href="main.jsp?pgm=/member/update.jsp" > 회원정보수정 </a> </td>
+		</tr>
+		<tr>
+		<td class="c"> <a href="main.jsp?pgm=/member/friend.jsp" > 친구/관심글 </a> </td>
+		</tr>
+		<tr>
+		<td class="c"> <a href="main.jsp?pgm=/member/message.jsp" > 쪽지함 </a> </td>
+		</tr>
+		<tr > 
+		<td class="c"> <a href="main.jsp?pgm=/member/secession.jsp"> 탈퇴 </a>
+		</td>	
+		</tr>
+		
 	</table>
-
 </body>
 </html>

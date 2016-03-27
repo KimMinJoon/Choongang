@@ -16,7 +16,7 @@
 	%>
 	<script type="text/javascript">
 		alert("수정 완료");
-		location.href = "../module/main.jsp?pgm=/member/mypage.jsp";
+		location.href = "../module/main.jsp?pgm=/member/mypagetemp.jsp";
 	</script>
 	<%
 		} else {

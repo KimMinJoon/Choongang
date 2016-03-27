@@ -14,7 +14,7 @@
 	<table width="100%">
 		<tr>
 			<td width="20%" align="left"><a href="main.jsp">
-					<h2>Web_Project</h2>
+					<h2>Exchange Language</h2>
 			</a></td>
 			<%
 				String m_no = (String) session.getAttribute("m_no");
@@ -27,7 +27,7 @@
 				} else {
 			%>
 			<td width="80%" align="right"><a
-				href="main.jsp?pgm=/member/mypage.jsp">Mypage</a> &nbsp; <a
+				href="main.jsp?pgm=/member/mypagetemp.jsp">Mypage</a> &nbsp; <a
 				href="main.jsp?pgm=/member/logout.jsp">Logout</a></td>
 			<%
 				}

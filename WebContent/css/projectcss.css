@@ -30,6 +30,11 @@ input {
 	font-family: "Nanum Gothic";
 	font-size: 12px;
 }
+
+.mypagetemp {
+	border-left: solid 1px;
+}
+
 .red {
 	color: red;
 }

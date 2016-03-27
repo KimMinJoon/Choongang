@@ -2,10 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-
-<mapper namespace="J_Board">
-
+<mapper namespace="J_MeetBoard">
   <resultMap id="J_MeetBoardResult"  type="J_MeetBoard">
     <result property="brd_no"        column="brd_no"/>
     <result property="brd_subject"   column="brd_subject"/>
@@ -24,8 +21,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </resultMap>
   
   <select id="selectListJ_MeetBoard" parameterType="hashMap" resultMap="J_MeetBoardResult">
-  select * from j_meetboard
-	<!-- select * from (select rowNum rn, * from j_board a, j_member b, j_code c where a.brd_no = b.m_no order by brd_no desc) where rn between #{startRow} and #{endRow} -->  
+  <!-- select * from j_board -->
+	<!-- select * from (select rowNum rn, * from j_board a, j_member b, j_code c where a.brd_no = b.m_no order by brd_no desc) where rn between #{startRow} and #{endRow} -->
+	select * from (select rowNum rn, * from j_board order by brd_no ) where rn between #{startRow} and #{endRow} 
   </select>
   
   

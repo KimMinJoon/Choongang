@@ -6,9 +6,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <configuration>
 	<properties resource="dbconnect.properties" />
 	<typeAliases>
-		<typeAlias type="dao.Dept" alias="Dept" />
-		<typeAlias type="dao.Board" alias="Board" />
-		<typeAlias type="dao.Emp" alias="Emp" />
+		<typeAlias type="dao.J_MeetBoard" alias="J_MeetBoard" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -22,9 +20,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="Dept.xml" />
-		<mapper resource="Board.xml" />
-		<mapper resource="Emp.xml" />
+		<mapper resource="J_MeetBoard.xml" />
 	</mappers>
 </configuration>
 

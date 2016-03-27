@@ -7,12 +7,12 @@
 </head><body>
 <table border="1"><caption>게시판</caption>
 	<tr>
-		<th>번호</th><th>제목</th><th>닉네임</th>
-		<th>조회수</th><th>IP</th><th>작성일</th>
+		<th>번호</th><th>제목</th><th>닉네임</th><th>언어</th><th>조회수</th><th>IP</th><th>작성일</th>
 	</tr>
 <%
-	String pageNum = request.getParameter("pageNum");//패이지를 읽어오지않으면!
 	J_BoardDao bd = J_BoardDao.getInstance();
+
+	String pageNum = request.getParameter("pageNum");//패이지를 읽어오지않으면!
 	int rowPerPage = 10;//한페이지에 보여줄 게시글의 수
 	int pagePerBlock = 10;//한페이지에 보여줄 블락의 수 (블락은 10페이지)
 	if (pageNum == null || pageNum.equals("null")||pageNum.equals("")) pageNum = "1";//페이지는 1이다.
@@ -29,9 +29,9 @@
 	}
 	
 	total = total - startRow +1;
-	List<J_Board> list = bd.selectList(startRow, endRow);
+	List<J_MeetBoard> list = bd.selectList(startRow, endRow);
 	if (list != null){
-		for(J_Board brd : list){
+		for(J_MeetBoard brd : list){
 %>
 	<tr>
 		<td><%=total--%></td>
@@ -64,6 +64,7 @@
 		<%-- <td><%=brd.getBrd_writer() %></td> --%>
 		<%-- <a href="mailto:<%=brd.getEmail() %>"> --%>
 		<td><%=brd.getM_nick() %></td>
+		<td><%=brd.getBrd_language() %></td>
 		<td><%=brd.getBrd_readcount() %></td>
 		
 		<td><%=brd.getBrd_ip() %></td>

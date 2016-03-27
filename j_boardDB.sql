@@ -49,3 +49,8 @@ FOREIGN KEY(code) REFERENCES 컨트리랭귀지(code);
 --boardcode 외래키 설정 삭제 예제
 ALTER TABLE j_board DROP CONSTRAINT fk_boardcode;
 
+select m_no, m_email,
+(select c_value from j_code c where m.l_code=c.c_minor ) lang,
+(select c_value from j_code c where m.c_code=c.c_minor ) cont
+from j_member m;  
+

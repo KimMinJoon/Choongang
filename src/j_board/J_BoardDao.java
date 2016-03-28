@@ -1,6 +1,9 @@
 package j_board;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -25,4 +28,24 @@ public class J_BoardDao {
 		return conn;
 	}
 	
+	
+	public void dbClose(ResultSet rs,PreparedStatement pstmt, Connection conn) throws SQLException{
+		if(rs != null){
+			rs.close();
+		}
+		if(pstmt != null){
+			pstmt.close();
+		}
+		if(conn != null){
+			conn.close();
+		}
+	}
+	public void dbClose(PreparedStatement pstmt, Connection conn) throws SQLException{
+		if(pstmt != null){
+			pstmt.close();
+		}
+		if(conn != null){
+			conn.close();
+		}
+	}
 }

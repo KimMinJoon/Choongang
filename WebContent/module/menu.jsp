@@ -13,10 +13,10 @@
 
 	<table height="5" width="100%">
 		<tr>
-			<td width="20%" align="center"><a href="board1.do">사이트소개/공지사항</a></td>
-			<td width="20%" align="center"><a href="board2.do">모임 게시판</a></td>
-			<td width="20%" align="center"><a href="board3.do">추천 게시판</a></td>
-			<td width="20%" align="center"><a href="board4.do">한줄 게시판</a></td>
+			<td width="20%" align="center"><a href="main.jsp?pgm=/board1/board1.jsp">사이트소개/공지사항</a></td>
+			<td width="20%" align="center"><a href="main.jsp?pgm=/board2/board2.jsp">모임 게시판</a></td>
+			<td width="20%" align="center"><a href="main.jsp?pgm=/board3/board3.jsp">추천 게시판</a></td>
+			<td width="20%" align="center"><a href="main.jsp?pgm=/board4/board4.jsp">한줄 게시판</a></td>
 			<td width="20%" align="center">
 			<input type="text" id="search" name="search" size=15 />
 			<input type="button" id="search" name="search" value="검색"/>

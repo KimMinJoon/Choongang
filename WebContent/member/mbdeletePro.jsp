@@ -7,21 +7,19 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<%
 		String m_no = (String) session.getAttribute("m_no");
 		String m_passwd = request.getParameter("m_passwd");
 		J_MemberDao md = J_MemberDao.getInstance();
-		int chk = md.passwdChk(m_passwd, m_no);
-		if (chk == 0) {
+		int chk = md.passwdChk(m_no, m_passwd);
+		if (chk == 1) {
 			int result = md.delete(Integer.parseInt(m_no));
 			if (result > 0) {
 				session.invalidate();
 	%>
 	<script type="text/javascript">
 		alert("탈퇴 완료");
-		opener.parent.location.href = "../main.jsp";
-		window.close();
+		location.href = "../module/main.jsp";
 	</script>
 	<%
 		}

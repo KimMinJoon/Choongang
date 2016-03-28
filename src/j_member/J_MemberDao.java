@@ -231,12 +231,12 @@ public class J_MemberDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select m_passwd from j_member where m_passwd = ? and m_no = ?";
+		String sql = "select m_passwd from j_member where m_no = ? and m_passwd = ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m_passwd);
-			pstmt.setString(2, m_no);
+			pstmt.setString(1, m_no);
+			pstmt.setString(2, m_passwd);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				result = 1;

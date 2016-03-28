@@ -23,7 +23,7 @@
 		<td> <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/message.jsp" > 쪽지함 </a> </td>
 		</tr>
 		<tr > 
-		<td> <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/secession.jsp"> 회원탈퇴 </a>
+		<td> <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/mbdelete.jsp"> 회원탈퇴 </a>
 		</td>	
 		</tr>
 	</table>

@@ -54,7 +54,7 @@ public class J_MemberDao {
 		}
 		return result;
 	}
-	
+
 	public int nickChk(String m_nick) throws SQLException {
 		int result = 0;
 		Connection conn = null;
@@ -197,6 +197,55 @@ public class J_MemberDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+		return result;
+	}
+
+	public int delete(int m_no) throws SQLException {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "delete from j_member where m_no=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, m_no);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+		return result;
+	}
+
+	public int passwdChk(String m_no, String m_passwd) throws SQLException {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select m_passwd from j_member where m_no = ? and m_passwd = ?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m_no);
+			pstmt.setString(2, m_passwd);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = 1;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (rs != null)
+				rs.close();
 			if (pstmt != null)
 				pstmt.close();
 			if (conn != null)

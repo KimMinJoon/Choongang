@@ -14,9 +14,9 @@ public class J_Board {
 	private Date brd_reg_date; 
 	private Date brd_update_date;
 	private String brd_del_yn;
-	private int brd_writer;
-	private String brd_language;
-	private String brd_boardcode;
+	private int m_no;
+	private String l_code;
+	private String b_code;
 	
 	public int getBrd_no() {
 		return brd_no;
@@ -78,22 +78,23 @@ public class J_Board {
 	public void setBrd_del_yn(String brd_del_yn) {
 		this.brd_del_yn = brd_del_yn;
 	}
-	public int getBrd_writer() {
-		return brd_writer;
+	public int getM_no() {
+		return m_no;
 	}
-	public void setBrd_writer(int brd_writer) {
-		this.brd_writer = brd_writer;
+	public void setM_no(int m_no) {
+		this.m_no = m_no;
 	}
-	public String getBrd_language() {
-		return brd_language;
+	public String getL_code() {
+		return l_code;
 	}
-	public void setBrd_language(String brd_language) {
-		this.brd_language = brd_language;
+	public void setL_code(String l_code) {
+		this.l_code = l_code;
 	}
-	public String getBrd_boardcode() {
-		return brd_boardcode;
+	public String getB_code() {
+		return b_code;
 	}
-	public void setBrd_boardcode(String brd_boardcode) {
-		this.brd_boardcode = brd_boardcode;
+	public void setB_code(String b_code) {
+		this.b_code = b_code;
 	}
+	
 }

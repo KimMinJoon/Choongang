@@ -49,7 +49,7 @@
 <body>
 
 	<div style="border: 1px solid; padding: 10px 10px 10px 10px;" class="wrap">
-		<form name="wrtierFrm" onsubmit="return chk()">
+		<form action="insertOnline.do" name="wrtierFrm" onsubmit="return chk()">
 			<input type="hidden" name="" value="id">
 			<!-- 세션값을 가져와서 담음 -->
 			<textarea rows="3" cols="100" maxlength="150" id="content" name="brd_content" onkeyup="textCheck()"></textarea>

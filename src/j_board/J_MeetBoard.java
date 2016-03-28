@@ -18,10 +18,7 @@ public class J_MeetBoard {
 	
 	private int m_no;// 세션때문에 필요하다. 세션 id  
 	private String brd_language;//l_code
-	
-	private String m_nick;//글쓴이
-	
-	
+	private String m_nick;//글쓴이	
 	
 	public int getBrd_no() {
 		return brd_no;

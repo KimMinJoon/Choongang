@@ -54,12 +54,19 @@ public class J_BoardDao {
 				
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
-			
-		}
-		
+		} 
 		return list;
-	}
+	}//selectList
+	
+	public int insertOneline(J_OnelineBoard job){
+		int result = 0;
+		try{
+			result = session.insert("insertOneline");
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		return result;
+	}//insertOneline
 	
 	
 }

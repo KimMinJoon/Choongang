@@ -21,6 +21,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</environments>
 	<mappers>
 		<mapper resource="J_MeetBoard.xml" />
+		<mapper resource="J_OnelineBoard.xml" />
 	</mappers>
 </configuration>
 

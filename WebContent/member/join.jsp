@@ -53,9 +53,9 @@
 				},
 				success : function(data) {
 					if ($.trim(data) == "TRUE") {
-						$('#check').html("사용가능");
+						$('#check').html("<font>사용가능</font>");
 					} else {
-						$('#check').html("사용불가");
+						$('#check').html("<font class=red>사용불가</font>");
 					}
 				}
 			});

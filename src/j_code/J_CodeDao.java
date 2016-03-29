@@ -14,10 +14,7 @@ import javax.sql.*;
 
 public class J_CodeDao {
 	private static J_CodeDao instance = new J_CodeDao();
-
-	private J_CodeDao() {
-	}
-
+	private J_CodeDao() { }
 	public static J_CodeDao getInstance() {
 		return instance;
 	}
@@ -41,16 +38,9 @@ public class J_CodeDao {
 		ResultSet rs = null;
 		List<J_Code> list = new ArrayList<>();
 		String sql = "select * from j_code";
-		String sql2 = " where c_major=?";
 		try {
 			conn = getConnection();
-			if (jc != 0) {
-				sql += sql2;
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, jc);
-			} else {
-				pstmt = conn.prepareStatement(sql);
-			}
+			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				J_Code c = new J_Code();

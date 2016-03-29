@@ -82,7 +82,7 @@ public class J_MemberDao {
 		return result;
 	}
 
-	public int insert(J_Member mb) throws SQLException {
+	public int insert(J_Member mb){
 		int result = 0, m_number = 0, m_no = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -103,16 +103,23 @@ public class J_MemberDao {
 			rs = pstmt.executeQuery();
 			if(rs.next()){
 				m_no = rs.getInt(1);
+				
 				pstmt.close();
+				
 				pstmt = conn.prepareStatement(sql3);
 				pstmt.setInt(1, m_no);
+					
 				result = pstmt.executeUpdate();
 			}else{
+				rs.close();
+				pstmt.close();
 				pstmt = conn.prepareStatement(sql1);
 				rs = pstmt.executeQuery();
-				if (rs.next())
+				if (rs.next()){
 					m_number = rs.getInt(1);
+				}
 				pstmt.close();
+				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, m_number);
 				pstmt.setString(2, mb.getM_email());
@@ -120,22 +127,18 @@ public class J_MemberDao {
 				pstmt.setString(4, mb.getM_nick());
 				pstmt.setString(5, mb.getC_code());
 				pstmt.setString(6, mb.getL_code());
+				
 				result = pstmt.executeUpdate();
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			dbClose(rs, pstmt, conn);
 		}
 		return result;
 	}
 
-	public int loginChk(String m_email, String m_passwd) throws SQLException {
+	public int loginChk(String m_email, String m_passwd){
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -157,12 +160,7 @@ public class J_MemberDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			dbClose(rs, pstmt, conn);
 		}
 		return result;
 	}

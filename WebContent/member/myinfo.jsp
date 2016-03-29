@@ -12,33 +12,29 @@
 		J_MemberDao mdo = J_MemberDao.getInstance();
 		J_Info jif = mdo.infoselect(m_no);
 	%>
-	<table class="tab" cellpadding="10" align="center">
+	<table class="tab" cellpadding="10" align="center" height="100%">
 		<caption>
 			<h2>내정보보기</h2>
 		</caption>
-		<tr>
+		<tr height="40%">
 			<td colspan="2"><img alt="pic" src="../images/1P.jpg"
 				height="150"></td>
 		</tr>
-		<tr height="50">
+		<tr height="15%">
 			<td class="join1">이메일</td>
 			<td><%=jif.getI_email()%></td>
 		</tr>
-		<tr height="50">
+		<tr height="15%">
 			<td class="join1">닉네임</td>
 			<td><%=jif.getI_nick()%></td>
 		</tr>
-		<tr height="50">
+		<tr height="15%">
 			<td class="join1">국적</td>
-			<td>
-				<%=jif.getC_value() %>
-			</td>
+			<td><%=jif.getC_value() %></td>
 		</tr>
-		<tr height="50">
+		<tr height="15%">
 			<td class="join1">희망언어</td>
-			<td>
-				<%=jif.getL_value() %>
-			</td>
+			<td><%=jif.getL_value() %></td>
 		</tr>
 	</table>
 

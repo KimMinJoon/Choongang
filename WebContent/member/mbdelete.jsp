@@ -22,7 +22,7 @@
 		onsubmit="return dechk()">
 		<table class="tab" cellpadding="10" align="center">
 			<tr>
-				<td>암호</td>
+				<td class="join1">암호</td>
 				<td><input type="password" name="m_passwd"></td>
 			</tr>
 			<tr>

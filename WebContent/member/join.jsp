@@ -67,7 +67,7 @@
 
 	<%
 		J_CodeDao jcd = J_CodeDao.getInstance();
-		List<J_Code> list = jcd.selectList(0);
+		List<J_Code> list = jcd.selectList();
 	%>
 
 	<form action="../member/joinPro.jsp" name="frm" onsubmit="return chk()">
@@ -83,16 +83,16 @@
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>비밀번호</td>
-				<td><input type="password" name="m_passwd" required="required"></td>
+				<td><input type="password" name="m_passwd" required="required" maxlength="20"></td>
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>비밀번호 확인</td>
-				<td><input type="password" name="m_passwd2" required="required"></td>
+				<td><input type="password" name="m_passwd2" required="required" maxlength="20"></td>
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>닉네임</td>
-				<td><input type="text" name="m_nick" id="m_nick"
-					required="required" maxlength="10"> <span id="check"></span>
+				<td><input type="text" name="m_nick" id="m_nick" required="required" maxlength="10">
+				<span id="check"></span>
 				</td>
 			</tr>
 			<tr height="50">

@@ -25,6 +25,7 @@ input {
 	border-collapse: collapse;
 }
 .join1 {
+	font-weight: bold;
 	border-right: solid 1px;
 	text-align: right;
 	font-family: "Nanum Gothic";

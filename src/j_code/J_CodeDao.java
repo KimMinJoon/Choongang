@@ -32,7 +32,7 @@ public class J_CodeDao {
 		return conn;
 	}// getConnection
 
-	public List<J_Code> selectList(int jc) {
+	public List<J_Code> selectList() {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

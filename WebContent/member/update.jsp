@@ -23,8 +23,8 @@
 			</caption>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>이메일</td>
-				<td><input type="hidden" name="m_email" value="<%=mb.getM_email()%>">
-				<label><%=mb.getM_email()%></label></td>
+				<td><input type="hidden" name="m_email"
+					value="<%=mb.getM_email()%>"> <label><%=mb.getM_email()%></label></td>
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>비밀번호</td>
@@ -43,11 +43,7 @@
 			<tr height="50">
 				<td class="join1">국적</td>
 				<td><select name="c_code">
-<<<<<<< HEAD
 						<option value="0">----------선택안함----------</option>
-=======
-						<option value="0">선택안함</option>
->>>>>>> 2b11f8f4f2981209f869555416ea3c526bce5055
 						<%
 							for (J_Code jc : list) {
 								if (jc.getC_major().equals("c")) {
@@ -67,11 +63,11 @@
 			<tr height="50">
 				<td class="join1">희망언어</td>
 				<td><select name="l_code">
-<<<<<<< HEAD
+
 						<option value="0">----------선택안함----------</option>
-=======
+
 						<option value="0">선택안함</option>
->>>>>>> 2b11f8f4f2981209f869555416ea3c526bce5055
+
 						<%
 							for (J_Code jc : list) {
 								if (jc.getC_major().equals("l")) {

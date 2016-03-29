@@ -1,9 +1,3 @@
-<!-- 
-<한줄게시판 입력창과 리스트를 보이는 jsp>
-
-마지막 수정날짜 : 2016-03-24 오전 09:16
-마지막 수정한 사람 : 이재설
- -->
 <%@page import="j_board.J_Board"%>
 <%@page import="java.util.List"%>
 <%@page import="j_board.J_BoardDao"%>

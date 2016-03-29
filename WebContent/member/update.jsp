@@ -23,16 +23,16 @@
 			</caption>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>이메일</td>
-				<td><input type="hidden" name="m_email" value="<%=mb.getM_email()%>">
-				<label><%=mb.getM_email()%></label></td>
+				<td><input type="hidden" name="m_email"
+					value="<%=mb.getM_email()%>"> <label><%=mb.getM_email()%></label></td>
 			</tr>
 			<tr height="50">
-				<td class="join1"><font class="red">*</font>암호</td>
+				<td class="join1"><font class="red">*</font>비밀번호</td>
 				<td><input type="password" name="m_passwd"
 					value="<%=mb.getM_passwd()%>" required="required"></td>
 			</tr>
 			<tr height="50">
-				<td class="join1"><font class="red">*</font>암호확인</td>
+				<td class="join1"><font class="red">*</font>비밀번호 확인</td>
 				<td><input type="password" name="m_passwd2" required="required"></td>
 			</tr>
 			<tr height="50">
@@ -43,7 +43,7 @@
 			<tr height="50">
 				<td class="join1">국적</td>
 				<td><select name="c_code">
-						<option value="0">해당없음</option>
+						<option value="0">----------선택안함----------</option>
 						<%
 							for (J_Code jc : list) {
 								if (jc.getC_major().equals("c")) {
@@ -63,7 +63,11 @@
 			<tr height="50">
 				<td class="join1">희망언어</td>
 				<td><select name="l_code">
-						<option value="0">해당없음</option>
+
+						<option value="0">----------선택안함----------</option>
+
+						<option value="0">선택안함</option>
+
 						<%
 							for (J_Code jc : list) {
 								if (jc.getC_major().equals("l")) {

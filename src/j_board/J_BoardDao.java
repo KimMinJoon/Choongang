@@ -80,7 +80,7 @@ public class J_BoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "";
+		String sql = "select m_nick, brd_reg_date, brd_content, brd_del_yn, a.m_no from j_board a, j_member b where a.m_no = b.m_no and b_code = 'olb';";
 		try{
 			
 		}catch(Exception e){

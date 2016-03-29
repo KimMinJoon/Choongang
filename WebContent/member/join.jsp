@@ -1,19 +1,3 @@
-<!--
-<회원가입 폼 jsp>
-1. 중복체크
-중복체크 버튼을 누르면 위의 스크립트 emailchk()로 갔다가 팝업창을 열고
-팝업창은 url로 emailchk.jsp를 실행
-(emailchk.jsp는 아직 구현 못했습니다.)
-
-2. 확인
-확인 버튼을 누르면 joinPro.jsp를 실행
-(joinPro.jsp는 아직 구현 못했습니다.)
-joinPro.jsp가 성공하면 회원가입 성공.
-
-마지막 수정날짜 : 2016-03-22 오전 10:00
-마지막 수정한 사람 : 곽지은
--->
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="j_code.*, java.util.*"%>
 <!DOCTYPE html>
@@ -98,11 +82,11 @@ joinPro.jsp가 성공하면 회원가입 성공.
 					<input type="button" value="중복체크" onclick="emailchk()"></td>
 			</tr>
 			<tr height="50">
-				<td class="join1"><font class="red">*</font>암호</td>
+				<td class="join1"><font class="red">*</font>비밀번호</td>
 				<td><input type="password" name="m_passwd" required="required"></td>
 			</tr>
 			<tr height="50">
-				<td class="join1"><font class="red">*</font>암호확인</td>
+				<td class="join1"><font class="red">*</font>비밀번호 확인</td>
 				<td><input type="password" name="m_passwd2" required="required"></td>
 			</tr>
 			<tr height="50">
@@ -114,7 +98,7 @@ joinPro.jsp가 성공하면 회원가입 성공.
 			<tr height="50">
 				<td class="join1">국적</td>
 				<td><select name="c_code">
-						<option value="0">해당없음</option>
+						<option value="0">----------선택안함----------</option>
 						<%
 							for (J_Code jc : list) {
 								if (jc.getC_major().equals("c")) {
@@ -131,7 +115,7 @@ joinPro.jsp가 성공하면 회원가입 성공.
 			<tr height="50">
 				<td class="join1">희망언어</td>
 				<td><select name="l_code">
-						<option value="0">해당없음</option>
+						<option value="0">----------선택안함----------</option>
 						<%
 							for (J_Code jc : list) {
 								if (jc.getC_major().equals("l")) {

@@ -8,13 +8,10 @@
 	String pgm = request.getParameter("pgm");
 	if (pgm == null || pgm == "") {
 		pgm = "home.jsp";
-<<<<<<< HEAD
-=======
 	} else if(!pgm.equals("/member/login.jsp")){
 %>
 	<%@ include file="../session/sessionChk.jsp" %>
 <%
->>>>>>> c48fd90642fec236ed144690c4a7bddfdb056a37
 	}
 %>
 

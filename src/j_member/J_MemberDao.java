@@ -28,12 +28,12 @@ public class J_MemberDao {
 		return conn;
 	}// getConnection
 
-	public int emailChk(String m_email) throws SQLException {
+	public int emailChk(String m_email) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select m_email from j_member where m_email = ? and m_del_yn = 'n'";
+		String sql = "select m_email from j_member where m_email=? and m_del_yn='n'";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -45,22 +45,17 @@ public class J_MemberDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			dbClose(rs, pstmt, conn);
 		}
 		return result;
 	}
 
-	public int nickChk(String m_nick) throws SQLException {
+	public int nickChk(String m_nick) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select m_nick from j_member where m_nick = ? and m_del_yn = 'n'";
+		String sql = "select m_nick from j_member where m_nick=? and m_del_yn='n'";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -72,29 +67,20 @@ public class J_MemberDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			dbClose(rs, pstmt, conn);
 		}
 		return result;
 	}
 
-	public int insert(J_Member mb) throws SQLException {
+	public int insert(J_Member mb) {
 		int result = 0, m_number = 0, m_no = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
-		
 		String sql = "insert into j_member values(?,?,?,?,sysdate,'n',null,?,?)";
 		String sql1 = "select nvl(max(m_no),0)+1 from j_member";
-		
-		String sql2 = "select m_no from j_member where m_email = ? and m_del_yn = 'y'";
-		
-		String sql3 = "update j_member set m_del_yn = 'n' , m_reg_date = sysdate where m_no = ?";
+		String sql2 = "select m_no from j_member where m_email=? and m_del_yn='y'";	
+		String sql3 = "update j_member set m_del_yn='n', m_reg_date=sysdate where m_no=?";
 		try {
 			conn = getConnection();
 			
@@ -108,6 +94,8 @@ public class J_MemberDao {
 				pstmt.setInt(1, m_no);
 				result = pstmt.executeUpdate();
 			}else{
+				pstmt.close();
+				rs.close();
 				pstmt = conn.prepareStatement(sql1);
 				rs = pstmt.executeQuery();
 				if (rs.next())
@@ -125,22 +113,17 @@ public class J_MemberDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			dbClose(rs, pstmt, conn);
 		}
 		return result;
 	}
 
-	public int loginChk(String m_email, String m_passwd) throws SQLException {
+	public int loginChk(String m_email, String m_passwd) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select m_no, m_passwd from j_member where m_email=? and m_del_yn = 'n'";
+		String sql = "select m_no, m_passwd from j_member where m_email=? and m_del_yn='n'";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -157,21 +140,16 @@ public class J_MemberDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			dbClose(rs, pstmt, conn);
 		}
 		return result;
 	}
 
-	public J_Member select(String m_no) throws SQLException {
+	public J_Member select(String m_no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from j_member where m_no = ? and m_del_yn = 'n'";
+		String sql = "select * from j_member where m_no=? and m_del_yn='n'";
 		J_Member mem = new J_Member();
 		try {
 			conn = getConnection();
@@ -188,12 +166,7 @@ public class J_MemberDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			dbClose(rs, pstmt, conn);
 		}
 		return mem;
 	}
@@ -202,7 +175,7 @@ public class J_MemberDao {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "update j_member set m_passwd=?, m_nick=?, c_code=?, l_code=? where m_email=? and m_del_yn = 'n'";
+		String sql = "update j_member set m_passwd=?, m_nick=?, c_code=?, l_code=? where m_email=? and m_del_yn='n'";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -224,7 +197,7 @@ public class J_MemberDao {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "update j_member set m_del_yn = 'y', m_out_date = sysdate where m_no=? and m_del_yn = 'n'";
+		String sql = "update j_member set m_del_yn='y', m_out_date=sysdate where m_no=? and m_del_yn='n'";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -238,12 +211,12 @@ public class J_MemberDao {
 		return result;
 	}
 
-	public int passwdChk(String m_no, String m_passwd) throws SQLException {
+	public int passwdChk(String m_no, String m_passwd) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select m_passwd from j_member where m_no = ? and m_passwd = ?";
+		String sql = "select m_passwd from j_member where m_no=? and m_passwd=?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);

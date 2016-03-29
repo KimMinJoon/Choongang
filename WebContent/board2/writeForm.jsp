@@ -1,19 +1,23 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="j_board.*,j_code.*"%>
+    
 <!DOCTYPE ><html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>WriteForm</title>
 <link rel="stylesheet" type="text/css" href="comm.css">
 
 <%
+	//String m_no = (String)session.getAttribute("m_no");
+	String m_no = "1";	
 	String pageNum = request.getParameter("pageNum");
 %>
 
 <%
 		J_CodeDao jcd = J_CodeDao.getInstance();
 		List<J_Code> list = jcd.selectList(0);
-	%>
+%>
+
 </head>
 <body>
 <form action="write.jsp" method="post">
@@ -27,14 +31,14 @@
 	<tr height="50">
 				<td class="join1">말머리</td>
 				<td>
-					<select name="l_code">
+					<select name="mc_code">
 						<option value="0">해당없음</option>
 						<%
-							for (J_Code jc : list) {
-								if (jc.getC_major().equals("mc")) {
+							for (J_Code jmc : list) {
+								if (jmc.getC_major().equals("mc")) {
 						%>
-						<option value=<%=jc.getC_minor()%>>
-							<%=jc.getC_value()%>
+						<option value=<%=jmc.getC_minor()%>>
+							<%=jmc.getC_value()%>
 						</option>
 						<%
 							}
@@ -63,10 +67,6 @@
 					</select>
 				</td>
 			</tr>
-	
-	<tr>
-		<th>닉네임</th><td><input type="text" name="nick" required="required" ></td>
-	</tr>
 	
 	<tr>
 		<th>email</th><td><input type="email" name="email" required="required" ></td>

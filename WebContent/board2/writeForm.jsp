@@ -1,12 +1,10 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="j_board.*,j_code.*"%>
-    
 <!DOCTYPE ><html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>WriteForm</title>
-<link rel="stylesheet" type="text/css" href="comm.css">
-
+<link rel="stylesheet" type="text/css" href="../css/projectcss.css">
 <%
 	//String m_no = (String)session.getAttribute("m_no");
 	String m_no = "1";	
@@ -22,10 +20,11 @@
 <body>
 <form action="write.jsp" method="post">
 <input type="hidden" name="pageNum" value="<%=pageNum%>">
+<input type="hidden" name="m_no" value="<%=m_no%>">
  
-<table border="1"><caption>게시판 작성</caption>
+<table class="tab"><caption>게시판 작성</caption>
 	<tr>
-		<th>제목</th><td><input type="text" name="subject" required="required" autofocus="autofocus"></td>
+		<td class="join1">제목</td><td><input type="text" name="brd_subject" required="required" autofocus="autofocus"></td>
 	</tr>
 	
 	<tr height="50">
@@ -47,7 +46,6 @@
 					</select>
 				</td>
 			</tr>
-	
 	<tr height="50">
 				<td class="join1">희망언어</td>
 				<td>
@@ -67,17 +65,8 @@
 					</select>
 				</td>
 			</tr>
-	
 	<tr>
-		<th>email</th><td><input type="email" name="email" required="required" ></td>
-	</tr>
-	
-	<tr>
-		<th>암호</th><td><input type="password" name="passwd" required="required" ></td>
-	</tr>
-	
-	<tr>
-		<th>내용</th><td><textarea rows="5" cols="50" name="content" required="required"></textarea></td>
+		<td class="join1">내용</td><td><textarea rows="5" cols="50" name="brd_content" required="required"></textarea></td>
 	</tr>
 	
 	<tr>

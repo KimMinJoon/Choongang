@@ -11,7 +11,15 @@ public class J_Member {
 	private String m_del_yn;
 	private String c_code;
 	private String l_code;
+	private Date m_out_date;
 	
+	public Date getM_out_date() {
+		return m_out_date;
+	}
+
+	public void setM_out_date(Date m_out_date) {
+		this.m_out_date = m_out_date;
+	}
 
 	public int getM_no() {
 		return m_no;

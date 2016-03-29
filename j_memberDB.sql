@@ -14,3 +14,4 @@ select * from j_member;
 --drop table j_member;
 
 alter table j_member add (m_out_date date);
+

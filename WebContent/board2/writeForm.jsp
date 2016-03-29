@@ -24,9 +24,25 @@
 		<th>제목</th><td><input type="text" name="subject" required="required" autofocus="autofocus"></td>
 	</tr>
 	
-	<tr>
-		<th>말머리</th><td><input type="text" name="nick" required="required" ></td>
-	</tr>
+	<tr height="50">
+				<td class="join1">말머리</td>
+				<td>
+					<select name="l_code">
+						<option value="0">해당없음</option>
+						<%
+							for (J_Code jc : list) {
+								if (jc.getC_major().equals("mc")) {
+						%>
+						<option value=<%=jc.getC_minor()%>>
+							<%=jc.getC_value()%>
+						</option>
+						<%
+							}
+						}
+						%>
+					</select>
+				</td>
+			</tr>
 	
 	<tr height="50">
 				<td class="join1">희망언어</td>

@@ -4,6 +4,9 @@
 마지막 수정날짜 : 2016-03-24 오전 09:16
 마지막 수정한 사람 : 이재설
  -->
+<%@page import="j_board.J_Board"%>
+<%@page import="java.util.List"%>
+<%@page import="j_board.J_BoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -57,11 +60,17 @@
 	} */
 </script>
 </head>
+<%
+	J_BoardDao jbd = J_BoardDao.getInstance();
+	List<J_Board> list = jbd.selectOneLine();
+%>
 <body>
 	<div style="border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
 		<form action="insertOneline.jsp" name="wrtierFrm">
 <!-- 			onsubmit="return isSubmit()"> -->
+			<input type="hidden" name="b_code" value="olb">
+			<input type="hidden" name="brd_subject" value="oneline">
 			<c:if test="${not empty m_no}">
 				<input type="hidden" name="m_no" value="${m_no}">
 			</c:if>
@@ -77,7 +86,14 @@
 	<p>
 	<div
 		style="height: 500px; border: 1px solid; border-style: inset; padding: 10px 10px 10px 10px;"
-		class="wrap">list</div>
+		class="wrap">
+		<c:if test="${empty list}">
+			
+		</c:if>
+		<c:if test="${not empty list}">
+			
+		</c:if>
+	</div>
 
 </body>
 </html>

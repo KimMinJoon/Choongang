@@ -38,7 +38,11 @@
 						if (jc.getC_major().equals("c")) {
 							if (jc.getC_minor().equals(mb.getC_code())) {
 				%> <%=jc.getC_value()%> <%
- 	}
+ 	break;
+ 			} else {
+ %>선택안함<%
+ 	break;
+ 			}
  		}
  	}
  %>
@@ -52,8 +56,14 @@
 						if (jc.getC_major().equals("l")) {
 							if (jc.getC_minor().equals(mb.getL_code())) {
 				%> <%=jc.getC_value()%> <%
- 	}
+ 	break;
+ 			} else {
+ %>선택안함<%
+ 	break;
+ 			}
+
  		}
+
  	}
  %>
 			</td>

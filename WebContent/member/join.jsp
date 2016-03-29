@@ -98,7 +98,6 @@
 			<tr height="50">
 				<td class="join1">국적</td>
 				<td><select name="c_code">
-						<option value="0">----------선택안함----------</option>
 						<%
 							for (J_Code jc : list) {
 								if (jc.getC_major().equals("c")) {
@@ -115,7 +114,6 @@
 			<tr height="50">
 				<td class="join1">희망언어</td>
 				<td><select name="l_code">
-						<option value="0">----------선택안함----------</option>
 						<%
 							for (J_Code jc : list) {
 								if (jc.getC_major().equals("l")) {

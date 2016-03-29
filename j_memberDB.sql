@@ -5,6 +5,7 @@ create table j_member (
   	m_nick varchar2(30) not null unique,
 	m_reg_date date default sysdate,
 	m_del_yn char(1) default 'n',
+	m_out_date date,
 	c_code varchar2(30),
 	l_code varchar2(30)
 );

@@ -7,10 +7,7 @@ import javax.sql.*;
 public class J_MemberDao {
 	// 싱글톤 객체 생성을 낭비하지 않기위해
 	private static J_MemberDao instance = new J_MemberDao();
-
-	private J_MemberDao() {
-	}
-
+	private J_MemberDao() { }
 	public static J_MemberDao getInstance() {
 		return instance;
 	}
@@ -80,7 +77,7 @@ public class J_MemberDao {
 		String sql = "insert into j_member values(?,?,?,?,sysdate,'n',null,?,?)";
 		String sql1 = "select nvl(max(m_no),0)+1 from j_member";
 		String sql2 = "select m_no from j_member where m_email=? and m_del_yn='y'";	
-		String sql3 = "update j_member set m_del_yn='n', m_reg_date=sysdate where m_no=?";
+		String sql3 = "update j_member set m_passwd=?, m_nick=?, m_reg_date=sysdate, m_del_yn='n', c_code=?, l_code=? where m_no=?";
 		try {
 			conn = getConnection();
 			
@@ -91,7 +88,11 @@ public class J_MemberDao {
 				m_no = rs.getInt(1);
 				pstmt.close();
 				pstmt = conn.prepareStatement(sql3);
-				pstmt.setInt(1, m_no);
+				pstmt.setString(1, mb.getM_passwd());
+				pstmt.setString(2, mb.getM_nick());
+				pstmt.setString(3, mb.getC_code());
+				pstmt.setString(4, mb.getL_code());
+				pstmt.setInt(5, m_no);
 				result = pstmt.executeUpdate();
 			}else{
 				pstmt.close();

@@ -1,10 +1,3 @@
-<!--
-<회원가입 폼에서 email 중복체크하는 jsp>
-
-마지막 수정날짜 : 2016-03-22 오전 10:00
-마지막 수정한 사람 : 곽지은
--->
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="j_member.*" errorPage="/error/DBError.jsp"%>
 <!DOCTYPE html>

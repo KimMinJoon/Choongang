@@ -2,7 +2,7 @@ create table j_member (
 	m_no number primary key,
 	m_email varchar2(30) not null unique,
 	m_passwd varchar2(20) not null,
-  	m_nick varchar2(30) not null unique,
+	m_nick varchar2(30) not null unique,
 	m_reg_date date default sysdate,
 	m_del_yn char(1) default 'n',
 	m_out_date date,
@@ -13,6 +13,3 @@ create table j_member (
 select * from j_member;
 
 --drop table j_member;
-
-alter table j_member add (m_out_date date);
-

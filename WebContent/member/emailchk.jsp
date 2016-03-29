@@ -22,17 +22,17 @@
 		int result = mdo.emailChk(m_email);
 		if (result == 1) {
 	%>
-	아이디 : <%=m_email%><br> 
-	사용할 수 없습니다.<p>
+	이메일 : <%=m_email%><br> 
+	<font color="red">사용할 수 없습니다.</font><p>
 	<form>
-		아이디: <input type="email" name="m_email" required="required"><p>
+		이메일 : <input type="email" name="m_email" required="required"><p>
 		<input type="submit" value="확인">
 	</form>
 	<%
 		} else {
 	%>
-	아이디 : <%=m_email%><br> 
-	사용할 수 있습니다.
+	이메일 : <%=m_email%><br>
+	<b>사용할 수 있습니다.</b> <p>
 	<button onclick="cl()">창닫기</button>
 	<%
 		}

@@ -18,7 +18,7 @@
 		} else if (result == 0) {
 	%>
 	<script type="text/javascript">
-		alert("암호가 틀렸습니다.");
+		alert("비밀번호가 틀렸습니다.");
 		history.go(-1);
 	</script>
 	<%

@@ -82,11 +82,11 @@
 					<input type="button" value="중복체크" onclick="emailchk()"></td>
 			</tr>
 			<tr height="50">
-				<td class="join1"><font class="red">*</font>암호</td>
+				<td class="join1"><font class="red">*</font>비밀번호</td>
 				<td><input type="password" name="m_passwd" required="required"></td>
 			</tr>
 			<tr height="50">
-				<td class="join1"><font class="red">*</font>암호확인</td>
+				<td class="join1"><font class="red">*</font>비밀번호 확인</td>
 				<td><input type="password" name="m_passwd2" required="required"></td>
 			</tr>
 			<tr height="50">

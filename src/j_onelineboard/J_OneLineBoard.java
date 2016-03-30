@@ -60,4 +60,11 @@ public class J_OneLineBoard {
 	public void setM_no(int m_no) {
 		this.m_no = m_no;
 	}
+	@Override
+	public String toString() {
+		return "J_OneLineBoard [brd_no=" + brd_no + ", brd_content=" + brd_content + ", brd_reg_date=" + brd_reg_date
+				+ ", brd_update_date=" + brd_update_date + ", brd_ip=" + brd_ip + ", brd_del_yn=" + brd_del_yn
+				+ ", m_no=" + m_no + ", m_nick=" + m_nick + "]";
+	}
+	
 }

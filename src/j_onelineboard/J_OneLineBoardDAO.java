@@ -74,7 +74,7 @@ public class J_OneLineBoardDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "select m_nick, brd_reg_date, brd_content, a.m_no from J_OneLineBoard a, j_member b where a.m_no = b.m_no and brd_del_yn = 'n'";
+		String sql = "select m_nick, brd_no, brd_reg_date, brd_content, brd_del_yn, a.m_no from J_OneLineBoard a, j_member b where a.m_no = b.m_no and brd_del_yn = 'n' order by brd_no desc";
 		try{
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -83,11 +83,17 @@ public class J_OneLineBoardDAO {
 			while(rs.next()){
 				J_OneLineBoard jolb = new J_OneLineBoard();
 				jolb.setM_nick(rs.getString("M_NICK"));
+				jolb.setBrd_no(rs.getInt("BRD_NO"));
 				jolb.setBrd_content(rs.getString("BRD_CONTENT"));
 				jolb.setBrd_reg_date(rs.getDate("BRD_REG_DATE"));
+				jolb.setBrd_del_yn(rs.getString("BRD_DEL_YN"));
 				jolb.setM_no(rs.getInt("M_NO"));
 				
 				list.add(jolb);
+			}
+			System.out.println("list.size : " + list.size());
+			for(J_OneLineBoard jolb : list){
+				System.out.println(jolb);
 			}
 		}catch(Exception e){
 			System.out.println("list.size : " + list.size());

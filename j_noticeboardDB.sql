@@ -1,8 +1,7 @@
-create table j_board (
+create table j_noticeboard (
 	brd_no number primary key, -- 게시글 번호 프라이머리키
 	brd_subject varchar2(50) not null, -- 게시글 제목
 	brd_content varchar2(4000) not null, -- 게시글내용
-	brd_category varchar2(10), -- 게시판말머리
 	brd_readcount number default 0, --읽은 횟수
 	brd_reg_date date default sysdate, --게시등록일
 	brd_update_date date,  --게시 수정일

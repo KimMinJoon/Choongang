@@ -44,8 +44,6 @@
 					</select>
 				</td>
 			</tr>
-			
-			
 	<tr height="50">
 				<td class="join1">희망언어</td>
 				<td>
@@ -66,7 +64,6 @@
 	<tr>
 		<td class="join1">내용</td><td><textarea rows="5" cols="50" name="brd_content" required="required"></textarea></td>
 	</tr>
-	
 	<tr>
 		<td colspan="2" align="center">
 			<input type="submit" value="확인">

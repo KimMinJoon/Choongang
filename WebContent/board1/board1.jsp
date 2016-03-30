@@ -15,7 +15,7 @@
 	</center>
 	안녕하세요. -->
 	<center>
-	<img alt="" src="http://www.discoverhongkong.com/ca/images/dine-drink/whats-hot/large/bars-with-good-view.jpg" height="300">
+	<img alt="" src="http://sccdn.chosun.com/news/photobook/201403/10088_2014030901000824400051061.jpg" height="300">
 	<p>
 	exchange langauge 사이트입니다. 
 	<br>

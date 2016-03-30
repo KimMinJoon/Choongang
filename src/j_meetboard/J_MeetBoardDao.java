@@ -114,7 +114,7 @@ public class J_MeetBoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = 
-				"select * from (select rowNum rn, a.* from (select * from j_meetboard order by brd_no desc) a ) where rn between ? and ?";
+				"select * from (select rowNum rn, a.* from (select mb.* ,m.m_nick from j_meetboard mb, j_member m where mb.m_no = m.m_no order by brd_no desc) a ) where rn between ? and ?";
 		// 댓글 정렬 해줌!
 		//가장안에 a는 num을 기준으로 역순으로 테이블을 정렬하고 그 결과값을 테이블로 사용한다.
 		// 그 테이블에 rowNum(테이블 기본 오름차순 순서번호값)을 주고 별칭을 rn으로 한다 그리고 a테이블의 모든 정보를 뒤에 출력
@@ -133,9 +133,12 @@ public class J_MeetBoardDao {
 				meetboard.setBrd_subject(rs.getString("brd_subject"));
 				meetboard.setBrd_content(rs.getString("brd_content"));
 				meetboard.setBrd_reg_date(rs.getDate("brd_reg_date"));
+				meetboard.setBrd_update_date(rs.getDate("brd_update_date"));
 				meetboard.setBrd_ip(rs.getString("brd_ip"));
-				meetboard.setBrd_recommand(rs.getInt("brd_readcount"));
+				meetboard.setBrd_recommend(rs.getInt("brd_recommend"));
+				meetboard.setBrd_readcount(rs.getInt("brd_readcount"));
 				meetboard.setBrd_dey_yn(rs.getString("brd_del_yn"));
+				meetboard.setM_nick(rs.getString("m_nick"));
 				meetboard.setM_no(rs.getInt("m_no"));
 				list.add(meetboard);
 			}
@@ -152,6 +155,68 @@ public class J_MeetBoardDao {
 	}
 	
 	
+	
+	public J_MeetBoard select(int brd_no) throws SQLException {
+		J_MeetBoard meetboard = new J_MeetBoard();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select mb.*, m.m_nick ,c.c_value, c.c_minor, c from j_meetboard mb, j_member m,j_code c where brd_no=? and mb.m_no = m.m_no and mb.l_code = c.c_minor";
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);//먼저 값을 읽어와야함
+			pstmt.setInt(1, brd_no);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				meetboard.setBrd_no(rs.getInt("brd_no"));
+				meetboard.setBrd_subject(rs.getString("brd_subject"));
+				meetboard.setBrd_content(rs.getString("brd_content"));
+				meetboard.setBrd_reg_date(rs.getDate("brd_reg_date"));
+				meetboard.setBrd_update_date(rs.getDate("brd_update_date"));
+				meetboard.setBrd_ip(rs.getString("brd_ip"));
+				meetboard.setBrd_recommend(rs.getInt("brd_recommend"));
+				meetboard.setBrd_readcount(rs.getInt("brd_recount"));
+				meetboard.setBrd_dey_yn(rs.getString("brd_del_yn"));
+				meetboard.setM_nick(rs.getString("m_nick"));
+				meetboard.setL_code(rs.getString("c_value"));
+				meetboard.setC_minor1(rs.getString("c_minor1"));
+				meetboard.setC_minor2(rs.getString("c_minor2"));
+				meetboard.setM_no(rs.getInt("m_no"));
+			}
+				
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (rs != null) rs.close();
+			if (pstmt != null) pstmt.close();
+			if (conn != null) conn.close();
+		}
+		
+		return meetboard;
+	}
+	
+	
+	
+	public void updateHit(int brd_no) throws SQLException {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = "update j_meetboard set brd_readcount = brd_readcount+1 where brd_no=?";
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);//먼저 값을 읽어와야함
+			pstmt.setInt(1, brd_no);
+			pstmt.executeUpdate();		
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (pstmt != null) pstmt.close();
+			if (conn != null) conn.close();
+		}
+	}
 	
 	
 	

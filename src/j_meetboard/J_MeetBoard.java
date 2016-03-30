@@ -7,16 +7,21 @@ public class J_MeetBoard {
 	private int brd_no;
 	private String brd_subject;
 	private String brd_content;
-	private String brd_category;
 	private int brd_readcount;
-	private int brd_recommand;
+	private int brd_recommend;
 	private String brd_ip;
 	private Date brd_reg_date;
 	private Date brd_update_date;
 	private String brd_dey_yn;
 	private int m_no;
+	private String m_nick;
+	
 	private String l_code;
+	private String c_minor1; //l_code에 대한 것
+	
 	private String mc_code;
+	private String c_minor2; //mc_code에 대한 것
+	
 	
 	public int getBrd_no() {
 		return brd_no;
@@ -36,24 +41,15 @@ public class J_MeetBoard {
 	public void setBrd_content(String brd_content) {
 		this.brd_content = brd_content;
 	}
-	public String getBrd_category() {
-		return brd_category;
-	}
-	public void setBrd_category(String brd_category) {
-		this.brd_category = brd_category;
-	}
+	
+	
 	public int getBrd_readcount() {
 		return brd_readcount;
 	}
 	public void setBrd_readcount(int brd_readcount) {
 		this.brd_readcount = brd_readcount;
 	}
-	public int getBrd_recommand() {
-		return brd_recommand;
-	}
-	public void setBrd_recommand(int brd_recommand) {
-		this.brd_recommand = brd_recommand;
-	}
+	
 	public String getBrd_ip() {
 		return brd_ip;
 	}
@@ -95,6 +91,32 @@ public class J_MeetBoard {
 	}
 	public void setMc_code(String mc_code) {
 		this.mc_code = mc_code;
+	}
+	public String getM_nick() {
+		return m_nick;
+	}
+	public void setM_nick(String m_nick) {
+		this.m_nick = m_nick;
+	}
+	public int getBrd_recommend() {
+		return brd_recommend;
+	}
+	public void setBrd_recommend(int brd_recommend) {
+		this.brd_recommend = brd_recommend;
+	}
+	
+	
+	public String getC_minor1() {
+		return c_minor1;
+	}
+	public void setC_minor1(String c_minor1) {
+		this.c_minor1 = c_minor1;
+	}
+	public String getC_minor2() {
+		return c_minor2;
+	}
+	public void setC_minor2(String c_minor2) {
+		this.c_minor2 = c_minor2;
 	}
 	
 

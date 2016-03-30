@@ -55,7 +55,7 @@
 							for (J_Code jc : list) {
 								if (jc.getC_major().equals("l")) {
 						%>
-						<option value=<%=jc.getC_minor()%>>
+						<option value="<%=jc.getC_minor()%>">
 							<%=jc.getC_value()%>
 						</option>
 						<%
@@ -77,6 +77,5 @@
 	</tr>
 </table>
 </form>
-
 </body>
 </html>

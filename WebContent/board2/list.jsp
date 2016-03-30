@@ -10,7 +10,7 @@
 <table border="1" width="100%"><caption>게시판</caption>
 
 	<tr>
-		<td>글번호</td><td>제목</td><td>m_no</td><td>조회수</td><td>IP</td><td>작성일</td><td>수정일</td>
+		<td>글번호</td><td>제목</td><td>닉네임</td><td>조회수</td><td>IP</td><td>작성일</td><td>수정일</td>
 	</tr>
 	
 <%
@@ -49,7 +49,7 @@
 		%>
 		<td>
 	
-<a href="view.jsp?num=<%=brd.getBrd_no()%>&pageNum=<%=nowPage %>"><%=brd.getBrd_subject() %></a>
+<a href="view.jsp?brd_no=<%=brd.getBrd_no()%>&pageNum=<%=nowPage %>"><%=brd.getBrd_subject() %></a>
 			<!-- 페이지넘을 가지고 다녀야만이 수정이나 삭제를 할때 페이지가 완료후 되돌아오는 페이지를 수정햇던 페이지로 보낸다.--> 
 			<%
 				if(brd.getBrd_readcount()>20){//조회수가 20보다 크면 이미지를 붙여라
@@ -57,7 +57,8 @@
 				}
 			%>
 		</td>
-		<td><%=brd.getM_no() %></td>
+		<%-- <td><%=brd.getM_no() %></td> --%>
+		<td><%=brd.getM_nick()%></td>
 		<td><%=brd.getBrd_readcount()%></td>
 		<td><%=brd.getBrd_ip() %></td>
 		<td><%=brd.getBrd_reg_date() %></td>

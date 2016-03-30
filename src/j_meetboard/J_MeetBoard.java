@@ -15,6 +15,7 @@ public class J_MeetBoard {
 	private Date brd_update_date;
 	private String brd_dey_yn;
 	private int m_no;
+	private String m_nick;
 	private String l_code;
 	private String mc_code;
 	
@@ -95,6 +96,12 @@ public class J_MeetBoard {
 	}
 	public void setMc_code(String mc_code) {
 		this.mc_code = mc_code;
+	}
+	public String getM_nick() {
+		return m_nick;
+	}
+	public void setM_nick(String m_nick) {
+		this.m_nick = m_nick;
 	}
 	
 

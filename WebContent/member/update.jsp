@@ -8,15 +8,42 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
 	function chk() {
-		if (frm.m_passwd.value != frm.m_passwd2.value) {
-			alert("암호를 다시 입력하세요");
+		if(frm.m_passwd.value != frm.m_passwd2.value) {
+			alert("비밀번호를 다시 입력하세요");
 			frm.m_passwd.value = "";
 			frm.m_passwd2.value = "";
 			frm.m_passwd.focus();
 			return false;
 		}
+		if(frm.m_passwd.value.length < 6) {
+			alert("비밀번호는 6~20자로 입력해주세요");
+			frm.m_passwd.value = "";
+			frm.m_passwd2.value = "";
+			frm.m_passwd.focus();
+			return false;
+		}
+		if(frm.m_passwd.value.indexOf(" ")>=0) {
+			alert("비밀번호는 공백없이 입력해 주세요.");
+			frm.m_passwd.value = "";
+			frm.m_passwd2.value = "";
+			frm.m_passwd.focus();
+			return false;
+	    }
 		return true;
 	}
+	
+	$(function() {
+		$('#m_passwd').blur(function() {
+			var re = /s$/;
+			var str_space = /\s/;
+			if($("#m_passwd").val().length < 6) {
+				$('#pass').html("<font>6~20자로 입력</font>");
+			} else if(str_space.test($("#m_passwd").val())) {
+				$('#pass').html("<font class=red>공백 불가능</font>");
+			} else
+				$('#pass').html("<font></font>");
+		});
+	});
 
 	$(function() {
 		$('#m_nick').blur(function() {
@@ -36,17 +63,10 @@
 			});
 		});
 	});
-	function sessionChk(){
-		var m_no = <%= (String) session.getAttribute("m_no")%>;
-		if (m_no == null || m_no == "" || m_no == "null") {
-			alert("로그인이 필요한 페이지 입니다.");
-			 location.href="../module/main.jsp?pgm=/member/login.jsp";
-		}
-	
-	}
 </script>
+
 </head>
-<body onload="sessionChk()">
+<body onloade="sessionChk()">
 
 	<%
 		J_CodeDao jcd = J_CodeDao.getInstance();
@@ -68,8 +88,10 @@
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>비밀번호</td>
-				<td><input type="password" name="m_passwd"
-					value="<%=mb.getM_passwd()%>" required="required" maxlength="20"></td>
+				<td><input type="password" name="m_passwd" id="m_passwd" 
+					value="<%=mb.getM_passwd()%>" required="required" maxlength="20">
+				<span id="pass"></span>
+				</td>
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>비밀번호 확인</td>
@@ -96,10 +118,9 @@
 						</option>
 						<%
 							}
-							}
+						}
 						%>
 				</select></td>
-
 			</tr>
 			<tr height="50">
 				<td class="join1">희망언어</td>
@@ -115,13 +136,13 @@
 						</option>
 						<%
 							}
-							}
+						}
 						%>
 				</select></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"><input type="submit" value="수정">
-					&nbsp; <input type="button" value="취소" onclick="history.back(-1)">
+					&nbsp; <input type="button" value="취소" onclick="location.href='../module/main.jsp?pgm=/member/mypagetemp.jsp'">
 				</td>
 			</tr>
 		</table>

@@ -114,7 +114,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center"><input type="submit" value="수정">
-					&nbsp; <input type="button" value="취소" onclick="location.href='../module/main.jsp?pgm=/member/mypagetemp.jsp'">
+					&nbsp; <input type="button" value="취소" onclick="history.back(-1)">
 				</td>
 			</tr>
 		</table>

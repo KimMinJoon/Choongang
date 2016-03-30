@@ -1,3 +1,5 @@
+<%@page import="java.sql.Date"%>
+<%@page import="java.util.Date"%>
 <%@page import="j_onelineboard.J_OneLineBoardDAO"%>
 <%@page import="j_onelineboard.J_OneLineBoard"%>
 <%@page import="j_board.J_Board"%>
@@ -45,6 +47,7 @@ table tr {
 	border-color: #BDBDBD;
 }
 </style>
+
 <script type="text/javascript">
 	function textCheck() {
 		var counter = document.getElementById("counter");
@@ -61,15 +64,38 @@ table tr {
  		}else{
  			document.wrtierFrm.submit();
  		}
-	} 
+	}
+ 	function dt(reg_date){
+ 		var sysdate = new Date();
+		var result = sysdate - reg_date;
+		var regdate = document.getElementById("regdate");
+		var str = "";
+		
+		alert(sysdate);
+		alert(reg_date);
+		
+		 if(result < 60) {
+			str = "방금";
+		} else if(result >= 60 && result < 3600) {
+			str = (result/60) + "분 전";
+		} else if(result >= 3600 && result < 86400) {
+			str = (result/3600) + "시간 전";
+		} else if(result >= 86400 && result < 2419200) {
+			str = (result/86400) + "일 전";
+		} else {
+			str = reg_date;
+		}
+		 regdate.innerHTML = str;
+ 	}
+ 	
 </script>
 </head>
 <body>
-<%
-	String m_no = (String)session.getAttribute("m_no");
-	J_OneLineBoardDAO jobd = J_OneLineBoardDAO.getInstance();
-	List<J_OneLineBoard> list = jobd.selectOneLine();
-%>
+	<%
+		String m_no = (String) session.getAttribute("m_no");
+		J_OneLineBoardDAO jobd = J_OneLineBoardDAO.getInstance();
+		List<J_OneLineBoard> list = jobd.selectOneLine();
+	%>
 	<div style="border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
 		<form action="../oneLineBoard/insertOneline.jsp" name="wrtierFrm">
@@ -79,7 +105,9 @@ table tr {
 			<!-- 세션값을 가져와서 담음 -->
 			<textarea rows="3" cols="100" maxlength="150" id="content"
 				name="brd_content" required="required" onkeyup="textCheck()"></textarea>
-			<span id="counter">0/150</span> <input style="height: 50px; width:120px;" type="button" value="등록" onclick="isSubmit(${m_no})">
+			<span id="counter">0/150</span> <input
+				style="height: 50px; width: 120px;" type="button" value="등록"
+				onclick="isSubmit(${m_no})">
 		</form>
 	</div>
 	<p>
@@ -87,20 +115,23 @@ table tr {
 		style="height: 500px; border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
 		<table>
-		<% 
-			if(list != null){
-				for(J_OneLineBoard jolb : list){
-		%>
-				<tr >
-					<td><%=jolb.getM_nick()%></td>
-					<td><%=jolb.getBrd_reg_date() %></td>
-					<td><%=jolb.getBrd_content() %></td>
-					<td></td>
-				</tr>
-		<%
+			<%
+				if (list != null) {
+					for (J_OneLineBoard jolb : list) {
+			%>
+			<tr>
+				<td><%=jolb.getM_nick()%></td>
+				<td>
+					<span id="regdate"> 
+					</span>
+				</td>
+				<td><%=jolb.getBrd_content()%></td>
+				<td></td>
+			</tr>
+			<%
 				}
-			} 
-		%>
+				}
+			%>
 		</table>
 	</div>
 

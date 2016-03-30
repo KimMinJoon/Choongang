@@ -39,7 +39,7 @@ public class J_OneLineBoardDAO {
 		ResultSet rs = null;
 		int brd_number = 0;
 		
-		String sql = "insert into J_OneLineBoard values(?,?,to_char(sysdate,'YYYY/MM/DD HH24:MI:SS'),null,?,'n',?)";
+		String sql = "insert into J_OneLineBoard values(?,?,sysdate,null,?,'n',?)";
 		String sql1 = "select nvl(max(brd_no),0)+1 from J_OneLineBoard";
 		
 		try {

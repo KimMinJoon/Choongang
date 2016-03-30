@@ -15,15 +15,14 @@
 		<tr>
 			<td>번호</td>
 			<td>제목</td>
-			<td>관리자</td>
 			<td>조회수</td>
 			<td>작성일</td>
 			<td>수정일</td>
 		</tr>
 
-		<%-- <%
+		<%
 			String pageNum = request.getParameter("pageNum");//패이지를 읽어오지않으면!
-			J_NoticeBoard bd = J_NoticeBoard.getInstance();
+			J_NoticeBoardDao bd = J_NoticeBoardDao.getInstance();
 
 			int rowPerPage = 10;//한페이지에 보여줄 게시글의 수
 			int pagePerBlock = 10;//한페이지에 보여줄 블락의 수 (블락은 10페이지)
@@ -47,9 +46,9 @@
 				for (J_NoticeBoard brd : list) {
 		%>
 		<tr>
-			<td><%=total%></td>
+			<td><%=total--%></td>
 			<%
-				if (brd.getBrd_dey_yn().equals("y")) {
+				if (brd.getBrd_del_yn().equals("y")) {
 			%>
 			<td colspan="7">삭제된 글입니다.</td>
 		</tr>
@@ -63,15 +62,14 @@
 				if (brd.getBrd_readcount() > 20) {//조회수가 20보다 크면 이미지를 붙여라
 								out.println("<img src='images/hot.gif'>");
 							}
-			%></td> --%>
-		<%-- <td><%=brd.getM_nick()%></td>
+			%></td>
+		<td><%=brd.getM_nick()%></td>
 		<td><%=brd.getBrd_readcount()%></td>
 		<td><%=brd.getBrd_recommend()%></td>
-		<td><%=brd.getBrd_ip() %></td>
 		<td><%=brd.getBrd_reg_date()%></td>
 		<td><%=brd.getBrd_update_date()%></td>
-		</tr> --%>
-		<%-- <%
+		</tr>
+		 <%
 			}
 				}
 			} else {
@@ -81,10 +79,10 @@
 		</tr>
 		<%
 			}
-		%> --%>
+		%>
 	</table>
 	<div align="center">
-		<%-- <%
+		 <%
 			if (startPage > pagePerBlock) {
 		%>
 		<a href="list.jsp?pageNum=<%=startPage - pagePerBlock%>">[이전]</a>
@@ -103,9 +101,9 @@
 		<a href="list.jsp?pageNum=<%=startPage + pagePerBlock%>">다음</a>
 		<%
 			}
-		%> --%>
+		%>
 		<br>
-		<%-- <button onclick="location.href='writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button> --%>
+		 <button onclick="location.href='writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>
 	</div>
 </body>
 </html>

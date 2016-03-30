@@ -45,6 +45,7 @@ table tr {
 	border-color: #BDBDBD;
 }
 </style>
+
 <script type="text/javascript">
 	function textCheck() {
 		var counter = document.getElementById("counter");
@@ -61,15 +62,15 @@ table tr {
  		}else{
  			document.wrtierFrm.submit();
  		}
-	} 
+	}
 </script>
 </head>
 <body>
-<%
-	String m_no = (String)session.getAttribute("m_no");
-	J_OneLineBoardDAO jobd = J_OneLineBoardDAO.getInstance();
-	List<J_OneLineBoard> list = jobd.selectOneLine();
-%>
+	<%
+		String m_no = (String) session.getAttribute("m_no");
+		J_OneLineBoardDAO jobd = J_OneLineBoardDAO.getInstance();
+		List<J_OneLineBoard> list = jobd.selectOneLine();
+	%>
 	<div style="border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
 		<form action="../oneLineBoard/insertOneline.jsp" name="wrtierFrm">
@@ -79,7 +80,9 @@ table tr {
 			<!-- 세션값을 가져와서 담음 -->
 			<textarea rows="3" cols="100" maxlength="150" id="content"
 				name="brd_content" required="required" onkeyup="textCheck()"></textarea>
-			<span id="counter">0/150</span> <input style="height: 50px; width:120px;" type="button" value="등록" onclick="isSubmit(${m_no})">
+			<span id="counter">0/150</span> <input
+				style="height: 50px; width: 120px;" type="button" value="등록"
+				onclick="isSubmit(${m_no})">
 		</form>
 	</div>
 	<p>
@@ -87,20 +90,22 @@ table tr {
 		style="height: 500px; border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
 		<table>
-		<% 
-			if(list != null){
-				for(J_OneLineBoard jolb : list){
-		%>
-				<tr >
-					<td><%=jolb.getM_nick()%></td>
-					<td><%=jolb.getBrd_reg_date() %></td>
-					<td><%=jolb.getBrd_content() %></td>
-					<td></td>
-				</tr>
-		<%
+			<%
+				if (list != null) {
+					for (J_OneLineBoard jolb : list) {
+			%>
+			<tr>
+				<td><%=jolb.getM_nick()%></td>
+				<td>
+					<%=jolb.getBrd_reg_date()%>
+				</td>
+				<td><%=jolb.getBrd_content()%></td>
+				<td></td>
+			</tr>
+			<%
 				}
-			} 
-		%>
+				}
+			%>
 		</table>
 	</div>
 

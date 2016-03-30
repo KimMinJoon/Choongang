@@ -1,5 +1,3 @@
-<%@page import="java.sql.Date"%>
-<%@page import="java.util.Date"%>
 <%@page import="j_onelineboard.J_OneLineBoardDAO"%>
 <%@page import="j_onelineboard.J_OneLineBoard"%>
 <%@page import="j_board.J_Board"%>
@@ -65,29 +63,6 @@ table tr {
  			document.wrtierFrm.submit();
  		}
 	}
- 	function dt(reg_date){
- 		var sysdate = new Date();
-		var result = sysdate - reg_date;
-		var regdate = document.getElementById("regdate");
-		var str = "";
-		
-		alert(sysdate);
-		alert(reg_date);
-		
-		 if(result < 60) {
-			str = "방금";
-		} else if(result >= 60 && result < 3600) {
-			str = (result/60) + "분 전";
-		} else if(result >= 3600 && result < 86400) {
-			str = (result/3600) + "시간 전";
-		} else if(result >= 86400 && result < 2419200) {
-			str = (result/86400) + "일 전";
-		} else {
-			str = reg_date;
-		}
-		 regdate.innerHTML = str;
- 	}
- 	
 </script>
 </head>
 <body>
@@ -122,8 +97,7 @@ table tr {
 			<tr>
 				<td><%=jolb.getM_nick()%></td>
 				<td>
-					<span id="regdate"> 
-					</span>
+					<%=jolb.getBrd_reg_date()%>
 				</td>
 				<td><%=jolb.getBrd_content()%></td>
 				<td></td>

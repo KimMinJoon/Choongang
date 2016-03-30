@@ -1,3 +1,5 @@
+<%@page import="j_onelineboard.J_OneLineBoardDAO"%>
+<%@page import="j_onelineboard.J_OneLineBoard"%>
 <%@page import="j_board.J_Board"%>
 <%@page import="java.util.List"%>
 <%@page import="j_board.J_BoardDao"%>
@@ -49,20 +51,19 @@ table tr {
 		var content = document.getElementById("content");
 		counter.innerHTML = content.value.length + "/150";
 	}
-
-/* 	function isSubmit() { 
-		if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
-			location.href = "../module/main.jsp?pgm=/member/login.jsp";
-		} else {
-			return;
-		}
-	} */
+ 	function isSubmit(m_no) {
+ 		if(m_no == null || m_no == "" || m_no == "null"){
+ 			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
+ 				location.href = "../module/main.jsp?pgm=/member/login.jsp";
+ 			} else {
+ 				return;
+ 			}
+ 		}else{
+ 			document.wrtierFrm.submit();
+ 		}
+	} 
 </script>
 </head>
-<%
-	J_BoardDao jbd = J_BoardDao.getInstance();
-	List<J_Board> list = jbd.selectOneLine();
-%>
 <body>
 <%
 	String m_no = (String)session.getAttribute("m_no");
@@ -71,31 +72,20 @@ table tr {
 %>
 	<div style="border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
-		<form action="insertOneline.jsp" name="wrtierFrm">
-<!-- 			onsubmit="return isSubmit()"> -->
-			<input type="hidden" name="b_code" value="olb">
-			<input type="hidden" name="brd_subject" value="oneline">
+		<form action="../oneLineBoard/insertOneline.jsp" name="wrtierFrm">
 			<c:if test="${not empty m_no}">
 				<input type="hidden" name="m_no" value="${m_no}">
 			</c:if>
-			<input type="hidden" name="m_no" value="1">
 			<!-- 세션값을 가져와서 담음 -->
 			<textarea rows="3" cols="100" maxlength="150" id="content"
 				name="brd_content" required="required" onkeyup="textCheck()"></textarea>
-<<<<<<< HEAD:WebContent/oneLineBoard/oneLineBoard.jsp
 			<span id="counter">0/150</span> <input style="height: 50px; width:120px;" type="button" value="등록" onclick="isSubmit(${m_no})">
-=======
-			<span id="counter">0/150</span> <input
-				style="height: 50px; width: 120px;" type="submit" value="등록">
-<!-- 				onclick="isSubmit()"> -->
->>>>>>> 98ef60da60f5935582c66e33f4915f1593ee92e2:WebContent/board4/board4.jsp
 		</form>
 	</div>
 	<p>
 	<div
 		style="height: 500px; border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
-<<<<<<< HEAD:WebContent/oneLineBoard/oneLineBoard.jsp
 		<table>
 		<% 
 			if(list != null){
@@ -112,14 +102,6 @@ table tr {
 			} 
 		%>
 		</table>
-=======
-		<c:if test="${empty list}">
-			
-		</c:if>
-		<c:if test="${not empty list}">
-			
-		</c:if>
->>>>>>> 98ef60da60f5935582c66e33f4915f1593ee92e2:WebContent/board4/board4.jsp
 	</div>
 
 </body>

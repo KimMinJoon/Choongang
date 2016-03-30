@@ -8,7 +8,7 @@ public class J_RecommendBoard {
 	private String brd_subject;
 	private String brd_content;
 	private int brd_readcount;
-	private int brd_recommand;
+	private int brd_recommend;
 	private String brd_ip;
 	private Date brd_reg_date;
 	private Date brd_update_date;
@@ -17,6 +17,7 @@ public class J_RecommendBoard {
 	private int re_step;
 	private int re_level;
 	private int m_no;
+	private String m_nick;
 	private String mc_code;
 
 	public int getBrd_no() {
@@ -51,12 +52,12 @@ public class J_RecommendBoard {
 		this.brd_readcount = brd_readcount;
 	}
 
-	public int getBrd_recommand() {
-		return brd_recommand;
+	public int getBrd_recommend() {
+		return brd_recommend;
 	}
 
-	public void setBrd_recommand(int brd_recommand) {
-		this.brd_recommand = brd_recommand;
+	public void setBrd_recommend(int brd_recommend) {
+		this.brd_recommend = brd_recommend;
 	}
 
 	public String getBrd_ip() {
@@ -97,6 +98,14 @@ public class J_RecommendBoard {
 
 	public void setM_no(int m_no) {
 		this.m_no = m_no;
+	}
+
+	public String getM_nick() {
+		return m_nick;
+	}
+
+	public void setM_nick(String m_nick) {
+		this.m_nick = m_nick;
 	}
 
 	public String getMc_code() {

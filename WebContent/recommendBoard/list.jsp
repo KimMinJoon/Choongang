@@ -9,24 +9,26 @@
 </head>
 <body>
 
-	<table border="1" align="center" style='border-collapse: collapse;'>
-		<caption>게시판</caption>
+	<table class="tab" cellpadding="10" align="center" width="60%">
+		<caption><h2>J_RecommendBoard</h2></caption>
 		<tr>
-			<th>번호</th>
-			<th>제목</th>
-			<th>닉네임</th>
-			<th>등록일</th>
-			<th>조회수</th>
-			<th>IP</th>
+			<th class="bottom" width="5%">번호</th>
+			<th class="bottom" width="33%">제목</th>
+			<th class="bottom" width="9%">닉네임</th>
+			<th class="bottom" width="9%">date</th>
+			<th class="bottom" width="2%">hit</th>
+			<th class="bottom" width="2%">rc</th>
 		</tr>
 		<%
-			int rowPerPage = 10;
-			int pagePerBlock = 10;
+			J_RecommendBoardDao jr = J_RecommendBoardDao.getInstance();
+
 			String pageNum = request.getParameter("pageNum");
 			if (pageNum == null || pageNum.equals("null") || pageNum.equals(""))
 				pageNum = "1";
+
+			int rowPerPage = 10;
+			int pagePerBlock = 10;
 			int nowPage = Integer.parseInt(pageNum);
-			J_RecommendBoardDao jr = J_RecommendBoardDao.getInstance();
 			int total = jr.selectTotal();
 			int totalPage = (int) Math.ceil((double) total / rowPerPage);
 			int startRow = (nowPage - 1) * rowPerPage + 1;
@@ -37,18 +39,19 @@
 			if (endPage > totalPage)
 				endPage = totalPage;
 			total = total - startRow + 1;
+			
 			List<J_RecommendBoard> list = jr.selectList(startRow, endRow);
 			if (list != null) {
 				for (J_RecommendBoard jrb : list) {
 		%>
 		<tr>
-			<td><%=total--%></td>
+			<td class="bottom"><%=total--%></td>
 			<%
 					if (jrb.getBrd_dey_yn().equals("y")) {
-							out.println("<td colspan='7'>삭제된 글입니다</td></tr>");
+							out.println("<td class='bottom' colspan='7'>삭제된 글입니다</td></tr>");
 					} else {
 			%>
-			<td>
+			<td class="bottom">
 				<%
 						if (jrb.getRe_level() > 0) {
 							int w = jrb.getRe_level() * 10;
@@ -58,15 +61,16 @@
 				<%
  						}
 				%>
-						<a href="view.jsp?num=<%=jrb.getBrd_no()%>&pageNum=<%=nowPage%>"> <%=jrb.getBrd_subject()%></a>
+						<a href="view.jsp?num=<%=jrb.getBrd_no()%>&pageNum=<%=nowPage%>"><%=jrb.getBrd_subject()%></a>
 				<%
 						if (jrb.getBrd_readcount() > 20)
 							out.println("<img src='images/hot.gif'>");
 				%>
 			</td>
-			<td><a href="mailto:<%=jrb.getEmail()%>"> <%=jrb.getBrd_Writer()%></a></td>
-			<td><%=jrb.getBrd_readcount()%></td>
-			<td><%=jrb.getBrd_reg_date()%></td>
+			<td class="bottom"><%=jrb.getM_nick()%></td>
+			<td class="bottom"><%=jrb.getBrd_reg_date()%></td>
+			<td class="bottom"><%=jrb.getBrd_readcount()%></td>
+			<td class="bottom"><%=jrb.getBrd_recommend()%></td>
 		</tr>
 			<%
 					}
@@ -80,6 +84,29 @@
 			}
 		%>
 	</table>
+	
+	<div align="center">
+		<%
+			if (startPage > pagePerBlock) {
+		%>
+		<a href="list.jsp?pageNum=<%=startPage - pagePerBlock%>">[이전] </a>
+		<%
+			}
+			for (int i = startPage; i <= endPage; i++) {
+		%>
+		<a href="list.jsp?pageNum=<%=i%>">[<%=i%>]
+		</a>
+		<%
+			}
+			if (totalPage > endPage) {
+		%>
+		<a href="list.jsp?pageNum=<%=startPage + pagePerBlock%>"> [다음]</a>
+		<%
+			}
+		%>
+		<p>
+		<button onclick="location.href='writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>
+	</div>
 
 </body>
 </html>

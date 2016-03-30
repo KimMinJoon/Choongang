@@ -1,4 +1,3 @@
-<%@page import="j_onelineboard.J_OneLineBoardDAO"%>
 <%@page import="j_board.J_BoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -8,20 +7,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<jsp:useBean id="olb" class="j_onelineboard.J_OneLineBoard"/>
+<jsp:useBean id="olb" class="j_board.J_Board"/>
 <jsp:setProperty property="*" name="olb"/>
 <body>
 <%
-	String m_no = (String)session.getAttribute("m_no");	
-	
+	//String m_no = (String)session.getAttribute("m_no");
+	String m_no = "1";	
+	J_BoardDao jbd = J_BoardDao.getInstance();
 	olb.setBrd_ip(request.getRemoteAddr());
-	J_OneLineBoardDAO jold = J_OneLineBoardDAO.getInstance();
-	int result = jold.insertBoard(olb);
+	int result = jbd.insertBoard(olb);
 	if(result > 0){
 %>
 	<script type="text/javascript">
 		alert("한줄 글 등록 성공");
-		location.href = "../module/main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp";
+		location.href = "../module/main.jsp?pgm=/board4/board4.jsp";
 	</script>
 <%		
 	}else{

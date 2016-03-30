@@ -5,18 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
-	function sessionChk(){
-		var m_no = <%= (String) session.getAttribute("m_no")%>;
-		if (m_no == null || m_no == "" || m_no == "null") {
-			alert("로그인이 필요한 페이지 입니다.");
-			 location.href="../module/main.jsp?pgm=/member/login.jsp";
-		}
-	
-	}
-</script>
 </head>
-<body onload="sessionChk()">
+<body>
 	
 	<%
 		String mypgm = request.getParameter("mypgm");

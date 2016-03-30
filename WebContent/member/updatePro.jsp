@@ -16,6 +16,7 @@
 </script>
 </head>
 <body>
+
 	<jsp:useBean id="mb" class="j_member.J_Member"></jsp:useBean>
 	<jsp:setProperty property="*" name="mb" />
 	<%
@@ -37,5 +38,6 @@
 	<%
 		}
 	%>
+	
 </body>
 </html>

@@ -9,7 +9,7 @@
 <script type="text/javascript">
 	function chk() {
 		if (frm.m_passwd.value != frm.m_passwd2.value) {
-			alert("암호를 다시 입력하세요");
+			alert("비밀번호를 다시 입력하세요");
 			frm.m_passwd.value = "";
 			frm.m_passwd2.value = "";
 			frm.m_passwd.focus();
@@ -19,6 +19,20 @@
 			alert("아이디 중복확인을 하세요");
 			return false;
 		}
+		if(frm.m_passwd.value.length < 6) {
+			alert("비밀번호는 6~20자로 입력해주세요");
+			frm.m_passwd.value = "";
+			frm.m_passwd2.value = "";
+			frm.m_passwd.focus();
+			return false;
+		}
+		if(frm.m_passwd.value.indexOf(" ")>=0) {
+			alert("비밀번호는 공백없이 입력해 주세요.");
+			frm.m_passwd.value = "";
+			frm.m_passwd2.value = "";
+			frm.m_passwd.focus();
+			return false;
+	    }
 		return true;
 	}
 
@@ -43,6 +57,20 @@
 			window.open(purl, pname, poption);
 		}
 	}
+	
+	$(function() {
+		$('#m_passwd').blur(function() {
+			var re = /s$/;
+			var str_space = /\s/;
+			if($("#m_passwd").val().length < 6) {
+				$('#pass').html("<font>6~20자로 입력</font>");
+			} else if(str_space.test($("#m_passwd").val())) {
+				$('#pass').html("<font class=red>공백 불가능</font>");
+			} else
+				$('#pass').html("<font></font>");
+		});
+	});
+	
 	$(function() {
 		$('#m_nick').blur(function() {
 			$.ajax({
@@ -54,9 +82,8 @@
 				success : function(data) {
 					if ($.trim(data) == "TRUE") {
 						$('#check').html("<font>사용가능</font>");
-					} else {
+					} else
 						$('#check').html("<font class=red>사용불가</font>");
-					}
 				}
 			});
 		});
@@ -83,7 +110,9 @@
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>비밀번호</td>
-				<td><input type="password" name="m_passwd" required="required" maxlength="20"></td>
+				<td><input type="password" name="m_passwd" id="m_passwd" required="required" maxlength="20">
+				<span id="pass"></span>
+				</td>
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>비밀번호 확인</td>

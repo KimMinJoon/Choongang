@@ -27,7 +27,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center"><input type="submit" value="확인">
-					&nbsp; <input type="button" value="취소" onclick="history.back(-1)"></td>
+					&nbsp; <input type="button" value="취소" onclick="location.href='../module/main.jsp?pgm=/member/mypagetemp.jsp'"></td>
 			</tr>
 		</table>
 	</form>

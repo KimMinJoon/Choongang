@@ -12,7 +12,6 @@
 			alert("로그인이 필요한 페이지 입니다.");
 			 location.href="../module/main.jsp?pgm=/member/login.jsp";
 		}
-	
 	}
 </script>
 </head>

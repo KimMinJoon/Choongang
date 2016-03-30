@@ -13,7 +13,7 @@
 
 <%
 		J_CodeDao jcd = J_CodeDao.getInstance();
-		List<J_Code> list = jcd.selectList(0);
+		List<J_Code> list = jcd.selectList();
 %>
 
 </head>

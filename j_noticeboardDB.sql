@@ -8,4 +8,5 @@ create table j_noticeboard (
 	brd_del_yn char(1) default 'n' check (brd_del_yn in ('y','n')),--도메인무결성
 	--외래키 설정해야될 속성들
 	--brd_writer number not null, -- m_no과 참조된 외래키
+	admin varchar2(15) not null unique -- 관리자
 );

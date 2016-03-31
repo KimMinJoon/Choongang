@@ -5,13 +5,34 @@ import java.sql.Date;
 public class J_OneLineBoard {
 	private int brd_no;
 	private String brd_content;
-	private Date brd_reg_date;
+	private String brd_reg_date;
 	private Date brd_update_date;
 	private String brd_ip;
 	private String brd_del_yn;
 	private int m_no;
 	private String m_nick;
+	private int grp;
+	private int step;
+	private int lvl;
 	
+	public int getGrp() {
+		return grp;
+	}
+	public void setGrp(int grp) {
+		this.grp = grp;
+	}
+	public int getStep() {
+		return step;
+	}
+	public void setStep(int step) {
+		this.step = step;
+	}
+	public int getLvl() {
+		return lvl;
+	}
+	public void setLvl(int lvl) {
+		this.lvl = lvl;
+	}
 	public String getM_nick() {
 		return m_nick;
 	}
@@ -30,10 +51,10 @@ public class J_OneLineBoard {
 	public void setBrd_content(String brd_content) {
 		this.brd_content = brd_content;
 	}
-	public Date getBrd_reg_date() {
+	public String getBrd_reg_date() {
 		return brd_reg_date;
 	}
-	public void setBrd_reg_date(Date brd_reg_date) {
+	public void setBrd_reg_date(String brd_reg_date) {
 		this.brd_reg_date = brd_reg_date;
 	}
 	public Date getBrd_update_date() {

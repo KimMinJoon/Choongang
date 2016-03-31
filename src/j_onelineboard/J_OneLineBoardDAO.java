@@ -39,7 +39,7 @@ public class J_OneLineBoardDAO {
 		ResultSet rs = null;
 		int brd_number = 0;
 		
-		String sql = "insert into J_OneLineBoard values(?,?,to_char(sysdate,'YYYY/MM/DD HH24:MI:SS'),null,?,'n',?)";
+		String sql = "insert into J_OneLineBoard values(?,?,sysdate,null,?,'n',?,?,?,?)";
 		String sql1 = "select nvl(max(brd_no),0)+1 from J_OneLineBoard";
 		
 		try {
@@ -58,6 +58,9 @@ public class J_OneLineBoardDAO {
 			pstmt.setString(2, job.getBrd_content());
 			pstmt.setString(3, job.getBrd_ip());
 			pstmt.setInt(4, job.getM_no());
+			pstmt.setInt(5, job.getGrp());
+			pstmt.setInt(6, job.getStep());
+			pstmt.setInt(7, job.getLvl());
 
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -68,16 +71,18 @@ public class J_OneLineBoardDAO {
 		return result;
 	}//insertOneline
 	
-	public List<J_OneLineBoard> selectOneLine(){
+	public List<J_OneLineBoard> selectOneLine(int startRow, int endRow){
 		List<J_OneLineBoard> list = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "select m_nick, brd_no, brd_reg_date, brd_content, brd_del_yn, a.m_no from J_OneLineBoard a, j_member b where a.m_no = b.m_no and brd_del_yn = 'n' order by brd_no desc";
+		String sql = "SELECT * FROM (SELECT ROWNUM RN, A.* FROM(select m_nick, brd_no, fc_date_check(brd_reg_date) as dt, brd_content, brd_del_yn, a.m_no from J_OneLineBoard a, j_member b where a.m_no = b.m_no and brd_del_yn = 'n' order by brd_no desc) A) WHERE RN BETWEEN ? AND ?";
 		try{
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
@@ -85,7 +90,7 @@ public class J_OneLineBoardDAO {
 				jolb.setM_nick(rs.getString("M_NICK"));
 				jolb.setBrd_no(rs.getInt("BRD_NO"));
 				jolb.setBrd_content(rs.getString("BRD_CONTENT"));
-				jolb.setBrd_reg_date(rs.getDate("BRD_REG_DATE"));
+				jolb.setBrd_reg_date(rs.getString("DT"));
 				jolb.setBrd_del_yn(rs.getString("BRD_DEL_YN"));
 				jolb.setM_no(rs.getInt("M_NO"));
 				
@@ -103,6 +108,30 @@ public class J_OneLineBoardDAO {
 		}
 		return list;
 	}//selectOneLine
+	
+	public int selectTotal(){
+		int total = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT COUNT(*) FROM J_OneLineBoard";
+		
+		try{
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				total = rs.getInt(1);
+			}
+		} catch(Exception e){
+			System.out.println(e.getMessage());
+		}finally{
+			dbClose(rs, pstmt, conn);
+		}
+		return total;
+	}//selectTotal
 	
 	public void dbClose(ResultSet rs,PreparedStatement pstmt, Connection conn){
 		try{

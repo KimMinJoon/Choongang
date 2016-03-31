@@ -39,12 +39,8 @@
 	padding: 0 .5em 0 .5em;
 	font-size: 0.75em;
 }
-
-table tr {
-	border: 1;
-	border-color: #BDBDBD;
-}
 </style>
+
 <script type="text/javascript">
 	function textCheck() {
 		var counter = document.getElementById("counter");
@@ -61,15 +57,40 @@ table tr {
  		}else{
  			document.wrtierFrm.submit();
  		}
-	} 
+	}
 </script>
 </head>
 <body>
-<%
-	String m_no = (String)session.getAttribute("m_no");
-	J_OneLineBoardDAO jobd = J_OneLineBoardDAO.getInstance();
-	List<J_OneLineBoard> list = jobd.selectOneLine();
-%>
+	<%
+		String m_no = (String) session.getAttribute("m_no");
+
+		int rowPerPage = 10;
+		int pagePerBlock = 10;
+		int nowPage = 0;
+		String pageNum = request.getParameter("pageNum");
+
+		if (pageNum == null || pageNum.equals("") || pageNum.equals("null")) {
+			pageNum = "1";
+		}
+		nowPage = Integer.parseInt(pageNum);
+
+		J_OneLineBoardDAO jobd = J_OneLineBoardDAO.getInstance();
+		int total = jobd.selectTotal();
+
+		int totalPage = (int) Math.ceil((double) total / rowPerPage);
+		int startRow = (nowPage - 1) * rowPerPage + 1;
+		int endRow = startRow + rowPerPage - 1;
+		int totalBlock = (int) Math.ceil((double) totalPage / pagePerBlock);
+		int startPage = (nowPage - 1) / 10 * 10 + 1;
+		int endPage = startPage + pagePerBlock - 1;
+		if (endPage > totalPage) {
+			endPage = totalPage;
+		}
+		total = total - startRow + 1;
+
+		List<J_OneLineBoard> list = jobd.selectOneLine(startRow, endRow);
+	%>
+
 	<div style="border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
 		<form action="../oneLineBoard/insertOneline.jsp" name="wrtierFrm">
@@ -79,7 +100,9 @@ table tr {
 			<!-- 세션값을 가져와서 담음 -->
 			<textarea rows="3" cols="100" maxlength="150" id="content"
 				name="brd_content" required="required" onkeyup="textCheck()"></textarea>
-			<span id="counter">0/150</span> <input style="height: 50px; width:120px;" type="button" value="등록" onclick="isSubmit(${m_no})">
+			<span id="counter">0/150</span> <input
+				style="height: 50px; width: 120px;" type="button" value="등록"
+				onclick="isSubmit(${m_no})">
 		</form>
 	</div>
 	<p>
@@ -87,22 +110,79 @@ table tr {
 		style="height: 500px; border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
 		<table>
-		<% 
-			if(list != null){
-				for(J_OneLineBoard jolb : list){
-		%>
-				<tr >
-					<td><%=jolb.getM_nick()%></td>
-					<td><%=jolb.getBrd_reg_date() %></td>
-					<td><%=jolb.getBrd_content() %></td>
-					<td></td>
-				</tr>
-		<%
-				}
-			} 
-		%>
-		</table>
-	</div>
+			<%
+				if (list != null) {
+					for (J_OneLineBoard jolb : list) {
+			%>
+			<tr>
+				<td width="10%" heigth="50"><%=jolb.getM_nick()%></td>
+				<td width="10%"><%=jolb.getBrd_reg_date()%></td>
+				<td width="70%"><%=jolb.getBrd_content()%></td>
+				<td width="10%">
+					<%
+						if (m_no != null) {
+							if (jolb.getM_no() == Integer.parseInt(m_no)) {
+					%> <a href="">수정</a> <a href="">삭제</a> <%
+ 	}
+ %> <a href="">답글</a> <%
+ 	} else {
+ %> <a href="">답글</a> <%
+ 	}
+ %>
 
+				</td>
+			</tr>
+			<%
+				}
+				}
+			%>
+		</table>
+		<div align="center">
+			<%
+				if (startPage != 1) {
+			%>
+			<a href="main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum=1">&lt;&lt;맨
+				앞으로</a>
+			<%
+				}
+				if (startPage > pagePerBlock) {
+			%>
+			<a
+				href="main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum=<%=startPage - pagePerBlock%>">&lt;이전</a>
+			<%
+				}
+			%>
+			<%
+				for (int i = startPage; i <= endPage; i++) {
+					if (nowPage != i) {
+			%>
+			<a href="main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum=<%=i%>"><%=i%></a>
+			<%
+				} else {
+			%>
+			<strong><a
+				href="main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum=<%=i%>">[<%=i%>]
+			</a></strong>
+			<%
+				}
+				}
+				if (totalPage > endPage) {
+			%>
+			<a
+				href="main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum=<%=startPage + pagePerBlock%>">다음&gt;</a>
+			<%
+				}
+			%>
+			<%
+				if (endPage != totalPage) {
+			%>
+			<a
+				href="main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum=<%=totalPage%>">맨
+				뒤로&gt;&gt;</a>
+			<%
+				}
+			%>
+		</div>
+	</div>
 </body>
 </html>

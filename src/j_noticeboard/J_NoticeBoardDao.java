@@ -69,14 +69,6 @@ public class J_NoticeBoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "select * from (select rowNum rn, a.* from (select mb.* ,m.m_email from j_noticeboard mb, j_member m where mb.m_no = m.m_no order by brd_no desc) a ) where rn between ? and ?";
-		// 댓글 정렬 해줌!
-		// 가장안에 a는 num을 기준으로 역순으로 테이블을 정렬하고 그 결과값을 테이블로 사용한다.
-		// 그 테이블에 rowNum(테이블 기본 오름차순 순서번호값)을 주고 별칭을 rn으로 한다 그리고 a테이블의 모든 정보를 뒤에
-		// 출력
-		// 그렇게 완성된 테이블을 rn을 기준으로 1~10번까지 출력하여 그 결과값을 보여준다.
-		// 결론 254개의 글이 테이블에 존재할때 254,253,252,...244까지를 1~10으로 맵핑이되며 그 수를 1~10까지
-		// 모든 속성값을 출력하라
-
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
@@ -92,6 +84,7 @@ public class J_NoticeBoardDao {
 				nb.setBrd_reg_date(rs.getDate("brd_reg_date"));
 				nb.setBrd_update_date(rs.getDate("brd_update_date"));
 				nb.setBrd_del_yn(rs.getString("brd_del_yn"));
+				nb.setM_no(rs.getInt("m_no"));
 				nb.setAdmin(rs.getString("m_email"));
 				list.add(nb);
 			}
@@ -109,4 +102,47 @@ public class J_NoticeBoardDao {
 
 		return list;
 	}
+
+	public int insert(J_NoticeBoard noticeboard) throws SQLException {
+		int result = 0;
+		int number = 0;// brd_no이다~
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "insert into j_noticeboard values(?,?,?,0,sysdate,sysdate,'n',?)";
+		// brdno,subject,content,readcount,recommend,ip,regdate,updatedate,delyn,m_no,mccode,lcode
+		// 처음에 입력될때는 n으로 입력되야합니다~
+		String sql1 = "select nvl(max(brd_no),0)+1 from j_noticeboard";
+		// num이 처음에 널일수잇으니nvl쓰고 시퀀스 오토 구분없이 오라클 mysql 통합으로 사용가능함
+
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql1);// 먼저 값을 읽어와야함
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				number = rs.getInt(1); // 값을 세팅
+			}
+			pstmt.close();
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, number);
+			pstmt.setString(2, noticeboard.getBrd_subject());
+			pstmt.setString(3, noticeboard.getBrd_content());
+			pstmt.setInt(4, noticeboard.getM_no());
+			/*pstmt.setString(4, noticeboard.getAdmin());*/
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+		return result;
+	}
+
 }

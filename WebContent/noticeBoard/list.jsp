@@ -103,7 +103,7 @@
 			}
 		%>
 		<br>
-		<button onclick="location.href='writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>
+		<button onclick="location.href='../noticeBoard/writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>
 	</div>
 </body>
 </html>

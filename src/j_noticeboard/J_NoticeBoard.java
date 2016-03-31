@@ -11,7 +11,16 @@ public class J_NoticeBoard {
 	private Date brd_reg_date; // 등록일
 	private Date brd_update_date; // 수정일
 	private String brd_del_yn; // 삭제yn
+	private int m_no; // 맴버 관리자
 	private String admin; // 관리자
+
+	public int getM_no() {
+		return m_no;
+	}
+
+	public void setM_no(int m_no) {
+		this.m_no = m_no;
+	}
 
 	public String getAdmin() {
 		return admin;

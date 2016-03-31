@@ -8,15 +8,15 @@
 <title>WriteForm</title>
 <link rel="stylesheet" type="text/css" href="../css/projectcss.css">
 <%
-	String m_no = (String) session.getAttribute("m_no");
+	/* String m_no = (String) session.getAttribute("m_no"); */
 	String pageNum = request.getParameter("pageNum");
 %>
 
 </head>
 <body>
-	<form action="write.jsp" method="post">
-		<input type="hidden" name="pageNum" value="<%=pageNum%>"> <input
-			type="hidden" name="m_no" value="<%=m_no%>">
+	<form action="../noticeBoard/write.jsp" method="post">
+		<input type="hidden" name="pageNum" value="<%=pageNum%>"> <%-- <input
+			type="hidden" name="m_no" value="<%=m_no%>"> --%>
 		<table class="tab">
 			<caption>공지사항 작성</caption>
 			<tr>

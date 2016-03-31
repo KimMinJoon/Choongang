@@ -68,7 +68,7 @@ public class J_NoticeBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from (select rowNum rn, a.* from (select mb.* ,m.m_email from j_noticeboard mb, j_member m where mb.m_no = m.m_no order by brd_no desc) a ) where rn between ? and ?";
+		String sql = "select * from (select rowNum rn, a.* from (select mb.* from j_noticeboard mb, j_member m where mb.m_admin = m.m_email order by brd_no desc) a ) where rn between ? and ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
@@ -84,8 +84,7 @@ public class J_NoticeBoardDao {
 				nb.setBrd_reg_date(rs.getDate("brd_reg_date"));
 				nb.setBrd_update_date(rs.getDate("brd_update_date"));
 				nb.setBrd_del_yn(rs.getString("brd_del_yn"));
-				nb.setM_no(rs.getInt("m_no"));
-				nb.setAdmin(rs.getString("m_email"));
+				nb.setAdmin(rs.getString("admin"));
 				list.add(nb);
 			}
 
@@ -128,8 +127,8 @@ public class J_NoticeBoardDao {
 			pstmt.setInt(1, number);
 			pstmt.setString(2, noticeboard.getBrd_subject());
 			pstmt.setString(3, noticeboard.getBrd_content());
-			pstmt.setInt(4, noticeboard.getM_no());
-			/*pstmt.setString(4, noticeboard.getAdmin());*/
+			/*pstmt.setInt(4, noticeboard.getM_no());*/
+			pstmt.setString(4, noticeboard.getAdmin());
 			result = pstmt.executeUpdate();
 
 		} catch (Exception e) {

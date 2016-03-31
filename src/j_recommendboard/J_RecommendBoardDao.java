@@ -41,9 +41,7 @@ public class J_RecommendBoardDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (rs != null) rs.close();
-			if (pstmt != null) pstmt.close();
-			if (conn != null) conn.close();
+			dbClose(rs,pstmt,conn);
 		}
 		return total;
 	}
@@ -82,9 +80,7 @@ public class J_RecommendBoardDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (rs != null) rs.close();
-			if (pstmt != null) pstmt.close();
-			if (conn != null) conn.close();
+			dbClose(rs,pstmt,conn);
 		}		
 		return list;
 	}
@@ -129,14 +125,38 @@ public class J_RecommendBoardDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			dbClose(rs,pstmt,conn);
 		}
 		return result;
+	}
+	
+	public void dbClose(PreparedStatement pstmt, Connection conn) {
+		try {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}// dbClose(pstmt,conn)
+
+	public void dbClose(ResultSet rs, PreparedStatement pstmt, Connection conn) {
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} // dbClose(rs,pstmt,conn)
 	}
 
 }

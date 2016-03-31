@@ -66,7 +66,7 @@
 			</tr>
 			<tr>
 				<td colspan="4" align="center"><input type="submit" value="확인"> &nbsp;
-				<input type="reset" value="취소"></td>
+				<input type="reset" value="취소" onclick="history.back(-1)"></td>
 			</tr>
 		</table>
 	</form>

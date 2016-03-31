@@ -93,7 +93,7 @@
 %>
 			<a href="list.jsp?pageNum=<%=startPage - pagePerBlock%>">[prev] </a>
 			<a href="list.jsp?pageNum=1">[1]</a>				
-			..
+			...
 <%
 		}
 		for (int i = startPage; i <= endPage; i++) {
@@ -109,7 +109,7 @@
 		}
 		if (totalPage > endPage) {
 %>
-			..				
+			...
 			<a href="list.jsp?pageNum=<%=totalPage%>">[<%=totalPage%>]</a>
 			<a href="list.jsp?pageNum=<%=startPage + pagePerBlock%>">[next]</a>
 <%

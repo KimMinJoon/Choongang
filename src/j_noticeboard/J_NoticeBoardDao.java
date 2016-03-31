@@ -63,14 +63,12 @@ public class J_NoticeBoardDao {
 		return total;
 	}
 
-	public List<J_MeetBoard> selectList(int startRow, int endRow) throws SQLException {
-		List<J_MeetBoard> list = new ArrayList<J_MeetBoard>();
+	public List<J_NoticeBoard> selectList(int startRow, int endRow) throws SQLException {
+		List<J_NoticeBoard> list = new ArrayList<J_NoticeBoard>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from (select rowNum rn, a.* from "
-				+ "(select mb.* ,m.m_nick from j_meetboard mb, j_member m where mb.m_no = m.m_no order by brd_no desc) a ) "
-				+ "where rn between ? and ?";
+		String sql = "select * from (select rowNum rn, a.* from (select mb.* ,m.m_email from j_noticeboard mb, j_member m where mb.m_no = m.m_no order by brd_no desc) a ) where rn between ? and ?";
 		// 댓글 정렬 해줌!
 		// 가장안에 a는 num을 기준으로 역순으로 테이블을 정렬하고 그 결과값을 테이블로 사용한다.
 		// 그 테이블에 rowNum(테이블 기본 오름차순 순서번호값)을 주고 별칭을 rn으로 한다 그리고 a테이블의 모든 정보를 뒤에
@@ -86,17 +84,16 @@ public class J_NoticeBoardDao {
 			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				J_MeetBoard meetboard = new J_MeetBoard();
-				meetboard.setBrd_no(rs.getInt("brd_no"));
-				meetboard.setBrd_subject(rs.getString("brd_subject"));
-				meetboard.setBrd_content(rs.getString("brd_content"));
-				meetboard.setBrd_reg_date(rs.getDate("brd_reg_date"));
-				meetboard.setBrd_update_date(rs.getDate("brd_update_date"));
-				meetboard.setBrd_recommend(rs.getInt("brd_recommend"));
-				meetboard.setBrd_readcount(rs.getInt("brd_readcount"));
-				meetboard.setBrd_dey_yn(rs.getString("brd_del_yn"));
-				meetboard.setM_(rs.getString("m_nick"));
-				list.add(meetboard);
+				J_NoticeBoard nb = new J_NoticeBoard();
+				nb.setBrd_no(rs.getInt("brd_no"));
+				nb.setBrd_subject(rs.getString("brd_subject"));
+				nb.setBrd_content(rs.getString("brd_content"));
+				nb.setBrd_readcount(rs.getInt("brd_readcount"));
+				nb.setBrd_reg_date(rs.getDate("brd_reg_date"));
+				nb.setBrd_update_date(rs.getDate("brd_update_date"));
+				nb.setBrd_del_yn(rs.getString("brd_del_yn"));
+				nb.setAdmin(rs.getString("m_email"));
+				list.add(nb);
 			}
 
 		} catch (Exception e) {

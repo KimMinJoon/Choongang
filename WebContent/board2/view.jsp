@@ -20,8 +20,13 @@
 			<th>제목</th><td><%=brd.getBrd_subject() %></td>
 		</tr>
 		<tr>
-			<th>작성자</th><td><%=brd.getM_nick() %></td>
+			<th>닉네임</th><td><%=brd.getM_nick() %></td>
 		</tr>
+		
+		<tr>
+			<th>말머리</th><td><%=brd.getC_value_cate() %></td>
+		</tr>
+		
 		<tr>
 			<th>조회수</th><td><%=brd.getBrd_readcount() %></td>
 		</tr>
@@ -31,7 +36,7 @@
 		</tr>
 		
 		<tr>
-			<th>희망언어</th><td><%=brd.getL_code() %></td>
+			<th>희망언어</th><td><%=brd.getC_value_lang() %></td>
 		</tr>
 		
 		

@@ -12,15 +12,15 @@ public class J_MeetBoard {
 	private String brd_ip;
 	private Date brd_reg_date;
 	private Date brd_update_date;
-	private String brd_dey_yn;
+	private String brd_del_yn;
 	private int m_no;
 	private String m_nick;
 	
 	private String l_code;
-	private String c_minor1; //l_code에 대한 것
+	private String c_value_lang; //l_code에 대한 것
 	
 	private String mc_code;
-	private String c_minor2; //mc_code에 대한 것
+	private String c_value_cate; //mc_code에 대한 것
 	
 	
 	public int getBrd_no() {
@@ -68,12 +68,7 @@ public class J_MeetBoard {
 	public void setBrd_update_date(Date brd_update_date) {
 		this.brd_update_date = brd_update_date;
 	}
-	public String getBrd_dey_yn() {
-		return brd_dey_yn;
-	}
-	public void setBrd_dey_yn(String brd_dey_yn) {
-		this.brd_dey_yn = brd_dey_yn;
-	}
+	
 	public int getM_no() {
 		return m_no;
 	}
@@ -104,20 +99,32 @@ public class J_MeetBoard {
 	public void setBrd_recommend(int brd_recommend) {
 		this.brd_recommend = brd_recommend;
 	}
-	
-	
-	public String getC_minor1() {
-		return c_minor1;
+	public String getC_value_lang() {
+		return c_value_lang;
 	}
-	public void setC_minor1(String c_minor1) {
-		this.c_minor1 = c_minor1;
+	public void setC_value_lang(String c_value_lang) {
+		this.c_value_lang = c_value_lang;
 	}
-	public String getC_minor2() {
-		return c_minor2;
+	public String getC_value_cate() {
+		return c_value_cate;
 	}
-	public void setC_minor2(String c_minor2) {
-		this.c_minor2 = c_minor2;
+	public void setC_value_cate(String c_value_cate) {
+		this.c_value_cate = c_value_cate;
 	}
 	
+	@Override
+	public String toString() {
+		return "J_MeetBoard [brd_no=" + brd_no + ", brd_subject=" + brd_subject + ", brd_content=" + brd_content
+				+ ", brd_readcount=" + brd_readcount + ", brd_recommend=" + brd_recommend + ", brd_ip=" + brd_ip
+				+ ", brd_reg_date=" + brd_reg_date + ", brd_update_date=" + brd_update_date + ", brd_dey_yn="
+				+ brd_del_yn + ", m_no=" + m_no + ", m_nick=" + m_nick + ", l_code=" + l_code + ", c_value_lang="
+				+ c_value_lang + ", mc_code=" + mc_code + ", c_value_cate=" + c_value_cate + "]";
+	}
+	public String getBrd_del_yn() {
+		return brd_del_yn;
+	}
+	public void setBrd_del_yn(String brd_del_yn) {
+		this.brd_del_yn = brd_del_yn;
+	}
 
 }

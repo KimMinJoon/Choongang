@@ -13,7 +13,7 @@
 
 	<table height="5" width="100%">
 		<tr>
-			<td width="20%" align="center"><a href="main.jsp?pgm=/board1/board1.jsp">사이트소개/공지사항</a></td>
+			<td width="20%" align="center"><a href="main.jsp?pgm=/noticeBoard/list.jsp">사이트소개/공지사항</a></td>
 			<td width="20%" align="center"><a href="main.jsp?pgm=/board2/board2.jsp">모임 게시판</a></td>
 			<td width="20%" align="center"><a href="main.jsp?pgm=/board3/board3.jsp">추천 게시판</a></td>
 			<td width="20%" align="center"><a href="main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp">한줄 게시판</a></td>

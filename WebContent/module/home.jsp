@@ -11,7 +11,7 @@
 	<center>
 	<h2> 자바기반 웹개발자 양성과정 </h2>
 	<br>
-	<img alt=""	src="http://sccdn.chosun.com/news/photobook/201403/10088_2014030901000824400051061.jpg" height="300">
+	<img alt=""	src="http://wp.firenzelodging.it/wp-content/uploads/2011/10/language-exchange.jpg" height="300">
 	<p>
 	처음 나오는 메인 화면 또는 Web_Project를 눌렀을때 나오는 메인화면(최신글, 좋아요 많은 글, 공지사항 등)
 	<br>

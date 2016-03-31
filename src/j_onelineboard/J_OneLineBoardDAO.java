@@ -39,7 +39,7 @@ public class J_OneLineBoardDAO {
 		ResultSet rs = null;
 		int brd_number = 0;
 		
-		String sql = "insert into J_OneLineBoard values(?,?,sysdate,null,?,'n',?,?,?,?)";
+		String sql = "insert into J_OneLineBoard values(?,?,sysdate,null,?,'n',?)";
 		String sql1 = "select nvl(max(brd_no),0)+1 from J_OneLineBoard";
 		
 		try {
@@ -58,10 +58,7 @@ public class J_OneLineBoardDAO {
 			pstmt.setString(2, job.getBrd_content());
 			pstmt.setString(3, job.getBrd_ip());
 			pstmt.setInt(4, job.getM_no());
-			pstmt.setInt(5, job.getGrp());
-			pstmt.setInt(6, job.getStep());
-			pstmt.setInt(7, job.getLvl());
-
+			
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -109,6 +106,35 @@ public class J_OneLineBoardDAO {
 		return list;
 	}//selectOneLine
 	
+	public J_OneLineBoard selectOneLineByNo(int brd_no){
+		J_OneLineBoard jolb  = new J_OneLineBoard();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "select brd_no, brd_content, m_no from J_OneLineBoard where brd_del_yn = 'n' and brd_no = ?";
+		try{
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, brd_no);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				jolb.setBrd_no(rs.getInt("BRD_NO"));
+				jolb.setBrd_content(rs.getString("BRD_CONTENT"));
+				jolb.setM_no(rs.getInt("M_NO"));
+			}
+			System.out.println("brd_no : " + brd_no);
+			System.out.println(jolb);
+		}catch(Exception e){
+			System.out.println(jolb);
+			System.out.println("selectOneLineByNo : " + e.getMessage());
+		}finally {
+			dbClose(rs, pstmt, conn);
+		}
+		return jolb;
+	}//selectOneLineByNo
+	
 	public int selectTotal(){
 		int total = 0;
 		Connection conn = null;
@@ -132,6 +158,27 @@ public class J_OneLineBoardDAO {
 		}
 		return total;
 	}//selectTotal
+	
+	public int updateBoard(J_OneLineBoard jolb){
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "update J_OneLineBoard set brd_content = ? , brd_update_date = sysdate where brd_no = ? and m_no = ?";
+		try{
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, jolb.getBrd_content());
+			pstmt.setInt(2,	jolb.getBrd_no());
+			pstmt.setInt(3, jolb.getM_no());
+			
+			result = pstmt.executeUpdate();
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}finally {
+			dbClose(pstmt, conn);
+		}
+		return result;
+	}//updateBoard
 	
 	public void dbClose(ResultSet rs,PreparedStatement pstmt, Connection conn){
 		try{

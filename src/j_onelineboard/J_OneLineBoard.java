@@ -12,26 +12,12 @@ public class J_OneLineBoard {
 	private int m_no;
 	private String m_nick;
 	private int grp;
-	private int step;
-	private int lvl;
 	
 	public int getGrp() {
 		return grp;
 	}
 	public void setGrp(int grp) {
 		this.grp = grp;
-	}
-	public int getStep() {
-		return step;
-	}
-	public void setStep(int step) {
-		this.step = step;
-	}
-	public int getLvl() {
-		return lvl;
-	}
-	public void setLvl(int lvl) {
-		this.lvl = lvl;
 	}
 	public String getM_nick() {
 		return m_nick;
@@ -85,7 +71,6 @@ public class J_OneLineBoard {
 	public String toString() {
 		return "J_OneLineBoard [brd_no=" + brd_no + ", brd_content=" + brd_content + ", brd_reg_date=" + brd_reg_date
 				+ ", brd_update_date=" + brd_update_date + ", brd_ip=" + brd_ip + ", brd_del_yn=" + brd_del_yn
-				+ ", m_no=" + m_no + ", m_nick=" + m_nick + "]";
+				+ ", m_no=" + m_no + ", m_nick=" + m_nick + ", grp=" + grp + "]";
 	}
-	
 }

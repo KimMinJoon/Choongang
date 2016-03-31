@@ -46,6 +46,7 @@
 					</select>
 				</td>
 			</tr>
+			
 	<tr height="50">
 				<td class="join1">희망언어</td>
 				<td>

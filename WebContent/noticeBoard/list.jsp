@@ -55,7 +55,7 @@
 				} else {
 			%>
 			<td><a
-				href="view.jsp?brd_no=<%=brd.getBrd_no()%>&pageNum=<%=nowPage%>"><%=brd.getBrd_subject()%></a>
+				href="../noticeBoard/view.jsp?brd_no=<%=brd.getBrd_no()%>&pageNum=<%=nowPage%>"><%=brd.getBrd_subject()%></a>
 				<!-- 페이지넘을 가지고 다녀야만이 수정이나 삭제를 할때 페이지가 완료후 되돌아오는 페이지를 수정햇던 페이지로 보낸다.-->
 				<%
 					if (brd.getBrd_readcount() > 20) {//조회수가 20보다 크면 이미지를 붙여라

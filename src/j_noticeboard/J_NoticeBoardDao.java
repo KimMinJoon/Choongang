@@ -142,4 +142,107 @@ public class J_NoticeBoardDao {
 		return result;
 	}
 
+	public J_NoticeBoard select(int brd_no) throws SQLException {
+		J_NoticeBoard nb = new J_NoticeBoard();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from j_noticeboard where brd_no=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
+			pstmt.setInt(1, brd_no);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				nb.setBrd_no(rs.getInt("brd_no"));
+				nb.setBrd_subject(rs.getString("brd_subject"));
+				nb.setBrd_content(rs.getString("brd_content"));
+				nb.setBrd_reg_date(rs.getDate("brd_reg_date"));
+				nb.setBrd_readcount(rs.getInt("brd_readcount"));
+				nb.setAdmin(rs.getString("admin"));
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+
+		return nb;
+	}
+
+	public void updateHit(int brd_no) throws SQLException {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		String sql = "update j_noticeboard set brd_readcount = brd_readcount+1 where brd_no=?";
+
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
+			pstmt.setInt(1, brd_no);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+	}
+
+	public int update(J_NoticeBoard noticeboard) throws SQLException {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "update j_noticeboard set brd_subject=?,brd_content=? where brd_no=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, noticeboard.getBrd_subject());
+			pstmt.setString(2, noticeboard.getBrd_content());
+			pstmt.setInt(3, noticeboard.getBrd_no());
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+		return result;
+	}
+
+	public int delete(int brd_no) throws SQLException {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		// String sql = "delete from board1 where num=?";
+		String sql = "update j_noticeboard set brd_del_yn='y' where brd_no=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, brd_no);
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+		return result;
+	}
+
 }

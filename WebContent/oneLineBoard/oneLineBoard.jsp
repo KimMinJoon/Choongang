@@ -40,30 +40,9 @@
 	font-size: 0.75em;
 }
 </style>
-
-<script type="text/javascript">
-	function textCheck() {
-		var counter = document.getElementById("counter");
-		var content = document.getElementById("content");
-		counter.innerHTML = content.value.length + "/150";
-	}
- 	function isSubmit(m_no) {
- 		if(m_no == null || m_no == "" || m_no == "null"){
- 			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
- 				location.href = "../module/main.jsp?pgm=/member/login.jsp";
- 			} else {
- 				return;
- 			}
- 		}else{
- 			document.wrtierFrm.submit();
- 		}
-	}
-</script>
-</head>
-<body>
-	<%
-		String m_no = (String) session.getAttribute("m_no");
-
+<%
+		String m_no = (String) session.getAttribute("m_no");	
+	
 		int rowPerPage = 10;
 		int pagePerBlock = 10;
 		int nowPage = 0;
@@ -89,54 +68,77 @@
 		total = total - startRow + 1;
 
 		List<J_OneLineBoard> list = jobd.selectOneLine(startRow, endRow);
-	%>
-
+%>
+<script type="text/javascript">
+	function udpateForm(id){
+		var originRow = document.getElementById(id);
+		var updateRow = document.getElementById("u" + id);
+		alert(<%=startRow + list.size()%>);
+		for(var i = <%=startRow%>; i < <%=startRow + list.size()%>;i++){
+			var oRow = document.getElementById(i);
+			var uRow = document.getElementById("u" + i);
+			oRow.style.display = "block";
+			uRow.style.display = "none";
+		}
+		originRow.style.display = "none";
+		updateRow.style.display = "block";
+	}
+	
+	function deleteChk(brd_no){
+		
+		if(confirm("정말 삭제하시겠습니까?")){
+			location.href="deleteOneline.jsp?brd_no="+brd_no;	
+		}else{
+			return;
+		}
+	}
+</script>
+</head>
+<body>
+	
 	<div style="border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
-		<form action="../oneLineBoard/insertOneline.jsp" name="wrtierFrm">
-			<c:if test="${not empty m_no}">
-				<input type="hidden" name="m_no" value="${m_no}">
-			</c:if>
-			<!-- 세션값을 가져와서 담음 -->
-			<textarea rows="3" cols="100" maxlength="150" id="content"
-				name="brd_content" required="required" onkeyup="textCheck()"></textarea>
-			<span id="counter">0/150</span> <input
-				style="height: 50px; width: 120px;" type="button" value="등록"
-				onclick="isSubmit(${m_no})">
-		</form>
+		<jsp:include page="insertOneLineForm.jsp"/>
 	</div>
 	<p>
 	<div
 		style="height: 500px; border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
-		<table>
-			<%
+		<%
 				if (list != null) {
 					for (J_OneLineBoard jolb : list) {
-			%>
-			<tr>
-				<td width="10%" heigth="50"><%=jolb.getM_nick()%></td>
-				<td width="10%"><%=jolb.getBrd_reg_date()%></td>
-				<td width="70%"><%=jolb.getBrd_content()%></td>
-				<td width="10%">
+		%>
+		<div id="<%=jolb.getBrd_no()%>">
+			<p><%=jolb.getM_nick()%><%=jolb.getBrd_reg_date()%><%=jolb.getBrd_content()%>
 					<%
 						if (m_no != null) {
 							if (jolb.getM_no() == Integer.parseInt(m_no)) {
-					%> <a href="">수정</a> <a href="">삭제</a> <%
- 	}
- %> <a href="">답글</a> <%
- 	} else {
- %> <a href="">답글</a> <%
- 	}
- %>
-
-				</td>
-			</tr>
+					%> 
+								<a href="javascript:udpateForm(<%=jolb.getBrd_no()%>);">수정</a> 
+								<a href="javascript:deleteChk(<%=jolb.getBrd_no()%>)">삭제</a> 
+					<%
+		 					}
+					%> 
+								<a href="">답글</a> 
+					<%
+						} else {
+					%> 
+							<a href="">답글</a> 
+					<%
+						}
+					%>
+			</p>
+		</div>
+		<div id="<%="u" + jolb.getBrd_no()%>" style="display: none;">
+			<jsp:include page="updateOneLineForm.jsp">
+				<jsp:param value="<%=jolb.getBrd_no()%>" name="brd_no"/>
+			</jsp:include>
+		</div>
 			<%
-				}
-				}
+
+							}
+						}
 			%>
-		</table>
 		<div align="center">
 			<%
 				if (startPage != 1) {

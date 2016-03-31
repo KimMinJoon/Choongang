@@ -10,7 +10,7 @@
 <table border="1" width="100%"><caption>게시판</caption>
 
 	<tr>
-		<td>글번호</td><td>제목</td><td>닉네임</td><td>조회수</td><td>추천수</td><td>작성일</td><td>수정일</td>
+		<td>말머리</td><td>글번호</td><td>제목</td><td>닉네임</td><td>희망언어</td><td>조회수</td><td>추천수</td><td>작성일</td><td>수정일</td>
 	</tr>
 	
 <%
@@ -35,13 +35,14 @@
 	}
 	total = total - startRow +1;
 	List<J_MeetBoard> list = bd.selectList(startRow, endRow);
-	if (list != null){
+	if (list.size() != 0){
 		for(J_MeetBoard brd : list){
 %>
 	<tr>
+		<td><%=brd.getC_value_cate()%></td>
 		<td><%=total--%></td>
 		<%
-			if (brd.getBrd_dey_yn().equals("y")) {
+			if (brd.getBrd_del_yn().equals("y")) {
 		%>
 		<td colspan="7"> 삭제된 글입니다.</td></tr>
 		<%
@@ -58,6 +59,7 @@
 		</td>
 		<%-- <td><%=brd.getM_no() %></td> --%>
 		<td><%=brd.getM_nick()%></td>
+		<td><%=brd.getC_value_lang()%></td>
 		<td><%=brd.getBrd_readcount()%></td>
 		<td><%=brd.getBrd_recommend()%></td>
 		<%-- <td><%=brd.getBrd_ip() %></td> --%>
@@ -66,10 +68,10 @@
 	</tr>		
 <%	
 		} }
-	} else{
+	} else {
 %>
 	<tr>
-		<th colspan="7">데이터가 없습니다.</th>
+		<th colspan="9">데이터가 없습니다.</th>
 	</tr> 
 <%		
 	}

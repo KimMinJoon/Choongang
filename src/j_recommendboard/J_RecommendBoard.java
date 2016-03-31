@@ -19,6 +19,7 @@ public class J_RecommendBoard {
 	private int m_no;
 	private String m_nick;
 	private String mc_code;
+	private String c_value;
 
 	public int getBrd_no() {
 		return brd_no;
@@ -138,6 +139,14 @@ public class J_RecommendBoard {
 
 	public void setRe_level(int re_level) {
 		this.re_level = re_level;
+	}
+
+	public String getC_value() {
+		return c_value;
+	}
+
+	public void setC_value(String c_value) {
+		this.c_value = c_value;
 	}
 
 }

@@ -13,9 +13,10 @@
 		<caption><h2>J_RecommendBoard</h2></caption>
 		<tr>
 			<th class="bottom" width="5%">번호</th>
-			<th class="bottom" width="33%">제목</th>
+			<th class="bottom" width="6%">말머리</th>
+			<th class="bottom" width="31%">제목</th>
 			<th class="bottom" width="9%">닉네임</th>
-			<th class="bottom" width="9%">date</th>
+			<th class="bottom" width="8%">date</th>
 			<th class="bottom" width="2%">hit</th>
 			<th class="bottom" width="2%">rc</th>
 		</tr>
@@ -46,6 +47,7 @@
 		%>
 		<tr>
 			<td class="bottom"><%=total--%></td>
+			<td class="bottom"><%=jrb.getC_value()%></td>
 			<%
 					if (jrb.getBrd_dey_yn().equals("y")) {
 							out.println("<td class='bottom' colspan='7'>삭제된 글입니다</td></tr>");
@@ -89,18 +91,27 @@
 		<%
 			if (startPage > pagePerBlock) {
 		%>
-		<a href="list.jsp?pageNum=<%=startPage - pagePerBlock%>">[이전] </a>
+				<a href="list.jsp?pageNum=<%=startPage - pagePerBlock%>">[prev] </a>
+				<a href="list.jsp?pageNum=1">[1]</a>				
+				..
 		<%
 			}
 			for (int i = startPage; i <= endPage; i++) {
+				if(i==nowPage){
 		%>
-		<a href="list.jsp?pageNum=<%=i%>">[<%=i%>]
-		</a>
+					<b>[<%=i%>]</b>
 		<%
+				} else {
+		%>
+					<a href="list.jsp?pageNum=<%=i%>">[<%=i%>]</a>
+		<%
+				}
 			}
 			if (totalPage > endPage) {
 		%>
-		<a href="list.jsp?pageNum=<%=startPage + pagePerBlock%>"> [다음]</a>
+			..				
+			<a href="list.jsp?pageNum=<%=totalPage%>">[<%=totalPage%>]</a>
+			<a href="list.jsp?pageNum=<%=startPage + pagePerBlock%>">[next]</a>
 		<%
 			}
 		%>

@@ -53,7 +53,7 @@ public class J_RecommendBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from (select rowNum rn, a.* from (select jrb.* ,m.m_nick from j_recommendboard jrb, j_member m where jrb.m_no = m.m_no order by brd_no desc) a ) where rn between ? and ?";
+		String sql = "select * from (select rowNum rn, a.* from (select jrb.* ,m.m_nick, c.c_value from j_recommendboard jrb, j_member m, j_code c where jrb.m_no = m.m_no and jrb.mc_code = c.c_minor order by brd_no desc) a ) where rn between ? and ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -76,6 +76,7 @@ public class J_RecommendBoardDao {
 				recommendboard.setRe_level(rs.getInt("re_level"));
 				recommendboard.setM_no(rs.getInt("m_no"));
 				recommendboard.setM_nick(rs.getString("m_nick"));
+				recommendboard.setC_value(rs.getString("c_value"));
 				list.add(recommendboard);
 			}				
 		} catch (Exception e) {

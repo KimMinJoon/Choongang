@@ -6,6 +6,7 @@ h2 {
 }
 
 td {
+	text-align: center;
 	font-family: "Nanum Gothic";
 	font-size: 14px;
 }
@@ -16,7 +17,18 @@ th {
 }
 
 input {
-	text-align:"left";
+	font-family: "Nanum Gothic";
+	font-size: 12px;
+}
+
+.inputleft {
+	text-align: left;
+	border-bottom: solid 1px;
+	border-left: solid 1px;
+	border-right: solid 1px;
+}
+
+textarea {
 	font-family: "Nanum Gothic";
 	font-size: 12px;
 }
@@ -24,13 +36,17 @@ input {
 .tab {
 	border: 1px solid black;
 	border-collapse: collapse;
-	text-align: center;
 }
 
 .bottom {
 	border-bottom: solid 1px;
 }
 
+.writeF {
+	border-bottom: solid 1px;
+	border-left: solid 1px;
+	border-right: solid 1px;
+}
 
 a:link {color:black; text-decoration:none}
 a:visited {color:black; text-decoration:none}

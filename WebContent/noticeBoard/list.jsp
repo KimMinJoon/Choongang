@@ -51,25 +51,25 @@
 				if (brd.getBrd_del_yn().equals("y")) {
 			%>
 			<td colspan="7">삭제된 글입니다.</td>
+			<%
+				} else {
+			%>
+			<td><a
+				href="../noticeBoard/view.jsp?brd_no=<%=brd.getBrd_no()%>&pageNum=<%=nowPage%>"><%=brd.getBrd_subject()%></a>
+				<!-- 페이지넘을 가지고 다녀야만이 수정이나 삭제를 할때 페이지가 완료후 되돌아오는 페이지를 수정햇던 페이지로 보낸다.-->
+				<%
+					if (brd.getBrd_readcount() > 20) {//조회수가 20보다 크면 이미지를 붙여라
+									out.println("<img src='images/hot.gif'>");
+								}
+				%></td>
+			<td><%=brd.getBrd_readcount()%></td>
+			<!-- 읽은 횟수 -->
+			<td><%=brd.getBrd_reg_date()%></td>
+			<!-- 작성일 -->
+			<td><%=brd.getBrd_update_date()%></td>
+			<!-- 수정일 -->
 		</tr>
 		<%
-			} else {
-		%>
-		<td><a
-			href="view.jsp?brd_no=<%=brd.getBrd_no()%>&pageNum=<%=nowPage%>"><%=brd.getBrd_subject()%></a>
-			<!-- 페이지넘을 가지고 다녀야만이 수정이나 삭제를 할때 페이지가 완료후 되돌아오는 페이지를 수정햇던 페이지로 보낸다.-->
-			<%
-				if (brd.getBrd_readcount() > 20) {//조회수가 20보다 크면 이미지를 붙여라
-								out.println("<img src='images/hot.gif'>");
-							}
-			%></td>
-		<td><%=brd.getM_nick()%></td>
-		<td><%=brd.getBrd_readcount()%></td>
-		<td><%=brd.getBrd_recommend()%></td>
-		<td><%=brd.getBrd_reg_date()%></td>
-		<td><%=brd.getBrd_update_date()%></td>
-		</tr>
-		 <%
 			}
 				}
 			} else {
@@ -82,7 +82,7 @@
 		%>
 	</table>
 	<div align="center">
-		 <%
+		<%
 			if (startPage > pagePerBlock) {
 		%>
 		<a href="list.jsp?pageNum=<%=startPage - pagePerBlock%>">[이전]</a>
@@ -103,7 +103,7 @@
 			}
 		%>
 		<br>
-		 <button onclick="location.href='writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>
+		<button onclick="location.href='../noticeBoard/writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>
 	</div>
 </body>
 </html>

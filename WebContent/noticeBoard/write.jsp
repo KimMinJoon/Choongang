@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="j_meetboard.*"%>
+	pageEncoding="UTF-8" import="j_noticeboard.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,16 +8,14 @@
 <%
 	request.setCharacterEncoding("utf-8");
 %>
-<jsp:useBean id="meetboard" class="j_meetboard.J_MeetBoard"></jsp:useBean>
-<jsp:setProperty property="*" name="meetboard" />
+<jsp:useBean id="noticeboard" class="j_noticeboard.J_NoticeBoard"></jsp:useBean>
+<jsp:setProperty property="*" name="noticeboard" />
 </head>
 <body>
 	<%
 		String pageNum = request.getParameter("pageNum");
-		String ip = request.getRemoteAddr();//아이피주소를 남기기위해 씀
-		meetboard.setBrd_ip(ip);
-		J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
-		int result = bd.insert(meetboard);
+		J_NoticeBoardDao bd = J_NoticeBoardDao.getInstance();
+		int result = bd.insert(noticeboard);
 		if (result > 0)
 			response.sendRedirect("list.jsp?pageNum=" + pageNum);
 		else {

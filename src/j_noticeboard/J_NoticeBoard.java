@@ -5,14 +5,14 @@ import java.sql.Date;
 public class J_NoticeBoard {
 
 	private int brd_no; // 공지사항 번호 프라이머리키
-	private String admin; // 관리자
 	private String brd_subject; // 제목
 	private String brd_content; // 내용
 	private int brd_readcount; // 읽은 수
 	private Date brd_reg_date; // 등록일
 	private Date brd_update_date; // 수정일
 	private String brd_del_yn; // 삭제yn
-
+	private String admin; // 관리자
+	
 	public String getAdmin() {
 		return admin;
 	}

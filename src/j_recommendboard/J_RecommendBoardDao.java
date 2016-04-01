@@ -30,7 +30,7 @@ public class J_RecommendBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select count(*) from j_recommendboard";
+		String sql = "select count(*) from j_recommendboard where brd_del_yn = 'n'";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -51,7 +51,7 @@ public class J_RecommendBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from (select rowNum rn, a.* from (select jrb.* ,m.m_nick, c.c_value as mc_value from j_recommendboard jrb, j_member m, j_code c, j_code d where jrb.m_no = m.m_no and jrb.mc_code = c.c_minor order by brd_no desc) a) where rn between ? and ?";
+		String sql = "select * from (select rowNum rn, a.* from (select jrb.* ,m.m_nick, c.c_value as mc_value from j_recommendboard jrb, j_member m, j_code c where jrb.m_no = m.m_no and jrb.mc_code = c.c_minor order by brd_no desc) a) where rn between ? and ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);

@@ -7,6 +7,14 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
+	function sessionChk() {
+		var m_no = <%= (String) session.getAttribute("m_no")%>;
+		if (m_no == null || m_no == "" || m_no == "null") {
+			alert("로그인이 필요한 페이지 입니다.");
+			location.href="../module/main.jsp?pgm=/member/login.jsp";
+		}
+	}
+
 	function chk() {
 		if(frm.m_passwd.value != frm.m_passwd2.value) {
 			alert("비밀번호를 다시 입력하세요");
@@ -33,19 +41,6 @@
 	}
 	
 	$(function() {
-		$('#m_passwd').blur(function() {
-			var re = /s$/;
-			var str_space = /\s/;
-			if($("#m_passwd").val().length < 6) {
-				$('#pass').html("<font>6~20자로 입력</font>");
-			} else if(str_space.test($("#m_passwd").val())) {
-				$('#pass').html("<font class=red>공백 불가능</font>");
-			} else
-				$('#pass').html("<font></font>");
-		});
-	});
-
-	$(function() {
 		$('#m_nick').blur(function() {
 			$.ajax({
 				type : "POST",
@@ -56,9 +51,9 @@
 				success : function(data) {
 					if ($.trim(data) == "TRUE") {
 						$('#check').html("<font>사용가능</font>");
-					} else {
+					} else if($.trim(data) == "FALSE") {
 						$('#check').html("<font class=red>사용불가</font>");
-					}
+					} else if($.trim(data) == "m_nick")
 				}
 			});
 		});
@@ -66,7 +61,7 @@
 </script>
 
 </head>
-<body onloade="sessionChk()">
+<body onload="sessionChk()">
 
 	<%
 		J_CodeDao jcd = J_CodeDao.getInstance();
@@ -75,7 +70,7 @@
 		J_MemberDao mdo = J_MemberDao.getInstance();
 		J_Member mb = mdo.select(m_no);
 	%>
-	<form action="../member/updatePro.jsp" name="frm" onsubmit="return chk()">
+	<form action="../member/mbupdatePro.jsp" name="frm" onsubmit="return chk()">
 		<input type="hidden" name="check" value="false">
 		<table class="tab" cellpadding="10" align="center">
 			<caption>

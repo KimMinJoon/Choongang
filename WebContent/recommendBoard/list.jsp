@@ -5,21 +5,25 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="../css/boardcss.css">
+<link rel="stylesheet" type="text/css" href="../css/projectcss.css">
 </head>
 <body>
 	
-	<table class="tab" cellpadding="5" align="center" width="60%">
+	<p>
+	<p>
+	
+	<table align="center" width="70%">
 		<caption><h2>J_RecommendBoard</h2></caption>
 		<tr>
-			<th class="bottom" width="3%"></th>
-			<th class="bottom" width="6%">말머리</th>
-			<th class="bottom" width="22%">제목</th>
-			<th class="bottom" width="8%">글쓴이</th>
-			<th class="bottom" width="7%">작성일</th>
-			<th class="bottom" width="2%">조회</th>
-			<th class="bottom" width="2%">추천</th>
+			<th width="3%"></th>
+			<th width="7%">말머리</th>
+			<th width="34%">제목</th>
+			<th width="8%">글쓴이</th>
+			<th width="8%">작성일</th>
+			<th width="4%">조회</th>
+			<th width="4%">추천</th>
 		</tr>
+		<tr><td colspan="7"><hr></td></tr>
 <%
 		J_RecommendBoardDao jr = J_RecommendBoardDao.getInstance();
 
@@ -31,10 +35,10 @@
 		int pagePerBlock = 10;
 		int nowPage = Integer.parseInt(pageNum);
 		int total = jr.selectTotal();
-		int totalPage = (int) Math.ceil((double) total / rowPerPage);
+		int totalPage = (int) Math.ceil((double)total/rowPerPage);
 		int startRow = (nowPage - 1) * rowPerPage + 1;
 		int endRow = startRow + rowPerPage - 1;
-		int totalBlk = (int) Math.ceil((double) totalPage / pagePerBlock);
+		int totalBlk = (int) Math.ceil((double)totalPage/pagePerBlock);
 		int startPage = (nowPage - 1) / 10 * 10 + 1;
 		int endPage = startPage + pagePerBlock - 1;
 		if (endPage > totalPage)
@@ -43,14 +47,15 @@
 			
 		List<J_RecommendBoard> list = jr.selectList(startRow, endRow);
 		if (list.size() != 0) {
-			for (J_RecommendBoard jrb : list) {			
+			for (J_RecommendBoard jrb : list) {	
+				System.out.println(jrb);
 %>
 			<tr>
-				<td class="bottom"><%=total--%></td>
-				<td class="bottom" ><font class="category"> [<%=jrb.getMc_value()%>] </font></td>
+				<td class="default"><%=total--%></td>
+				<td class="default"><font class="category"> [<%=jrb.getMc_value()%>] </font></td>
 <%				
 				if (jrb.getBrd_dey_yn().equals("y")) {
-					out.println("<td class='bottom' colspan='7'>삭제된 글입니다</td></tr>");
+					out.println("<td class='subject' colspan='7'>삭제된 글입니다</td></tr>");
 				} else {
 %>
 				<td class="subject">
@@ -63,17 +68,18 @@
 <%
  					}
 %>
-					<a href="view.jsp?num=<%=jrb.getBrd_no()%>&pageNum=<%=nowPage%>"><%=jrb.getBrd_subject()%></a>
+					<a href="../module/main.jsp?pgm=/recommendBoard/view.jsp?num=<%=jrb.getBrd_no()%>&pageNum=<%=nowPage%>"><%=jrb.getBrd_subject()%></a>
 <%
 					if (jrb.getBrd_readcount() > 20)
 						out.println("<img src='images/hot.gif'>");
 %>
 				</td>
 				<td class="nickname"><%=jrb.getM_nick()%></td>
-				<td class="bottom"><%=jrb.getBrd_reg_date()%></td>
-				<td class="bottom"><%=jrb.getBrd_readcount()%></td>
-				<td class="bottom"><%=jrb.getBrd_recommend()%></td>
+				<td class="default"><%=jrb.getBrd_reg_date()%></td>
+				<td class="default"><%=jrb.getBrd_readcount()%></td>
+				<td class="default"><%=jrb.getBrd_recommend()%></td>
 			</tr>
+			<tr><td colspan="7"><hr></td></tr>
 <%
 				}
 			}
@@ -87,12 +93,12 @@
 %>
 	</table>
 		
-	<div align="center" class="default">
+	<div align="center">
 <%
 		if (startPage > pagePerBlock) {
 %>
-			<a href="list.jsp?pageNum=<%=startPage - pagePerBlock%>">[prev] </a>
-			<a href="list.jsp?pageNum=1">[1]</a>				
+			<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=startPage - pagePerBlock%>">[prev] </a>
+			<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=1">[1]</a>				
 			...
 <%
 		}
@@ -103,20 +109,20 @@
 <%
 			} else {
 %>
-				<a href="list.jsp?pageNum=<%=i%>">[<%=i%>]</a>
+				<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=i%>">[<%=i%>]</a>
 <%
 			}
 		}
 		if (totalPage > endPage) {
 %>
 			...
-			<a href="list.jsp?pageNum=<%=totalPage%>">[<%=totalPage%>]</a>
-			<a href="list.jsp?pageNum=<%=startPage + pagePerBlock%>">[next]</a>
+			<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=totalPage%>">[<%=totalPage%>]</a>
+			<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=startPage + pagePerBlock%>">[next]</a>
 <%
 		}
 %>
 		<p>
-		<button onclick="location.href='writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>
+		<button onclick="location.href='../module/main.jsp?pgm=/recommendBoard/writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>
 	</div>
 
 </body>

@@ -20,10 +20,10 @@
  			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
  				location.href = "../module/main.jsp?pgm=/member/login.jsp";
  			} else {
- 				return;
+ 				return false;
  			}
  		}else{
- 			document.wrtierFrm.submit();
+ 			return true;
  		}
 	}
 </script>
@@ -32,7 +32,7 @@
 %>
 </head>
 <body>
-	<form action="../oneLineBoard/insertOneline.jsp" name="wrtierFrm">
+	<form action="../oneLineBoard/insertOneline.jsp" name="wrtierFrm" onsubmit="return isSubmit(${m_no})">
 		<c:if test="${not empty m_no}">
 			<input type="hidden" name="m_no" value="${m_no}">
 		</c:if>		
@@ -40,8 +40,7 @@
 		<textarea rows="3" cols="100" maxlength="150" id="content"
 			name="brd_content" required="required" onkeyup="textCheck()"></textarea>
 		<span id="counter">0/150</span> <input
-			style="height: 50px; width: 120px;" type="button" value="등록"
-			onclick="isSubmit(${m_no})">
+			style="height: 50px; width: 120px;" type="submit" value="등록">
 	</form>
 
 </body>

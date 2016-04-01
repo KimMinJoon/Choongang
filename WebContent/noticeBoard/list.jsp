@@ -1,7 +1,6 @@
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="j_noticeboard.*"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	pageEncoding="UTF-8" import="j_noticeboard.*, java.util.*"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -9,15 +8,16 @@
 <link type="text/css" rel="stylesheet" href="../css/projectcss.css">
 </head>
 <body>
-	<table border="1" width="100%">
-		<caption>공지사항</caption>
+	<table class="tab" cellpadding="10" align="center" width="60%">
+		<caption>
+			<h2>공지사항</h2>
+		</caption>
 
 		<tr>
-			<td>번호</td>
-			<td>제목</td>
-			<td>조회수</td>
-			<td>작성일</td>
-			<td>수정일</td>
+			<th class="bottom" width="5%">번호</th>
+			<th class="bottom" width="32%">제목</th>
+			<th class="bottom" width="10%">작성일</th>
+			<th class="bottom" width="5%">조회수</th>
 		</tr>
 
 		<%
@@ -50,24 +50,21 @@
 			<%
 				if (brd.getBrd_del_yn().equals("y")) {
 			%>
-			<td colspan="7">삭제된 글입니다.</td>
+			<td colspan="4">삭제된 글입니다.</td>
 			<%
 				} else {
 			%>
-			<td><a
-				href="../noticeBoard/view.jsp?brd_no=<%=brd.getBrd_no()%>&pageNum=<%=nowPage%>"><%=brd.getBrd_subject()%></a>
+			<td><a href="../module/main.jsp?pgm=/noticeBoard/view.jsp?brd_no=<%=brd.getBrd_no()%>&pageNum=<%=nowPage%>"><%=brd.getBrd_subject()%></a>
 				<!-- 페이지넘을 가지고 다녀야만이 수정이나 삭제를 할때 페이지가 완료후 되돌아오는 페이지를 수정햇던 페이지로 보낸다.-->
 				<%
 					if (brd.getBrd_readcount() > 20) {//조회수가 20보다 크면 이미지를 붙여라
 									out.println("<img src='images/hot.gif'>");
 								}
 				%></td>
-			<td><%=brd.getBrd_readcount()%></td>
-			<!-- 읽은 횟수 -->
 			<td><%=brd.getBrd_reg_date()%></td>
 			<!-- 작성일 -->
-			<td><%=brd.getBrd_update_date()%></td>
-			<!-- 수정일 -->
+			<td><%=brd.getBrd_readcount()%></td>
+			<!-- 읽은 횟수 -->
 		</tr>
 		<%
 			}
@@ -81,6 +78,7 @@
 			}
 		%>
 	</table>
+	
 	<div align="center">
 		<%
 			if (startPage > pagePerBlock) {
@@ -103,7 +101,7 @@
 			}
 		%>
 		<br>
-		<button onclick="location.href='../noticeBoard/writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>
+		<button onclick="location.href='../module/main.jsp?pgm=/noticeBoard/writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>
 	</div>
 </body>
 </html>

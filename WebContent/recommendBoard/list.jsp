@@ -8,17 +8,17 @@
 <link rel="stylesheet" type="text/css" href="../css/boardcss.css">
 </head>
 <body>
-
-	<table class="tab" cellpadding="10" align="center" width="60%">
+	
+	<table class="tab" cellpadding="5" align="center" width="60%">
 		<caption><h2>J_RecommendBoard</h2></caption>
 		<tr>
-			<th class="bottom" width="5%">번호</th>
-			<th class="bottom" width="7%">말머리</th>
-			<th class="bottom" width="32%">제목</th>
-			<th class="bottom" width="10%">닉네임</th>
-			<th class="bottom" width="10%">date</th>
-			<th class="bottom" width="1%">hit</th>
-			<th class="bottom" width="1%">rc</th>
+			<th class="bottom" width="3%"></th>
+			<th class="bottom" width="6%">말머리</th>
+			<th class="bottom" width="22%">제목</th>
+			<th class="bottom" width="8%">글쓴이</th>
+			<th class="bottom" width="7%">작성일</th>
+			<th class="bottom" width="2%">조회</th>
+			<th class="bottom" width="2%">추천</th>
 		</tr>
 <%
 		J_RecommendBoardDao jr = J_RecommendBoardDao.getInstance();
@@ -27,7 +27,7 @@
 		if (pageNum == null || pageNum.equals("null") || pageNum.equals(""))
 			pageNum = "1";
 
-		int rowPerPage = 10;
+		int rowPerPage = 15;
 		int pagePerBlock = 10;
 		int nowPage = Integer.parseInt(pageNum);
 		int total = jr.selectTotal();
@@ -47,13 +47,13 @@
 %>
 			<tr>
 				<td class="bottom"><%=total--%></td>
-				<td class="bottom"><%=jrb.getC_value()%></td>
-<%
+				<td class="bottom" ><font class="category"> [<%=jrb.getMc_value()%>] </font></td>
+<%				
 				if (jrb.getBrd_dey_yn().equals("y")) {
 					out.println("<td class='bottom' colspan='7'>삭제된 글입니다</td></tr>");
 				} else {
 %>
-				<td class="bottom">
+				<td class="subject">
 <%
 					if (jrb.getRe_level() > 0) {
 						int w = jrb.getRe_level() * 10;
@@ -69,7 +69,7 @@
 						out.println("<img src='images/hot.gif'>");
 %>
 				</td>
-				<td class="bottom"><%=jrb.getM_nick()%></td>
+				<td class="nickname"><%=jrb.getM_nick()%></td>
 				<td class="bottom"><%=jrb.getBrd_reg_date()%></td>
 				<td class="bottom"><%=jrb.getBrd_readcount()%></td>
 				<td class="bottom"><%=jrb.getBrd_recommend()%></td>
@@ -86,8 +86,8 @@
 		}
 %>
 	</table>
-	
-	<div align="center">
+		
+	<div align="center" class="default">
 <%
 		if (startPage > pagePerBlock) {
 %>

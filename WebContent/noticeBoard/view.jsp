@@ -49,13 +49,13 @@
 		}
 	%>
 	<div align="center">
-		<button onclick="location.href='list.jsp?pageNum=<%=pageNum%>'">게시판
+		<button onclick="location.href='../module/main.jsp?pgm=/noticeBoard/list.jsp?pageNum=<%=pageNum%>'">게시판
 			목록</button>
 		<button
-			onclick="location.href='updateForm.jsp?brd_no=<%=brd_no%>&pageNum=<%=pageNum%>'">수정하기</button>
+			onclick="location.href='../module/main.jsp?pgm=/noticeBoard/updateForm.jsp?brd_no=<%=brd_no%>&pageNum=<%=pageNum%>'">수정하기</button>
 		<!-- 이렇게해야 수정을 누르면 수정클릭한 해당 페이지로 보내준다. -->
 		<button
-			onclick="location.href='deleteForm.jsp?brd_no=<%=brd_no%>&pageNum=<%=pageNum%>'">삭제하기</button>
+			onclick="location.href='../module/main.jsp?pgm=/noticeBoard/deleteForm.jsp?brd_no=<%=brd_no%>&pageNum=<%=pageNum%>'">삭제하기</button>
 	</div>
 
 </body>

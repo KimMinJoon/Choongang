@@ -204,7 +204,7 @@ public class J_NoticeBoardDao {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "update j_noticeboard set brd_subject=?,brd_content=? where brd_no=?";
+		String sql = "update j_noticeboard set brd_subject=?, brd_content=? where brd_no=?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -212,7 +212,6 @@ public class J_NoticeBoardDao {
 			pstmt.setString(2, noticeboard.getBrd_content());
 			pstmt.setInt(3, noticeboard.getBrd_no());
 			result = pstmt.executeUpdate();
-			System.out.println("result : " + result);
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

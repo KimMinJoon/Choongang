@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="../css/projectcss.css">
 <%
 	/* String m_no = (String) session.getAttribute("m_no"); */
-	/* String m_no = "1"; */
+	String m_no = "1";
 	String pageNum = request.getParameter("pageNum");
 %>
 

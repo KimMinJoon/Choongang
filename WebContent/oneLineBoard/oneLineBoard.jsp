@@ -79,7 +79,7 @@
 			uRow.style.display = "none";
 		}
 	}
-	function udpateForm(id, text){
+	function updateForm(id, text){
 		var originRow = document.getElementById(id);
 		var updateRow = document.getElementById("u" + id);
 		displayOrow(text);
@@ -130,22 +130,17 @@
 						J_OneLineBoard jolb = list.get(i);
 		%>
 		<div id="<%=i%>">
-			
 			<p><%=total--%>&nbsp;<%=jolb.getM_nick()%>&nbsp;<%=jolb.getBrd_reg_date()%>&nbsp;<%=jolb.getBrd_content()%><a href="javascript:replyForm(<%=i%>)">[<%=jolb.getRep_count()%>]</a>
 					<%
 						if (m_no != null) {
 							if (jolb.getM_no() == Integer.parseInt(m_no)) {
 					%> 
-								<a href="javascript:udpateForm(<%=i%>,<%=jolb.getBrd_content()%>);">수정</a> 
+								<a href="javascript:updateForm(<%=i%>,<%=jolb.getBrd_content()%>)">수정</a> 
 								<a href="javascript:deleteChk(<%=jolb.getBrd_no()%>,<%=pageNum%>)">삭제</a> 
 					<%
 		 					}
 					%> 
 								<a href="javascript:replyForm(<%=i%>)">답글</a> 
-					<%
-						} else {
-					%> 
-							<a href="javascript:replyForm(<%=i%>)">답글</a> 
 					<%
 						}
 					%>
@@ -153,7 +148,7 @@
 		</div>
 		<div id="<%="u" + i%>" style="display: none;">
 			<form action="../oneLineBoard/updateOneline.jsp" name="updateFrm">
-				<p><a>확인</a><a>취소</a></p>
+				<p><a>취소</a></p>
 					<c:if test="${not empty m_no}">
 						<input type="hidden" name="m_no" value="${m_no}">
 					</c:if>
@@ -168,6 +163,7 @@
 		<div id="<%="r" + i%>" style="display: none;">
 			<jsp:include page="replyOneLineForm.jsp" >
 				<jsp:param value="<%=jolb.getBrd_no()%>" name="brd_no"/>
+				<jsp:param value="<%=pageNum%>" name="pageNum"/>
 			</jsp:include>
 		</div>
 			<%

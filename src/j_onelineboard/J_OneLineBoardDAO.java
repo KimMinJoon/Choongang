@@ -179,7 +179,6 @@ public class J_OneLineBoardDAO {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		System.out.println("brd_no : " + brd_no);
 		String sql = "update j_onelineboard set brd_del_yn = 'y',brd_out_date = sysdate where brd_no = ? and brd_del_yn = 'n'";
 		
 		try{
@@ -194,6 +193,64 @@ public class J_OneLineBoardDAO {
 			dbClose(pstmt, conn);
 		}
 		return result;
+	}//deleteBoard
+	
+	public int insertReply(J_OneLineReply jolr){
+		int result = 0;
+		int rpl_number = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		System.out.println(jolr);
+		
+		String sql = "insert into J_onelineReply values (?,?,?,sysdate,null,?,'n',null)";
+		String sql1 = "select nvl(max(REPLY_NO),0)+1 from J_onelineReply";
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql1);
+			rs = pstmt.executeQuery();
+			if (rs.next())
+				rpl_number = rs.getInt(1);
+			pstmt.close();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rpl_number);
+			pstmt.setInt(2,jolr.getBrd_no());
+			pstmt.setString(3, jolr.getContent());
+			pstmt.setInt(4, jolr.getM_no());
+			
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("result : " + result);
+			System.out.println(e.getMessage());
+		} finally {
+			dbClose(rs, pstmt, conn);
+		}
+		return result;
+	}//insertReply
+	
+	public List<J_OneLineReply> selectReply(int brd_no){
+		List<J_OneLineReply> list = new ArrayList<J_OneLineReply>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT ";
+		
+		try{
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			
+		} catch(Exception e){
+			System.out.println(e.getMessage());
+		}finally{
+			dbClose(rs, pstmt, conn);
+		}
+		return list;
 	}
 	
 	public void dbClose(ResultSet rs,PreparedStatement pstmt, Connection conn){

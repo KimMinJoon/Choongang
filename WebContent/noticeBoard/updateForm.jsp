@@ -13,11 +13,11 @@
 		int brd_no = Integer.parseInt(request.getParameter("brd_no"));
 		String pageNum = request.getParameter("pageNum");
 		J_NoticeBoardDao bd = J_NoticeBoardDao.getInstance();
-		J_NoticeBoard noticeboard = bd.select(brd_no);
+		J_NoticeBoard nb = bd.select(brd_no);
 	%>
-	<form action="../noticeBoard/updatePro.jsp" method="post">
-		<input type="hidden" name="num" value="<%=noticeboard.getBrd_no()%>">
-		<input type="hidden" name="pageNum" value="<%=pageNum%>">
+	<form action="../module/main.jsp?pgm=/noticeBoard/updatePro.jsp" method="post">
+		<input type="hidden" name="num" value="<%=nb.getBrd_no()%>"> <input
+			type="hidden" name="pageNum" value="<%=pageNum%>">
 
 		<table border="1">
 			<caption>게시판 수정</caption>
@@ -25,16 +25,16 @@
 			<tr>
 				<td class="join1">제목</td>
 				<td><input type="text" name="brd_subject" required="required"
-					autofocus="autofocus"></td>
+					autofocus="autofocus" value="<%=nb.getBrd_subject()%>"></td>
 			</tr>
 			<tr>
 				<td class="join1">내용</td>
 				<td><textarea rows="5" cols="50" name="brd_content"
-						required="required"></textarea></td>
+						required="required"><%=nb.getBrd_content()%>"</textarea></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"><input type="submit" value="확인">
-					<input type="reset" value="취소"></td>
+					<input type="button" value="취소" onclick="history.go(-1)"></td>
 			</tr>
 		</table>
 	</form>

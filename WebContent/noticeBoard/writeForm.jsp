@@ -15,7 +15,7 @@
 
 </head>
 <body>
-	<form action="../noticeBoard/write.jsp" method="post">
+	<form action="../module/main.jsp?pgm=/noticeBoard/write.jsp" method="post">
 		<input type="hidden" name="pageNum" value="<%=pageNum%>">
 		<table class="tab">
 			<caption>공지사항 작성</caption>
@@ -32,7 +32,7 @@
 
 			<tr>
 				<td colspan="2" align="center"><input type="submit" value="확인">
-					<input type="button" value="취소" onclick="history.back(-1)"></td>
+					<input type="button" value="취소" onclick="history.go(-1)"></td>
 			</tr>
 		</table>
 	</form>

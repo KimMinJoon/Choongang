@@ -154,12 +154,14 @@ public class J_NoticeBoardDao {
 			pstmt.setInt(1, brd_no);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				nb.setBrd_no(rs.getInt("brd_no"));
-				nb.setBrd_subject(rs.getString("brd_subject"));
-				nb.setBrd_content(rs.getString("brd_content"));
-				nb.setBrd_reg_date(rs.getDate("brd_reg_date"));
-				nb.setBrd_readcount(rs.getInt("brd_readcount"));
-				nb.setAdmin(rs.getString("admin"));
+				nb.setBrd_no(rs.getInt("brd_no")); // 공지사항 번호
+				nb.setBrd_subject(rs.getString("brd_subject")); // 제목
+				nb.setBrd_content(rs.getString("brd_content")); // 내용
+				nb.setBrd_readcount(rs.getInt("brd_readcount")); // 읽은수
+				nb.setBrd_reg_date(rs.getDate("brd_reg_date")); // 등록일
+				nb.setBrd_update_date(rs.getDate("brd_update_date")); // 수정일
+				nb.setBrd_del_yn(rs.getString("brd_del_yn")); // 삭제yn
+				nb.setAdmin(rs.getString("admin")); // 관리자
 			}
 
 		} catch (Exception e) {
@@ -210,6 +212,7 @@ public class J_NoticeBoardDao {
 			pstmt.setString(2, noticeboard.getBrd_content());
 			pstmt.setInt(3, noticeboard.getBrd_no());
 			result = pstmt.executeUpdate();
+			System.out.println("result : " + result);
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

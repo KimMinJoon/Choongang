@@ -20,8 +20,9 @@
 			jrb.setRef(ref);
 			jrb.setRe_level(re_level);
 			jrb.setRe_step(re_step);
-			jrb.setM_no(7);
-			jrb.setMc_code("mc_study");
+			jrb.setM_no(1);
+			jrb.setMc_code("mc_exlang");
+			jrb.setL_code("l_default");
 			bd.insert(jrb);
 		}
 	%>

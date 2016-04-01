@@ -51,7 +51,7 @@ public class J_RecommendBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from (select rowNum rn, a.* from (select jrb.* ,m.m_nick, c.c_value from j_recommendboard jrb, j_member m, j_code c where jrb.m_no = m.m_no and jrb.mc_code = c.c_minor order by brd_no desc) a ) where rn between ? and ?";
+		String sql = "select * from (select rowNum rn, a.* from (select jrb.* ,m.m_nick, c.c_value as mc_value from j_recommendboard jrb, j_member m, j_code c, j_code d where jrb.m_no = m.m_no and jrb.mc_code = c.c_minor order by brd_no desc) a) where rn between ? and ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -74,7 +74,7 @@ public class J_RecommendBoardDao {
 				recommendboard.setRe_level(rs.getInt("re_level"));
 				recommendboard.setM_no(rs.getInt("m_no"));
 				recommendboard.setM_nick(rs.getString("m_nick"));
-				recommendboard.setC_value(rs.getString("c_value"));
+				recommendboard.setMc_value(rs.getString("mc_value"));
 				list.add(recommendboard);
 			}				
 		} catch (Exception e) {
@@ -90,7 +90,7 @@ public class J_RecommendBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "insert into j_recommendboard values(?,?,?,0,0,?,sysdate,sysdate,'n',?,?,?,?,?)";
+		String sql = "insert into j_recommendboard values(?,?,?,0,0,?,sysdate,null,'n',?,?,?,?,?)";
 		String sql1 = "select nvl(max(brd_no),0)+1 from j_recommendboard";
 		String sql2 = "update j_recommendboard set re_step=re_step+1 where ref=? and re_step > ?";
 		try {

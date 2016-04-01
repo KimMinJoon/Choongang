@@ -1,8 +1,6 @@
 <%@page import="j_onelineboard.J_OneLineBoardDAO"%>
 <%@page import="j_onelineboard.J_OneLineBoard"%>
-<%@page import="j_board.J_Board"%>
 <%@page import="java.util.List"%>
-<%@page import="j_board.J_BoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -70,27 +68,49 @@
 		List<J_OneLineBoard> list = jobd.selectOneLine(startRow, endRow);
 %>
 <script type="text/javascript">
-	function udpateForm(id){
-		var originRow = document.getElementById(id);
-		var updateRow = document.getElementById("u" + id);
-		alert(<%=startRow + list.size()%>);
-		for(var i = <%=startRow%>; i < <%=startRow + list.size()%>;i++){
+	function displayOrow(text){
+		for(var i = 0; i < <%=list.size()%>;i++){
 			var oRow = document.getElementById(i);
 			var uRow = document.getElementById("u" + i);
+			var rRow = document.getElementById("r"+ i );
 			oRow.style.display = "block";
+			var textarea = document.getElementById("updateContent" + i);
+			textarea.value = text;
 			uRow.style.display = "none";
 		}
+	}
+	function udpateForm(id, text){
+		var originRow = document.getElementById(id);
+		var updateRow = document.getElementById("u" + id);
+		displayOrow(text);
 		originRow.style.display = "none";
 		updateRow.style.display = "block";
 	}
+	function replyForm(id){
+		var originRow = document.getElementById(id);
+		var replyRow = document.getElementById("r" + id);
+		originRow.style.display = "none";
+		replyRow.style.display = "block";
+	}
 	
-	function deleteChk(brd_no){
-		
+	function deleteChk(brd_no,pageNum){
 		if(confirm("정말 삭제하시겠습니까?")){
-			location.href="deleteOneline.jsp?brd_no="+brd_no;	
+			location.href="../oneLineBoard/deleteOneline.jsp?brd_no="+brd_no+"&pageNum="+pageNum;	
 		}else{
 			return;
 		}
+	}
+	
+	function isUpdateSubmit(m_no) {
+ 		if(m_no == null || m_no == "" || m_no == "null"){
+ 			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
+ 				location.href = "../module/main.jsp?pgm=/member/login.jsp";
+ 			} else {
+ 				return;
+ 			}
+ 		}else{
+ 			document.updateFrm.submit();
+ 		}
 	}
 </script>
 </head>
@@ -102,35 +122,51 @@
 	</div>
 	<p>
 	<div
-		style="height: 500px; border: 1px solid; padding: 10px 10px 10px 10px;"
+		style=" border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
 		<%
 				if (list != null) {
-					for (J_OneLineBoard jolb : list) {
+					for (int i = 0 ; i < list.size(); i++) {
+						J_OneLineBoard jolb = list.get(i);
 		%>
-		<div id="<%=jolb.getBrd_no()%>">
-			<p><%=jolb.getM_nick()%><%=jolb.getBrd_reg_date()%><%=jolb.getBrd_content()%>
+		<div id="<%=i%>">
+			
+			<p><%=total--%>&nbsp;<%=jolb.getM_nick()%>&nbsp;<%=jolb.getBrd_reg_date()%>&nbsp;<%=jolb.getBrd_content()%><a href="javascript:replyForm(<%=i%>)">[<%=jolb.getRep_count()%>]</a>
 					<%
 						if (m_no != null) {
 							if (jolb.getM_no() == Integer.parseInt(m_no)) {
 					%> 
-								<a href="javascript:udpateForm(<%=jolb.getBrd_no()%>);">수정</a> 
-								<a href="javascript:deleteChk(<%=jolb.getBrd_no()%>)">삭제</a> 
+								<a href="javascript:udpateForm(<%=i%>,<%=jolb.getBrd_content()%>);">수정</a> 
+								<a href="javascript:deleteChk(<%=jolb.getBrd_no()%>,<%=pageNum%>)">삭제</a> 
 					<%
 		 					}
 					%> 
-								<a href="">답글</a> 
+								<a href="javascript:replyForm(<%=i%>)">답글</a> 
 					<%
 						} else {
 					%> 
-							<a href="">답글</a> 
+							<a href="javascript:replyForm(<%=i%>)">답글</a> 
 					<%
 						}
 					%>
 			</p>
 		</div>
-		<div id="<%="u" + jolb.getBrd_no()%>" style="display: none;">
-			<jsp:include page="updateOneLineForm.jsp">
+		<div id="<%="u" + i%>" style="display: none;">
+			<form action="../oneLineBoard/updateOneline.jsp" name="updateFrm">
+				<p><a>확인</a><a>취소</a></p>
+					<c:if test="${not empty m_no}">
+						<input type="hidden" name="m_no" value="${m_no}">
+					</c:if>
+						<input type="hidden" name="brd_no" value="<%=jolb.getBrd_no()%>">
+					<textarea rows="3" cols="100" maxlength="150" id="updateContent<%=i%>"
+						name="brd_content" required="required" onkeyup="textCheck()"><%=jolb.getBrd_content()%></textarea>
+					<span id="counter">0/150</span> <input
+						style="height: 50px; width: 120px;" type="submit" value="등록"
+						onclick="isUpdateSubmit(${m_no})">
+			</form>
+		</div>
+		<div id="<%="r" + i%>" style="display: none;">
+			<jsp:include page="replyOneLineForm.jsp" >
 				<jsp:param value="<%=jolb.getBrd_no()%>" name="brd_no"/>
 			</jsp:include>
 		</div>
@@ -162,9 +198,9 @@
 			<%
 				} else {
 			%>
-			<strong><a
-				href="main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum=<%=i%>">[<%=i%>]
-			</a></strong>
+			<strong>
+				[<%=i%>]
+			</strong>
 			<%
 				}
 				}

@@ -20,7 +20,6 @@
 	if(result > 0){
 %>
 	<script type="text/javascript">
-		alert("한줄 글 등록 성공");
 		location.href = "../module/main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp";
 	</script>
 <%		

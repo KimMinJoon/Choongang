@@ -12,7 +12,16 @@ public class J_OneLineBoard {
 	private int m_no;
 	private String m_nick;
 	private int grp;
+	private int rep_count;
 	
+	
+	
+	public int getRep_count() {
+		return rep_count;
+	}
+	public void setRep_count(int rep_count) {
+		this.rep_count = rep_count;
+	}
 	public int getGrp() {
 		return grp;
 	}
@@ -71,6 +80,6 @@ public class J_OneLineBoard {
 	public String toString() {
 		return "J_OneLineBoard [brd_no=" + brd_no + ", brd_content=" + brd_content + ", brd_reg_date=" + brd_reg_date
 				+ ", brd_update_date=" + brd_update_date + ", brd_ip=" + brd_ip + ", brd_del_yn=" + brd_del_yn
-				+ ", m_no=" + m_no + ", m_nick=" + m_nick + ", grp=" + grp + "]";
+				+ ", m_no=" + m_no + ", m_nick=" + m_nick + ", grp=" + grp + ", rep_count=" + rep_count + "]";
 	}
 }

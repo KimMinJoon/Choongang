@@ -17,6 +17,7 @@
 	J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
 	int result = bd.update(meetboard);
 	if (result > 0){
+		
 %>
 	<script type="text/javascript">
 		alert("수정 성공");

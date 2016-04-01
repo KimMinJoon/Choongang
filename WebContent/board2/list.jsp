@@ -1,24 +1,50 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="j_meetboard.*"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html >
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+function chk(m_no) {
+		alert(m_no);
+		if(m_no == null || m_no == "" || m_no == "null"){
+			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")==true) {
+				location.href = "../module/main.jsp?pgm=/member/login.jsp";
+			} else {
+				return;
+			}
+		}else{
+			document.frm.submit();
+		}
+}
+
+</script>
+
 <link type="text/css" rel="stylesheet" href="../css/projectcss.css">
 </head><body>
+
 <table border="1" width="100%"><caption>게시판</caption>
 
 	<tr>
-		<td>말머리</td><td>글번호</td><td>제목</td><td>닉네임</td><td>희망언어</td><td>조회수</td><td>추천수</td><td>작성일</td><td>수정일</td>
+		<td>말머리</td><td>글번호</td><td>제목</td><td>닉네임</td><td>희망언어</td><td>조회수</td><td>추천수</td><td>작성일</td>
 	</tr>
 	
 <%
+	String m_no = (String) session.getAttribute("m_no");
+	System.out.println(m_no);//이거0
+
+	/* String m_no = (String)session.getAttribute("m_no");
+	String path = application.getContextPath();
+	if(m_no == null || m_no.equals("") || m_no.equals("null")){
+	   response.sendRedirect(path+"/module/main.jsp?pgm=/member/login.jsp");
+	} 
+ */
+
 	String pageNum = request.getParameter("pageNum");//패이지를 읽어오지않으면!
 	J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
-	
-	
-	int rowPerPage = 10;//한페이지에 보여줄 게시글의 수
+
+	int rowPerPage = 15;//한페이지에 보여줄 게시글의 수
 	int pagePerBlock = 10;//한페이지에 보여줄 블락의 수 (블락은 10페이지)
 	if (pageNum == null || pageNum.equals("null")||pageNum.equals("")) pageNum = "1";//페이지는 1이다.
 	int nowPage = Integer.parseInt(pageNum);
@@ -38,6 +64,7 @@
 	if (list.size() != 0){
 		for(J_MeetBoard brd : list){
 %>
+
 	<tr>
 		<td><%=brd.getC_value_cate()%></td>
 		<td><%=total--%></td>
@@ -49,7 +76,8 @@
 			}else{
 		%>
 		<td>
-<a href="view.jsp?brd_no=<%=brd.getBrd_no()%>&pageNum=<%=nowPage %>"><%=brd.getBrd_subject() %></a>
+			<a href="view.jsp?brd_no=<%=brd.getBrd_no()%>&pageNum=<%=nowPage %>">
+			<%=brd.getBrd_subject() %></a>
 			<!-- 페이지넘을 가지고 다녀야만이 수정이나 삭제를 할때 페이지가 완료후 되돌아오는 페이지를 수정햇던 페이지로 보낸다.--> 
 			<%
 				if(brd.getBrd_readcount()>20){//조회수가 20보다 크면 이미지를 붙여라
@@ -64,7 +92,7 @@
 		<td><%=brd.getBrd_recommend()%></td>
 		<%-- <td><%=brd.getBrd_ip() %></td> --%>
 		<td><%=brd.getBrd_reg_date() %></td>
-		<td><%=brd.getBrd_update_date() %></td>
+		<%-- <td><%=brd.getBrd_update_date() %></td> --%>
 	</tr>		
 <%	
 		} }
@@ -81,6 +109,7 @@
 <%
 	if (startPage > pagePerBlock) {
 %>
+	<a href="list.jsp?pageNum=1">[첫페이지]</a>
 	<a href="list.jsp?pageNum=<%=startPage-pagePerBlock%>">[이전]</a>
 <%
 	}
@@ -93,11 +122,16 @@
 	}
 	if (totalPage > endPage) {
 %>
-	<a href="list.jsp?pageNum=<%=startPage+pagePerBlock%>">다음</a>
+	<a href="list.jsp?pageNum=<%=startPage+pagePerBlock%>">[다음]</a>
+	<a href="list.jsp?pageNum=<%=totalPage%>">[마지막페이지]</a>
 <%
 	}
 %>
-	<br><button onclick="location.href='writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>
+	<%-- <br><button onclick="location.href='writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>  --%>
+	<!-- <br><input type="submit" value="글쓰기"> -->
+	<br><button onclick="chk(<%=m_no%>)">글쓰기</button> 
+
 </div>
+
 </body>
 </html>

@@ -149,4 +149,14 @@ public class J_RecommendBoard {
 		this.mc_value = mc_value;
 	}
 
+	/*@Override
+	public String toString() {
+		return "J_RecommendBoard [brd_no=" + brd_no + ", brd_subject=" + brd_subject + ", brd_content=" + brd_content
+				+ ", brd_readcount=" + brd_readcount + ", brd_recommend=" + brd_recommend + ", brd_ip=" + brd_ip
+				+ ", brd_reg_date=" + brd_reg_date + ", brd_update_date=" + brd_update_date + ", brd_dey_yn="
+				+ brd_dey_yn + ", ref=" + ref + ", re_step=" + re_step + ", re_level=" + re_level + ", m_no=" + m_no
+				+ ", m_nick=" + m_nick + ", mc_code=" + mc_code + ", mc_value=" + mc_value + "]";
+	}*/
+	
+	
 }

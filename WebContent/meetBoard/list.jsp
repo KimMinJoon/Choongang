@@ -76,7 +76,7 @@ function chk(m_no) {
 			}else{
 		%>
 		<td>
-			<a href="view.jsp?brd_no=<%=brd.getBrd_no()%>&pageNum=<%=nowPage %>">
+			<a href="../module/main.jsp?pgm=/meetBoard/view.jsp?brd_no=<%=brd.getBrd_no()%>&pageNum=<%=nowPage %>">
 			<%=brd.getBrd_subject() %></a>
 			<!-- 페이지넘을 가지고 다녀야만이 수정이나 삭제를 할때 페이지가 완료후 되돌아오는 페이지를 수정햇던 페이지로 보낸다.--> 
 			<%
@@ -109,21 +109,21 @@ function chk(m_no) {
 <%
 	if (startPage > pagePerBlock) {
 %>
-	<a href="list.jsp?pageNum=1">[첫페이지]</a>
-	<a href="list.jsp?pageNum=<%=startPage-pagePerBlock%>">[이전]</a>
+	<a href="../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=1">[첫페이지]</a>
+	<a href="../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=startPage-pagePerBlock%>">[이전]</a>
 <%
 	}
 
 	for(int i = startPage; i <= endPage; i++){
 %>
-	<a href="list.jsp?pageNum=<%=i%>">[<%=i %>]</a>
+	<a href="../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=i%>">[<%=i %>]</a>
 	<!-- i를누르면 pageNum을 가지고 다시 그페이지로 넘어가라 -->
 <%
 	}
 	if (totalPage > endPage) {
 %>
-	<a href="list.jsp?pageNum=<%=startPage+pagePerBlock%>">[다음]</a>
-	<a href="list.jsp?pageNum=<%=totalPage%>">[마지막페이지]</a>
+	<a href="../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=startPage+pagePerBlock%>">[다음]</a>
+	<a href="../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=totalPage%>">[마지막페이지]</a>
 <%
 	}
 %>

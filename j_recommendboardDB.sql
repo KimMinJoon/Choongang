@@ -8,8 +8,11 @@ create table j_recommendboard (
 	brd_reg_date date default sysdate, --게시등록일
 	brd_update_date date,  --게시 수정일
 	brd_del_yn char(1) default 'n' check (brd_del_yn in ('y','n')),
+	ref number not null, -- 답변글끼리 그룹
+	re_step number not null, -- ref내의 순서
+	re_level number not null, -- 들여쓰기
 	m_no number not null, -- m_no과 참조된 외래키
-	mc_code varchar2(30) not null -- 게시판말머리(brd_category)
+	mc_code varchar2(30) not null -- 게시판말머리
 );
 
 -- 게시판에 m_no 외래키 설정

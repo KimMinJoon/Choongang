@@ -18,7 +18,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>WriteForm</title>
-<link rel="stylesheet" type="text/css" href="../css/boardcss.css">
+<link rel="stylesheet" type="text/css" href="../css/projectcss.css">
 </head>
 <body>
 

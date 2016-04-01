@@ -23,7 +23,7 @@
 	J_MeetBoard meetboard = bd.select(brd_no);
 	//String dbPass = meetboard.getPasswd();
 %>
-<form action="deletePro.jsp" name="frm" onsubmit="return chk()">
+<form action="../meetBoard/deletePro.jsp" name="frm" onsubmit="return chk()">
 	<input type="hidden" name="brd_no" value="<%=brd_no%>">
 	<input type="hidden" name="pageNum" value="<%=pageNum%>">
 	<%-- <input type="hidden" name="dbPass" value="<%=dbPass%>"> --%>

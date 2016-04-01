@@ -8,10 +8,25 @@
 </head>
 <body>
 <%
+	String m_no = (String)session.getAttribute("m_no");
+	
+	
+	// 로그인없이 게시글 접근 시 막기 
+	//if(m_no == null || m_no.equals("") || m_no.equals("null")){
+		%>
+		<!-- <script type="text/javascript">
+			alert("1");		
+			location.href="../module/main.jsp?pgm=/member/login.jsp";
+		</script> -->
+		<%
+	   //response.sendRedirect(path+"/module/main.jsp?pgm=/member/login.jsp");
+	//} 
+
 	int brd_no = Integer.parseInt(request.getParameter("brd_no"));
 	String pageNum = request.getParameter("pageNum");
 	J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
 	J_MeetBoard brd = bd.select(brd_no);
+	System.out.println("view에서 받은 m_no값~ :"+brd.getM_no());
 	if (brd != null) {
 		bd.updateHit(brd_no);
 %>
@@ -44,9 +59,27 @@
 			<th>IP</th><td><%=brd.getBrd_ip() %></td>
 		</tr> --%>
 		
+		
+		
+		<%
+			if (brd.getBrd_update_date()!=null){
+		%>
 		<tr>
 			<th>작성일</th><td><%=brd.getBrd_reg_date() %></td>
 		</tr>
+		<tr>
+			<th>최근수정일</th><td><%=brd.getBrd_reg_date() %></td>
+		</tr>
+		<%
+			} else {
+		%>
+		<tr>
+			<th>작성일</th><td><%=brd.getBrd_reg_date() %></td>
+		</tr>
+		<%
+			}
+		%>
+		
 		<tr>
 			<th>내용</th><td><pre><%=brd.getBrd_content() %></pre></td>
 			<!-- pre는 입력한 내용을 잇는 그래도 보여줌  -->
@@ -60,11 +93,25 @@
 	}
 %>
 <div align="center">
-	<button onclick="location.href='list.jsp?pageNum=<%=pageNum%>'">게시판 목록</button>
-	<button onclick="location.href='updateForm.jsp?brd_no=<%=brd_no %>&pageNum=<%=pageNum%>'">수정하기</button>
+	<button onclick="location.href='../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=pageNum%>'">게시판 목록</button>
+	<%
+		m_no = "1";
+		
+		System.out.println(m_no);//1
+		System.out.println(brd.getM_no());//0
+		if (m_no != null) {
+		 	if (Integer.parseInt(m_no) == brd.getM_no()){
+			
+	%>
+	<button onclick="location.href='../module/main.jsp?pgm=/meetBoard/updateForm.jsp?brd_no=<%=brd_no %>&pageNum=<%=pageNum%>'">수정하기</button>
 	<!-- 이렇게해야 수정을 누르면 수정클릭한 해당 페이지로 보내준다. -->
-	<button onclick="location.href='deleteForm.jsp?brd_no=<%=brd_no %>&pageNum=<%=pageNum%>'">삭제하기</button>
-	<button onclick="location.href='writeForm.jsp?brd_no=<%=brd_no %>&pageNum=<%=pageNum%>'">답변</button>
+	
+	<button onclick="location.href='../module/main.jsp?pgm=/meetBoard/deleteForm.jsp?brd_no=<%=brd_no %>&pageNum=<%=pageNum%>'">삭제하기</button>
+	<%
+			}
+		}
+	%>
+	<%-- <button onclick="location.href='writeForm.jsp?brd_no=<%=brd_no %>&pageNum=<%=pageNum%>'">답변</button> --%>
 </div>
 
 </body>

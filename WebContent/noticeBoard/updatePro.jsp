@@ -21,7 +21,7 @@
 	%>
 	<script type="text/javascript">
 		alert("수정 성공");
-		location.href="../noticeBoard/list.jsp?pageNum=<%=pageNum%>";
+		location.href="../module/main.jsp?pgm=/noticeBoard/list.jsp?pageNum=<%=pageNum%>";
 	</script>
 	<%
 		} else {

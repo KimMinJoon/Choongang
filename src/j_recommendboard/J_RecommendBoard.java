@@ -19,7 +19,7 @@ public class J_RecommendBoard {
 	private int m_no;
 	private String m_nick;
 	private String mc_code;
-	private String c_value;
+	private String mc_value;
 
 	public int getBrd_no() {
 		return brd_no;
@@ -93,30 +93,6 @@ public class J_RecommendBoard {
 		this.brd_dey_yn = brd_dey_yn;
 	}
 
-	public int getM_no() {
-		return m_no;
-	}
-
-	public void setM_no(int m_no) {
-		this.m_no = m_no;
-	}
-
-	public String getM_nick() {
-		return m_nick;
-	}
-
-	public void setM_nick(String m_nick) {
-		this.m_nick = m_nick;
-	}
-
-	public String getMc_code() {
-		return mc_code;
-	}
-
-	public void setMc_code(String mc_code) {
-		this.mc_code = mc_code;
-	}
-
 	public int getRef() {
 		return ref;
 	}
@@ -141,12 +117,46 @@ public class J_RecommendBoard {
 		this.re_level = re_level;
 	}
 
-	public String getC_value() {
-		return c_value;
+	public int getM_no() {
+		return m_no;
 	}
 
-	public void setC_value(String c_value) {
-		this.c_value = c_value;
+	public void setM_no(int m_no) {
+		this.m_no = m_no;
 	}
 
+	public String getM_nick() {
+		return m_nick;
+	}
+
+	public void setM_nick(String m_nick) {
+		this.m_nick = m_nick;
+	}
+
+	public String getMc_code() {
+		return mc_code;
+	}
+
+	public void setMc_code(String mc_code) {
+		this.mc_code = mc_code;
+	}
+
+	public String getMc_value() {
+		return mc_value;
+	}
+
+	public void setMc_value(String mc_value) {
+		this.mc_value = mc_value;
+	}
+
+	/*@Override
+	public String toString() {
+		return "J_RecommendBoard [brd_no=" + brd_no + ", brd_subject=" + brd_subject + ", brd_content=" + brd_content
+				+ ", brd_readcount=" + brd_readcount + ", brd_recommend=" + brd_recommend + ", brd_ip=" + brd_ip
+				+ ", brd_reg_date=" + brd_reg_date + ", brd_update_date=" + brd_update_date + ", brd_dey_yn="
+				+ brd_dey_yn + ", ref=" + ref + ", re_step=" + re_step + ", re_level=" + re_level + ", m_no=" + m_no
+				+ ", m_nick=" + m_nick + ", mc_code=" + mc_code + ", mc_value=" + mc_value + "]";
+	}*/
+	
+	
 }

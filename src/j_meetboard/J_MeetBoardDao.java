@@ -45,7 +45,7 @@ public class J_MeetBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "insert into j_meetboard values(?,?,?,0,0,?,sysdate,sysdate,'n',?,?,?)";
+		String sql = "insert into j_meetboard values(?,?,?,0,0,?,sysdate,null,'n',?,?,?)";
 		//									brdno,subject,content,readcount,recommend,ip,regdate,updatedate,delyn,m_no,mccode,lcode					
 		//처음에 입력될때는 n으로 입력되야합니다~
 		String sql1 = "select nvl(max(brd_no),0)+1 from j_meetboard";
@@ -88,7 +88,7 @@ public class J_MeetBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select count(*) from j_meetboard";
+		String sql = "select count(*) from j_meetboard where brd_del_yn='n'";
 		
 		try {
 			conn = getConnection();
@@ -114,7 +114,7 @@ public class J_MeetBoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = 
-				"select * from (select rowNum rn, a.* from (select mb.*, m.m_nick, c.c_value as c_value_cate, d.c_value as c_value_lang from j_meetboard mb, j_member m, j_code c, j_code d where mb.m_no = m.m_no and mb.mc_code = c.c_minor and mb.l_code = d.c_minor order by mb.brd_no desc) a) where rn between ? and ?";
+				"select * from (select rowNum rn, a.* from (select mb.*, m.m_nick, c.c_value as c_value_cate, d.c_value as c_value_lang from j_meetboard mb, j_member m, j_code c, j_code d where mb.m_no = m.m_no and mb.mc_code = c.c_minor and mb.l_code = d.c_minor and brd_del_yn='n' order by mb.brd_no desc) a) where rn between ? and ?";
 		// 댓글 정렬 해줌!
 		//가장안에 a는 num을 기준으로 역순으로 테이블을 정렬하고 그 결과값을 테이블로 사용한다.
 		// 그 테이블에 rowNum(테이블 기본 오름차순 순서번호값)을 주고 별칭을 rn으로 한다 그리고 a테이블의 모든 정보를 뒤에 출력
@@ -142,6 +142,7 @@ public class J_MeetBoardDao {
 				meetboard.setC_value_lang(rs.getString("c_value_lang"));
 				meetboard.setC_value_cate(rs.getString("c_value_cate"));
 				meetboard.setM_no(rs.getInt("m_no"));
+				System.out.println("select의 m_no 받아올때 값 :"+rs.getInt("m_no"));
 				list.add(meetboard);
 			}
 				
@@ -173,14 +174,17 @@ public class J_MeetBoardDao {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				meetboard.setBrd_no(rs.getInt("brd_no"));
+				meetboard.setM_no(rs.getInt("m_no"));
 				meetboard.setBrd_subject(rs.getString("brd_subject"));
 				meetboard.setBrd_content(rs.getString("brd_content"));
 				meetboard.setBrd_reg_date(rs.getDate("brd_reg_date"));
+				meetboard.setBrd_update_date(rs.getDate("brd_update_date"));
 				meetboard.setBrd_recommend(rs.getInt("brd_recommend"));
 				meetboard.setBrd_readcount(rs.getInt("brd_readcount"));
 				meetboard.setM_nick(rs.getString("m_nick"));
 				meetboard.setMc_code(rs.getString("mc_code"));
 				meetboard.setL_code(rs.getString("l_code"));
+				
 				meetboard.setC_value_lang(rs.getString("c_value_lang"));
 				meetboard.setC_value_cate(rs.getString("c_value_cate"));
 			}
@@ -224,7 +228,7 @@ public class J_MeetBoardDao {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "update j_meetboard set brd_subject=?,brd_content=?,l_code=?,mc_code=? where brd_no=?";
+		String sql = "update j_meetboard set brd_subject=?,brd_content=?,l_code=?,mc_code=?,brd_update_date=sysdate where brd_no=?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);

@@ -16,9 +16,15 @@
 		String pageNum = request.getParameter("pageNum");
 		J_NoticeBoardDao bd = J_NoticeBoardDao.getInstance();
 		int result = bd.insert(noticeboard);
-		if (result > 0)
+		if (result > 0) {
 			response.sendRedirect("list.jsp?pageNum=" + pageNum);
-		else {
+	%>
+	<script type="text/javascript">
+			alert("입력성공");
+			location.href="../module/main.jsp?pgm=/noticeBoard/list.jsp?pageNum=<%=pageNum%>";
+	</script>
+	<%
+		} else {
 	%>
 	<script type="text/javascript">
 		alert("잘해!");

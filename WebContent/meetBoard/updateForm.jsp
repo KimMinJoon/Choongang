@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
 <link rel="stylesheet" type="text/css" href="comm.css">
 </head>
 <body>
@@ -15,7 +16,7 @@
 	J_CodeDao jcd = J_CodeDao.getInstance();
 	List<J_Code> list = jcd.selectList();
 %>
-<form action="updatePro.jsp" method="post">
+<form action="../meetBoard/updatePro.jsp" method="post">
 	<input type="hidden" name="brd_no" value="<%=meetboard.getBrd_no() %>">
 	<input type="hidden" name="pageNum" value="<%=pageNum %>">
 <table border="1"><caption>게시판 수정</caption>

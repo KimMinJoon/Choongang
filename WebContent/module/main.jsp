@@ -18,8 +18,6 @@
 <link rel="stylesheet" type="text/css" href="../css/projectcss.css">
 </head>
 <body>
-
-
 	<table align="center">
 		<tr>
 			<td width="1100" height="50"><jsp:include page="top.jsp" /></td>
@@ -34,6 +32,5 @@
 			<td colspan="2" height="40"><jsp:include page="bottom.jsp" /></td>
 		</tr>
 	</table>
-	
 </body>
 </html>

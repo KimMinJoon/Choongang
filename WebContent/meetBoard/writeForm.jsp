@@ -18,7 +18,7 @@
 
 </head>
 <body>
-<form action="write.jsp" method="post">
+<form action="../meetBoard/write.jsp" method="post">
 <input type="hidden" name="pageNum" value="<%=pageNum%>">
 <input type="hidden" name="m_no" value="<%=m_no%>">
  

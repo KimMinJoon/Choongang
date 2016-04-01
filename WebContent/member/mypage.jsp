@@ -24,7 +24,7 @@
 		<td> <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/myinfo.jsp" > 내정보보기 </a> </td>
 		</tr>
 		<tr>
-		<td> <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/update.jsp" > 회원정보수정 </a> </td>
+		<td> <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/mbupdate.jsp" > 회원정보수정 </a> </td>
 		</tr>
 		<tr>
 		<td> <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/friend.jsp" > 친구/관심글 </a> </td>

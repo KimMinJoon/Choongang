@@ -76,4 +76,13 @@ public class J_NoticeBoard {
 	public void setBrd_del_yn(String brd_del_yn) {
 		this.brd_del_yn = brd_del_yn;
 	}
+
+	@Override
+	public String toString() {
+		return "J_NoticeBoard [brd_no=" + brd_no + ", brd_subject=" + brd_subject + ", brd_content=" + brd_content
+				+ ", brd_readcount=" + brd_readcount + ", brd_reg_date=" + brd_reg_date + ", brd_update_date="
+				+ brd_update_date + ", brd_del_yn=" + brd_del_yn + ", admin=" + admin + "]";
+	}
+	
+	
 }

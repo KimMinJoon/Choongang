@@ -166,15 +166,14 @@
 		</div>
 		<div class="updateForm">
 			<form action="../oneLineBoard/updateOneline.jsp" name="updateFrm" method="post" onsubmit="return isSubmit(${m_no})">
-						<input type="button" class="updateCancel" value="취소">
-						<input type="hidden" name="m_no" value="${m_no}">
-						<input type="hidden" name="pageNum" value="<%=pageNum%>">
-						<input type="hidden" name="brd_no" value="<%=jolb.getBrd_no()%>">
-						<p class="originText" style="display: none;"><%=jolb.getBrd_content()%></p>
-					<textarea rows="3" cols="100" maxlength="150" class="updateContent"
+				<input type="button" class="updateCancel" value="취소">
+				<input type="hidden" name="m_no" value="${m_no}">
+				<input type="hidden" name="pageNum" value="<%=pageNum%>">
+				<input type="hidden" name="brd_no" value="<%=jolb.getBrd_no()%>">
+				<p class="originText" style="display: none;"><%=jolb.getBrd_content()%></p>
+				<textarea rows="3" cols="100" maxlength="150" class="updateContent"
 						name="brd_content" required="required"><%=jolb.getBrd_content()%></textarea>
-					<input
-						style="height: 50px; width: 120px;" type="submit" value="등록">
+				<input style="height: 50px; width: 120px;" type="submit" value="등록">
 			</form>
 		</div>
 		<div class="replyForm">

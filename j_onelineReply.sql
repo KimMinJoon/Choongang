@@ -8,3 +8,4 @@ create table J_OneLineReply(
   del_yn char(1) default 'n',
   delete_date date
 );
+

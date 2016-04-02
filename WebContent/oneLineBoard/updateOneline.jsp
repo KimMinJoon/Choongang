@@ -20,7 +20,7 @@
 	if(result > 0){
 %>
 	<script type="text/javascript">
-		location.href = "../module/main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp";
+		location.href = "../module/main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum="+pageNum;
 	</script>
 <%		
 	}else{

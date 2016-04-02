@@ -6,14 +6,25 @@
 <title>WriteForm</title>
 <link rel="stylesheet" type="text/css" href="../css/projectcss.css">
 <%
-	//String m_no = (String)session.getAttribute("m_no");
-	String m_no = "1";	
+	String m_no = (String)session.getAttribute("m_no");
+	//String m_no = "1";	
 	String pageNum = request.getParameter("pageNum");
 %>
 
 <%
 		J_CodeDao jcd = J_CodeDao.getInstance();
 		List<J_Code> list = jcd.selectList();
+		//String m_no = (String)session.getAttribute("m_no");
+		// 로그인없이 게시글 접근 시 막기 
+			if(m_no == null || m_no.equals("") || m_no.equals("null")){
+				%>
+				<script type="text/javascript">
+					alert("로그인을 하셔야 이용할 수 있는 페이지입니다.");		
+					location.href="../module/main.jsp?pgm=/member/login.jsp";
+				</script> 
+				<%
+			   
+			} 
 %>
 
 </head>

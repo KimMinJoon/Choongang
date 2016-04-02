@@ -31,6 +31,10 @@
 	right: 5px;
 }
 
+#update{
+	position : relative;
+}
+
 #counter {
 	background: rgba(255, 0, 0, 0.5);
 	border-radius: 0.5em;
@@ -67,25 +71,21 @@
 
 		List<J_OneLineBoard> list = jobd.selectOneLine(startRow, endRow);
 %>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
-	function displayOrow(text){
-		for(var i = 0; i < <%=list.size()%>;i++){
-			var oRow = document.getElementById(i);
-			var uRow = document.getElementById("u" + i);
-			var rRow = document.getElementById("r"+ i );
-			oRow.style.display = "block";
-			var textarea = document.getElementById("updateContent" + i);
-			textarea.value = text;
-			uRow.style.display = "none";
-		}
-	}
-	function udpateForm(id, text){
-		var originRow = document.getElementById(id);
-		var updateRow = document.getElementById("u" + id);
-		displayOrow(text);
-		originRow.style.display = "none";
-		updateRow.style.display = "block";
-	}
+	
+	
+	$(document).ready(function(){
+		$(".updateForm").hide();
+		$(".replyForm").hide();
+		
+		$(".btnUpdate").click(function(){
+			$(this).parent().hide("slow");
+			$(this).parent().parent().next().show("slow");
+
+		});
+	});
+	
 	function replyForm(id){
 		var originRow = document.getElementById(id);
 		var replyRow = document.getElementById("r" + id);
@@ -115,59 +115,56 @@
 </script>
 </head>
 <body>
-	
 	<div style="border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
 		<jsp:include page="insertOneLineForm.jsp"/>
 	</div>
 	<p>
+	
 	<div
 		style=" border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
+			
 		<%
 				if (list != null) {
 					for (int i = 0 ; i < list.size(); i++) {
 						J_OneLineBoard jolb = list.get(i);
 		%>
-		<div id="<%=i%>">
-			
+		<div class="row">
 			<p><%=total--%>&nbsp;<%=jolb.getM_nick()%>&nbsp;<%=jolb.getBrd_reg_date()%>&nbsp;<%=jolb.getBrd_content()%><a href="javascript:replyForm(<%=i%>)">[<%=jolb.getRep_count()%>]</a>
 					<%
 						if (m_no != null) {
 							if (jolb.getM_no() == Integer.parseInt(m_no)) {
 					%> 
-								<a href="javascript:udpateForm(<%=i%>,<%=jolb.getBrd_content()%>);">수정</a> 
+								<input type="button" class="btnUpdate" value="수정">
 								<a href="javascript:deleteChk(<%=jolb.getBrd_no()%>,<%=pageNum%>)">삭제</a> 
 					<%
 		 					}
 					%> 
 								<a href="javascript:replyForm(<%=i%>)">답글</a> 
 					<%
-						} else {
-					%> 
-							<a href="javascript:replyForm(<%=i%>)">답글</a> 
-					<%
 						}
 					%>
 			</p>
 		</div>
-		<div id="<%="u" + i%>" style="display: none;">
+		<div class="updateForm">
 			<form action="../oneLineBoard/updateOneline.jsp" name="updateFrm">
-				<p><a>확인</a><a>취소</a></p>
+				<p><a>취소</a></p>
 					<c:if test="${not empty m_no}">
 						<input type="hidden" name="m_no" value="${m_no}">
 					</c:if>
 						<input type="hidden" name="brd_no" value="<%=jolb.getBrd_no()%>">
-					<textarea rows="3" cols="100" maxlength="150" id="updateContent<%=i%>"
+					<textarea rows="3" cols="100" maxlength="150" id="updateContent"
 						name="brd_content" required="required" onkeyup="textCheck()"><%=jolb.getBrd_content()%></textarea>
 					<span id="counter">0/150</span> <input
 						style="height: 50px; width: 120px;" type="submit" value="등록"
 						onclick="isUpdateSubmit(${m_no})">
 			</form>
 		</div>
-		<div id="<%="r" + i%>" style="display: none;">
+		<div class="replyForm">
 			<jsp:include page="replyOneLineForm.jsp" >
 				<jsp:param value="<%=jolb.getBrd_no()%>" name="brd_no"/>
+				<jsp:param value="<%=pageNum%>" name="pageNum"/>
 			</jsp:include>
 		</div>
 			<%
@@ -222,5 +219,6 @@
 			%>
 		</div>
 	</div>
+	
 </body>
 </html>

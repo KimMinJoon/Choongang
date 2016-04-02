@@ -15,6 +15,16 @@
 	J_MeetBoard meetboard = bd.select(brd_no);
 	J_CodeDao jcd = J_CodeDao.getInstance();
 	List<J_Code> list = jcd.selectList();
+	String m_no = (String)session.getAttribute("m_no");
+	// 로그인없이 게시글 접근 시 막기 
+		if(m_no == null || m_no.equals("") || m_no.equals("null")){
+			%>
+			<script type="text/javascript">
+				alert("로그인을 하셔야 이용할 수 있는 페이지입니다.");		
+				location.href="../module/main.jsp?pgm=/member/login.jsp";
+			</script> 
+			<%
+		} 
 %>
 <form action="../meetBoard/updatePro.jsp" method="post">
 	<input type="hidden" name="brd_no" value="<%=meetboard.getBrd_no() %>">

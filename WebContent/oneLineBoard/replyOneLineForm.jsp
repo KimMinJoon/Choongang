@@ -1,3 +1,4 @@
+<%@page import="j_onelineboard.J_OneLineReply"%>
 <%@page import="j_board.J_BoardDao"%>
 <%@page import="java.util.List"%>
 <%@page import="j_onelineboard.J_OneLineBoard"%>
@@ -5,11 +6,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 <script type="text/javascript">
 	function textCheck() {
 		var counter = document.getElementById("counter");
@@ -32,22 +28,24 @@
 <%
 	String m_no = (String) session.getAttribute("m_no");
 	int brd_no = Integer.parseInt(request.getParameter("brd_no"));
+	int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 	J_OneLineBoardDAO jobd = J_OneLineBoardDAO.getInstance();
 	J_OneLineBoard jolb = jobd.selectOneLineByNo(brd_no);
+	
+	//List<J_OneLineReply> list = jobd.selectReply(brd_no);
 %>
-</head>
-<body>
-	<form action="../oneLineBoard/replyOneline.jsp" name="replyFrm" onsubmit="return isSubmit(${m_no})">
+	<form action="../oneLineBoard/insertReplyOneline.jsp" name="replyFrm" onsubmit="return isSubmit(${m_no})" method="post">
+	<p><a>취소</a></p>
 		<c:if test="${not empty m_no}">
 			<input type="hidden" name="m_no" value="${m_no}">
-		</c:if>		
-		<!-- 세션값을 가져와서 담음 -->
+		</c:if>
+			<input type="hidden" name="brd_no" value="<%=brd_no%>">
+			<input type="hidden" name="pageNum" value="<%=pageNum%>">
 		<p><%=jolb.getM_nick()%><%=jolb.getBrd_reg_date()%><%=jolb.getBrd_content()%></p>
-		<textarea rows="3" cols="100" maxlength="150" id="content%>"
-			name="brd_content" required="required" onkeyup="textCheck()"></textarea>
-		<span id="counter">0/150</span> <input
-			style="height: 50px; width: 120px;" type="submit" value="등록">
+		<textarea rows="3" cols="100" maxlength="150" id="content"
+			name="content" required="required" onkeyup="textCheck()"></textarea>
+		<span id="counter">0/150</span> <input style="height: 50px; width: 120px;" type="submit" value="등록">
 	</form>
-
-</body>
-</html>
+	
+	<div>
+	</div>

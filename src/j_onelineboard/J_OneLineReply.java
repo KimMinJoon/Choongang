@@ -9,6 +9,7 @@ public class J_OneLineReply {
 	private String reg_Date;
 	private Date update_date;
 	private String m_nick;
+	private int m_no;
 	private String del_yn;
 	
 	public int getReply_no() {
@@ -53,9 +54,16 @@ public class J_OneLineReply {
 	public void setDel_yn(String del_yn) {
 		this.del_yn = del_yn;
 	}
+	public int getM_no() {
+		return m_no;
+	}
+	public void setM_no(int m_no) {
+		this.m_no = m_no;
+	}
 	@Override
 	public String toString() {
 		return "J_OneLineReply [reply_no=" + reply_no + ", brd_no=" + brd_no + ", content=" + content + ", reg_Date="
-				+ reg_Date + ", update_date=" + update_date + ", m_nick=" + m_nick + ", del_yn=" + del_yn + "]";
+				+ reg_Date + ", update_date=" + update_date + ", m_nick=" + m_nick + ", m_no=" + m_no + ", del_yn="
+				+ del_yn + "]";
 	}
 }

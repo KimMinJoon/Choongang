@@ -68,7 +68,7 @@ public class J_NoticeBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from (select rowNum rn, a.* from (select mb.* from j_noticeboard mb, j_member m where mb.admin = m.m_email order by brd_no desc) a ) where rn between ? and ?";
+		String sql = "select * from (select rowNum rn, a.* from (select mb.* from j_noticeboard mb, j_member m where mb.admin = m.m_email and brd_del_yn='n' order by brd_no desc) a ) where rn between ? and ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함

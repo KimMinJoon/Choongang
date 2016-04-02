@@ -15,7 +15,7 @@ public class J_MeetBoard {
 	private String brd_del_yn;
 	private int m_no;
 	private String m_nick;
-	
+	private String m_passwd;
 	private String l_code;
 	private String c_value_lang; //l_code에 대한 것
 	
@@ -125,6 +125,12 @@ public class J_MeetBoard {
 	}
 	public void setBrd_del_yn(String brd_del_yn) {
 		this.brd_del_yn = brd_del_yn;
+	}
+	public String getM_passwd() {
+		return m_passwd;
+	}
+	public void setM_passwd(String m_passwd) {
+		this.m_passwd = m_passwd;
 	}
 
 }

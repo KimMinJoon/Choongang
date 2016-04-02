@@ -3,12 +3,9 @@
 	pageEncoding="UTF-8" import="j_code.*" %>
 
 <%
-	//String m_no = (String)session.getAttribute("m_no");
-	String m_no = "1";
+	String m_no = (String)session.getAttribute("m_no");
 	String pageNum = request.getParameter("pageNum");
-%>
 
-<%
 	J_CodeDao jcd = J_CodeDao.getInstance();
 	List<J_Code> list = jcd.selectList();
 %>
@@ -21,6 +18,17 @@
 <link rel="stylesheet" type="text/css" href="../css/projectcss.css">
 </head>
 <body>
+
+<%
+	if(m_no == null || m_no.equals("") || m_no.equals("null")){
+%>
+		<script type="text/javascript">
+			alert("로그인을 하셔야 이용할 수 있는 페이지입니다.");		
+			location.href="../module/main.jsp?pgm=/member/login.jsp";
+		</script> 
+<%
+	} 
+%>
 
 	<form action="../recommendBoard/writePro.jsp" method="post">
 		<input type="hidden" name="pageNum" value="<%=pageNum%>">

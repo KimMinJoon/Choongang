@@ -41,7 +41,7 @@ public class J_NoticeBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select count(*) from j_noticeboard";
+		String sql = "select count(*) from j_noticeboard where brd_del_yn='n'";
 
 		try {
 			conn = getConnection();
@@ -68,7 +68,7 @@ public class J_NoticeBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from (select rowNum rn, a.* from (select mb.* from j_noticeboard mb, j_member m where mb.admin = m.m_email and brd_del_yn='n' order by brd_no desc) a ) where rn between ? and ?";
+		String sql = "select * from (select rowNum rn, a.* from (select * from j_noticeboard where brd_del_yn='n' order by brd_no desc) a ) where rn between ? and ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
@@ -86,6 +86,7 @@ public class J_NoticeBoardDao {
 				nb.setBrd_del_yn(rs.getString("brd_del_yn"));
 				nb.setAdmin(rs.getString("admin"));
 				list.add(nb);
+				System.out.println("list : " + list);
 			}
 
 		} catch (Exception e) {
@@ -108,7 +109,7 @@ public class J_NoticeBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "insert into j_noticeboard values(?,?,?,0,sysdate,sysdate,'n','Master')";
+		String sql = "insert into j_noticeboard values(?,?,?,0,sysdate,null,'n','Master')";
 		// brdno,subject,content,readcount,recommend,ip,regdate,updatedate,delyn,m_no,mccode,lcode
 		// 처음에 입력될때는 n으로 입력되야합니다~
 		String sql1 = "select nvl(max(brd_no),0)+1 from j_noticeboard";

@@ -4,11 +4,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 <script type="text/javascript">
 	function textCheck() {
 		var counter = document.getElementById("counter");
@@ -30,8 +25,6 @@
 <%
 	String m_no = (String) session.getAttribute("m_no");
 %>
-</head>
-<body>
 	<form action="../oneLineBoard/insertOneline.jsp" name="wrtierFrm" onsubmit="return isSubmit(${m_no})">
 		<c:if test="${not empty m_no}">
 			<input type="hidden" name="m_no" value="${m_no}">
@@ -42,6 +35,3 @@
 		<span id="counter">0/150</span> <input
 			style="height: 50px; width: 120px;" type="submit" value="등록">
 	</form>
-
-</body>
-</html>

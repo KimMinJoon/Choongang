@@ -95,7 +95,7 @@
 <div align="center">
 	<button onclick="location.href='../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=pageNum%>'">게시판 목록</button>
 	<%
-		m_no = "1";
+		//m_no = "1";
 		
 		System.out.println(m_no);//1
 		System.out.println(brd.getM_no());//0

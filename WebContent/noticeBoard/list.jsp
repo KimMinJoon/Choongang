@@ -102,21 +102,7 @@
 			}
 		%>
 		<br>
-		<%
-			J_MemberDao md = J_MemberDao.getInstance();
-			List<J_Member> ml = md.selectList();
-			for (J_Member jm : ml) {
-				if (jm.getM_email().equals("Master")) {
-		%>
-		<button
-			onclick="location.href='../module/main.jsp?pgm=/noticeBoard/writeForm.jsp?pageNum=<%=pageNum%>'">
-			글쓰기</button>
-		<%
-			break;
-				} else break;
-			}
-		%>
-
+		<button onclick="location.href='../module/main.jsp?pgm=/noticeBoard/writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>
 	</div>
 </body>
 </html>

@@ -82,8 +82,8 @@ public class J_MemberDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "insert into j_member values(?,?,?,?,sysdate,'n',null,?,?)";
-		String sql1 = "select nvl(max(m_no),0)+1 from j_member";
+		String sql = "insert into j_member values(?,?,?,?,sysdate,null,'n',?,?)";
+		String sql1 = "select nvl(max(m_no),0)+2 from j_member";
 		String sql2 = "select m_no from j_member where m_email=? and m_del_yn='y'";
 		String sql3 = "update j_member set m_passwd=?, m_nick=?, m_reg_date=sysdate, m_del_yn='n', c_code=?, l_code=? where m_no=?";
 		try {
@@ -267,45 +267,6 @@ public class J_MemberDao {
 			dbClose(rs, pstmt, conn);
 		}
 		return result;
-	}
-
-	public List<J_Member> selectList() {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		List<J_Member> list = new ArrayList<>();
-		String sql = "select * from j_member";
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				J_Member c = new J_Member();
-				c.setM_no(rs.getInt(1));
-				c.setM_email(rs.getString(2));
-				c.setM_passwd(rs.getString(3));
-				c.setM_nick(rs.getString(4));
-				c.setM_reg_date(rs.getDate(5));
-				c.setM_del_yn(rs.getString(6));
-				c.setM_out_date(rs.getDate(7));
-				c.setC_code(rs.getString(8));
-				c.setL_code(rs.getString(9));
-				list.add(c);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-			}
-		}
-		return list;
 	}
 
 	// conn과 pstmt,그리고 rs를 종료해주는 메서드

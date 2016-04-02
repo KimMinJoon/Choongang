@@ -1,0 +1,96 @@
+drop table j_code;
+
+create table j_code (
+	c_major varchar2(2) not null,
+	c_minor varchar2(10) primary key,
+	c_value varchar2(30) not null
+);
+
+select * from j_code;
+select * from j_member;
+
+insert into j_member values (1,'Master',1,'관리자',sysdate,'n',null,'c_default','l_defult');
+
+commit;
+
+insert into 
+
+desc j_member;
+
+select COUNT(*) from j_code;
+
+drop table j_member;
+create table j_member (
+	m_no number primary key,
+	m_email varchar2(30) not null unique,
+	m_passwd varchar2(20) not null,
+  	m_nick varchar2(30) not null unique,
+	m_reg_date date default sysdate,
+	m_del_yn char(1) default 'n',
+	c_code varchar2(30),
+	l_code varchar2(30)
+);
+
+select * from j_member;
+drop table j_member;
+
+create table j_member (
+	m_no number primary key,
+	m_email varchar2(30) not null unique,
+	m_passwd varchar2(20) not null,
+  	m_nick varchar2(30) not null unique,
+	m_reg_date date default sysdate,
+	m_del_yn char(1) default 'n',
+	m_out_date date,
+	c_code varchar2(30),
+	l_code varchar2(30)
+);
+
+
+create or replace function fc_date_check(
+  v_brd_reg_date date
+)
+return varchar2
+is
+  v_min number;
+  v_result varchar2(20);
+begin
+  select FLOOR((sysdate - v_brd_reg_date) * 24 * 60 * 60)
+  into v_min
+  from dual;
+  
+  select case when v_min < 60 then '방금'
+               when v_min >= 60 and v_min < 3600 then floor(v_min/60)||'분 전'
+               when v_min >= 3600 and v_min < 86400 then floor(v_min/3600)||'시간 전'
+               when v_min >= 86400 and v_min < 2419200 then floor(v_min/86400)||'일 전'
+          else
+               to_char(v_brd_reg_date,'YYYY/MM/DD')
+          end as dt
+  into v_result
+  from dual;
+  
+  return v_result;
+end;
+/
+
+select fc_date_check() from dual;
+
+select * from user_tables;
+
+
+drop table j_noticeboard;
+select * from j_noticeboard;
+
+create table j_noticeboard (
+	brd_no number primary key,
+	brd_subject varchar2(50) not null,
+	brd_content varchar2(4000) not null,
+	brd_readcount number default 0,
+	brd_reg_date date default sysdate,
+	brd_update_date date,
+	brd_del_yn char(1) default 'n' check (brd_del_yn in ('y','n')),
+	admin varchar2(15) not null
+);
+
+
+select * from manager;

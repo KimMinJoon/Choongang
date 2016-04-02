@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="j_recommendboard.*"%>
+	pageEncoding="UTF-8" import="j_recommendboard.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,7 +10,7 @@
 <body>
 
 	<%
-		String m_no = (String) session.getAttribute("m_no");
+		String m_no = (String)session.getAttribute("m_no");
 		int brd_no = Integer.parseInt(request.getParameter("brd_no"));
 		String pageNum = request.getParameter("pageNum");
 		J_RecommendBoardDao jrbd = J_RecommendBoardDao.getInstance();

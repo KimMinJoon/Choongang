@@ -12,8 +12,7 @@ public class J_Member {
 	private String m_del_yn;
 	private String c_code;
 	private String l_code;
-	
-	
+
 	public Date getM_out_date() {
 		return m_out_date;
 	}

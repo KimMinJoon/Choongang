@@ -1,7 +1,5 @@
 package j_member;
 
-import java.sql.Date;
-
 public class J_Info {
 	private int i_no;
 	private String i_email;

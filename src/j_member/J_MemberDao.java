@@ -83,7 +83,7 @@ public class J_MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "insert into j_member values(?,?,?,?,sysdate,null,'n',?,?)";
-		String sql1 = "select nvl(max(m_no),0)+2 from j_member";
+		String sql1 = "select nvl(max(m_no),0)+1 from j_member";
 		String sql2 = "select m_no from j_member where m_email=? and m_del_yn='y'";
 		String sql3 = "update j_member set m_passwd=?, m_nick=?, m_reg_date=sysdate, m_del_yn='n', c_code=?, l_code=? where m_no=?";
 		try {

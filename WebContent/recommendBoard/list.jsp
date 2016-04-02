@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="j_recommendboard.*, java.util.*"%>
+	pageEncoding="UTF-8" import="j_recommendboard.*, java.util.*" %>
 <!DOCTYPE html>
 <html>
 <head>

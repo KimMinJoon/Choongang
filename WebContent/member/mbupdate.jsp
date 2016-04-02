@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="j_member.*, j_code.*, java.util.*"%>
+	pageEncoding="UTF-8" import="j_member.*, j_code.*, java.util.*" %>
+<%@ include file="../session/sessionChk.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +37,7 @@
 		$('#m_nick').blur(function() {
 			$.ajax({
 				type : "POST",
-				url : "../member/nickchk.jsp",
+				url : "../member/nickChk.jsp",
 				data : {
 					"m_nick" : $('#m_nick').val()
 				},
@@ -53,18 +54,6 @@
 </script>
 </head>
 <body>
-
-<%
-	String m_no = (String)session.getAttribute("m_no");
-	if(m_no == null || m_no.equals("") || m_no.equals("null")){
-%>
-		<script type="text/javascript">
-			alert("로그인을 하셔야 이용할 수 있는 페이지입니다.");		
-			location.href="../module/main.jsp?pgm=/member/login.jsp";
-		</script> 
-<%
-	} 
-%>
 
 <%
 	J_CodeDao jcd = J_CodeDao.getInstance();

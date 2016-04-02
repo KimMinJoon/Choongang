@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="j_code.*, java.util.*"%>
+	pageEncoding="UTF-8" import="j_code.*, java.util.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,7 +41,7 @@
 		if (regex.test(frm.m_email.value) === false) {
 			alert("정확한 이메일 형식으로 입력해주세요");
 		} else {
-			var purl = "../member/emailchk.jsp?m_email=" + frm.m_email.value;
+			var purl = "../member/emailChk.jsp?m_email=" + frm.m_email.value;
 			var pname = "emailpopup";
 			var pwidth = 300;
 			var pheight = 200;
@@ -78,11 +78,10 @@
 			$.ajax({
 				/* 아이작스를 쓰겟다는 구문 */
 				type : "POST",
-				url : "../member/nickchk.jsp",
+				url : "../member/nickChk.jsp",
 				data : {
 					"m_nick" : $('#m_nick').val()
 					/* 아이디 엘레멘트의 값을 엠닉이라 명명하고 url로 보내겟다 */
-					
 				},
 				success : function(data) {
 					if ($.trim(data) == "TRUE") {

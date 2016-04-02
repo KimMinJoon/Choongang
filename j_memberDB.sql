@@ -15,7 +15,4 @@ select * from j_member;
 insert into j_member values (1,'master',1,'관리자',sysdate,null,'n','c_default','l_defult');
 -- 관리자 insert
 
-
 --drop table j_member;
-
-

@@ -31,14 +31,9 @@
 	int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 	J_OneLineBoardDAO jobd = J_OneLineBoardDAO.getInstance();
 	J_OneLineBoard jolb = jobd.selectOneLineByNo(brd_no);
-	
-	//List<J_OneLineReply> list = jobd.selectReply(brd_no);
 %>
 	<form action="../oneLineBoard/insertReplyOneline.jsp" name="replyFrm" onsubmit="return isSubmit(${m_no})" method="post">
-	<p><a>취소</a></p>
-		<c:if test="${not empty m_no}">
 			<input type="hidden" name="m_no" value="${m_no}">
-		</c:if>
 			<input type="hidden" name="brd_no" value="<%=brd_no%>">
 			<input type="hidden" name="pageNum" value="<%=pageNum%>">
 		<p><%=jolb.getM_nick()%><%=jolb.getBrd_reg_date()%><%=jolb.getBrd_content()%></p>
@@ -46,6 +41,3 @@
 			name="content" required="required" onkeyup="textCheck()"></textarea>
 		<span id="counter">0/150</span> <input style="height: 50px; width: 120px;" type="submit" value="등록">
 	</form>
-	
-	<div>
-	</div>

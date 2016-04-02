@@ -9,10 +9,9 @@
 	request.setCharacterEncoding("utf-8");
 %>
 <jsp:useBean id="recommendboard" class="j_recommendboard.J_RecommendBoard"></jsp:useBean>
-<jsp:setProperty property="*" name="recommendboard"/>
+<jsp:setProperty property="*" name="recommendboard" />
 </head>
 <body>
-
 	<%
 		String pageNum = request.getParameter("pageNum");
 		String ip = request.getRemoteAddr();
@@ -23,13 +22,12 @@
 			response.sendRedirect("../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=" + pageNum);
 		else {
 	%>
-			<script type="text/javascript">
-				alert("글쓰기 실패");
-				history.go(-1);
-			</script>
+		<script type="text/javascript">
+			alert("글쓰기 실패");
+			history.go(-1);
+		</script>
 	<%
 		}
 	%>
-	
 </body>
 </html>

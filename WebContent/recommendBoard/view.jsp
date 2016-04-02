@@ -11,7 +11,6 @@
 
 	<%
 		String m_no = (String) session.getAttribute("m_no");
-
 		int brd_no = Integer.parseInt(request.getParameter("brd_no"));
 		String pageNum = request.getParameter("pageNum");
 		J_RecommendBoardDao jrbd = J_RecommendBoardDao.getInstance();

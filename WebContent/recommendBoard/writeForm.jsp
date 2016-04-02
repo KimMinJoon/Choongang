@@ -1,9 +1,10 @@
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="j_board.*, j_code.*" %>
+	pageEncoding="UTF-8" import="j_code.*" %>
 
 <%
-	String m_no = (String)session.getAttribute("m_no");
+	//String m_no = (String)session.getAttribute("m_no");
+	String m_no = "1";
 	String pageNum = request.getParameter("pageNum");
 %>
 

@@ -8,11 +8,11 @@
 </head>
 <body>
 	<%
-		J_RecommendBoardDao bd = J_RecommendBoardDao.getInstance();
+		J_RecommendBoardDao jrbd = J_RecommendBoardDao.getInstance();
 		int ref = 0, re_step = 0, re_level = 0;
 		String ip = request.getRemoteAddr();
 
-		for (int i = 0; i <= 10; i++) {
+		for (int i = 0; i <= 1; i++) {
 			J_RecommendBoard jrb = new J_RecommendBoard();
 			jrb.setBrd_subject("bobby♥ bobby♥ bobby♥ bobby♥ bobby♥" + i);
 			jrb.setBrd_content("♥♥♥♥♥♥♥♥♥♥" + i);
@@ -20,9 +20,9 @@
 			jrb.setRef(ref);
 			jrb.setRe_level(re_level);
 			jrb.setRe_step(re_step);
-			jrb.setM_no(8);
-			jrb.setMc_code("mc_exlang");
-			bd.insert(jrb);
+			jrb.setM_no(1);
+			jrb.setRc_code("rc_default");
+			jrbd.insert(jrb);
 		}
 	%>
 	성공

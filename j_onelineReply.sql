@@ -5,5 +5,6 @@ create table J_OneLineReply(
   reg_date date default sysdate,
   update_date date,
   m_no number not null,
-  del_yn char(1) default 'n'
+  del_yn char(1) default 'n',
+  delete_date date
 );

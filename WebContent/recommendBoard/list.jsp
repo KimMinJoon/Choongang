@@ -23,7 +23,6 @@
 			<th width="4%">조회</th>
 			<th width="4%">추천</th>
 		</tr>
-		<tr><td colspan="7"><hr></td></tr>
 <%
 		J_RecommendBoardDao jr = J_RecommendBoardDao.getInstance();
 
@@ -50,6 +49,7 @@
 			for (J_RecommendBoard jrb : list) {	
 				System.out.println(jrb);
 %>
+			<tr><td colspan="7"><hr></td></tr>
 			<tr>
 				<td class="default"><%=total--%></td>
 				<td class="default"><font class="category"> [<%=jrb.getMc_value()%>] </font></td>
@@ -79,7 +79,6 @@
 				<td class="default"><%=jrb.getBrd_readcount()%></td>
 				<td class="default"><%=jrb.getBrd_recommend()%></td>
 			</tr>
-			<tr><td colspan="7"><hr></td></tr>
 <%
 				}
 			}

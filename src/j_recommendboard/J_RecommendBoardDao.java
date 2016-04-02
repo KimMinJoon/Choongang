@@ -2,6 +2,7 @@ package j_recommendboard;
 
 import java.sql.*;
 import java.util.*;
+
 import javax.naming.*;
 import javax.sql.*;
 
@@ -30,7 +31,7 @@ public class J_RecommendBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select count(*) from j_recommendboard where brd_del_yn = 'n'";
+		String sql = "select count(*) from j_recommendboard where brd_del_yn='n'";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -46,12 +47,28 @@ public class J_RecommendBoardDao {
 		return total;
 	}
 	
+	public void updateHit(int brd_no) throws SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "update j_recommendboard set brd_readcount=brd_readcount+1 where brd_no=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, brd_no);
+			pstmt.executeUpdate();		
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			dbClose(pstmt,conn);
+		}
+	}
+	
 	public List<J_RecommendBoard> selectList(int startRow,int endRow) throws SQLException {
 		List<J_RecommendBoard> list = new ArrayList<J_RecommendBoard>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from (select rowNum rn, a.* from (select jrb.* ,m.m_nick, c.c_value as mc_value from j_recommendboard jrb, j_member m, j_code c where jrb.m_no = m.m_no and jrb.mc_code = c.c_minor order by brd_no desc) a) where rn between ? and ?";
+		String sql = "select * from (select rowNum rn, a.* from (select jrb.* ,m.m_nick, c.c_value as rc_value from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor order by brd_no desc) a) where rn between ? and ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -74,7 +91,7 @@ public class J_RecommendBoardDao {
 				recommendboard.setRe_level(rs.getInt("re_level"));
 				recommendboard.setM_no(rs.getInt("m_no"));
 				recommendboard.setM_nick(rs.getString("m_nick"));
-				recommendboard.setMc_value(rs.getString("mc_value"));
+				recommendboard.setRc_value(rs.getString("rc_value"));
 				list.add(recommendboard);
 			}				
 		} catch (Exception e) {
@@ -92,7 +109,7 @@ public class J_RecommendBoardDao {
 		ResultSet rs = null;
 		String sql = "insert into j_recommendboard values(?,?,?,0,0,?,sysdate,null,'n',?,?,?,?,?)";
 		String sql1 = "select nvl(max(brd_no),0)+1 from j_recommendboard";
-		String sql2 = "update j_recommendboard set re_step=re_step+1 where ref=? and re_step > ?";
+		String sql2 = "update j_recommendboard set re_step=re_step+1 where ref=? and re_step>?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql1);
@@ -120,7 +137,7 @@ public class J_RecommendBoardDao {
 			pstmt.setInt(6, recommendboard.getRe_step());
 			pstmt.setInt(7, recommendboard.getRe_level());
 			pstmt.setInt(8, recommendboard.getM_no());
-			pstmt.setString(9, recommendboard.getMc_code());
+			pstmt.setString(9, recommendboard.getRc_code());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -128,6 +145,40 @@ public class J_RecommendBoardDao {
 			dbClose(rs,pstmt,conn);
 		}
 		return result;
+	}
+	
+	public J_RecommendBoard select(int brd_no) throws SQLException {
+		J_RecommendBoard recommendboard = new J_RecommendBoard();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = 
+				"select jrb.*, m.m_nick, c.c_value as rc_value from j_recommendboard jrb, j_member m, j_code c"+
+				" where mb.brd_no=?	and jrb.m_no=m.m_no and jrb.rc_code=c.c_minor";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, brd_no);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				recommendboard.setBrd_no(rs.getInt("brd_no"));
+				recommendboard.setBrd_subject(rs.getString("brd_subject"));
+				recommendboard.setBrd_content(rs.getString("brd_content"));
+				recommendboard.setBrd_reg_date(rs.getDate("brd_reg_date"));
+				recommendboard.setBrd_update_date(rs.getDate("brd_update_date"));
+				recommendboard.setBrd_recommend(rs.getInt("brd_recommend"));
+				recommendboard.setBrd_readcount(rs.getInt("brd_readcount"));
+				recommendboard.setM_no(rs.getInt("m_no"));
+				recommendboard.setM_nick(rs.getString("m_nick"));
+				recommendboard.setRc_code(rs.getString("rc_code"));
+				recommendboard.setRc_value(rs.getString("rc_value"));
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			dbClose(rs,pstmt,conn);
+		}
+		return recommendboard;
 	}
 	
 	public void dbClose(PreparedStatement pstmt, Connection conn) {

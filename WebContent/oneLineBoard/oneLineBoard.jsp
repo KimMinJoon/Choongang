@@ -80,9 +80,27 @@
 		$(".replyForm").hide();
 		
 		$(".btnUpdate").click(function(){
-			$(this).parent().hide("slow");
+			$(this).parent().parent().nextAll(".row").show();
+			$(this).parent().parent().nextAll(".updateForm").hide();
+			$(this).parent().parent().prevAll(".row").show();
+			$(this).parent().parent().prevAll(".updateForm").hide();
+			$(this).parent().parent().hide("slow"); 
+			var text = $(this).parent().parent().next().find(".originText").text();
+			$(this).parent().parent().next().find(".updateContent").val(text);
 			$(this).parent().parent().next().show("slow");
-
+		});
+		
+		$(".updateCancel").click(function(){
+			$(this).parent().parent().hide("slow"); 
+			$(this).parent().parent().prev().show("slow");	
+		});
+		
+		$(".btnReply").click(function(){
+			$(this).parent().parent().next().next().show("slow");
+		});
+		$(".replyCancel").click(function(){
+			$(this).parent().parent().parent().hide("slow"); 
+			$(this).parent().parent().parent().prev().prev().show("slow");	
 		});
 	});
 	
@@ -101,16 +119,15 @@
 		}
 	}
 	
-	function isUpdateSubmit(m_no) {
+	function isSubmit(m_no) {
  		if(m_no == null || m_no == "" || m_no == "null"){
  			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
  				location.href = "../module/main.jsp?pgm=/member/login.jsp";
  			} else {
- 				return;
+ 				return false;
  			}
- 		}else{
- 			document.updateFrm.submit();
  		}
+ 		return true;
 	}
 </script>
 </head>
@@ -137,38 +154,40 @@
 							if (jolb.getM_no() == Integer.parseInt(m_no)) {
 					%> 
 								<input type="button" class="btnUpdate" value="수정">
-								<a href="javascript:deleteChk(<%=jolb.getBrd_no()%>,<%=pageNum%>)">삭제</a> 
+								<input type="button" value="삭제" onclick="deleteChk(<%=jolb.getBrd_no()%>,<%=pageNum%>)">
 					<%
 		 					}
 					%> 
-								<a href="javascript:replyForm(<%=i%>)">답글</a> 
+								<input type="button" class="btnReply" value="답글">
 					<%
 						}
 					%>
 			</p>
 		</div>
 		<div class="updateForm">
-			<form action="../oneLineBoard/updateOneline.jsp" name="updateFrm">
-				<p><a>취소</a></p>
-					<c:if test="${not empty m_no}">
-						<input type="hidden" name="m_no" value="${m_no}">
-					</c:if>
-						<input type="hidden" name="brd_no" value="<%=jolb.getBrd_no()%>">
-					<textarea rows="3" cols="100" maxlength="150" id="updateContent"
-						name="brd_content" required="required" onkeyup="textCheck()"><%=jolb.getBrd_content()%></textarea>
-					<span id="counter">0/150</span> <input
-						style="height: 50px; width: 120px;" type="submit" value="등록"
-						onclick="isUpdateSubmit(${m_no})">
+			<form action="../oneLineBoard/updateOneline.jsp" name="updateFrm" method="post" onsubmit="return isSubmit(${m_no})">
+				<input type="button" class="updateCancel" value="취소">
+				<input type="hidden" name="m_no" value="${m_no}">
+				<input type="hidden" name="pageNum" value="<%=pageNum%>">
+				<input type="hidden" name="brd_no" value="<%=jolb.getBrd_no()%>">
+				<p class="originText" style="display: none;"><%=jolb.getBrd_content()%></p>
+				<textarea rows="3" cols="100" maxlength="150" class="updateContent"
+						name="brd_content" required="required"><%=jolb.getBrd_content()%></textarea>
+				<input style="height: 50px; width: 120px;" type="submit" value="등록">
 			</form>
 		</div>
 		<div class="replyForm">
-			<jsp:include page="replyOneLineForm.jsp" >
-				<jsp:param value="<%=jolb.getBrd_no()%>" name="brd_no"/>
-				<jsp:param value="<%=pageNum%>" name="pageNum"/>
-			</jsp:include>
+			<form action="../oneLineBoard/insertReplyOneline.jsp" name="replyFrm" onsubmit="return isSubmit(${m_no})" method="post">
+				<input type="hidden" name="m_no" value="${m_no}">
+				<input type="hidden" name="brd_no" value="<%=jolb.getBrd_no()%>">
+				<input type="hidden" name="pageNum" value="<%=pageNum%>">
+				<p><%=jolb.getM_nick()%><%=jolb.getBrd_reg_date()%><%=jolb.getBrd_content()%><input type="button" class="replyCancel" value="취소"></p>
+				<textarea rows="3" cols="100" maxlength="150" class="replyContent"
+					name="content" required="required"></textarea>
+		 		<input style="height: 50px; width: 120px;" type="submit" value="등록">
+			</form>
 		</div>
 			<%
-
 							}
 						}
 			%>

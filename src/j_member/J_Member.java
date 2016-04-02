@@ -8,10 +8,11 @@ public class J_Member {
 	private String m_passwd;
 	private String m_nick;
 	private Date m_reg_date;
+	private Date m_out_date;
 	private String m_del_yn;
 	private String c_code;
 	private String l_code;
-	private Date m_out_date;
+	
 	
 	public Date getM_out_date() {
 		return m_out_date;

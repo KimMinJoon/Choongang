@@ -4,6 +4,26 @@
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+$(function() {
+	$('#m_nick').blur(function() {
+		$.ajax({
+			type : "POST",
+			url : "../member/nickchk.jsp",
+			data : {
+				"m_nick" : $('#m_nick').val()
+			},
+			success : function(data) {
+				if ($.trim(data) == "TRUE") {
+					$('#check').html("<font>사용가능</font>");
+				} else
+					$('#check').html("<font class=red>사용불가</font>");
+			}
+		});
+	});
+});
+
+</script>
 <link rel="stylesheet" type="text/css" href="../projectcss.css">
 </head>
 <body>
@@ -26,7 +46,7 @@
 	String pageNum = request.getParameter("pageNum");
 	J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
 	J_MeetBoard brd = bd.select(brd_no);
-	System.out.println("view에서 받은 m_no값~ :"+brd.getM_no());
+	
 	if (brd != null) {
 		bd.updateHit(brd_no);
 %>
@@ -67,6 +87,7 @@
 		<tr>
 			<th>작성일</th><td><%=brd.getBrd_reg_date() %></td>
 		</tr>
+		
 		<tr>
 			<th>최근수정일</th><td><%=brd.getBrd_reg_date() %></td>
 		</tr>
@@ -92,16 +113,18 @@
 <%		
 	}
 %>
+
+<div align="center">
+	<button onclick="location.href='../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=pageNum%>'">좋아요</button>
+</div>
+
 <div align="center">
 	<button onclick="location.href='../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=pageNum%>'">게시판 목록</button>
 	<%
 		//m_no = "1";
 		
-		System.out.println(m_no);//1
-		System.out.println(brd.getM_no());//0
 		if (m_no != null) {
 		 	if (Integer.parseInt(m_no) == brd.getM_no()){
-			
 	%>
 	<button onclick="location.href='../module/main.jsp?pgm=/meetBoard/updateForm.jsp?brd_no=<%=brd_no %>&pageNum=<%=pageNum%>'">수정하기</button>
 	<!-- 이렇게해야 수정을 누르면 수정클릭한 해당 페이지로 보내준다. -->

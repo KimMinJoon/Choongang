@@ -157,6 +157,27 @@ public class J_MeetBoardDao {
 		return list;
 	}
 	
+	public J_MeetBoard passwdChk(int brd_no) {
+		J_MeetBoard meetboard = new J_MeetBoard();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select m.m_passwd from j_meetboard mb, j_member m where mb.m_no = m.m_no and brd_no=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);//먼저 값을 읽어와야함
+			pstmt.setInt(1, brd_no);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				meetboard.setM_passwd(rs.getString("m_passwd"));
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			dbClose(rs, pstmt, conn);
+		}
+		return meetboard;
+	}
 	
 	
 	public J_MeetBoard select(int brd_no) throws SQLException {
@@ -165,7 +186,7 @@ public class J_MeetBoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = 
-				"select mb.*, m.m_nick as m_nick, m.m_passwd as m_passwd, c.c_value as c_value_lang, d.c_value as c_value_cate from j_meetboard mb, j_member m, j_code c, j_code d"+
+				"select mb.*, m.m_nick as m_nick, c.c_value as c_value_lang, d.c_value as c_value_cate from j_meetboard mb, j_member m, j_code c, j_code d"+
 				" where mb.brd_no=?	and mb.m_no = m.m_no and mb.l_code = c.c_minor and mb.mc_code = d.c_minor";
 		try {
 			conn = getConnection();
@@ -184,7 +205,6 @@ public class J_MeetBoardDao {
 				meetboard.setM_nick(rs.getString("m_nick"));
 				meetboard.setMc_code(rs.getString("mc_code"));
 				meetboard.setL_code(rs.getString("l_code"));
-				meetboard.setM_passwd(rs.getString("m_passwd"));
 				meetboard.setC_value_lang(rs.getString("c_value_lang"));
 				meetboard.setC_value_cate(rs.getString("c_value_cate"));
 			}

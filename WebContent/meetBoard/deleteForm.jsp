@@ -16,13 +16,12 @@
 </script>
 </head><body>
 <%
+	String m_no = (String)session.getAttribute("m_no");
 	String pageNum = request.getParameter("pageNum");
 	int brd_no = Integer.parseInt(request.getParameter("brd_no"));
 	J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
-	
-	J_MeetBoard meetboard = bd.select(brd_no);
+	J_MeetBoard meetboard = bd.passwdChk(brd_no);
 	String dbPass = meetboard.getM_passwd();
-	String m_no = (String)session.getAttribute("m_no");
 	// 로그인없이 게시글 접근 시 막기 
 		if(m_no == null || m_no.equals("") || m_no.equals("null")){
 			%>
@@ -31,7 +30,6 @@
 				location.href="../module/main.jsp?pgm=/member/login.jsp";
 			</script> 
 			<%
-		   
 		} 
 %>
 

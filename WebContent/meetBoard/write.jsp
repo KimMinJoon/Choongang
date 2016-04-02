@@ -18,7 +18,7 @@
 	meetboard.setBrd_ip(ip);
 	J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
 	int result = bd.insert(meetboard);
-	if (result > 0) response.sendRedirect("list.jsp?pageNum="+pageNum);
+	if (result > 0) response.sendRedirect("../module/main.jsp?pgm=/meetboard/list.jsp?pageNum="+pageNum);
 	else {
 %>
 <script type="text/javascript">

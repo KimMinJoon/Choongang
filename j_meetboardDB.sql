@@ -12,7 +12,7 @@ create table j_meetboard (
 	--brd_writer number not null, -- m_no과 참조된 외래키
 	m_no number not null, -- m_no과 참조된 외래키
 	mc_code varchar2(30) not null, -- 게시판말머리(brd_category)
-	l_code varchar2(30) not null, -- l_code 과 게시글마다 희망언어로 필요
+	l_code varchar2(30) not null -- l_code 과 게시글마다 희망언어로 필요
 );
 
 drop constraint fk_m_no;

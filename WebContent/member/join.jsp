@@ -72,12 +72,17 @@
 	});
 	
 	$(function() {
-		$('#m_nick').blur(function() {
+		$('#m_nick').blur(function() { 
+			/* #은 밑에 input type id를 말한다. */
+			/* 포커스를 잃었을때를 실행하라 */
 			$.ajax({
+				/* 아이작스를 쓰겟다는 구문 */
 				type : "POST",
 				url : "../member/nickchk.jsp",
 				data : {
 					"m_nick" : $('#m_nick').val()
+					/* 아이디 엘레멘트의 값을 엠닉이라 명명하고 url로 보내겟다 */
+					
 				},
 				success : function(data) {
 					if ($.trim(data) == "TRUE") {

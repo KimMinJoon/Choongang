@@ -19,6 +19,8 @@ create table j_recommendboard (
 alter table j_recommendboard add constraint fk_m_no
 foreign key(m_no) references j_member(m_no);
 
+drop constraint fk_m_no;
+
 -- 게시판에 c_minor를 rc_code에  외래키 설정
 alter table j_recommendboard add constraint fk_rc_code
 foreign key(rc_code) references j_code(c_minor);

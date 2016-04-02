@@ -86,7 +86,6 @@ public class J_NoticeBoardDao {
 				nb.setBrd_del_yn(rs.getString("brd_del_yn"));
 				nb.setAdmin(rs.getString("admin"));
 				list.add(nb);
-				System.out.println("list : " + list);
 			}
 
 		} catch (Exception e) {

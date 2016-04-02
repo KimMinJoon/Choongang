@@ -165,7 +165,7 @@ public class J_MeetBoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = 
-				"select mb.*, m.m_nick as m_nick, c.c_value as c_value_lang, d.c_value as c_value_cate from j_meetboard mb, j_member m, j_code c, j_code d"+
+				"select mb.*, m.m_nick as m_nick, m.m_passwd as m_passwd, c.c_value as c_value_lang, d.c_value as c_value_cate from j_meetboard mb, j_member m, j_code c, j_code d"+
 				" where mb.brd_no=?	and mb.m_no = m.m_no and mb.l_code = c.c_minor and mb.mc_code = d.c_minor";
 		try {
 			conn = getConnection();
@@ -184,7 +184,7 @@ public class J_MeetBoardDao {
 				meetboard.setM_nick(rs.getString("m_nick"));
 				meetboard.setMc_code(rs.getString("mc_code"));
 				meetboard.setL_code(rs.getString("l_code"));
-				
+				meetboard.setM_passwd(rs.getString("m_passwd"));
 				meetboard.setC_value_lang(rs.getString("c_value_lang"));
 				meetboard.setC_value_cate(rs.getString("c_value_cate"));
 			}

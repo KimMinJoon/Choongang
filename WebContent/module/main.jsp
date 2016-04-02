@@ -2,8 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("utf-8");
-%>
-<%
 	String pgm = request.getParameter("pgm");
 	if (pgm == null || pgm == "") {
 		pgm = "home.jsp";

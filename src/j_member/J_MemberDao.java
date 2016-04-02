@@ -1,13 +1,21 @@
 package j_member;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.naming.*;
 import javax.sql.*;
+
+import j_code.J_Code;
 
 public class J_MemberDao {
 	// 싱글톤 객체 생성을 낭비하지 않기위해
 	private static J_MemberDao instance = new J_MemberDao();
-	private J_MemberDao() { }
+
+	private J_MemberDao() {
+	}
+
 	public static J_MemberDao getInstance() {
 		return instance;
 	}
@@ -76,15 +84,15 @@ public class J_MemberDao {
 		ResultSet rs = null;
 		String sql = "insert into j_member values(?,?,?,?,sysdate,'n',null,?,?)";
 		String sql1 = "select nvl(max(m_no),0)+1 from j_member";
-		String sql2 = "select m_no from j_member where m_email=? and m_del_yn='y'";	
+		String sql2 = "select m_no from j_member where m_email=? and m_del_yn='y'";
 		String sql3 = "update j_member set m_passwd=?, m_nick=?, m_reg_date=sysdate, m_del_yn='n', c_code=?, l_code=? where m_no=?";
 		try {
 			conn = getConnection();
-			
+
 			pstmt = conn.prepareStatement(sql2);
 			pstmt.setString(1, mb.getM_email());
 			rs = pstmt.executeQuery();
-			if(rs.next()){
+			if (rs.next()) {
 				m_no = rs.getInt(1);
 				pstmt.close();
 				pstmt = conn.prepareStatement(sql3);
@@ -94,7 +102,7 @@ public class J_MemberDao {
 				pstmt.setString(4, mb.getL_code());
 				pstmt.setInt(5, m_no);
 				result = pstmt.executeUpdate();
-			}else{
+			} else {
 				pstmt.close();
 				rs.close();
 				pstmt = conn.prepareStatement(sql1);
@@ -145,7 +153,7 @@ public class J_MemberDao {
 		}
 		return result;
 	}
-	
+
 	public J_Member select(String m_no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -171,7 +179,7 @@ public class J_MemberDao {
 		}
 		return mem;
 	}
-	
+
 	public J_Info infoselect(String m_no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -259,6 +267,45 @@ public class J_MemberDao {
 			dbClose(rs, pstmt, conn);
 		}
 		return result;
+	}
+
+	public List<J_Member> selectList() {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<J_Member> list = new ArrayList<>();
+		String sql = "select * from j_member";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				J_Member c = new J_Member();
+				c.setM_no(rs.getInt(1));
+				c.setM_email(rs.getString(2));
+				c.setM_passwd(rs.getString(3));
+				c.setM_nick(rs.getString(4));
+				c.setM_reg_date(rs.getDate(5));
+				c.setM_del_yn(rs.getString(6));
+				c.setM_out_date(rs.getDate(7));
+				c.setC_code(rs.getString(8));
+				c.setL_code(rs.getString(9));
+				list.add(c);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		return list;
 	}
 
 	// conn과 pstmt,그리고 rs를 종료해주는 메서드

@@ -5,6 +5,13 @@
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<%
+	String m_no = (String) session.getAttribute("m_no");
+	System.out.println(m_no);//이거0
+	String pageNum = request.getParameter("pageNum");//패이지를 읽어오지않으면!
+	J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
+
+%>
 <script type="text/javascript">
 function chk(m_no) {
 		alert(m_no);
@@ -15,8 +22,9 @@ function chk(m_no) {
 				return;
 			}
 		}else{
-			document.frm.submit();
+			location.href = "../module/main.jsp?pgm=/meetBoard/writeForm.jsp?pageNum=<%=pageNum%>";
 		}
+		
 }
 
 </script>
@@ -31,8 +39,7 @@ function chk(m_no) {
 	</tr>
 	
 <%
-	String m_no = (String) session.getAttribute("m_no");
-	System.out.println(m_no);//이거0
+	
 
 	/* String m_no = (String)session.getAttribute("m_no");
 	String path = application.getContextPath();
@@ -41,8 +48,7 @@ function chk(m_no) {
 	} 
  */
 
-	String pageNum = request.getParameter("pageNum");//패이지를 읽어오지않으면!
-	J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
+	
 
 	int rowPerPage = 15;//한페이지에 보여줄 게시글의 수
 	int pagePerBlock = 10;//한페이지에 보여줄 블락의 수 (블락은 10페이지)
@@ -80,8 +86,8 @@ function chk(m_no) {
 			<%=brd.getBrd_subject() %></a>
 			<!-- 페이지넘을 가지고 다녀야만이 수정이나 삭제를 할때 페이지가 완료후 되돌아오는 페이지를 수정햇던 페이지로 보낸다.--> 
 			<%
-				if(brd.getBrd_readcount()>20){//조회수가 20보다 크면 이미지를 붙여라
-					out.println("<img src='images/hot.gif'>");
+				if(brd.getBrd_readcount()>1){//조회수가 20보다 크면 이미지를 붙여라
+					out.println("<img src='../images/hot.gif'>");
 				}
 			%>
 		</td>
@@ -129,7 +135,7 @@ function chk(m_no) {
 %>
 	<%-- <br><button onclick="location.href='writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>  --%>
 	<!-- <br><input type="submit" value="글쓰기"> -->
-	<br><button onclick="chk(<%=m_no%>)">글쓰기</button> 
+	<br><button onclick="chk(<%=m_no%>)" name="writeBtn">글쓰기</button> 
 
 </div>
 

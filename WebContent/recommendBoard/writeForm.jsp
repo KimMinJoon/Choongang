@@ -3,8 +3,7 @@
 	pageEncoding="UTF-8" import="j_board.*, j_code.*" %>
 
 <%
-	// String m_no = (String)session.getAttribute("m_no"); // 세션처리안됌
-	String m_no = "1";
+	String m_no = (String)session.getAttribute("m_no");
 	String pageNum = request.getParameter("pageNum");
 %>
 
@@ -22,7 +21,7 @@
 </head>
 <body>
 
-	<form action="write.jsp" method="post">
+	<form action="../recommendBoard/writePro.jsp" method="post">
 		<input type="hidden" name="pageNum" value="<%=pageNum%>">
 		<input type="hidden" name="m_no" value="<%=m_no%>">
 
@@ -30,11 +29,10 @@
 			<caption><h2>게시판 작성</h2></caption>
 			<tr>
 				<td class="inputleft">
-				<select name="mc_code">
-					<option>말머리 없음</option>
+				<select name="rc_code">
 					<%
 						for (J_Code jc : list) {
-							if (jc.getC_major().equals("mc")) {
+							if (jc.getC_major().equals("rc")) {
 					%>
 						<option value=<%=jc.getC_minor()%>>
 							<%=jc.getC_value()%>

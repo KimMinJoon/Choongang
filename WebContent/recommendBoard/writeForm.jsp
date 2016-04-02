@@ -1,14 +1,11 @@
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="j_board.*, j_code.*" %>
+	pageEncoding="UTF-8" import="j_code.*" %>
 
 <%
-	// String m_no = (String)session.getAttribute("m_no"); // 세션처리안됌
-	String m_no = "1";
+	String m_no = (String)session.getAttribute("m_no");
 	String pageNum = request.getParameter("pageNum");
-%>
 
-<%
 	J_CodeDao jcd = J_CodeDao.getInstance();
 	List<J_Code> list = jcd.selectList();
 %>
@@ -22,7 +19,18 @@
 </head>
 <body>
 
-	<form action="write.jsp" method="post">
+<%
+	if(m_no == null || m_no.equals("") || m_no.equals("null")){
+%>
+		<script type="text/javascript">
+			alert("로그인을 하셔야 이용할 수 있는 페이지입니다.");		
+			location.href="../module/main.jsp?pgm=/member/login.jsp";
+		</script> 
+<%
+	} 
+%>
+
+	<form action="../recommendBoard/writePro.jsp" method="post">
 		<input type="hidden" name="pageNum" value="<%=pageNum%>">
 		<input type="hidden" name="m_no" value="<%=m_no%>">
 
@@ -30,11 +38,10 @@
 			<caption><h2>게시판 작성</h2></caption>
 			<tr>
 				<td class="inputleft">
-				<select name="mc_code">
-					<option>말머리 없음</option>
+				<select name="rc_code">
 					<%
 						for (J_Code jc : list) {
-							if (jc.getC_major().equals("mc")) {
+							if (jc.getC_major().equals("rc")) {
 					%>
 						<option value=<%=jc.getC_minor()%>>
 							<%=jc.getC_value()%>

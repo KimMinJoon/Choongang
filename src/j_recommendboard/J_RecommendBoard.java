@@ -18,8 +18,8 @@ public class J_RecommendBoard {
 	private int re_level;
 	private int m_no;
 	private String m_nick;
-	private String mc_code;
-	private String mc_value;
+	private String rc_code;
+	private String rc_value;
 
 	public int getBrd_no() {
 		return brd_no;
@@ -133,20 +133,20 @@ public class J_RecommendBoard {
 		this.m_nick = m_nick;
 	}
 
-	public String getMc_code() {
-		return mc_code;
+	public String getRc_code() {
+		return rc_code;
 	}
 
-	public void setMc_code(String mc_code) {
-		this.mc_code = mc_code;
+	public void setRc_code(String rc_code) {
+		this.rc_code = rc_code;
 	}
 
-	public String getMc_value() {
-		return mc_value;
+	public String getRc_value() {
+		return rc_value;
 	}
 
-	public void setMc_value(String mc_value) {
-		this.mc_value = mc_value;
+	public void setRc_value(String rc_value) {
+		this.rc_value = rc_value;
 	}
 
 	/*@Override

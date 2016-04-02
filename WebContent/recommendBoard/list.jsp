@@ -16,15 +16,15 @@
 		<caption><h2>J_RecommendBoard</h2></caption>
 		<tr>
 			<th width="3%"></th>
-			<th width="7%">말머리</th>
-			<th width="34%">제목</th>
+			<th width="10%">말머리</th>
+			<th width="31%">제목</th>
 			<th width="8%">글쓴이</th>
 			<th width="8%">작성일</th>
 			<th width="4%">조회</th>
 			<th width="4%">추천</th>
 		</tr>
 <%
-		J_RecommendBoardDao jr = J_RecommendBoardDao.getInstance();
+		J_RecommendBoardDao jrbd = J_RecommendBoardDao.getInstance();
 
 		String pageNum = request.getParameter("pageNum");
 		if (pageNum == null || pageNum.equals("null") || pageNum.equals(""))
@@ -33,7 +33,7 @@
 		int rowPerPage = 15;
 		int pagePerBlock = 10;
 		int nowPage = Integer.parseInt(pageNum);
-		int total = jr.selectTotal();
+		int total = jrbd.selectTotal();
 		int totalPage = (int) Math.ceil((double)total/rowPerPage);
 		int startRow = (nowPage - 1) * rowPerPage + 1;
 		int endRow = startRow + rowPerPage - 1;
@@ -44,15 +44,20 @@
 			endPage = totalPage;
 		total = total - startRow + 1;
 			
-		List<J_RecommendBoard> list = jr.selectList(startRow, endRow);
+		List<J_RecommendBoard> list = jrbd.selectList(startRow, endRow);
 		if (list.size() != 0) {
-			for (J_RecommendBoard jrb : list) {	
-				System.out.println(jrb);
+			for (J_RecommendBoard jrb : list) {
 %>
 			<tr><td colspan="7"><hr></td></tr>
 			<tr>
 				<td class="default"><%=total--%></td>
-				<td class="default"><font class="category"> [<%=jrb.getMc_value()%>] </font></td>
+				<td class="default">
+				<%if(jrb.getRc_value().equals("말머리 없음")) { %>
+				<font class="category"> </font>
+				<% } else { %>			
+				<font class="category"> [<%=jrb.getRc_value()%>] </font>
+				<% } %>
+				</td>
 <%				
 				if (jrb.getBrd_dey_yn().equals("y")) {
 					out.println("<td class='subject' colspan='7'>삭제된 글입니다</td></tr>");
@@ -84,13 +89,16 @@
 			}
 		} else {
 %>
+			<tr><td colspan="7"><hr></td></tr>
 			<tr>
-				<td colspan="7">데이터가 없습니다</td>
+				<td colspan="7" class="default">데이터가 없습니다</td>
 			</tr>
 <%
 		}
 %>
 	</table>
+	
+	<br>
 		
 	<div align="center">
 <%

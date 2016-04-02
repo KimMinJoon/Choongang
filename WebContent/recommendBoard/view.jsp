@@ -46,7 +46,8 @@
 		</tr>
 
 		<tr>
-			<th>IP</th><td><%=jrb.getBrd_ip() %></td>
+			<th>IP</th>
+			<td><%=jrb.getBrd_ip()%></td>
 		</tr>
 
 		<%
@@ -76,21 +77,20 @@
 			<td><pre><%=jrb.getBrd_content()%></pre></td>
 			<!-- pre는 입력한 내용을 잇는 그래도 보여줌  -->
 		</tr>
-	</table>
-	<%
+		<%
 		} else {
 	%>
-	데이터가 없습니다.
+		<tr><td>데이터가 없습니다.</td></tr>
 	<%
 		}
 	%>
+	</table>
+	
 	<div align="center">
 		<button
 			onclick="location.href='../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=pageNum%>'">게시판
 			목록</button>
 		<%
-			//m_no = "1";
-
 			System.out.println(m_no);//1
 			System.out.println(jrb.getM_no());//0
 			if (m_no != null) {
@@ -105,7 +105,8 @@
 			}
 			}
 		%>
-		<button onclick="location.href='../module/main.jsp?pgm=/recommendBoard/writeForm.jsp?num=<%=brd_no %>&pageNum=<%=pageNum%>'">답변</button>
+		<button
+			onclick="location.href='../module/main.jsp?pgm=/recommendBoard/writeForm.jsp?num=<%=brd_no%>&pageNum=<%=pageNum%>'">답변</button>
 	</div>
 
 </body>

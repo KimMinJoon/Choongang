@@ -12,8 +12,8 @@
 	<p>
 	<p>
 	
-	<table align="center" width="70%">
-		<caption><h2>J_RecommendBoard</h2></caption>
+	<table align="center" width="70%" cellspacing="0" cellpadding="0">
+		<caption><h2>추천 게시판</h2></caption>
 		<tr>
 			<th width="3%"></th>
 			<th width="10%">말머리</th>
@@ -49,7 +49,7 @@
 			for (J_RecommendBoard jrb : list) {
 %>
 			<tr><td colspan="7"><hr></td></tr>
-			<tr>
+			<tr onMouseOver="this.style.backgroundColor='pink'" onmouseout="this.style.backgroundColor=''">
 				<td class="default"><%=total--%></td>
 				<td class="default">
 				<%if(jrb.getRc_value().equals("말머리 없음")) { %>
@@ -73,7 +73,7 @@
 <%
  					}
 %>
-					<a href="../module/main.jsp?pgm=/recommendBoard/view.jsp?num=<%=jrb.getBrd_no()%>&pageNum=<%=nowPage%>"><%=jrb.getBrd_subject()%></a>
+					<a href="../module/main.jsp?pgm=/recommendBoard/view.jsp?brd_no=<%=jrb.getBrd_no()%>&pageNum=<%=nowPage%>"><%=jrb.getBrd_subject()%></a>
 <%
 					if (jrb.getBrd_readcount() > 20)
 						out.println("<img src='images/hot.gif'>");

@@ -1,11 +1,3 @@
-<%--
-<에러가 발생한 경우 한글로 에러 내용을 보여주는 에러 처리 jsp>
-사용 방법 : <%@ page import errorPage="/error/DBError.jsp" %>
-
-마지막 수정날짜 : 2016-03-22 오전 9:52
-마지막 수정한 사람 : 곽지은
---%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isErrorPage="true"%>
 <% response.setStatus(200); %>

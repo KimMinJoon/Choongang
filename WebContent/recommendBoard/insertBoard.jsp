@@ -15,12 +15,12 @@
 		for (int i = 0; i <= 3; i++) {
 			J_RecommendBoard jrb = new J_RecommendBoard();
 			jrb.setBrd_subject("bobby♥ bobby♥ bobby♥ bobby♥ bobby♥" + i);
-			jrb.setBrd_content("♥♥♥♥♥♥♥♥♥♥" + i);
+			jrb.setBrd_content("지금은 새벽 1시 40분입니다." + i);
 			jrb.setBrd_ip(ip);
 			jrb.setRef(ref);
 			jrb.setRe_level(re_level);
 			jrb.setRe_step(re_step);
-			jrb.setM_no(2);
+			jrb.setM_no(1);
 			jrb.setRc_code("rc_1");
 			jrbd.insert(jrb);
 		}

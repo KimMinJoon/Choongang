@@ -20,10 +20,10 @@
 			<td width="1100" height="50"><jsp:include page="top.jsp" /></td>
 		</tr>
 		<tr>
-			<td><jsp:include page="menu.jsp" /></td>
+			<td><jsp:include page="menu.jsp"/></td>
 		</tr>
 		<tr>
-			<td><jsp:include page="<%=pgm%>" /></td>
+			<td><jsp:include page="<%=pgm%>"/></td>
 		</tr>
 		<tr>
 			<td colspan="2" height="40"><jsp:include page="bottom.jsp" /></td>

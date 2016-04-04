@@ -42,9 +42,11 @@
 	font-size: 0.75em;
 }
 </style>
-<%
-		String m_no = (String) session.getAttribute("m_no");	
-	
+<%	
+		String mno = (String)session.getAttribute("m_no");
+		
+		System.out.println(mno);
+
 		int rowPerPage = 10;
 		int pagePerBlock = 10;
 		int nowPage = 0;
@@ -73,8 +75,6 @@
 %>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
-	
-	
 	$(document).ready(function(){
 		$(".updateForm").hide();
 		$(".replyForm").hide();
@@ -119,22 +119,36 @@
 		}
 	}
 	
-	function isSubmit(m_no) {
- 		if(m_no == null || m_no == "" || m_no == "null"){
+	function isSubmit(number) {
+		alert(number);
+ 		if(number == null || number == "" || number == "null"){
  			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
+ 				alert("1");
  				location.href = "../module/main.jsp?pgm=/member/login.jsp";
  			} else {
+ 				alert("2");
  				return false;
  			}
  		}
  		return true;
+	}
+	function textCheck() {
+		var counter = document.getElementById("counter");
+		var content = document.getElementById("content");
+		counter.innerHTML = content.value.length + "/150";
 	}
 </script>
 </head>
 <body>
 	<div style="border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
-		<jsp:include page="insertOneLineForm.jsp"/>
+		<form action="../oneLineBoard/insertOneline.jsp" name="wrtierFrm" onsubmit="return isSubmit(<%=mno%>)">
+			<input type="hidden" name="m_no" value="<%=mno%>">
+			<textarea rows="3" cols="100" maxlength="150" id="content"
+				name="brd_content" required="required" onkeyup="textCheck()"></textarea>
+			<span id="counter">0/150</span> <input
+				style="height: 50px; width: 120px;" type="submit" value="등록">
+		</form>
 	</div>
 	<p>
 	
@@ -150,8 +164,8 @@
 		<div class="row">
 			<p><%=total--%>&nbsp;<%=jolb.getM_nick()%>&nbsp;<%=jolb.getBrd_reg_date()%>&nbsp;<%=jolb.getBrd_content()%><a href="javascript:replyForm(<%=i%>)">[<%=jolb.getRep_count()%>]</a>
 					<%
-						if (m_no != null) {
-							if (jolb.getM_no() == Integer.parseInt(m_no)) {
+						if (mno != null) {
+							if (jolb.getM_no() == Integer.parseInt(mno)) {
 					%> 
 								<input type="button" class="btnUpdate" value="수정">
 								<input type="button" value="삭제" onclick="deleteChk(<%=jolb.getBrd_no()%>,<%=pageNum%>)">
@@ -165,9 +179,9 @@
 			</p>
 		</div>
 		<div class="updateForm">
-			<form action="../oneLineBoard/updateOneline.jsp" name="updateFrm" method="post" onsubmit="return isSubmit(${m_no})">
+			<form action="../oneLineBoard/updateOneline.jsp" name="updateFrm" method="post" onsubmit="return isSubmit(<%=mno%>)">
 				<input type="button" class="updateCancel" value="취소">
-				<input type="hidden" name="m_no" value="${m_no}">
+				<input type="hidden" name="m_no" value="<%=mno%>">
 				<input type="hidden" name="pageNum" value="<%=pageNum%>">
 				<input type="hidden" name="brd_no" value="<%=jolb.getBrd_no()%>">
 				<p class="originText" style="display: none;"><%=jolb.getBrd_content()%></p>
@@ -177,7 +191,7 @@
 			</form>
 		</div>
 		<div class="replyForm">
-			<form action="../oneLineBoard/insertReplyOneline.jsp" name="replyFrm" onsubmit="return isSubmit(${m_no})" method="post">
+			<form action="../oneLineBoard/insertReplyOneline.jsp" name="replyFrm" onsubmit="return isSubmit(${mno})" method="post">
 				<input type="hidden" name="m_no" value="${m_no}">
 				<input type="hidden" name="brd_no" value="<%=jolb.getBrd_no()%>">
 				<input type="hidden" name="pageNum" value="<%=pageNum%>">

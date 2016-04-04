@@ -2,6 +2,7 @@
 <%@page import="j_board.J_BoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="../session/sessionChk.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,18 +12,13 @@
 <jsp:useBean id="olb" class="j_onelineboard.J_OneLineBoard"/>
 <jsp:setProperty property="*" name="olb"/>
 <body>
-<%
-	String m_no = (String)session.getAttribute("m_no");	
-	
+<%	
 	olb.setBrd_ip(request.getRemoteAddr());
+	System.out.println(olb);
 	J_OneLineBoardDAO jold = J_OneLineBoardDAO.getInstance();
 	int result = jold.insertBoard(olb);
 	if(result > 0){
-%>
-	<script type="text/javascript">
-		location.href = "../module/main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp";
-	</script>
-<%		
+		response.sendRedirect("../module/main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp");
 	}else{
 %>
 	<script type="text/javascript">

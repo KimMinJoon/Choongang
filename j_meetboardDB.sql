@@ -1,6 +1,6 @@
 create table j_meetboard (
 	brd_no number primary key, -- 게시글 번호 프라이머리키
-	brd_subject varchar2(50) not null, -- 게시글 제목
+	brd_subject varchar2(200) not null, -- 게시글 제목
 	brd_content varchar2(4000) not null, -- 게시글내용
 	brd_readcount number default 0, --읽은 횟수
 	brd_recommend number default 0, --추천받은 수

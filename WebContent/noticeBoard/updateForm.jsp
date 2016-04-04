@@ -1,4 +1,5 @@
 <%@page import="java.util.List"%>
+<%@ include file="../session/adminChk.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="j_noticeboard.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,6 +19,8 @@
 	<form action="../module/main.jsp?pgm=/noticeBoard/updatePro.jsp" method="post">
 		<input type="hidden" name="brd_no" value="<%=nb.getBrd_no()%>"> <input
 			type="hidden" name="pageNum" value="<%=pageNum%>">
+			<input
+			type="hidden" name="admin" value="<%=admin%>">
 
 		<table border="1">
 			<caption>게시판 수정</caption>

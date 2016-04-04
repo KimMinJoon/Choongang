@@ -108,7 +108,7 @@ public class J_NoticeBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "insert into j_noticeboard values(?,?,?,0,sysdate,null,'n','Master')";
+		String sql = "insert into j_noticeboard values(?,?,?,0,sysdate,null,'n',?)";
 		// brdno,subject,content,readcount,recommend,ip,regdate,updatedate,delyn,m_no,mccode,lcode
 		// 처음에 입력될때는 n으로 입력되야합니다~
 		String sql1 = "select nvl(max(brd_no),0)+1 from j_noticeboard";
@@ -127,6 +127,7 @@ public class J_NoticeBoardDao {
 			pstmt.setInt(1, number);
 			pstmt.setString(2, noticeboard.getBrd_subject());
 			pstmt.setString(3, noticeboard.getBrd_content());
+			pstmt.setString(4, noticeboard.getAdmin());
 			result = pstmt.executeUpdate();
 
 		} catch (Exception e) {

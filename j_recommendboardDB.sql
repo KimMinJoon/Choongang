@@ -12,7 +12,7 @@ create table j_recommendboard (
 	re_step number not null, -- ref내의 순서
 	re_level number not null, -- 들여쓰기
 	m_no number not null, -- m_no과 참조된 외래키
-	mc_code varchar2(30) not null -- 게시판말머리
+	rc_code varchar2(30) not null -- 게시판말머리
 );
 
 -- 게시판에 m_no 외래키 설정

@@ -12,18 +12,13 @@
 <jsp:setProperty property="*" name="olb"/>
 <body>
 <%
-	String m_no = (String)session.getAttribute("m_no");
 	int brd_no = Integer.parseInt(request.getParameter("brd_no"));
 	int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 	J_OneLineBoardDAO jold = J_OneLineBoardDAO.getInstance();
 	int result = jold.deleteBoard(brd_no);
 	System.out.println(result);
 	if(result > 0){
-%>
-	<script type="text/javascript">
-		location.href = "../module/main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum="+<%=pageNum%>;
-	</script>
-<%		
+		response.sendRedirect("../module/main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum="+pageNum);
 	}else{
 %>
 	<script type="text/javascript">

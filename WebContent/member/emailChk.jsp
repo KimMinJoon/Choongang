@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="j_member.*" errorPage="/error/DBError.jsp" %>
+	pageEncoding="UTF-8" import="j_member.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,8 +20,8 @@
 <body>
 
 	<%
-		J_MemberDao mdo = J_MemberDao.getInstance();
-		int result = mdo.emailChk(m_email);
+		J_MemberDao jmd = J_MemberDao.getInstance();
+		int result = jmd.emailCheck(m_email);
 		if (result == 1) {
 	%>
 	

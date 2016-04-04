@@ -9,8 +9,8 @@
 </head>
 <body>
 	<%
-		J_MemberDao mdo = J_MemberDao.getInstance();
-		J_Info jif = mdo.infoselect(m_no);
+		J_MemberDao jmd = J_MemberDao.getInstance();
+		J_Info jif = jmd.infoselect(m_no);
 	%>
 	<table class="tab" cellpadding="10" align="center" height="100%">
 		<caption>

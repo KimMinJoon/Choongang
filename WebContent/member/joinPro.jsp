@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="j_member.*" errorPage="/error/DBError.jsp" %>
+	pageEncoding="UTF-8" import="j_member.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,8 +10,8 @@
 	<jsp:useBean id="mb" class="j_member.J_Member"></jsp:useBean>
 	<jsp:setProperty property="*" name="mb" />
 	<%
-		J_MemberDao mdo = J_MemberDao.getInstance();
-		int result = mdo.insert(mb);
+		J_MemberDao jmd = J_MemberDao.getInstance();
+		int result = jmd.insert(mb);
 		if (result > 0) {
 	%>
 	<script type="text/javascript">

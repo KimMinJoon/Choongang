@@ -13,12 +13,7 @@
 	<jsp:setProperty property="*" name="olr"/>
 	
 	<%
-		
-	
-		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
-		
-		System.out.println(pageNum);
-		
+		int pageNum = Integer.parseInt(request.getParameter("pageNum"));		
 		J_OneLineBoardDAO jobd = J_OneLineBoardDAO.getInstance();
 		int result = jobd.insertReply(olr);
 		if(result > 0){

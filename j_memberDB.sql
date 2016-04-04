@@ -16,3 +16,9 @@ insert into j_member values (1,'master',1,'관리자',sysdate,null,'n','c_defaul
 -- 관리자 insert
 
 --drop table j_member;
+
+ALTER TABLE j_member ADD CONSTRAINT fk_member_l_code
+FOREIGN KEY(l_code) REFERENCES j_code(c_minor);
+
+ALTER TABLE j_member ADD CONSTRAINT fk_member_c_code
+FOREIGN KEY(c_code) REFERENCES j_code(c_minor);

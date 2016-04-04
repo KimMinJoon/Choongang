@@ -10,13 +10,13 @@
 <body>
 	<p>
 	<p>
-	<table align="center" width="60%">
+	<table align="center" width="70%" cellspacing="0" cellpadding="0">
 		<caption>
 			<h2>공지사항</h2>
 		</caption>
 
 		<tr>
-			<th width="5%">번호</th>
+			<th width="3%"></th>
 			<th width="32%">제목</th>
 			<th width="10%">작성일</th>
 			<th width="5%">조회수</th>
@@ -49,7 +49,9 @@
 			<td colspan="4"><hr></td>
 		</tr>
 		<tr>
-			<td class="default"><%=total--%></td>
+			<td class="default">
+				<%-- <%=total--%>
+			</td>
 			<td class="subject"><a
 				href="../module/main.jsp?pgm=/noticeBoard/view.jsp?brd_no=<%=brd.getBrd_no()%>&pageNum=<%=nowPage%>"><%=brd.getBrd_subject()%></a>
 				<!-- 페이지넘을 가지고 다녀야만이 수정이나 삭제를 할때 페이지가 완료후 되돌아오는 페이지를 수정햇던 페이지로 보낸다.-->
@@ -70,7 +72,7 @@
 			}
 		%>
 	</table>
-
+	<br>
 	<div align="center">
 		<%
 			if (startPage > pagePerBlock) {
@@ -107,8 +109,17 @@
 			}
 		%>
 		<p>
+			<%
+				String admin = (String) session.getAttribute("m_no");
+				if (admin == null || admin.equals("") || admin.equals("null") || !admin.equals("1")) {
+				} else {
+			%>
 			<button
 				onclick="location.href='../module/main.jsp?pgm=/noticeBoard/writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>
+			<%
+				}
+			%>
+		
 	</div>
 </body>
 </html>

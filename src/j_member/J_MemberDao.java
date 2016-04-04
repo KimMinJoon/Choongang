@@ -33,7 +33,7 @@ public class J_MemberDao {
 		return conn;
 	}// getConnection
 
-	public int emailChk(String m_email) {
+	public int emailCheck(String m_email) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -55,7 +55,7 @@ public class J_MemberDao {
 		return result;
 	}
 
-	public int nickChk(String m_nick) {
+	public int nickCheck(String m_nick) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;

@@ -12,9 +12,9 @@
 	<p>
 	<p>
 	
-	<table align="center" width="70%" cellspacing="0" cellpadding="0">
+	<table class="tab" align="center" width="70%" cellspacing="0" cellpadding="0">
 		<caption><h2>추천 게시판</h2></caption>
-		<tr>
+		<tr height="30">
 			<th width="3%"></th>
 			<th width="10%">말머리</th>
 			<th width="31%">제목</th>
@@ -45,24 +45,23 @@
 		total = total - startRow + 1;
 			
 		List<J_RecommendBoard> list = jrbd.selectList(startRow, endRow);
-		if (list.size() != 0) {
+		if (list != null) {
 			for (J_RecommendBoard jrb : list) {
 %>
-			<tr><td colspan="7"><hr></td></tr>
-			<tr onMouseOver="this.style.backgroundColor='pink'" onmouseout="this.style.backgroundColor=''">
+			<tr height="30" onMouseOver="this.style.backgroundColor='#E7E7E7'" onmouseout="this.style.backgroundColor=''">
 				<td class="default"><%=total--%></td>
-				<td class="default">
-				<%if(jrb.getRc_value().equals("말머리 없음")) { %>
-				<font class="category"> </font>
-				<% } else { %>			
-				<font class="category"> [<%=jrb.getRc_value()%>] </font>
-				<% } %>
-				</td>
 <%				
 				if (jrb.getBrd_dey_yn().equals("y")) {
 					out.println("<td class='subject' colspan='7'>삭제된 글입니다</td></tr>");
 				} else {
 %>
+				<td class="default">
+					<%if(jrb.getRc_value().equals("말머리 없음")) { %>
+					<font class="category"> </font>
+					<% } else { %>			
+					<font class="category"> [<%=jrb.getRc_value()%>] </font>
+					<% } %>
+				</td>
 				<td class="subject">
 <%
 					if (jrb.getRe_level() > 0) {
@@ -84,6 +83,7 @@
 				<td class="default"><%=jrb.getBrd_readcount()%></td>
 				<td class="default"><%=jrb.getBrd_recommend()%></td>
 			</tr>
+			<tr height="1" bgcolor="#e2e2e2"><td colspan="7"></td></tr>
 <%
 				}
 			}
@@ -100,11 +100,11 @@
 	
 	<br>
 		
-	<div align="center">
+	<div class="list">
 <%
 		if (startPage > pagePerBlock) {
 %>
-			<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=startPage - pagePerBlock%>">[prev] </a>
+			<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=startPage - pagePerBlock%>">[이전] </a>
 			<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=1">[1]</a>				
 			...
 <%
@@ -112,7 +112,7 @@
 		for (int i = startPage; i <= endPage; i++) {
 			if(i==nowPage){
 %>
-				<b>[<%=i%>]</b>
+				<b class="b">[<%=i%>]</b>
 <%
 			} else {
 %>
@@ -124,7 +124,7 @@
 %>
 			...
 			<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=totalPage%>">[<%=totalPage%>]</a>
-			<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=startPage + pagePerBlock%>">[next]</a>
+			<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=startPage + pagePerBlock%>">[다음]</a>
 <%
 		}
 %>

@@ -89,7 +89,7 @@ $(function() {
 		</tr>
 		
 		<tr>
-			<th>최근수정일</th><td><%=brd.getBrd_reg_date() %></td>
+			<th>최근수정일</th><td><%=brd.getBrd_update_date() %></td>
 		</tr>
 		<%
 			} else {

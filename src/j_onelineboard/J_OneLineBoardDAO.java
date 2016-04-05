@@ -68,18 +68,23 @@ public class J_OneLineBoardDAO {
 		return result;
 	}//insertOneline
 	
-	public List<J_OneLineBoard> selectOneLine(int startRow, int endRow){
+	public List<J_OneLineBoard> selectOneLine(int startRow, int endRow, String searchType, String searchTxt){
 		List<J_OneLineBoard> list = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
-		String sql = "SELECT * FROM (SELECT ROWNUM RN, A.* FROM(select m_nick, brd_no, fc_date_check(brd_reg_date) as dt, brd_content, brd_del_yn, a.m_no,(select count(*) from J_ONELINEREPLY c where c.brd_no = a.brd_no) rep_count from J_OneLineBoard a, j_member b where a.m_no = b.m_no and brd_del_yn = 'n' order by brd_no desc) A) WHERE RN BETWEEN ? AND ?";
+		String sql2 = " and " +searchType + " like '%" + searchTxt + "%' ";
+		if(searchTxt.equals("")){
+			sql2 = "";
+		}
+		String sql = "SELECT * FROM (SELECT ROWNUM RN, A.* FROM(select m_nick, brd_no, fc_date_check(brd_reg_date) as dt, brd_content, brd_del_yn, a.m_no,(select count(*) from J_ONELINEREPLY c where c.brd_no = a.brd_no) rep_count from J_OneLineBoard a, j_member b where a.m_no = b.m_no and brd_del_yn = 'n' " + sql2 + "order by brd_no desc) A) WHERE RN BETWEEN ? AND ?";
+		System.out.println(sql);
 		try{
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
+			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
@@ -130,14 +135,18 @@ public class J_OneLineBoardDAO {
 		return jolb;
 	}//selectOneLineByNo
 	
-	public int selectTotal(){
+	public int selectTotal(String searchType, String searchTxt){
 		int total = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		String sql = "SELECT COUNT(*) FROM J_OneLineBoard a, j_member b WHERE a.m_no = b.m_no and BRD_DEL_YN = 'n'";
+		String sql2 = " and " +searchType + " like '%" + searchTxt + "%'";
 		
-		String sql = "SELECT COUNT(*) FROM J_OneLineBoard WHERE BRD_DEL_YN = 'n'";
-		
+		if(!searchTxt.equals("")){
+			sql += sql2;
+		}
+		System.out.println(sql);
 		try{
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);

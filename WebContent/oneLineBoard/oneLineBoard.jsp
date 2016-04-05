@@ -45,8 +45,16 @@
 <%	
 		String mno = (String)session.getAttribute("m_no");
 		
-		System.out.println(mno);
-
+		String searchType = request.getParameter("searchType");
+		String searchTxt = request.getParameter("searchTxt");
+		
+		if(searchType == null || searchType.equals("null") || searchType.equals("")){
+			searchType = "brd_content";
+		}
+		if(searchTxt == null || searchTxt.equals("null")){
+			searchTxt = "";
+		}
+		
 		int rowPerPage = 10;
 		int pagePerBlock = 10;
 		int nowPage = 0;
@@ -58,7 +66,7 @@
 		nowPage = Integer.parseInt(pageNum);
 
 		J_OneLineBoardDAO jobd = J_OneLineBoardDAO.getInstance();
-		int total = jobd.selectTotal();
+		int total = jobd.selectTotal(searchType, searchTxt);
 
 		int totalPage = (int) Math.ceil((double) total / rowPerPage);
 		int startRow = (nowPage - 1) * rowPerPage + 1;
@@ -71,11 +79,12 @@
 		}
 		total = total - startRow + 1;
 
-		List<J_OneLineBoard> list = jobd.selectOneLine(startRow, endRow);
+		List<J_OneLineBoard> list = jobd.selectOneLine(startRow, endRow, searchType, searchTxt);
 %>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		$('#searchType')
 		$(".updateForm").hide();
 		$(".replyForm").hide();
 		
@@ -84,10 +93,10 @@
 			$(this).parent().parent().nextAll(".updateForm").hide();
 			$(this).parent().parent().prevAll(".row").show();
 			$(this).parent().parent().prevAll(".updateForm").hide();
-			$(this).parent().parent().hide("slow"); 
+			$(this).parent().hide(); 
 			var text = $(this).parent().parent().next().find(".originText").text();
 			$(this).parent().parent().next().find(".updateContent").val(text);
-			$(this).parent().parent().next().show("slow");
+			$(this).parent().next().show("slow");
 		});
 		
 		$(".updateCancel").click(function(){
@@ -120,22 +129,31 @@
 	}
 	
 	function isSubmit(number) {
-		alert(number);
  		if(number == null || number == "" || number == "null"){
  			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
- 				alert("1");
  				location.href = "../module/main.jsp?pgm=/member/login.jsp";
  			} else {
- 				alert("2");
  				return false;
  			}
+ 		}else{
+ 			return true;
  		}
- 		return true;
+ 		return false;	
 	}
+	
 	function textCheck() {
 		var counter = document.getElementById("counter");
 		var content = document.getElementById("content");
-		counter.innerHTML = content.value.length + "/150";
+		counter.innerHTML = content.value.length + "/" + content.maxLength;
+		if(content.value.length >= content.maxLength){
+			alert("최대 " + content.maxLength + "글자 까지 작성할수 있습니다.");
+		}
+	}
+	
+	function locate(pageNum){
+		var searchType = document.getElementById("searchType");
+		var searchTxt = document.getElementById("searchTxt");
+		location.href="main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum=" + pageNum + "&searchType=" + searchType.value + "&searchTxt=" + searchTxt.value;
 	}
 </script>
 </head>
@@ -144,7 +162,7 @@
 		class="wrap">
 		<form action="../oneLineBoard/insertOneline.jsp" name="wrtierFrm" onsubmit="return isSubmit(<%=mno%>)">
 			<input type="hidden" name="m_no" value="<%=mno%>">
-			<textarea rows="3" cols="100" maxlength="150" id="content"
+			<textarea rows="3" cols="50" maxlength="150" id="content"
 				name="brd_content" required="required" onkeyup="textCheck()"></textarea>
 			<span id="counter">0/150</span> <input
 				style="height: 50px; width: 120px;" type="submit" value="등록">
@@ -158,11 +176,14 @@
 			
 		<%
 				if (list != null) {
-					for (int i = 0 ; i < list.size(); i++) {
-						J_OneLineBoard jolb = list.get(i);
+					if(list.size() > 0){
+						for (int i = 0 ; i < list.size(); i++) {
+							J_OneLineBoard jolb = list.get(i);
 		%>
 		<div class="row">
-			<p><%=total--%>&nbsp;<%=jolb.getM_nick()%>&nbsp;<%=jolb.getBrd_reg_date()%>&nbsp;<%=jolb.getBrd_content()%><a href="javascript:replyForm(<%=i%>)">[<%=jolb.getRep_count()%>]</a>
+			<p><%=total--%>&nbsp;<%=jolb.getM_nick()%>&nbsp;<%=jolb.getBrd_reg_date()%>
+			<pre style="width:600px; white-space: pre-line;word-break:break-all;"><%=jolb.getBrd_content()%></pre>
+			<a href="javascript:replyForm(<%=i%>)">[<%=jolb.getRep_count()%>]</a>
 					<%
 						if (mno != null) {
 							if (jolb.getM_no() == Integer.parseInt(mno)) {
@@ -202,21 +223,27 @@
 			</form>
 		</div>
 			<%
-							}
 						}
+					}else{
 			%>
-		<div align="center">
+				<p>no data found</p>
+			<%
+					}
+				}
+			%>
+		
+		<div align="center" id="pagingandsearch">
 			<%
 				if (startPage != 1) {
 			%>
-			<a href="main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum=1">&lt;&lt;맨
+			<a href="javascript:locate(1)">&lt;&lt;맨
 				앞으로</a>
 			<%
 				}
 				if (startPage > pagePerBlock) {
 			%>
 			<a
-				href="main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum=<%=startPage - pagePerBlock%>">&lt;이전</a>
+				href="javascript:locate(<%=startPage - pagePerBlock%>)">&lt;이전</a>
 			<%
 				}
 			%>
@@ -224,7 +251,7 @@
 				for (int i = startPage; i <= endPage; i++) {
 					if (nowPage != i) {
 			%>
-			<a href="main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum=<%=i%>"><%=i%></a>
+			<a href="javascript:locate(<%=i%>)"><%=i%></a>
 			<%
 				} else {
 			%>
@@ -232,12 +259,12 @@
 				[<%=i%>]
 			</strong>
 			<%
-				}
+					}
 				}
 				if (totalPage > endPage) {
 			%>
 			<a
-				href="main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum=<%=startPage + pagePerBlock%>">다음&gt;</a>
+				href="javascript:locate(<%=startPage + pagePerBlock%>)">다음&gt;</a>
 			<%
 				}
 			%>
@@ -245,13 +272,19 @@
 				if (endPage != totalPage) {
 			%>
 			<a
-				href="main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum=<%=totalPage%>">맨
+				href="javascript:locate(<%=totalPage%>)">맨
 				뒤로&gt;&gt;</a>
 			<%
 				}
 			%>
+			<br>
+			<select id="searchType">
+				<option value="brd_content">내용</option>
+				<option value="m_nick">글쓴이</option>
+			</select>
+			<input type="text" id="searchTxt" value="<%=searchTxt%>">
+			<input type="submit" value="검색" onclick="locate(1)">
 		</div>
 	</div>
-	
 </body>
 </html>

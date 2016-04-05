@@ -21,31 +21,31 @@
 	<table border="1" width="70%" align="center">
 		<caption><h2>게시글 보기</h2></caption>
 		<tr>
-			<th>제목</th>
+			<td>제목</td>
 			<td><%=jrb.getBrd_subject()%></td>
 		</tr>
 		<tr>
-			<th>닉네임</th>
+			<td>닉네임</td>
 			<td><%=jrb.getM_nick()%></td>
 		</tr>
 
 		<tr>
-			<th>말머리</th>
+			<td>말머리</td>
 			<td><%=jrb.getRc_value()%></td>
 		</tr>
 
 		<tr>
-			<th>조회수</th>
+			<td>조회수</td>
 			<td><%=jrb.getBrd_readcount()%></td>
 		</tr>
 
 		<tr>
-			<th>추천수</th>
+			<td>추천수</td>
 			<td><%=jrb.getBrd_recommend()%></td>
 		</tr>
 
 		<tr>
-			<th>IP</th>
+			<td>IP</td>
 			<td><%=jrb.getBrd_ip()%></td>
 		</tr>
 
@@ -53,18 +53,18 @@
 			if (jrb.getBrd_update_date() != null) {
 		%>
 		<tr>
-			<th>작성일</th>
+			<td>작성일</td>
 			<td><%=jrb.getBrd_reg_date()%></td>
 		</tr>
 		<tr>
-			<th>최근수정일</th>
-			<td><%=jrb.getBrd_reg_date()%></td>
+			<td>최근수정일</td>
+			<td><%=jrb.getBrd_update_date()%></td>
 		</tr>
 		<%
 			} else {
 		%>
 		<tr>
-			<th>작성일</th>
+			<td>작성일</td>
 			<td><%=jrb.getBrd_reg_date()%></td>
 		</tr>
 		<%
@@ -72,7 +72,7 @@
 		%>
 
 		<tr>
-			<th>내용</th>
+			<td>내용</td>
 			<td><pre><%=jrb.getBrd_content()%></pre></td>
 		</tr>
 	</table>

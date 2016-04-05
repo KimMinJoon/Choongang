@@ -7,10 +7,10 @@ create table j_recommend (
 );
 
 -- 게시판에 m_no 외래키 설정
-ALTER TABLE j_recommend ADD CONSTRAINT fk_m_no
+ALTER TABLE j_recommend ADD CONSTRAINT fk_m_no_reco
 FOREIGN KEY(m_no) REFERENCES j_member(m_no);
 
 
 -- 게시판에 brd_no 외래키 설정
-ALTER TABLE j_recommend ADD CONSTRAINT fk_brd_no
+ALTER TABLE j_recommend ADD CONSTRAINT fk_brd_no_reco
 FOREIGN KEY(brd_no) REFERENCES j_meetboard(brd_no);

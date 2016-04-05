@@ -4,20 +4,22 @@
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
 $(function() {
-	$('#m_nick').blur(function() {
+	$('#btnLike').click(function(){
 		$.ajax({
 			type : "POST",
-			url : "../member/nickchk.jsp",
+			url : "../member/recommendchk.jsp",
 			data : {
-				"m_nick" : $('#m_nick').val()
+				"brd_no" : $('#like_brd_no').val()
 			},
 			success : function(data) {
 				if ($.trim(data) == "TRUE") {
-					$('#check').html("<font>사용가능</font>");
-				} else
-					$('#check').html("<font class=red>사용불가</font>");
+					$('#btnLike').value("좋아요 취소");
+				} else if($.trim(data) == "FLASE"){
+					$('#btnLike').value("좋아요");
+				}
 			}
 		});
 	});
@@ -29,7 +31,7 @@ $(function() {
 <body>
 <%
 	String m_no = (String)session.getAttribute("m_no");
-	
+	int brd_no = Integer.parseInt(request.getParameter("brd_no"));
 	
 	// 로그인없이 게시글 접근 시 막기 
 	//if(m_no == null || m_no.equals("") || m_no.equals("null")){
@@ -42,7 +44,7 @@ $(function() {
 	   //response.sendRedirect(path+"/module/main.jsp?pgm=/member/login.jsp");
 	//} 
 
-	int brd_no = Integer.parseInt(request.getParameter("brd_no"));
+	
 	String pageNum = request.getParameter("pageNum");
 	J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
 	J_MeetBoard brd = bd.select(brd_no);
@@ -115,7 +117,8 @@ $(function() {
 %>
 
 <div align="center">
-	<button onclick="location.href='../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=pageNum%>'">좋아요</button>
+	<button id="btnLike"/>
+	<input type="hidden" id="like_brd_no" value="<%=brd_no%>">
 </div>
 
 <div align="center">

@@ -68,7 +68,7 @@ public class J_RecommendBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from (select rowNum rn, a.* from (select jrb.* ,m.m_nick, c.c_value as rc_value from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor order by brd_no desc) a) where rn between ? and ?";
+		String sql = "select * from (select rowNum rn, a.* from (select jrb.* , m.m_nick, c.c_value as rc_value from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor order by ref desc, re_step) a) where rn between ? and ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -168,6 +168,9 @@ public class J_RecommendBoardDao {
 				recommendboard.setBrd_ip(rs.getString("brd_ip"));
 				recommendboard.setBrd_reg_date(rs.getDate("brd_reg_date"));
 				recommendboard.setBrd_update_date(rs.getDate("brd_update_date"));
+				recommendboard.setRef(rs.getInt("ref"));
+				recommendboard.setRe_step(rs.getInt("re_step"));
+				recommendboard.setRe_level(rs.getInt("re_level"));
 				recommendboard.setM_no(rs.getInt("m_no"));
 				recommendboard.setM_nick(rs.getString("m_nick"));
 				recommendboard.setRc_code(rs.getString("rc_code"));

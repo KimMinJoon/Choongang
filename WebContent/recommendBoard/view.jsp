@@ -58,7 +58,7 @@
 		</tr>
 		<tr>
 			<th>최근수정일</th>
-			<td><%=jrb.getBrd_reg_date()%></td>
+			<td><%=jrb.getBrd_update_date()%></td>
 		</tr>
 		<%
 			} else {

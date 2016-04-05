@@ -41,7 +41,7 @@ public class J_OneLineBoardDAO {
 		
 		String sql = "insert into J_OneLineBoard values(?,?,sysdate,null,?,'n',?,null)";
 		String sql1 = "select nvl(max(brd_no),0)+1 from J_OneLineBoard";
-		
+
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql1);

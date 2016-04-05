@@ -51,6 +51,7 @@
 		if(searchType == null || searchType.equals("null") || searchType.equals("")){
 			searchType = "brd_content";
 		}
+		
 		if(searchTxt == null || searchTxt.equals("null")){
 			searchTxt = "";
 		}
@@ -84,7 +85,7 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#searchType')
+		
 		$(".updateForm").hide();
 		$(".replyForm").hide();
 		
@@ -213,7 +214,7 @@
 		</div>
 		<div class="replyForm">
 			<form action="../oneLineBoard/insertReplyOneline.jsp" name="replyFrm" onsubmit="return isSubmit(${mno})" method="post">
-				<input type="hidden" name="m_no" value="${m_no}">
+				<input type="hidden" name="m_no" value="<%=mno%>">
 				<input type="hidden" name="brd_no" value="<%=jolb.getBrd_no()%>">
 				<input type="hidden" name="pageNum" value="<%=pageNum%>">
 				<p><%=jolb.getM_nick()%><%=jolb.getBrd_reg_date()%><%=jolb.getBrd_content()%><input type="button" class="replyCancel" value="취소"></p>
@@ -279,8 +280,24 @@
 			%>
 			<br>
 			<select id="searchType">
-				<option value="brd_content">내용</option>
-				<option value="m_nick">글쓴이</option>
+				<option value="brd_content" 
+				<%
+					if(searchType.equals("brd_content")){
+				%>
+					selected="selected"
+				<%
+					}
+				%>
+				>내용</option>
+				<option value="m_nick"
+				<%
+					if(searchType.equals("m_nick")){
+				%>
+					selected="selected"
+				<%
+					}
+				%>
+				>글쓴이</option>
 			</select>
 			<input type="text" id="searchTxt" value="<%=searchTxt%>">
 			<input type="submit" value="검색" onclick="locate(1)">

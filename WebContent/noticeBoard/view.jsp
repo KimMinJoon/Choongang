@@ -24,6 +24,10 @@
 			<th>제목</th>
 			<td><%=jnb.getBrd_subject()%></td>
 		</tr>
+		<tr>
+			<th>조회수</th>
+			<td><%=jnb.getBrd_readcount()%></td>
+		</tr>
 		<%
 			if (jnb.getBrd_update_date() != null) {
 		%>

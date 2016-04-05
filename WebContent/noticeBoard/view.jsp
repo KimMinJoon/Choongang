@@ -57,11 +57,19 @@
 		<button
 			onclick="location.href='../module/main.jsp?pgm=/noticeBoard/list.jsp?pageNum=<%=pageNum%>'">
 			목록</button>
+		<%
+			String admin = (String) session.getAttribute("m_no");
+			if (admin == null || admin.equals("") || admin.equals("null") || !admin.equals("1")) {
+			} else {
+		%>
 		<button
 			onclick="location.href='../module/main.jsp?pgm=/noticeBoard/updateForm.jsp?brd_no=<%=brd_no%>&pageNum=<%=pageNum%>'">수정</button>
 		<!-- 이렇게해야 수정을 누르면 수정클릭한 해당 페이지로 보내준다. -->
 		<button
 			onclick="location.href='../module/main.jsp?pgm=/noticeBoard/deleteForm.jsp?brd_no=<%=brd_no%>&pageNum=<%=pageNum%>'">삭제</button>
+		<%
+			}
+		%>
 	</div>
 </body>
 </html>

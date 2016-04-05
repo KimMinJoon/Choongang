@@ -1,5 +1,5 @@
 <%@page import="java.util.List"%>
-<%@ include file="../session/adminChk.jsp" %>
+<%@ include file="../session/adminChk.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="j_noticeboard.*"%>
 <!DOCTYPE html>
@@ -14,12 +14,14 @@
 
 </head>
 <body>
-	<form action="../module/main.jsp?pgm=/noticeBoard/writePro.jsp" method="post">
-		<input type="hidden" name="pageNum" value="<%=pageNum%>">
-		<input type="hidden" name="m_no" value="<%=m_no%>">
-		
+	<form action="../noticeBoard/writePro.jsp" method="post">
+		<input type="hidden" name="pageNum" value="<%=pageNum%>"> <input
+			type="hidden" name="admin" value="<%=admin%>">
+
 		<table class="tab" cellpadding="10" align="center" width="50%">
-			<caption><h2>공지사항 작성</h2></caption>
+			<caption>
+				<h2>공지사항 작성</h2>
+			</caption>
 			<tr>
 				<td class="join1">제목</td>
 				<td><input type="text" name="brd_subject" required="required"

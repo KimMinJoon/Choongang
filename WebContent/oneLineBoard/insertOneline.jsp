@@ -14,7 +14,6 @@
 <body>
 <%	
 	olb.setBrd_ip(request.getRemoteAddr());
-	System.out.println(olb);
 	J_OneLineBoardDAO jold = J_OneLineBoardDAO.getInstance();
 	int result = jold.insertBoard(olb);
 	if(result > 0){

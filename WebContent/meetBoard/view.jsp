@@ -6,21 +6,23 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
+
 $(function() {
 	$('#btnLike').click(function(){
 		$.ajax({
 			type : "POST",
-			url : "../member/recommendchk.jsp",
+			url : "../meetBoard/recommendchk.jsp",
 			data : {
 				"brd_no" : $('#like_brd_no').val()
 			},
-			success : function(data) {
+			success : function(data){
+				alert($.trim(data));
 				if ($.trim(data) == "TRUE") {
-					$('#btnLike').value("좋아요 취소");
-				} else if($.trim(data) == "FLASE"){
-					$('#btnLike').value("좋아요");
+					$('#btnLike').text("좋아요");
+				} else if($.trim(data) == "FALSE"){
+					$('#btnLike').text("좋아요 취소");
 				}
-			}
+			} 
 		});
 	});
 });
@@ -33,26 +35,16 @@ $(function() {
 	String m_no = (String)session.getAttribute("m_no");
 	int brd_no = Integer.parseInt(request.getParameter("brd_no"));
 	
-	// 로그인없이 게시글 접근 시 막기 
-	//if(m_no == null || m_no.equals("") || m_no.equals("null")){
-		%>
-		<!-- <script type="text/javascript">
-			alert("1");		
-			location.href="../module/main.jsp?pgm=/member/login.jsp";
-		</script> -->
-		<%
-	   //response.sendRedirect(path+"/module/main.jsp?pgm=/member/login.jsp");
-	//} 
-
-	
 	String pageNum = request.getParameter("pageNum");
 	J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
 	J_MeetBoard brd = bd.select(brd_no);
+	int recommend = bd.selectRecommend(Integer.parseInt(m_no), brd_no);
 	
 	if (brd != null) {
 		bd.updateHit(brd_no);
 %>
 	<table border="1" width="80%"><caption>게시판 상세내용</caption>
+	
 		<tr>
 			<th>제목</th><td><%=brd.getBrd_subject() %></td>
 		</tr>
@@ -117,7 +109,19 @@ $(function() {
 %>
 
 <div align="center">
-	<button id="btnLike"/>
+	<button id="btnLike">
+	<%
+		if(recommend > 0){
+	%>
+		좋아요 취소
+	<%
+		}else{
+	%>
+		좋아요
+	<%
+		}
+	%>
+	</button>
 	<input type="hidden" id="like_brd_no" value="<%=brd_no%>">
 </div>
 
@@ -125,7 +129,6 @@ $(function() {
 	<button onclick="location.href='../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=pageNum%>'">게시판 목록</button>
 	<%
 		//m_no = "1";
-		
 		if (m_no != null) {
 		 	if (Integer.parseInt(m_no) == brd.getM_no()){
 	%>

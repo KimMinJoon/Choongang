@@ -1,19 +1,24 @@
+
 package j_onelineboard;
 
 import java.sql.Date;
-
+/**
+ * 한줄게시판에서 사용될 VO 클래스
+ * 
+ * @author 이재설
+ *
+ */
 public class J_OneLineBoard {
-	private int brd_no;
-	private String brd_content;
-	private String brd_reg_date;
-	private Date brd_update_date;
-	private String brd_ip;
-	private String brd_del_yn;
-	private int m_no;
-	private String m_nick;
-	private int grp;
-	private int rep_count;
-	
+	private int brd_no;				//게시글 번호
+	private String brd_content;		//게시글 내용
+	private String brd_reg_date;	//게시글 등록일
+	private Date brd_update_date;	//게시글 최종 수정일
+	private String brd_ip;			//게시글 등록 IP
+	private String brd_del_yn;		//게시글 삭제 여부
+	private int m_no;				//게시자 회원번호
+	private String m_nick;			//게시자 닉네임
+	private int grp;				//댓글 그룹
+	private int rep_count;			//해당 게시글에 대한 댓글의 총 수
 	
 	
 	public int getRep_count() {
@@ -76,6 +81,11 @@ public class J_OneLineBoard {
 	public void setM_no(int m_no) {
 		this.m_no = m_no;
 	}
+	//getter,setter
+	
+	/**
+	 * 저장된 값 확인을 위한 toString 오버라이드
+	 */
 	@Override
 	public String toString() {
 		return "J_OneLineBoard [brd_no=" + brd_no + ", brd_content=" + brd_content + ", brd_reg_date=" + brd_reg_date

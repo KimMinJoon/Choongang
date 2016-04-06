@@ -70,7 +70,7 @@ public class J_RecommendBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from (select rowNum rn, a.* from (select jrb.* , m.m_nick, c.c_value as rc_value from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor order by ref desc, re_step) a) where rn between ? and ?";
+		String sql = "select * from (select rowNum rn, a.* from (select jrb.* , m.m_nick, c.c_value as rc_value from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor and brd_del_yn='n' order by ref desc, re_step) a) where rn between ? and ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);

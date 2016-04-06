@@ -50,11 +50,6 @@
 %>
 			<tr height="30" onMouseOver="this.style.backgroundColor='#E7E7E7'" onmouseout="this.style.backgroundColor=''">
 				<td class="default"><%=total--%></td>
-<%				
-				if (jrb.getBrd_dey_yn().equals("y")) {
-					out.println("<td class='subject' colspan='7'>삭제된 글입니다</td></tr>");
-				} else {
-%>
 				<td class="default">
 					<%if(jrb.getRc_value().equals("말머리 없음")) { %>
 					<font class="category"> </font>
@@ -85,7 +80,6 @@
 			</tr>
 			<tr height="1" bgcolor="#e2e2e2"><td colspan="7"></td></tr>
 <%
-				}
 			}
 		} else {
 %>

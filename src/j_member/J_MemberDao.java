@@ -180,21 +180,21 @@ public class J_MemberDao {
 		return mem;
 	}
 
-	public J_Info infoselect(String m_no) {
+	public J_Member infoselect(String m_no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "select m_email, m_passwd, m_nick, (select c_value from j_code c where c.c_minor = m.c_code) as c_value, (select c_value from j_code c where c.c_minor = m.l_code) as l_value from j_member m where m_no=? and m_del_yn='n'";
-		J_Info jif = new J_Info();
+		J_Member jif = new J_Member();
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, m_no);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				jif.setI_email(rs.getString("m_email"));
-				jif.setI_passwd(rs.getString("m_passwd"));
-				jif.setI_nick(rs.getString("m_nick"));
+				jif.setM_email(rs.getString("m_email"));
+				jif.setM_passwd(rs.getString("m_passwd"));
+				jif.setM_nick(rs.getString("m_nick"));
 				jif.setC_value(rs.getString("c_value"));
 				jif.setL_value(rs.getString("l_value"));
 			}

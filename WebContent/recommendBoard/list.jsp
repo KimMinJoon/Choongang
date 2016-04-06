@@ -45,16 +45,11 @@
 		total = total - startRow + 1;
 			
 		List<J_RecommendBoard> list = jrbd.selectList(startRow, endRow);
-		if (list != null) {
+		if (list.size() != 0) {
 			for (J_RecommendBoard jrb : list) {
 %>
 			<tr height="30" onMouseOver="this.style.backgroundColor='#E7E7E7'" onmouseout="this.style.backgroundColor=''">
 				<td class="default"><%=total--%></td>
-<%				
-				if (jrb.getBrd_dey_yn().equals("y")) {
-					out.println("<td class='subject' colspan='7'>삭제된 글입니다</td></tr>");
-				} else {
-%>
 				<td class="default">
 					<%if(jrb.getRc_value().equals("말머리 없음")) { %>
 					<font class="category"> </font>
@@ -75,7 +70,7 @@
 					<a href="../module/main.jsp?pgm=/recommendBoard/view.jsp?brd_no=<%=jrb.getBrd_no()%>&pageNum=<%=nowPage%>"><%=jrb.getBrd_subject()%></a>
 <%
 					if (jrb.getBrd_readcount() > 20)
-						out.println("<img src='images/hot.gif'>");
+						out.println("<img src='../images/hot.gif'>");
 %>
 				</td>
 				<td class="nickname"><%=jrb.getM_nick()%></td>
@@ -85,12 +80,11 @@
 			</tr>
 			<tr height="1" bgcolor="#e2e2e2"><td colspan="7"></td></tr>
 <%
-				}
 			}
 		} else {
 %>
-			<tr><td colspan="7"><hr></td></tr>
-			<tr>
+			<tr height="1" bgcolor="#e2e2e2"><td colspan="7"></td></tr>
+			<tr height="30" onMouseOver="this.style.backgroundColor='#E7E7E7'" onmouseout="this.style.backgroundColor=''">
 				<td colspan="7" class="default">데이터가 없습니다</td>
 			</tr>
 <%

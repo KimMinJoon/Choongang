@@ -6,6 +6,8 @@ import java.util.*;
 import javax.naming.*;
 import javax.sql.*;
 
+import j_meetboard.J_MeetBoard;
+
 public class J_RecommendBoardDao {
 	
 	private static J_RecommendBoardDao instance = new J_RecommendBoardDao();
@@ -68,7 +70,7 @@ public class J_RecommendBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from (select rowNum rn, a.* from (select jrb.* , m.m_nick, c.c_value as rc_value from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor order by ref desc, re_step) a) where rn between ? and ?";
+		String sql = "select * from (select rowNum rn, a.* from (select jrb.* , m.m_nick, c.c_value as rc_value from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor and brd_del_yn='n' order by ref desc, re_step) a) where rn between ? and ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -180,6 +182,69 @@ public class J_RecommendBoardDao {
 			System.out.println(e.getMessage());
 		} finally {
 			dbClose(rs,pstmt,conn);
+		}
+		return recommendboard;
+	}
+	
+	public int update(J_RecommendBoard recommendboard) throws SQLException {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "update j_recommendboard set brd_subject=?,brd_content=?,rc_code=?,brd_update_date=sysdate where brd_no=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, recommendboard.getBrd_subject());
+			pstmt.setString(2, recommendboard.getBrd_content());
+			pstmt.setString(3, recommendboard.getRc_code());
+			pstmt.setInt(4, recommendboard.getBrd_no());
+			System.out.println(recommendboard);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(recommendboard);
+			System.out.println(e.getMessage());
+		} finally {
+			dbClose(pstmt, conn);
+		}
+		return result;
+	}
+
+	public int delete(int brd_no) throws SQLException {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "update j_recommendboard set brd_del_yn='y' where brd_no=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, brd_no);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			dbClose(pstmt, conn);
+		}
+		return result;
+	}
+	
+	public J_RecommendBoard pwdCheck(int brd_no) {
+		J_RecommendBoard recommendboard = new J_RecommendBoard();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select m.m_passwd from j_recommendboard jrb, j_member m where jrb.m_no = m.m_no and brd_no=?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
+			pstmt.setInt(1, brd_no);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				recommendboard.setM_passwd(rs.getString("m_passwd"));
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			dbClose(rs, pstmt, conn);
 		}
 		return recommendboard;
 	}

@@ -18,6 +18,7 @@ public class J_RecommendBoard {
 	private int re_level;
 	private int m_no;
 	private String m_nick;
+	private String m_passwd;
 	private String rc_code;
 	private String rc_value;
 
@@ -133,6 +134,14 @@ public class J_RecommendBoard {
 		this.m_nick = m_nick;
 	}
 
+	public String getM_passwd() {
+		return m_passwd;
+	}
+
+	public void setM_passwd(String m_passwd) {
+		this.m_passwd = m_passwd;
+	}
+	
 	public String getRc_code() {
 		return rc_code;
 	}

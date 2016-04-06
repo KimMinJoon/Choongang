@@ -1,13 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="j_recommendboard.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="../projectcss.css">
-</head>
-<body>
 
 	<%
 		String m_no = (String) session.getAttribute("m_no");
@@ -17,6 +10,26 @@
 		J_RecommendBoard jrb = jrbd.select(brd_no);
 		jrbd.updateHit(brd_no);
 	%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="../projectcss.css">
+<script language="javascript">
+function pwdpopup(){
+	var purl = "../recommendBoard/deleteForm.jsp?brd_no="+<%=brd_no%>+"&pageNum="+<%=pageNum%>;
+	var pname = "pwdpopup";
+	var pwidth = 250;
+	var pheight = 100;
+	var pleft = (screen.availWidth-pwidth)/2;
+	var ptop = (screen.availHeight-pheight)/2;
+	var poption = "scrollbars=no,status=no,toolbar=no,resizable=0,location=no,menu=no," +
+	                "width=" + pwidth + ",height=" + pheight + ",left=" + pleft + ",top=" + ptop;
+	window.open(purl, pname, poption);
+}
+</script>
+</head>
+<body>
 	
 	<table border="1" width="70%" align="center">
 		<caption><h2>게시글 보기</h2></caption>
@@ -89,7 +102,7 @@
 		<button
 			onclick="location.href='../module/main.jsp?pgm=/recommendBoard/updateForm.jsp?brd_no=<%=brd_no%>&pageNum=<%=pageNum%>'">수정</button>
 		<button
-			onclick="location.href='../module/main.jsp?pgm=/recommendBoard/deleteForm.jsp?brd_no=<%=brd_no%>&pageNum=<%=pageNum%>'">삭제</button>
+			onclick="pwdpopup()">삭제</button>
 		<button
 			onclick="location.href='../module/main.jsp?pgm=/recommendBoard/writeForm.jsp?brd_no=<%=brd_no%>&pageNum=<%=pageNum%>'">답변</button>
 		<%

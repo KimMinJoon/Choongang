@@ -19,7 +19,7 @@
 		J_NoticeBoardDao bd = J_NoticeBoardDao.getInstance();
 		int result = bd.insert(noticeboard);
 		if (result > 0) {
-			response.sendRedirect("../module/main.jsp?pgm=/noticeBoard/list.jsp?pageNum=" + pageNum);
+			response.sendRedirect("../module/main.jsp?pgm=/noticeBoard/noticeMenuTemp.jsp?nbpgm=/noticeBoard/list.jsp?pageNum=" + pageNum);
 		} else {
 	%>
 	<script type="text/javascript">

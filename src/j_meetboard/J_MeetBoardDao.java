@@ -167,32 +167,40 @@ public class J_MeetBoardDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		System.out.println("recommendChk >> m_no : " + m_no + ", brd_no : " + brd_no);
+		
 		String sql2 = "select * from j_recommend where m_no = ? and brd_no = ?";
 		String sql = "insert into j_recommend values(?,?,sysdate,'n')";
 		String sql3 = "delete from j_recommend where m_no = ? and brd_no = ?";	
 		conn = getConnection();
 			try {
 				pstmt = conn.prepareStatement(sql2);// 먼저 값을 읽어와야함
-				pstmt.setInt(1, brd_no);
-				pstmt.setInt(2, m_no);
+				pstmt.setInt(1, m_no);
+				pstmt.setInt(2, brd_no);
 				rs = pstmt.executeQuery();
 				if(rs.next()){
+					System.out.println(m_no + " 의 " + brd_no + " 추천이력 확인");
 					rs.close();
 					pstmt.close();
 					pstmt = conn.prepareStatement(sql3);
+					pstmt.setInt(1, m_no);
+					pstmt.setInt(2, brd_no);
 					result = pstmt.executeUpdate();
 					if(result > 0){
-						result = 1; //추천 성공
+						result = 1; //추천 취소 성공
 					}else{
 						result = -1; //추천 실패
 					}
 				}else{
+					System.out.println(m_no + " 의 " + brd_no + " 추천이력 미확인");
 					rs.close();
 					pstmt.close();
 					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, brd_no);
+					pstmt.setInt(2, m_no);
 					result = pstmt.executeUpdate();
 					if(result > 0){
-						result = 0; //추천 취소 성공
+						result = 0; //추천 성공
 					}else{
 						result = -1; //추천 취소 실패
 					}
@@ -202,6 +210,7 @@ public class J_MeetBoardDao {
 			}finally {
 				dbClose(rs, pstmt, conn);
 			}
+		System.out.println("result : " + result);
 		return result; 
 	}
 
@@ -341,6 +350,30 @@ public class J_MeetBoardDao {
 		}
 		return result;
 	}
+	
+	public int selectRecommend(int m_no, int brd_no){
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from j_recommend where m_no = ? and brd_no = ?";
+		try{
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, m_no);
+			pstmt.setInt(2, brd_no);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				result = 1;
+			}
+		}catch(Exception e){
+			System.out.println("selectRecommend : " + e.getMessage());
+		}finally {
+			dbClose(rs, pstmt, conn);
+		}
+		return result;
+	}//selectRecommend
 
 	/// DB close 사용자함수 생성
 	public void dbClose(ResultSet rs, PreparedStatement pstmt, Connection conn) {

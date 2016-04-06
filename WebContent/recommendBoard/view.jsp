@@ -77,7 +77,7 @@ $(function() {
 
 		<tr>
 			<td>추천수</td>
-			<td><%=jrb.getBrd_recommend()%></td>
+			<td><%=jrb.getRecocount()%></td>
 		</tr>
 
 		<tr>

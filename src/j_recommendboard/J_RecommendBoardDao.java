@@ -83,7 +83,6 @@ public class J_RecommendBoardDao {
 				recommendboard.setBrd_subject(rs.getString("brd_subject"));
 				recommendboard.setBrd_content(rs.getString("brd_content"));
 				recommendboard.setBrd_readcount(rs.getInt("brd_readcount"));
-				recommendboard.setBrd_recommend(rs.getInt("brd_recommend"));
 				recommendboard.setBrd_ip(rs.getString("brd_ip"));
 				recommendboard.setBrd_reg_date(rs.getDate("brd_reg_date"));
 				recommendboard.setBrd_update_date(rs.getDate("brd_update_date"));
@@ -110,7 +109,7 @@ public class J_RecommendBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "insert into j_recommendboard values(?,?,?,0,0,?,sysdate,null,'n',?,?,?,?,?)";
+		String sql = "insert into j_recommendboard values(?,?,?,0,?,sysdate,null,'n',?,?,?,?,?)";
 		String sql1 = "select nvl(max(brd_no),0)+1 from j_recommendboard";
 		String sql2 = "update j_recommendboard set re_step=re_step+1 where ref=? and re_step>?";
 		try {
@@ -156,7 +155,7 @@ public class J_RecommendBoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = 
-				"select jrb.*, m.m_nick, c.c_value as rc_value from j_recommendboard jrb, j_member m, j_code c where jrb.brd_no=? and jrb.m_no=m.m_no and jrb.rc_code=c.c_minor";
+				"select jrb.*, m.m_nick, c.c_value as rc_value, (select count(*) from j_recommend2 jr2 where jr2.brd_no = jrb.brd_no) recocount from j_recommendboard jrb, j_member m, j_code c where jrb.brd_no=? and jrb.m_no=m.m_no and jrb.rc_code=c.c_minor";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -167,7 +166,6 @@ public class J_RecommendBoardDao {
 				recommendboard.setBrd_subject(rs.getString("brd_subject"));
 				recommendboard.setBrd_content(rs.getString("brd_content"));
 				recommendboard.setBrd_readcount(rs.getInt("brd_readcount"));
-				recommendboard.setBrd_recommend(rs.getInt("brd_recommend"));
 				recommendboard.setBrd_ip(rs.getString("brd_ip"));
 				recommendboard.setBrd_reg_date(rs.getDate("brd_reg_date"));
 				recommendboard.setBrd_update_date(rs.getDate("brd_update_date"));
@@ -178,6 +176,7 @@ public class J_RecommendBoardDao {
 				recommendboard.setM_nick(rs.getString("m_nick"));
 				recommendboard.setRc_code(rs.getString("rc_code"));
 				recommendboard.setRc_value(rs.getString("rc_value"));
+				recommendboard.setRecocount(rs.getInt("recocount"));				
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

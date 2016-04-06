@@ -6,6 +6,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="../css/projectcss.css">
+<script type="text/javascript">
+	function locate(pageNum){
+		var searchType = document.getElementById("searchType");
+		var searchTxt = document.getElementById("searchTxt");
+		location.href="main.jsp?pgm=/recommendBoard/list.jsp?pageNum="+pageNum+"&searchType="+searchType.value+"&searchTxt="+searchTxt.value;
+	}
+</script>
 </head>
 <body>
 	
@@ -29,11 +36,20 @@
 		String pageNum = request.getParameter("pageNum");
 		if (pageNum == null || pageNum.equals("null") || pageNum.equals(""))
 			pageNum = "1";
-
+		
+		String searchType = request.getParameter("searchType");
+		String searchTxt = request.getParameter("searchTxt");
+		if(searchType == null || searchType.equals("null") || searchType.equals("")){
+			searchType = "brd_subject";
+		}
+		if(searchTxt == null || searchTxt.equals("null")){
+			searchTxt = "";
+		}
+		
 		int rowPerPage = 15;
 		int pagePerBlock = 10;
 		int nowPage = Integer.parseInt(pageNum);
-		int total = jrbd.selectTotal();
+		int total = jrbd.selectTotal(searchType, searchTxt);
 		int totalPage = (int) Math.ceil((double)total/rowPerPage);
 		int startRow = (nowPage - 1) * rowPerPage + 1;
 		int endRow = startRow + rowPerPage - 1;
@@ -43,8 +59,8 @@
 		if (endPage > totalPage)
 			endPage = totalPage;
 		total = total - startRow + 1;
-			
-		List<J_RecommendBoard> list = jrbd.selectList(startRow, endRow);
+		
+		List<J_RecommendBoard> list = jrbd.selectList(startRow, endRow, searchType, searchTxt);
 		if (list.size() != 0) {
 			for (J_RecommendBoard jrb : list) {
 %>
@@ -98,8 +114,8 @@
 <%
 		if (startPage > pagePerBlock) {
 %>
-			<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=startPage - pagePerBlock%>">[이전] </a>
-			<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=1">[1]</a>				
+			<a href="javascript:locate(<%=startPage - pagePerBlock%>)">[이전] </a>
+			<a href="javascript:locate(1)">[1]</a>				
 			...
 <%
 		}
@@ -110,20 +126,44 @@
 <%
 			} else {
 %>
-				<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=i%>">[<%=i%>]</a>
+				<a href="javascript:locate(<%=i%>)">[<%=i%>]</a>
 <%
 			}
 		}
 		if (totalPage > endPage) {
 %>
 			...
-			<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=totalPage%>">[<%=totalPage%>]</a>
-			<a href="../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=startPage + pagePerBlock%>">[다음]</a>
+			<a href="javascript:locate(<%=totalPage%>)">[<%=totalPage%>]</a>
+			<a href="javascript:locate(<%=startPage + pagePerBlock%>)">[다음]</a>
 <%
 		}
 %>
 		<p>
 		<button onclick="location.href='../module/main.jsp?pgm=/recommendBoard/writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>
+		
+		<p>
+		<select id="searchType">
+			<option value="brd_subject" 
+			<%
+				if(searchType.equals("brd_content")){
+			%>
+				selected="selected"
+			<%
+				}
+			%>
+			>제목</option>
+			<option value="m_nick"
+			<%
+				if(searchType.equals("m_nick")){
+			%>
+				selected="selected"
+			<%
+				}
+			%>
+			>글쓴이</option>
+		</select>
+		<input type="text" id="searchTxt" value="<%=searchTxt%>">
+		<input type="submit" value="검색" onclick="locate(1)">
 	</div>
 
 </body>

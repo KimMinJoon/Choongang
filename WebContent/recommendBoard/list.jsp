@@ -76,7 +76,7 @@
 				<td class="nickname"><%=jrb.getM_nick()%></td>
 				<td class="default"><%=jrb.getBrd_reg_date()%></td>
 				<td class="default"><%=jrb.getBrd_readcount()%></td>
-				<td class="default"><%=jrb.getBrd_recommend()%></td>
+				<td class="default"><%=jrb.getRecocount()%></td>
 			</tr>
 			<tr height="1" bgcolor="#e2e2e2"><td colspan="7"></td></tr>
 <%

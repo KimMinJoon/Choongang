@@ -205,7 +205,7 @@ public class J_NoticeBoardDao {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "update j_noticeboard set brd_subject=?, brd_content=? where brd_no=?";
+		String sql = "update j_noticeboard set brd_subject=?, brd_content=?, brd_update_date=sysdate where brd_no=?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);

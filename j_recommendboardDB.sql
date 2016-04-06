@@ -3,7 +3,6 @@ create table j_recommendboard (
 	brd_subject varchar2(200) not null, -- 게시글 제목
 	brd_content varchar2(4000) not null, -- 게시글내용
 	brd_readcount number default 0, --읽은 횟수
-	brd_recommend number default 0, --추천받은 수
 	brd_ip varchar2(20) not null, --작성자 ip
 	brd_reg_date date default sysdate, --게시등록일
 	brd_update_date date,  --게시 수정일

@@ -20,7 +20,7 @@
 	function deleteCheck(){	
 			if (frm.password.value == '') {
 				alert('비밀번호를 입력해주세요.');
-				form.password.focus();
+				frm.password.focus();
 				return false;
 			}
 			if(frm.password.value != frm.dbPass.value){
@@ -35,7 +35,9 @@
 <body>
 	
 	<form action="../recommendBoard/deletePro.jsp" name="frm" onsubmit="return deleteCheck()">
-		<input type="hidden" name="dbPass" value="<%=dbPass%>"> 
+		<input type="hidden" name="brd_no" value="<%=brd_no%>">
+		<input type="hidden" name="pageNum" value="<%=pageNum%>">
+		<input type="hidden" name="dbPass" value="<%=dbPass%>">
 		<table align="center" cellpadding="0" cellspacing="0" border="0">
 			<tr height="25">
 			<td align="right" width="120" bgcolor="#D5D5D5"> <font face="나눔고딕" size="2"> password &nbsp; </font> </td>
@@ -43,8 +45,10 @@
 			</tr>
 			<tr height="10" bgcolor="white"><td colspan="2"></td></tr>
 			<tr align="center">
-			<td colspan="2"><input type="submit" value="삭제">
-			<input type="button" value="취소" onclick="window.close()"></td>
+				<td colspan="2">
+				<input type="submit" value="삭제">
+				<input type="button" value="취소" onclick="window.close()">
+				</td>
 			</tr>
 		</table>
 	</form>

@@ -75,7 +75,7 @@
 					<a href="../module/main.jsp?pgm=/recommendBoard/view.jsp?brd_no=<%=jrb.getBrd_no()%>&pageNum=<%=nowPage%>"><%=jrb.getBrd_subject()%></a>
 <%
 					if (jrb.getBrd_readcount() > 20)
-						out.println("<img src='images/hot.gif'>");
+						out.println("<img src='../images/hot.gif'>");
 %>
 				</td>
 				<td class="nickname"><%=jrb.getM_nick()%></td>

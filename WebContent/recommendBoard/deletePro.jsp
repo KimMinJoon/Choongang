@@ -14,7 +14,7 @@
 	%>
 			<script language=javascript>
 				self.window.alert("삭제 성공");
-				opener.parent.location.href = "../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=pageNum%>";
+				opener.parent.location.href = "../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=pageNum%>";
 				window.close();
 			</script>
 	<%

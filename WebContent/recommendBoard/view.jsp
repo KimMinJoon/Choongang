@@ -9,7 +9,9 @@
 		J_RecommendBoardDao jrbd = J_RecommendBoardDao.getInstance();
 		J_RecommendBoard jrb = jrbd.select(brd_no);
 		jrbd.updateHit(brd_no);
+		int recommend = jrbd.selectRecommend(m_no, brd_no);
 	%>
+	
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -27,6 +29,27 @@ function pwdpopup(){
 	                "width=" + pwidth + ",height=" + pheight + ",left=" + pleft + ",top=" + ptop;
 	window.open(purl, pname, poption);
 }
+</script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('#btnLike').click(function(){
+		$.ajax({
+			type : "POST",
+			url : "../recommendBoard/recommendChk.jsp",
+			data : {
+				"brd_no" : $('#like_brd_no').val()
+			},
+			success : function(data){
+				if ($.trim(data) == "TRUE") {
+					$('#btnLike').text("좋아요");
+				} else if($.trim(data) == "FALSE"){
+					$('#btnLike').text("좋아요 취소");
+				}
+			} 
+		});
+	});
+});
 </script>
 </head>
 <body>
@@ -54,7 +77,7 @@ function pwdpopup(){
 
 		<tr>
 			<td>추천수</td>
-			<td><%=jrb.getBrd_recommend()%></td>
+			<td><%=jrb.getRecocount()%></td>
 		</tr>
 
 		<tr>
@@ -91,7 +114,32 @@ function pwdpopup(){
 	</table>
 	
 	<p>
+	
+	<%
+		if (m_no != null) {
+	%>
+			<div align="center">
+				<button id="btnLike">
+				<%
+					if(recommend > 0){
+				%>
+					좋아요 취소
+				<%
+					}else{
+				%>
+					좋아요
+				<%
+					}
+				%>
+				</button>
+				<input type="hidden" id="like_brd_no" value="<%=brd_no%>">
+			</div>
+	<%
+		}
+	%>
 
+	<p>
+	
 	<div align="center">
 		<button
 			onclick="location.href='../module/main.jsp?pgm=/recommendBoard/list.jsp?pageNum=<%=pageNum%>'">목록</button>

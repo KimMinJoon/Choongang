@@ -70,7 +70,7 @@ public class J_RecommendBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from (select rowNum rn, a.* from (select jrb.* , m.m_nick, c.c_value as rc_value from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor and brd_del_yn='n' order by ref desc, re_step) a) where rn between ? and ?";
+		String sql = "select * from (select rowNum rn, a.* from (select jrb.* , m.m_nick, c.c_value as rc_value, (select count(*) from j_recommend2 jr2 where jr2.brd_no = jrb.brd_no) recocount from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor and brd_del_yn='n' order by ref desc, re_step) a) where rn between ? and ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -94,6 +94,7 @@ public class J_RecommendBoardDao {
 				recommendboard.setM_no(rs.getInt("m_no"));
 				recommendboard.setM_nick(rs.getString("m_nick"));
 				recommendboard.setRc_value(rs.getString("rc_value"));
+				recommendboard.setRecocount(rs.getInt("recocount"));
 				list.add(recommendboard);
 			}				
 		} catch (Exception e) {
@@ -235,7 +236,7 @@ public class J_RecommendBoardDao {
 		String sql = "select m.m_passwd from j_recommendboard jrb, j_member m where jrb.m_no = m.m_no and brd_no=?";
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, brd_no);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -247,6 +248,76 @@ public class J_RecommendBoardDao {
 			dbClose(rs, pstmt, conn);
 		}
 		return recommendboard;
+	}
+	
+	public int selectRecommend(String m_no, int brd_no){
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from j_recommend2 where m_no = ? and brd_no = ?";
+		try{
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m_no);
+			pstmt.setInt(2, brd_no);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				result = 1;
+			}
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}finally {
+			dbClose(rs, pstmt, conn);
+		}
+		return result;
+	}
+	
+	public int recoCheck(String m_no, int brd_no) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql2 = "select * from j_recommend2 where m_no = ? and brd_no = ?";
+		String sql = "insert into j_recommend2 values(?,?,sysdate,'n')";
+		String sql3 = "delete from j_recommend2 where m_no = ? and brd_no = ?";	
+		conn = getConnection();
+			try {
+				pstmt = conn.prepareStatement(sql2);
+				pstmt.setString(1, m_no);
+				pstmt.setInt(2, brd_no);
+				rs = pstmt.executeQuery();
+				if(rs.next()){
+					rs.close();
+					pstmt.close();
+					pstmt = conn.prepareStatement(sql3);
+					pstmt.setString(1, m_no);
+					pstmt.setInt(2, brd_no);
+					result = pstmt.executeUpdate();
+					if(result > 0){
+						result = 1;
+					}else{
+						result = -1;
+					}
+				}else{
+					rs.close();
+					pstmt.close();
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, brd_no);
+					pstmt.setString(2, m_no);
+					result = pstmt.executeUpdate();
+					if(result > 0){
+						result = 0;
+					}else{
+						result = -1;
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				dbClose(rs, pstmt, conn);
+			}
+		return result; 
 	}
 	
 	public void dbClose(PreparedStatement pstmt, Connection conn) {

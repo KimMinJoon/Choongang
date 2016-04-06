@@ -21,6 +21,7 @@ public class J_RecommendBoard {
 	private String m_passwd;
 	private String rc_code;
 	private String rc_value;
+	private int recocount;
 
 	public int getBrd_no() {
 		return brd_no;
@@ -156,6 +157,14 @@ public class J_RecommendBoard {
 
 	public void setRc_value(String rc_value) {
 		this.rc_value = rc_value;
+	}
+
+	public int getRecocount() {
+		return recocount;
+	}
+
+	public void setRecocount(int recocount) {
+		this.recocount = recocount;
 	}
 
 	/*@Override

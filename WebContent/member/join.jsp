@@ -100,7 +100,8 @@
 				$('#check').html("<font>한글,영문,숫자 2~10자</font>");
 				if($("#m_nick").val().length < 2) {
 					$('#check').html("<font>2~10자로 입력</font>");
-				}else if(str_space.test($('#m_nick').val())) {
+				}
+				if(str_space.test($('#m_nick').val())) {
 					$('#check').html("<font class=red>공백 불가능</font>");
 				}
 			}else {

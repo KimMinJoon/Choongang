@@ -1,7 +1,6 @@
-<%@page import="java.util.List"%>
 <%@ include file="../session/adminChk.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="j_noticeboard.*"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,17 +9,10 @@
 <link rel="stylesheet" type="text/css" href="comm.css">
 </head>
 <body>
-	<%
-		int brd_no = Integer.parseInt(request.getParameter("brd_no"));
-		String pageNum = request.getParameter("pageNum");
-		J_NoticeBoardDao bd = J_NoticeBoardDao.getInstance();
-		J_NoticeBoard nb = bd.select(brd_no);
-	%>
-	<form action="../noticeBoard/updatePro.jsp" method="post">
-		<input type="hidden" name="brd_no" value="<%=nb.getBrd_no()%>"> <input
-			type="hidden" name="pageNum" value="<%=pageNum%>">
-			<input
-			type="hidden" name="admin" value="<%=admin%>">
+	<form action="../noticeBoard/updatePro.do" method="post">
+		<input type="hidden" name="brd_no" value="<%=nb.getBrd_no()%>">
+		<input type="hidden" name="pageNum" value="${pageNum}"> 
+		<input type="hidden" name="admin" value="${sessionScope.m_no}">
 
 		<table border="1">
 			<caption>게시판 수정</caption>

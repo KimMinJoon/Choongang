@@ -94,7 +94,6 @@ public class J_MeetBoardDao {
 			sql2 = ",j_member m where " + searchType + " like '%" + searchTxt + "%' and mb.m_no = m.m_no";
 		}
 		
-		
 		if(!searchTxt.equals("")){
 			sql += sql2;
 		} else {

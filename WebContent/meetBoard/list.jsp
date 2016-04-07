@@ -124,27 +124,39 @@ function locate(pageNum){
 %>
 </table>
 <div align="center">
+
+	<a href="javascript:locate(1)">[첫페이지]</a>
+
 <%
 	if (startPage > pagePerBlock) {
 %>
-	<a href="../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=1">[첫페이지]</a>
-	<a href="../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=startPage-pagePerBlock%>">[이전]</a>
+	<a href="javascript:locate(<%=startPage-pagePerBlock%>)">[이전]</a>
 <%
 	}
 
 	for(int i = startPage; i <= endPage; i++){
+		if (nowPage != i) {
 %>
-	<a href="../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=i%>">[<%=i %>]</a>
+	<a href="javascript:locate(<%=i%>)"><%=i%></a>
 	<!-- i를누르면 pageNum을 가지고 다시 그페이지로 넘어가라 -->
 <%
+	} else {
+%>
+	<strong>
+		[<%=i%>]
+	</strong>
+<%
+		}
 	}
 	if (totalPage > endPage) {
 %>
-	<a href="../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=startPage+pagePerBlock%>">[다음]</a>
-	<a href="../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=totalPage%>">[마지막페이지]</a>
+	<a href="javascript:locate(<%=startPage + pagePerBlock%>)">[다음]</a>
 <%
 	}
 %>
+
+	<a href="javascript:locate(<%=totalPage%>)">[마지막페이지]</a>
+
 	<%-- <br><button onclick="location.href='writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>  --%>
 	<!-- <br><input type="submit" value="글쓰기"> -->
 	<br><button onclick="chk(<%=m_no%>)" name="writeBtn">글쓰기</button> 

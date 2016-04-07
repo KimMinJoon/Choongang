@@ -39,14 +39,17 @@
 				type : "POST",
 				url : "../member/nickChk.jsp",
 				data : {
-					"m_nick" : $('#m_nick').val()
+					"m_nick" : $('#m_nick').val(),
+					"m_no" : $('#m_no').val()
 				},
 				success : function(data) {
-					if ($.trim(data) == "TRUE") {
+					if ($.trim(data) == "FALSE") {
 						$('#check').html("<font>사용가능</font>");
-					} else if($.trim(data) == "FALSE") {
+					} else if($.trim(data) == "TRUE"){
 						$('#check').html("<font class=red>사용불가</font>");
-					} else if($.trim(data) == "m_nick")
+					} else {
+						$('#check').html("<font></font>");
+					}						
 				}
 			});
 		});
@@ -64,6 +67,7 @@
 	
 	<form action="../member/mbupdatePro.jsp" name="frm" onsubmit="return chk()">
 		<input type="hidden" name="check" value="false">
+		<input type="hidden" name="m_no" id="m_no" value="<%=m_no%>">
 		<table class="tab" cellpadding="10" align="center">
 			<caption>
 				<h2>회원정보수정</h2>

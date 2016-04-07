@@ -6,7 +6,9 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
-
+	function chk() {
+		alert("회원가입 후 사용하실 수 있습니다.")
+	}
 $(function() {
 	$('#btnLike').click(function(){
 		$.ajax({
@@ -34,11 +36,16 @@ $(function() {
 <%
 	String m_no = (String)session.getAttribute("m_no");
 	int brd_no = Integer.parseInt(request.getParameter("brd_no"));
-	
 	String pageNum = request.getParameter("pageNum");
 	J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
 	J_MeetBoard brd = bd.select(brd_no);
-	int recommend = bd.selectRecommend(Integer.parseInt(m_no), brd_no);
+	
+	System.out.println("추천수 가져올때 값 : " + brd.getBrd_recommend());
+	int recommend = 0;
+	
+	if ( m_no != null){
+	recommend = bd.selectRecommend(Integer.parseInt(m_no), brd_no);
+	}
 	
 	if (brd != null) {
 		bd.updateHit(brd_no);
@@ -109,6 +116,9 @@ $(function() {
 %>
 
 <div align="center">
+<%
+	if(m_no!=null){
+%>
 	<button id="btnLike">
 	<%
 		if(recommend > 0){
@@ -121,6 +131,13 @@ $(function() {
 	<%
 		}
 	%>
+<%
+	} else {
+%>
+	<button id="disableBtnLike" onclick="chk()">좋아요</button>
+<%
+	}
+%>
 	</button>
 	<input type="hidden" id="like_brd_no" value="<%=brd_no%>">
 </div>
@@ -128,7 +145,6 @@ $(function() {
 <div align="center">
 	<button onclick="location.href='../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=pageNum%>'">게시판 목록</button>
 	<%
-		//m_no = "1";
 		if (m_no != null) {
 		 	if (Integer.parseInt(m_no) == brd.getM_no()){
 	%>

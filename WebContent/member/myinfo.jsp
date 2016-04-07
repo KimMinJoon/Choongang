@@ -10,7 +10,7 @@
 <body>
 	<%
 		J_MemberDao jmd = J_MemberDao.getInstance();
-		J_Info jif = jmd.infoselect(m_no);
+		J_Member jif = jmd.infoselect(m_no);
 	%>
 	<table class="tab" cellpadding="10" align="center" height="100%">
 		<caption>
@@ -22,11 +22,11 @@
 		</tr>
 		<tr height="15%">
 			<td class="join1">이메일</td>
-			<td><%=jif.getI_email()%></td>
+			<td><%=jif.getM_email()%></td>
 		</tr>
 		<tr height="15%">
 			<td class="join1">닉네임</td>
-			<td><%=jif.getI_nick()%></td>
+			<td><%=jif.getM_nick()%></td>
 		</tr>
 		<tr height="15%">
 			<td class="join1">국적</td>

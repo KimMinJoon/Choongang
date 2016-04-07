@@ -11,6 +11,9 @@
 	String pageNum = request.getParameter("pageNum");//패이지를 읽어오지않으면!
 	J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
 
+	String searchType = request.getParameter("searchType");
+	String searchTxt = request.getParameter("searchTxt");
+	
 %>
 <script type="text/javascript">
 function chk(m_no) {
@@ -137,6 +140,29 @@ function chk(m_no) {
 	<!-- <br><input type="submit" value="글쓰기"> -->
 	<br><button onclick="chk(<%=m_no%>)" name="writeBtn">글쓰기</button> 
 
+<br>
+			<select id="searchType">
+				<option value="brd_content" 
+				<%
+					if(searchType.equals("brd_content")){
+				%>
+					selected="selected"
+				<%
+					}
+				%>
+				>내용</option>
+				<option value="m_nick"
+				<%
+					if(searchType.equals("m_nick")){
+				%>
+					selected="selected"
+				<%
+					}
+				%>
+				>글쓴이</option>
+			</select>
+			<input type="text" id="searchTxt" value="<%=searchTxt%>">
+			<input type="submit" value="검색" onclick="locate(1)">
 </div>
 
 </body>

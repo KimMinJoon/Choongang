@@ -113,19 +113,11 @@ public class J_MeetBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from (select rowNum rn, a.* from (select mb.*, m.m_nick, c.c_value as c_value_cate, d.c_value as c_value_lang from j_meetboard mb, j_member m, j_code c, j_code d where mb.m_no = m.m_no and mb.mc_code = c.c_minor and mb.l_code = d.c_minor and brd_del_yn='n' order by mb.brd_no desc) a) where rn between ? and ?";
-		// 댓글 정렬 해줌!
-		// 가장안에 a는 num을 기준으로 역순으로 테이블을 정렬하고 그 결과값을 테이블로 사용한다.
-		// 그 테이블에 rowNum(테이블 기본 오름차순 순서번호값)을 주고 별칭을 rn으로 한다 그리고 a테이블의 모든 정보를 뒤에
-		// 출력
-		// 그렇게 완성된 테이블을 rn을 기준으로 1~10번까지 출력하여 그 결과값을 보여준다.
-		// 결론 254개의 글이 테이블에 존재할때 254,253,252,...244까지를 1~10으로 맵핑이되며 그 수를 1~10까지
-		// 모든 속성값을 출력하라
-		// String sql2 = "select c.c_value, d.c_value from j_meetboard mb,
-		// j_code c, j_code d where mb.mc_code=c.c_minor mb.mc_code=d.c_minor";
+		//String sql = "select * from (select rowNum rn, a.* from (select mb.*, m.m_nick, c.c_value as c_value_cate, d.c_value as c_value_lang from j_meetboard mb, j_member m, j_code c, j_code d where mb.m_no = m.m_no and mb.mc_code = c.c_minor and mb.l_code = d.c_minor and brd_del_yn='n' order by mb.brd_no desc) a) where rn between ? and ?";
+		String sql = "select * from (select rowNum rn, a.* from (select mb.*, m.m_nick, c.c_value as c_value_cate, d.c_value as c_value_lang, nvl(rc.brd_recommend,0) as brd_recommend from j_meetboard mb, j_member m, j_code c, j_code d, (select brd_no, count(*) as brd_recommend from j_recommend group by brd_no) rc where rc.brd_no(+) = mb.brd_no and mb.m_no = m.m_no and mb.mc_code = c.c_minor and mb.l_code = d.c_minor and brd_del_yn='n' order by mb.brd_no desc) a) where rn between ? and ?";
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
@@ -137,14 +129,13 @@ public class J_MeetBoardDao {
 				meetboard.setBrd_reg_date(rs.getDate("brd_reg_date"));
 				meetboard.setBrd_update_date(rs.getDate("brd_update_date"));
 				meetboard.setBrd_ip(rs.getString("brd_ip"));
-				meetboard.setBrd_recommend(rs.getInt("brd_recommend"));
 				meetboard.setBrd_readcount(rs.getInt("brd_readcount"));
+				meetboard.setBrd_recommend(rs.getInt("brd_recommend"));
 				meetboard.setBrd_del_yn(rs.getString("brd_del_yn"));
 				meetboard.setM_nick(rs.getString("m_nick"));
 				meetboard.setC_value_lang(rs.getString("c_value_lang"));
 				meetboard.setC_value_cate(rs.getString("c_value_cate"));
 				meetboard.setM_no(rs.getInt("m_no"));
-				System.out.println("select의 m_no 받아올때 값 :" + rs.getInt("m_no"));
 				list.add(meetboard);
 			}
 
@@ -241,12 +232,13 @@ public class J_MeetBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select mb.*, m.m_nick as m_nick, c.c_value as c_value_lang, d.c_value as c_value_cate from j_meetboard mb, j_member m, j_code c, j_code d"
-				+ " where mb.brd_no=?	and mb.m_no = m.m_no and mb.l_code = c.c_minor and mb.mc_code = d.c_minor";
+		String sql = "select mb.*, m.m_nick as m_nick, c.c_value as c_value_lang, d.c_value as c_value_cate, rc.brd_recommend as brd_recommend from j_meetboard mb, j_member m, j_code c, j_code d, (select count(*) brd_recommend from j_recommend where brd_no=?) rc"
+				+ " where mb.brd_no=? and mb.m_no = m.m_no and mb.l_code = c.c_minor and mb.mc_code = d.c_minor";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
 			pstmt.setInt(1, brd_no);
+			pstmt.setInt(2, brd_no);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				meetboard.setBrd_no(rs.getInt("brd_no"));
@@ -351,6 +343,8 @@ public class J_MeetBoardDao {
 		return result;
 	}
 	
+	
+	
 	public int selectRecommend(int m_no, int brd_no){
 		int result = 0;
 		Connection conn = null;
@@ -362,7 +356,6 @@ public class J_MeetBoardDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, m_no);
 			pstmt.setInt(2, brd_no);
-			
 			rs = pstmt.executeQuery();
 			if(rs.next()){
 				result = 1;
@@ -375,6 +368,10 @@ public class J_MeetBoardDao {
 		return result;
 	}//selectRecommend
 
+	
+	
+	
+	
 	/// DB close 사용자함수 생성
 	public void dbClose(ResultSet rs, PreparedStatement pstmt, Connection conn) {
 		try {

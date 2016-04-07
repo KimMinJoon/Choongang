@@ -16,7 +16,7 @@
 		J_NoticeBoardDao bd = J_NoticeBoardDao.getInstance();
 		J_NoticeBoard nb = bd.select(brd_no);
 	%>
-	<form action="../module/main.jsp?pgm=/noticeBoard/updatePro.jsp" method="post">
+	<form action="../noticeBoard/updatePro.jsp" method="post">
 		<input type="hidden" name="brd_no" value="<%=nb.getBrd_no()%>"> <input
 			type="hidden" name="pageNum" value="<%=pageNum%>">
 			<input

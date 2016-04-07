@@ -12,6 +12,8 @@ public class J_Member {
 	private String m_del_yn;
 	private String c_code;
 	private String l_code;
+	private String c_value;
+	private String l_value;
 
 	public Date getM_out_date() {
 		return m_out_date;
@@ -83,6 +85,22 @@ public class J_Member {
 
 	public void setC_code(String c_code) {
 		this.c_code = c_code;
+	}
+	
+	public String getC_value() {
+		return c_value;
+	}
+
+	public void setC_value(String c_value) {
+		this.c_value = c_value;
+	}
+
+	public String getL_value() {
+		return l_value;
+	}
+
+	public void setL_value(String l_value) {
+		this.l_value = l_value;
 	}
 
 	/*@Override

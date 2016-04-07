@@ -17,14 +17,13 @@
 		J_OneLineBoardDAO jobd = J_OneLineBoardDAO.getInstance();
 		int result = jobd.insertReply(olr);
 		if(result > 0){
-	%>
-		<script type="text/javascript">
-			location.href = "../module/main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum="+pageNum;
-		</script>
-	<%
+			response.sendRedirect("../module/main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum=" + pageNum);
+
 		}else{
 	%>
 		<script type="text/javascript">
+			alert("한줄 글 댓글 입력 실패");
+			history.back();
 		</script>
 	<%
 		}

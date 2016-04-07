@@ -12,7 +12,13 @@ public class WriteProAction implements CommandProcess {
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) {
 		J_NoticeBoard jbd = new J_NoticeBoard();
-		jbd.setBrd_no(Integer.parseInt(request.getParameter("brd_no")));
+		//jbd.setBrd_no(Integer.parseInt(request.getParameter("brd_no")));
+		String brd_subject = request.getParameter("brd_subject");
+		String brd_content = request.getParameter("brd_content");
+		String adMin = request.getParameter("admin");
+		
+		System.out.println(brd_subject + ", " + brd_content + ", " + adMin);
+		
 		jbd.setBrd_subject(request.getParameter("brd_subject"));
 		jbd.setBrd_content(request.getParameter("brd_content"));
 		jbd.setAdmin(request.getParameter("admin"));
@@ -22,7 +28,7 @@ public class WriteProAction implements CommandProcess {
 		int result = jnbd.insert(jbd);
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("result", result);
-		return "writePro.jsp";
+		return "/noticeBoard/writePro.jsp";
 	}
 
 }

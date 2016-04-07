@@ -11,7 +11,7 @@ public class WriteFormAction implements CommandProcess {
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) {
 		String pageNum = request.getParameter("pageNum");
 		request.setAttribute("pageNum", pageNum);
-		return "writeForm.jsp";
+		return "/noticeBoard/writeForm.jsp";
 	}
 
 }

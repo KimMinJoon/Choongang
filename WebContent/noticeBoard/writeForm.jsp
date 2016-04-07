@@ -12,7 +12,7 @@
 <body>
 	<form action="../noticeBoard/writePro.do" method="post">
 		<input type="hidden" name="pageNum" value="${pageNum}"> <input
-			type="hidden" name="admin" value="${admin}">
+			type="hidden" name="admin" value="${sessionScope.m_no}">
 
 		<table class="tab" cellpadding="10" align="center" width="50%">
 			<caption>

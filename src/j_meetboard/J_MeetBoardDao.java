@@ -42,7 +42,7 @@ public class J_MeetBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "insert into j_meetboard values(?,?,?,0,0,?,sysdate,null,'n',?,?,?)";
+		String sql = "insert into j_meetboard values(?,?,?,0,?,sysdate,null,'n',?,?,?)";
 		// brdno,subject,content,readcount,recommend,ip,regdate,updatedate,delyn,m_no,mccode,lcode
 		// 처음에 입력될때는 n으로 입력되야합니다~
 		String sql1 = "select nvl(max(brd_no),0)+1 from j_meetboard";
@@ -81,13 +81,25 @@ public class J_MeetBoardDao {
 	}
 
 	//
-	public int selectTotal() throws SQLException {
+	public int selectTotal(String searchType, String searchTxt) throws SQLException {
 		int total = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select count(*) from j_meetboard where brd_del_yn='n'";
-
+		String sql = "select count(*) from j_meetboard mb";
+		String sql2="";
+		if(searchType.equals("brd_content")){
+			sql2 = " where " + searchType + " like '%" + searchTxt + "%' or brd_subject like '%" + searchTxt + "%'";	
+		} else if (searchType.equals("m_nick")){
+			sql2 = ",j_member m where " + searchType + " like '%" + searchTxt + "%' and mb.m_no = m.m_no";
+		}
+		
+		
+		if(!searchTxt.equals("")){
+			sql += sql2;
+		} else {
+			sql = "select count(*) from j_meetboard mb where brd_del_yn='n'";
+		}
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
@@ -108,13 +120,26 @@ public class J_MeetBoardDao {
 		return total;
 	}
 
-	public List<J_MeetBoard> selectList(int startRow, int endRow) throws SQLException {
+	public List<J_MeetBoard> selectList(int startRow, int endRow,String searchType, String searchTxt) throws SQLException {
 		List<J_MeetBoard> list = new ArrayList<J_MeetBoard>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		//String sql = "select * from (select rowNum rn, a.* from (select mb.*, m.m_nick, c.c_value as c_value_cate, d.c_value as c_value_lang from j_meetboard mb, j_member m, j_code c, j_code d where mb.m_no = m.m_no and mb.mc_code = c.c_minor and mb.l_code = d.c_minor and brd_del_yn='n' order by mb.brd_no desc) a) where rn between ? and ?";
-		String sql = "select * from (select rowNum rn, a.* from (select mb.*, m.m_nick, c.c_value as c_value_cate, d.c_value as c_value_lang, nvl(rc.brd_recommend,0) as brd_recommend from j_meetboard mb, j_member m, j_code c, j_code d, (select brd_no, count(*) as brd_recommend from j_recommend group by brd_no) rc where rc.brd_no(+) = mb.brd_no and mb.m_no = m.m_no and mb.mc_code = c.c_minor and mb.l_code = d.c_minor and brd_del_yn='n' order by mb.brd_no desc) a) where rn between ? and ?";
+		String sql2="";
+		String sql3="";
+		if(searchType.equals("brd_content")){
+			sql2 = " where " + searchType + " like '%" + searchTxt + "%' or brd_subject like '%" + searchTxt + "%'";
+			
+		} else if (searchType.equals("m_nick")){
+			sql3 = " and " + searchType + " like '%" + searchTxt + "%'";
+		}
+			//조건 검색시 추가되어야할 QUERY
+		if(searchTxt.equals("")){
+			sql2 = "";
+			sql3 = "";
+		}//검색내용이 없다면 검색을 하지 않고 모든 게시글을 가져오는 것으로 판단
+		String sql = "select * from (select rowNum rn, a.* from (select mb.*, m.m_nick, c.c_value as c_value_cate, d.c_value as c_value_lang, nvl(rc.brd_recommend,0) as brd_recommend from (select * from j_meetboard"+sql2+") mb, j_member m, j_code c, j_code d, (select brd_no, count(*) as brd_recommend from j_recommend group by brd_no) rc where rc.brd_no(+) = mb.brd_no and mb.m_no = m.m_no and mb.mc_code = c.c_minor and mb.l_code = d.c_minor and brd_del_yn='n'"+sql3+" order by mb.brd_no desc) a) where rn between ? and ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);

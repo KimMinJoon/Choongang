@@ -14,6 +14,16 @@
 	String searchType = request.getParameter("searchType");
 	String searchTxt = request.getParameter("searchTxt");
 	
+	if(searchType == null || searchType.equals("null") || searchType.equals("")){
+		searchType = "brd_content";
+	}
+	
+	if(searchTxt == null || searchTxt.equals("null")){
+		searchTxt = "";
+	}
+	
+	
+	
 %>
 <script type="text/javascript">
 function chk(m_no) {
@@ -30,6 +40,12 @@ function chk(m_no) {
 		
 }
 
+function locate(pageNum){
+	var searchType = document.getElementById("searchType");
+	var searchTxt = document.getElementById("searchTxt");
+	location.href="main.jsp?pgm=/meetBoard/list.jsp?pageNum=" + pageNum + "&searchType=" + searchType.value + "&searchTxt=" + searchTxt.value;
+}
+
 </script>
 
 <link type="text/css" rel="stylesheet" href="../css/projectcss.css">
@@ -44,20 +60,12 @@ function chk(m_no) {
 <%
 	
 
-	/* String m_no = (String)session.getAttribute("m_no");
-	String path = application.getContextPath();
-	if(m_no == null || m_no.equals("") || m_no.equals("null")){
-	   response.sendRedirect(path+"/module/main.jsp?pgm=/member/login.jsp");
-	} 
- */
-
-	
 
 	int rowPerPage = 15;//한페이지에 보여줄 게시글의 수
 	int pagePerBlock = 10;//한페이지에 보여줄 블락의 수 (블락은 10페이지)
 	if (pageNum == null || pageNum.equals("null")||pageNum.equals("")) pageNum = "1";//페이지는 1이다.
 	int nowPage = Integer.parseInt(pageNum);
-	int total = bd.selectTotal();
+	int total = bd.selectTotal(searchType, searchTxt);
 	int totalPage = (int)Math.ceil((double)total/rowPerPage);
 	int startRow = (nowPage - 1) * rowPerPage + 1;
 	int endRow = startRow + rowPerPage - 1;
@@ -69,7 +77,8 @@ function chk(m_no) {
 		endPage = totalPage;
 	}
 	total = total - startRow +1;
-	List<J_MeetBoard> list = bd.selectList(startRow, endRow);
+	
+	List<J_MeetBoard> list = bd.selectList(startRow, endRow, searchType, searchTxt);
 	if (list.size() != 0){
 		for(J_MeetBoard brd : list){
 %>
@@ -150,7 +159,7 @@ function chk(m_no) {
 				<%
 					}
 				%>
-				>내용</option>
+				>제목 + 내용</option>
 				<option value="m_nick"
 				<%
 					if(searchType.equals("m_nick")){

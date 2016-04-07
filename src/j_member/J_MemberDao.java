@@ -1,13 +1,8 @@
 package j_member;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.naming.*;
 import javax.sql.*;
-
-import j_code.J_Code;
 
 public class J_MemberDao {
 	// 싱글톤 객체 생성을 낭비하지 않기위해
@@ -54,20 +49,40 @@ public class J_MemberDao {
 		}
 		return result;
 	}
-
-	public int nickCheck(String m_nick) {
+	
+	public int nickCheck(String m_nick, String m_no) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select m_nick from j_member where m_nick=? and m_del_yn='n'";
+		String sql2 = "select m_nick from j_member where m_no = ?";
+		String sql = "select m_nick from j_member where m_nick=? and m_del_yn='n' and m_no != ? union select m_nick from j_member where m_no = ? and m_nick = ?";
+		String orgNick = "";
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m_nick);
-			rs = pstmt.executeQuery();
+				pstmt = conn.prepareStatement(sql2);
+				pstmt.setString(1, m_no);
+				rs = pstmt.executeQuery();
+				if(rs.next()){
+					orgNick = rs.getString("m_nick");
+				}
+				pstmt.close();
+				rs.close();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, m_nick);
+				pstmt.setString(2, m_no);
+				pstmt.setString(3, m_no);
+				pstmt.setString(4, m_nick);
+				rs = pstmt.executeQuery();
 			if (rs.next()) {
-				result = 1;
+				String db_nick = rs.getString("m_nick");
+				if(db_nick.equals(orgNick)) {
+					result = 0;
+				}else {
+					result = 1;
+				}
+			}else {
+				result = -1;
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -88,7 +103,6 @@ public class J_MemberDao {
 		String sql3 = "update j_member set m_passwd=?, m_nick=?, m_reg_date=sysdate, m_del_yn='n', c_code=?, l_code=? where m_no=?";
 		try {
 			conn = getConnection();
-
 			pstmt = conn.prepareStatement(sql2);
 			pstmt.setString(1, mb.getM_email());
 			rs = pstmt.executeQuery();

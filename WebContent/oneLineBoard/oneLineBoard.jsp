@@ -1,3 +1,4 @@
+<%@page import="j_onelineboard.J_OneLineReply"%>
 <%@page import="j_onelineboard.J_OneLineBoardDAO"%>
 <%@page import="j_onelineboard.J_OneLineBoard"%>
 <%@page import="java.util.List"%>
@@ -81,6 +82,7 @@
 		total = total - startRow + 1;
 
 		List<J_OneLineBoard> list = jobd.selectOneLine(startRow, endRow, searchType, searchTxt);
+		
 %>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
@@ -100,17 +102,23 @@
 			$(this).parent().next().show("slow");
 		});
 		
+		$('.btnReply').click(function(){
+			$(this).parent().next().next().show("slow");
+		});
+		
+		
 		$(".updateCancel").click(function(){
 			$(this).parent().parent().hide("slow"); 
 			$(this).parent().parent().prev().show("slow");	
 		});
 		
 		$(".btnReply").click(function(){
-			$(this).parent().parent().next().next().show("slow");
+			$(this).parent().next().next().show("slow");
 		});
+		
 		$(".replyCancel").click(function(){
-			$(this).parent().parent().parent().hide("slow"); 
-			$(this).parent().parent().parent().prev().prev().show("slow");	
+			$(this).parent().parent().hide("slow"); 
+			$(this).parent().parent().prev().prev().show("slow");	
 		});
 	});
 	
@@ -130,6 +138,7 @@
 	}
 	
 	function isSubmit(number) {
+		alert(number);
  		if(number == null || number == "" || number == "null"){
  			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
  				location.href = "../module/main.jsp?pgm=/member/login.jsp";
@@ -184,7 +193,7 @@
 		<div class="row">
 			<p><%=total--%>&nbsp;<%=jolb.getM_nick()%>&nbsp;<%=jolb.getBrd_reg_date()%>
 			<pre style="width:600px; white-space: pre-line;word-break:break-all;"><%=jolb.getBrd_content()%></pre>
-			<a href="javascript:replyForm(<%=i%>)">[<%=jolb.getRep_count()%>]</a>
+			<a href="javascript:replyForm(<%=i%>)">[<%=jolb.getRep_count()%>]</a>	
 					<%
 						if (mno != null) {
 							if (jolb.getM_no() == Integer.parseInt(mno)) {
@@ -213,15 +222,35 @@
 			</form>
 		</div>
 		<div class="replyForm">
-			<form action="../oneLineBoard/insertReplyOneline.jsp" name="replyFrm" onsubmit="return isSubmit(${mno})" method="post">
+			<form action="../oneLineBoard/insertReplyOneline.jsp" name="replyFrm" onsubmit="return isSubmit(<%=mno%>)" method="post">
 				<input type="hidden" name="m_no" value="<%=mno%>">
 				<input type="hidden" name="brd_no" value="<%=jolb.getBrd_no()%>">
 				<input type="hidden" name="pageNum" value="<%=pageNum%>">
-				<p><%=jolb.getM_nick()%><%=jolb.getBrd_reg_date()%><%=jolb.getBrd_content()%><input type="button" class="replyCancel" value="취소"></p>
+				<input type="button" class="replyCancel" value="취소"></p>
 				<textarea rows="3" cols="100" maxlength="150" class="replyContent"
 					name="content" required="required"></textarea>
 		 		<input style="height: 50px; width: 120px;" type="submit" value="등록">
 			</form>
+			<div>
+				
+				<%
+				System.out.println(jolb.getBrd_no());
+					List<J_OneLineReply> reList = jobd.selectReply(jolb.getBrd_no());
+					if(reList != null){
+						System.out.println(reList.size());
+						for(J_OneLineReply jolr : reList){
+							System.out.println(jolr);
+				%>
+						<div class="replyRow">
+							<img src="../images/re.gif"><%=jolr.getM_nick()%><%=jolr.getReg_Date()%><%=jolr.getContent()%>
+							<input type="button" value="수정">
+							<input type="button" value="삭제">
+						</div>
+				<%
+						}
+					}
+				%>
+			</div>
 		</div>
 			<%
 						}

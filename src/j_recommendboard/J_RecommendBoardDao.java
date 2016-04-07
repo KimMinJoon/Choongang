@@ -28,12 +28,16 @@ public class J_RecommendBoardDao {
 		return conn;
 	}
 	
-	public int selectTotal() throws SQLException {
+	public int selectTotal(String searchType, String searchTxt) {
 		int total = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select count(*) from j_recommendboard where brd_del_yn='n'";
+		String sql = "select count(*) from j_recommendboard jrb, j_member m where jrb.m_no=m.m_no and brd_del_yn='n'";
+		String sql2 = " and " +searchType + " like '%" + searchTxt + "%'";
+		if(!searchTxt.equals("")){
+			sql += sql2;
+		}
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -49,7 +53,7 @@ public class J_RecommendBoardDao {
 		return total;
 	}
 	
-	public void updateHit(int brd_no) throws SQLException {
+	public void updateHit(int brd_no) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = "update j_recommendboard set brd_readcount=brd_readcount+1 where brd_no=?";
@@ -65,12 +69,16 @@ public class J_RecommendBoardDao {
 		}
 	}
 	
-	public List<J_RecommendBoard> selectList(int startRow,int endRow) throws SQLException {
+	public List<J_RecommendBoard> selectList(int startRow, int endRow, String searchType, String searchTxt) {
 		List<J_RecommendBoard> list = new ArrayList<J_RecommendBoard>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from (select rowNum rn, a.* from (select jrb.* , m.m_nick, c.c_value as rc_value, (select count(*) from j_recommend2 jr2 where jr2.brd_no = jrb.brd_no) recocount from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor and brd_del_yn='n' order by ref desc, re_step) a) where rn between ? and ?";
+		String sql2 = " and " + searchType + " like '%" + searchTxt + "%' ";
+		if(searchTxt.equals("")){
+			sql2 = "";
+		}
+		String sql = "select * from (select rowNum rn, a.* from (select jrb.*, m_nick, c.c_value as rc_value, (select count(*) from j_recommend2 jr2 where jr2.brd_no = jrb.brd_no) recocount from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor and brd_del_yn='n' " + sql2 + "order by ref desc, re_step) a) where rn between ? and ?";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -104,7 +112,7 @@ public class J_RecommendBoardDao {
 		return list;
 	}
 	
-	public int insert(J_RecommendBoard recommendboard) throws SQLException {
+	public int insert(J_RecommendBoard recommendboard) {
 		int result = 0, number = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -149,7 +157,7 @@ public class J_RecommendBoardDao {
 		return result;
 	}
 	
-	public J_RecommendBoard select(int brd_no) throws SQLException {
+	public J_RecommendBoard select(int brd_no) {
 		J_RecommendBoard recommendboard = new J_RecommendBoard();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -186,7 +194,7 @@ public class J_RecommendBoardDao {
 		return recommendboard;
 	}
 	
-	public int update(J_RecommendBoard recommendboard) throws SQLException {
+	public int update(J_RecommendBoard recommendboard) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -209,7 +217,7 @@ public class J_RecommendBoardDao {
 		return result;
 	}
 
-	public int delete(int brd_no) throws SQLException {
+	public int delete(int brd_no) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -249,7 +257,7 @@ public class J_RecommendBoardDao {
 		return recommendboard;
 	}
 	
-	public int selectRecommend(String m_no, int brd_no){
+	public int selectRecommend(String m_no, int brd_no) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;

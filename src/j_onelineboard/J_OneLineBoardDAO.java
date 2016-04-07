@@ -298,13 +298,21 @@ public class J_OneLineBoardDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT ";
+		String sql = "SELECT BRD_NO, CONTENT, FC_DATE_CHECK(REG_DATE) AS REG_DATE, M_NICK FROM J_ONELINEREPLY A, J_MEMBER B WHERE A.M_NO = B.M_NO AND BRD_NO = ? AND DEL_YN = 'n'";
 		
 		try{
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, brd_no);
 			rs = pstmt.executeQuery();
-			
+			while(rs.next()){
+				J_OneLineReply jolr = new J_OneLineReply();
+				jolr.setBrd_no(rs.getInt("BRD_NO"));
+				jolr.setContent(rs.getString("CONTENT"));
+				jolr.setReg_Date(rs.getString("REG_DATE"));
+				jolr.setM_nick(rs.getString("M_NICK"));
+				list.add(jolr);
+			}
 			
 		} catch(Exception e){
 			System.out.println(e.getMessage());

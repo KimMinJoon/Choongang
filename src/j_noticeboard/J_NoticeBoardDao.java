@@ -11,8 +11,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import j_meetboard.J_MeetBoard;
-
 public class J_NoticeBoardDao {
 	private static J_NoticeBoardDao instance = new J_NoticeBoardDao();// 싱글톤
 																		// 생성
@@ -102,17 +100,14 @@ public class J_NoticeBoardDao {
 		return list;
 	}
 
-	public int insert(J_NoticeBoard noticeboard) throws SQLException {
+	public int insert(J_NoticeBoard noticeboard) {
 		int result = 0;
 		int number = 0;// brd_no이다~
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "insert into j_noticeboard values(?,?,?,0,sysdate,null,'n',?)";
-		// brdno,subject,content,readcount,recommend,ip,regdate,updatedate,delyn,m_no,mccode,lcode
-		// 처음에 입력될때는 n으로 입력되야합니다~
 		String sql1 = "select nvl(max(brd_no),0)+1 from j_noticeboard";
-		// num이 처음에 널일수잇으니nvl쓰고 시퀀스 오토 구분없이 오라클 mysql 통합으로 사용가능함
 
 		try {
 			conn = getConnection();
@@ -133,12 +128,15 @@ public class J_NoticeBoardDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
 		}
 		return result;
 	}

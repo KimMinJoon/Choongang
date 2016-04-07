@@ -82,11 +82,12 @@
 				type : "POST",
 				url : "../member/nickChk.jsp",
 				data : {
-					"m_nick" : $('#m_nick').val()
+					"m_nick" : $('#m_nick').val(),
+					"m_no" : 0
 					/* 아이디 엘레멘트의 값을 엠닉이라 명명하고 url로 보내겟다 */
 				},
 				success : function(data) {
-					if ($.trim(data) == "TRUE") {
+					if ($.trim(data) == "FALSE") {
 						$('#check').html("<font>사용가능</font>");
 					} else
 						$('#check').html("<font class=red>사용불가</font>");

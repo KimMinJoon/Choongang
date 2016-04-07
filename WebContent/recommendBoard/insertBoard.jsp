@@ -12,7 +12,7 @@
 		int ref = 0, re_step = 0, re_level = 0;
 		String ip = request.getRemoteAddr();
 
-		for (int i = 0; i <= 12; i++) {
+		for (int i = 0; i <= 102; i++) {
 			J_RecommendBoard jrb = new J_RecommendBoard();
 			jrb.setBrd_subject("bobby♥" + i);
 			jrb.setBrd_content("지금은 새벽 1시 40분입니다." + i);

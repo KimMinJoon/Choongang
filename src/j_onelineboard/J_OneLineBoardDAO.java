@@ -292,13 +292,30 @@ public class J_OneLineBoardDAO {
 		return result;
 	}//insertReply
 	
+	public int deleteRep(int reply_no){
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = "UPDATE J_ONELINEREPLY SET OUT_DATE = SYSDATE, DEL_YN = 'y' WHERE REPLY_NO = ? AND DEL_YN = 'n'";
+		
+		try{
+			
+		}catch(Exception e){
+			
+		}finally {
+			dbClose(pstmt, conn);
+		}
+		return result;
+	}
+	
 	public List<J_OneLineReply> selectReply(int brd_no){
 		List<J_OneLineReply> list = new ArrayList<J_OneLineReply>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT BRD_NO, CONTENT, FC_DATE_CHECK(REG_DATE) AS REG_DATE, M_NICK FROM J_ONELINEREPLY A, J_MEMBER B WHERE A.M_NO = B.M_NO AND BRD_NO = ? AND DEL_YN = 'n'";
+		String sql = "SELECT REPLY_NO,BRD_NO, CONTENT, FC_DATE_CHECK(REG_DATE) AS REG_DATE, M_NICK, A.M_NO FROM J_ONELINEREPLY A, J_MEMBER B WHERE A.M_NO = B.M_NO AND BRD_NO = ? AND DEL_YN = 'n'";
 		
 		try{
 			conn = getConnection();
@@ -307,10 +324,12 @@ public class J_OneLineBoardDAO {
 			rs = pstmt.executeQuery();
 			while(rs.next()){
 				J_OneLineReply jolr = new J_OneLineReply();
+				jolr.setReply_no(rs.getInt("REPLY_NO"));
 				jolr.setBrd_no(rs.getInt("BRD_NO"));
 				jolr.setContent(rs.getString("CONTENT"));
 				jolr.setReg_Date(rs.getString("REG_DATE"));
 				jolr.setM_nick(rs.getString("M_NICK"));
+				jolr.setM_no(rs.getInt("M_NO"));
 				list.add(jolr);
 			}
 			

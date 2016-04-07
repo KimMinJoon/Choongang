@@ -75,6 +75,8 @@
 		$('#m_nick').blur(function() { 
 			/* #은 밑에 input type id를 말한다. */
 			/* 포커스를 잃었을때를 실행하라 */
+			
+			
 			$.ajax({
 				/* 아이작스를 쓰겟다는 구문 */
 				type : "POST",

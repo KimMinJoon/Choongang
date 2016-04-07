@@ -92,13 +92,13 @@
 		$(".replyForm").hide();
 		
 		$(".btnUpdate").click(function(){
-			$(this).parent().parent().nextAll(".row").show();
-			$(this).parent().parent().nextAll(".updateForm").hide();
-			$(this).parent().parent().prevAll(".row").show();
-			$(this).parent().parent().prevAll(".updateForm").hide();
-			$(this).parent().hide(); 
-			var text = $(this).parent().parent().next().find(".originText").text();
-			$(this).parent().parent().next().find(".updateContent").val(text);
+			$(this).parent().nextAll(".row").show();
+			$(this).parent().nextAll(".updateForm").hide();
+			$(this).parent().prevAll(".row").show();
+			$(this).parent().prevAll(".updateForm").hide();
+			$(this).parent().hide();
+			var text = $(this).parent().next().find(".originText").text();
+			$(this).parent().next().find(".updateContent").val(text);
 			$(this).parent().next().show("slow");
 		});
 		
@@ -132,6 +132,14 @@
 	function deleteChk(brd_no,pageNum){
 		if(confirm("정말 삭제하시겠습니까?")){
 			location.href="../oneLineBoard/deleteOneline.jsp?brd_no="+brd_no+"&pageNum="+pageNum;	
+		}else{
+			return;
+		}
+	}
+	
+	function deleteRepChk(reply_no){
+		if(confirm("정말 삭제하시겠습니까?")){
+			location.href="../oneLineBoard/deleteRepOneline.jsp?reply="+reply_no;	
 		}else{
 			return;
 		}
@@ -243,8 +251,28 @@
 				%>
 						<div class="replyRow">
 							<img src="../images/re.gif"><%=jolr.getM_nick()%><%=jolr.getReg_Date()%><%=jolr.getContent()%>
-							<input type="button" value="수정">
-							<input type="button" value="삭제">
+							<%
+								if(mno != null){
+									System.out.println("mno : " + mno + ", rep 작성자 mno : " + jolr.getM_no());
+									if(Integer.parseInt(mno) == jolr.getM_no()){
+							%>
+									<input type="button" value="수정" id="btnRepUpdate">
+									<input type="button" value="삭제" onclick="deleteRepChk(<%=jolr.getReply_no()%>)">
+							<%
+									}
+								}
+							%>
+						
+						</div>
+						<div class="replyUpdate" style="display: none;">
+							<form action="../oneLineBoard/oneLineReplyUpdate.jsp" method="post" >
+								<input type="hidden" value="<%=jolr.getReply_no()%>">
+								<input type="hidden" value="<%=jolr.getBrd_no()%>">
+								<input type="button" id="repUpdateCancel" value="취소">
+								<textarea rows="3" cols="100" maxlength="150" class="updateReContent"
+									name="content" required="required"><%=jolr.getContent()%></textarea>
+								<input type="submit" value="등록">
+							</form>
 						</div>
 				<%
 						}

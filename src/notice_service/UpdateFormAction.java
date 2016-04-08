@@ -15,6 +15,9 @@ public class UpdateFormAction implements CommandProcess {
 		String pageNum = request.getParameter("pageNum");
 		J_NoticeBoardDao bd = J_NoticeBoardDao.getInstance();
 		J_NoticeBoard nb = bd.select(brd_no);
+		request.setAttribute("brd_no", brd_no);
+		request.setAttribute("pageNum", pageNum);
+		request.setAttribute("nb", nb);
 		return "/noticeBoard/updateForm.jsp";
 	}
 

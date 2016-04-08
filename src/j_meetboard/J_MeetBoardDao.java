@@ -36,7 +36,7 @@ public class J_MeetBoardDao {
 	}// getConnection
 
 	// 게시판 글쓰기
-	public int insert(J_MeetBoard meetboard) throws SQLException {
+	public int insert(J_MeetBoard meetboard) {
 		int result = 0;
 		int number = 0;// brd_no이다~
 		Connection conn = null;
@@ -56,7 +56,6 @@ public class J_MeetBoardDao {
 				number = rs.getInt(1); // 값을 세팅
 			}
 			pstmt.close();
-
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, number);
 			pstmt.setString(2, meetboard.getBrd_subject());
@@ -70,35 +69,28 @@ public class J_MeetBoardDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			dbClose(rs, pstmt, conn);
 		}
 		return result;
 	}
 
-	//
-	public int selectTotal(String searchType, String searchTxt) throws SQLException {
+	public int selectTotal(String searchType, String searchTxt){
 		int total = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select count(*) from j_meetboard mb";
+		String sql = "select count(*) from j_meetboard mb, j_member m where mb.m_no = m.m_no and brd_del_yn='n'";
 		String sql2="";
-		if(searchType.equals("brd_content")){
-			sql2 = " where " + searchType + " like '%" + searchTxt + "%' or brd_subject like '%" + searchTxt + "%'";	
+		if(searchType.equals("all")){
+			sql2 = " and (brd_content like '%" + searchTxt + "%' or brd_subject like '%" + searchTxt + "%')";	
 		} else if (searchType.equals("m_nick")){
-			sql2 = ",j_member m where " + searchType + " like '%" + searchTxt + "%' and mb.m_no = m.m_no";
-		}
-		
+			sql2 = " and " + searchType + " like '%" + searchTxt + "%'";
+		} else {
+			sql2 = " and " + searchType + " like '%" + searchTxt + "%'";
+		} 
 		if(!searchTxt.equals("")){
 			sql += sql2;
-		} else {
-			sql = "select count(*) from j_meetboard mb where brd_del_yn='n'";
-		}
+		} 
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
@@ -107,41 +99,32 @@ public class J_MeetBoardDao {
 				total = rs.getInt(1);
 			}
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("selectTotal : " + e.getMessage());
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			dbClose(rs, pstmt, conn);
 		}
 		return total;
 	}
 
-	public List<J_MeetBoard> selectList(int startRow, int endRow,String searchType, String searchTxt) throws SQLException {
+	public List<J_MeetBoard> selectList(int startRow, int endRow,String searchType, String searchTxt) {
 		List<J_MeetBoard> list = new ArrayList<J_MeetBoard>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		//String sql = "select * from (select rowNum rn, a.* from (select mb.*, m.m_nick, c.c_value as c_value_cate, d.c_value as c_value_lang from j_meetboard mb, j_member m, j_code c, j_code d where mb.m_no = m.m_no and mb.mc_code = c.c_minor and mb.l_code = d.c_minor and brd_del_yn='n' order by mb.brd_no desc) a) where rn between ? and ?";
 		String sql2="";
-		String sql3="";
-		if(searchType.equals("brd_content")){
-			sql2 = " where " + searchType + " like '%" + searchTxt + "%' or brd_subject like '%" + searchTxt + "%'";
-			
-		} else if (searchType.equals("m_nick")){
-			sql3 = " and " + searchType + " like '%" + searchTxt + "%'";
-		}
-			//조건 검색시 추가되어야할 QUERY
+		if(searchType.equals("all")){
+			sql2 = " and (brd_content like '%" + searchTxt + "%' or brd_subject like '%" + searchTxt + "%')";
+		} else {
+			sql2 = " and " + searchType + " like '%" + searchTxt + "%'";
+		}//조건 검색시 추가되어야할 QUERY
+		
 		if(searchTxt.equals("")){
 			sql2 = "";
-			sql3 = "";
 		}//검색내용이 없다면 검색을 하지 않고 모든 게시글을 가져오는 것으로 판단
-		String sql = "select * from (select rowNum rn, a.* from (select mb.*, m.m_nick, c.c_value as c_value_cate, d.c_value as c_value_lang, nvl(rc.brd_recommend,0) as brd_recommend from (select * from j_meetboard"+sql2+") mb, j_member m, j_code c, j_code d, (select brd_no, count(*) as brd_recommend from j_recommend group by brd_no) rc where rc.brd_no(+) = mb.brd_no and mb.m_no = m.m_no and mb.mc_code = c.c_minor and mb.l_code = d.c_minor and brd_del_yn='n'"+sql3+" order by mb.brd_no desc) a) where rn between ? and ?";
+		String sql = "select * from (select rowNum rn, a.* from (select mb.*, m.m_nick, c.c_value as c_value_cate, d.c_value as c_value_lang, nvl(rc.brd_recommend,0) as brd_recommend from j_meetboard mb, j_member m, j_code c, j_code d, (select brd_no, count(*) as brd_recommend from j_recommend group by brd_no) rc where rc.brd_no(+) = mb.brd_no and mb.m_no = m.m_no and mb.mc_code = c.c_minor and mb.l_code = d.c_minor and brd_del_yn='n'"+sql2+" order by mb.brd_no desc) a) where rn between ? and ?";
 		
 		try {
-			
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
@@ -163,20 +146,12 @@ public class J_MeetBoardDao {
 				meetboard.setC_value_cate(rs.getString("c_value_cate"));
 				meetboard.setM_no(rs.getInt("m_no"));
 				list.add(meetboard);
-				
 			}
-
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("selectList : " + e.getMessage());
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			dbClose(rs, pstmt, conn);
 		}
-
 		return list;
 	}
 
@@ -185,8 +160,6 @@ public class J_MeetBoardDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		System.out.println("recommendChk >> m_no : " + m_no + ", brd_no : " + brd_no);
-		
 		String sql2 = "select * from j_recommend where m_no = ? and brd_no = ?";
 		String sql = "insert into j_recommend values(?,?,sysdate,'n')";
 		String sql3 = "delete from j_recommend where m_no = ? and brd_no = ?";	
@@ -197,7 +170,7 @@ public class J_MeetBoardDao {
 				pstmt.setInt(2, brd_no);
 				rs = pstmt.executeQuery();
 				if(rs.next()){
-					System.out.println(m_no + " 의 " + brd_no + " 추천이력 확인");
+					//System.out.println(m_no + " 의 " + brd_no + " 추천이력 확인");
 					rs.close();
 					pstmt.close();
 					pstmt = conn.prepareStatement(sql3);
@@ -210,7 +183,7 @@ public class J_MeetBoardDao {
 						result = -1; //추천 실패
 					}
 				}else{
-					System.out.println(m_no + " 의 " + brd_no + " 추천이력 미확인");
+					//System.out.println(m_no + " 의 " + brd_no + " 추천이력 미확인");
 					rs.close();
 					pstmt.close();
 					pstmt = conn.prepareStatement(sql);
@@ -228,7 +201,7 @@ public class J_MeetBoardDao {
 			}finally {
 				dbClose(rs, pstmt, conn);
 			}
-		System.out.println("result : " + result);
+		//System.out.println("result : " + result);
 		return result; 
 	}
 
@@ -254,7 +227,7 @@ public class J_MeetBoardDao {
 		return meetboard;
 	}
 
-	public J_MeetBoard select(int brd_no) throws SQLException {
+	public J_MeetBoard select(int brd_no) {
 		J_MeetBoard meetboard = new J_MeetBoard();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -286,18 +259,13 @@ public class J_MeetBoardDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			dbClose(rs, pstmt, conn);
 		}
 
 		return meetboard;
 	}
 
-	public void updateHit(int brd_no) throws SQLException {
+	public void updateHit(int brd_no) {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -312,14 +280,11 @@ public class J_MeetBoardDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			dbClose(pstmt, conn);
 		}
 	}
 
-	public int update(J_MeetBoard meetboard) throws SQLException {
+	public int update(J_MeetBoard meetboard) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -339,15 +304,12 @@ public class J_MeetBoardDao {
 			System.out.println(meetboard);
 			System.out.println(e.getMessage());
 		} finally {
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			dbClose(pstmt, conn);
 		}
 		return result;
 	}
 
-	public int delete(int brd_no) throws SQLException {
+	public int delete(int brd_no) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -362,10 +324,7 @@ public class J_MeetBoardDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			dbClose(pstmt, conn);
 		}
 		return result;
 	}
@@ -395,10 +354,6 @@ public class J_MeetBoardDao {
 		return result;
 	}//selectRecommend
 
-	
-	
-	
-	
 	/// DB close 사용자함수 생성
 	public void dbClose(ResultSet rs, PreparedStatement pstmt, Connection conn) {
 		try {

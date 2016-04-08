@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<center>
 	<h2> 자바기반 웹개발자 양성과정 </h2>
 	<br>
@@ -17,6 +16,5 @@
 	<br>
 	일단 home이라고 할게요.
 	</center>
-	
 </body>
 </html>

@@ -21,7 +21,7 @@
 %>
 	<script type="text/javascript">
 		alert("수정 성공");
-		location.href="list.jsp?pageNum=<%=pageNum%>";
+		location.href="../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=pageNum%>";
 	</script>
 <%
 	}else {

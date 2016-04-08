@@ -34,7 +34,7 @@ public class J_NoticeBoardDao {
 		return conn;
 	}// getConnection
 
-	public int selectTotal() throws SQLException {
+	public int selectTotal() {
 		int total = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -51,17 +51,20 @@ public class J_NoticeBoardDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
 		}
 		return total;
 	}
 
-	public List<J_NoticeBoard> selectList(int startRow, int endRow) throws SQLException {
+	public List<J_NoticeBoard> selectList(int startRow, int endRow) {
 		List<J_NoticeBoard> list = new ArrayList<J_NoticeBoard>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -89,12 +92,15 @@ public class J_NoticeBoardDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
 		}
 
 		return list;
@@ -180,7 +186,7 @@ public class J_NoticeBoardDao {
 		return nb;
 	}
 
-	public void updateHit(int brd_no) throws SQLException {
+	public void updateHit(int brd_no) {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -195,14 +201,17 @@ public class J_NoticeBoardDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
 		}
 	}
 
-	public int update(J_NoticeBoard noticeboard) throws SQLException {
+	public int update(J_NoticeBoard noticeboard) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -218,15 +227,18 @@ public class J_NoticeBoardDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
 		}
 		return result;
 	}
 
-	public int delete(int brd_no) throws SQLException {
+	public int delete(int brd_no) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -241,10 +253,13 @@ public class J_NoticeBoardDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
 		}
 		return result;
 	}

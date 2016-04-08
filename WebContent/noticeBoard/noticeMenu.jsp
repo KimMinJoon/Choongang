@@ -20,7 +20,7 @@
 		</tr>
 		<tr>
 			<td><a
-				href="main.jsp?pgm=/noticeBoard/noticeMenuTemp.jsp?nbpgm=/noticeBoard/list.jsp">
+				href="../noticeBoard/list.do">
 					공지사항 </a></td>
 		</tr>
 	</table>

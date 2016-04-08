@@ -15,9 +15,7 @@ font {
 </style>
 </head>
 <body>
-
 	<hr>
 	<font> 저희는 이재설, 곽지은, 강진우, 김민준을 팀으로 국비지원 교육 1차프로젝트 개발자들입니다. </font>
-	
 </body>
 </html>

@@ -11,8 +11,8 @@
 </head>
 <body>
 	<form action="../noticeBoard/writePro.do" method="post">
-		<input type="hidden" name="pageNum" value="${pageNum}"> <input
-			type="hidden" name="admin" value="${sessionScope.m_no}">
+		<input type="hidden" name="brd_no" value="${brd_no}">
+		<input type="hidden" name="admin" value="${sessionScope.m_no}">
 
 		<table class="tab" cellpadding="10" align="center" width="50%">
 			<caption>
@@ -29,8 +29,9 @@
 						required="required"></textarea></td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><input type="submit" value="확인">&nbsp;
-					<input type="button" value="취소" onclick="history.go(-1)"></td>
+				<td colspan="2" align="center">
+				<input type="submit" value="확인">&nbsp;
+				<input type="button" value="취소" onclick="history.go(-1)"></td>
 			</tr>
 		</table>
 	</form>

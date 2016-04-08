@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="j_meetboard.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -9,6 +10,7 @@
 	function chk() {
 		alert("회원가입 후 사용하실 수 있습니다.")
 	}
+	
 $(function() {
 	$('#btnLike').click(function(){
 		$.ajax({

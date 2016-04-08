@@ -186,7 +186,7 @@ public class J_NoticeBoardDao {
 		return nb;
 	}
 
-	public void updateHit(int brd_no) throws SQLException {
+	public void updateHit(int brd_no) {
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -201,10 +201,13 @@ public class J_NoticeBoardDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
 		}
 	}
 
@@ -235,7 +238,7 @@ public class J_NoticeBoardDao {
 		return result;
 	}
 
-	public int delete(int brd_no) throws SQLException {
+	public int delete(int brd_no) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -250,10 +253,13 @@ public class J_NoticeBoardDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
 		}
 		return result;
 	}

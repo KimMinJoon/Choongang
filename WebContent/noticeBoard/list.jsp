@@ -36,7 +36,7 @@
 						<%-- <%=total--%>
 					</td>
 					<td class="subject"><a
-						href="../module/main.jsp?pgm=/noticeBoard/noticeMenuTemp.jsp?nbpgm=/noticeBoard/view.jsp?brd_no=${brd.brd_no}&pageNum=${nowPage}">${brd.brd_subject}</a>
+						href="../noticeBoard/view.do?brd_no=${brd.brd_no}&pageNum=${nowPage}">${brd.brd_subject}</a>
 						<!-- 페이지넘을 가지고 다녀야만이 수정이나 삭제를 할때 페이지가 완료후 되돌아오는 페이지를 수정햇던 페이지로 보낸다.-->
 					</td>
 					<td class="default">${brd.brd_reg_date}</td>
@@ -56,9 +56,9 @@
 	<div align="center">
 		<c:if test="${startPage > pagePerBlock}">
 			<a
-				href="../module/main.jsp?pgm=/noticeBoard/noticeMenuTemp.jsp?nbpgm=/noticeBoard/list.jsp?pageNum=${startPage-pagePerBlock}">[이전]</a>
+				href="../noticeBoard/list.do?pageNum=${startPage-pagePerBlock}">[이전]</a>
 			<a
-				href="../module/main.jsp?pgm=/noticeBoard/noticeMenuTemp.jsp?nbpgm=/noticeBoard/list.jsp?pageNum=1">[1]</a>
+				href="../noticeBoard/list.do?pageNum=1">[1]</a>
 		...
 		</c:if>
 		<c:forEach var="i" begin="${startPage }" end="${endPage }">
@@ -68,25 +68,25 @@
 			</c:if>
 			<c:if test="${i != nowPage}">
 				<a
-					href="../module/main.jsp?pgm=/noticeBoard/noticeMenuTemp.jsp?nbpgm=/noticeBoard/list.jsp?pageNum=${i}">[${i}]
+					href="../noticeBoard/list.do?pageNum=${i}">[${i}]
 				</a>
 			</c:if>
 		</c:forEach>
 		<c:if test="${totalPage > endPage }">
 	
 		... <a
-				href="../module/main.jsp?pgm=/noticeBoard/noticeMenuTemp.jsp?nbpgm=/noticeBoard/list.jsp?pageNum=${totalPage}">[${totalPage}]
+				href="../noticeBoard/list.do?pageNum=${totalPage}">[${totalPage}]
 			</a>
 			<a
-				href="../module/main.jsp?pgm=/noticeBoard/noticeMenuTemp.jsp?nbpgm=/noticeBoard/list.jsp?pageNum=${startPage+pagePerBlock}">[다음]</a>
+				href="../noticeBoard/list.do?pageNum=${startPage+pagePerBlock}">[다음]</a>
 		</c:if>
 		<p>
-			<c:set var="admin" value="${sessionScope.m_no}" />
-			<c:if
-				test="${empty admin } || ${ admin eq ''} || ${ admin eq 'null'} || ${ admin ne '1'}">
+			<%-- <c:set var="admin" value="${sessionScope.m_no}" />
+			<c:if 
+				test="${empty admin } || ${ admin eq ''} || ${ admin eq 'null'} || ${ admin ne '1'}"> --%>
 				<button
-					onclick="location.href='../module/main.jsp?pgm=/noticeBoard/noticeMenuTemp.jsp?nbpgm=/noticeBoard/writeForm.jsp?pageNum=${pageNum}'">글쓰기</button>
-			</c:if>
+					onclick="location.href='../noticeBoard/writeForm.do?pageNum=${pageNum}'">글쓰기</button>
+			<%-- </c:if> --%>
 	</div>
 </body>
 </html>

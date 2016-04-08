@@ -139,7 +139,9 @@ public class J_MeetBoardDao {
 			sql3 = "";
 		}//검색내용이 없다면 검색을 하지 않고 모든 게시글을 가져오는 것으로 판단
 		String sql = "select * from (select rowNum rn, a.* from (select mb.*, m.m_nick, c.c_value as c_value_cate, d.c_value as c_value_lang, nvl(rc.brd_recommend,0) as brd_recommend from (select * from j_meetboard"+sql2+") mb, j_member m, j_code c, j_code d, (select brd_no, count(*) as brd_recommend from j_recommend group by brd_no) rc where rc.brd_no(+) = mb.brd_no and mb.m_no = m.m_no and mb.mc_code = c.c_minor and mb.l_code = d.c_minor and brd_del_yn='n'"+sql3+" order by mb.brd_no desc) a) where rn between ? and ?";
+		
 		try {
+			
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
@@ -161,6 +163,7 @@ public class J_MeetBoardDao {
 				meetboard.setC_value_cate(rs.getString("c_value_cate"));
 				meetboard.setM_no(rs.getInt("m_no"));
 				list.add(meetboard);
+				
 			}
 
 		} catch (Exception e) {

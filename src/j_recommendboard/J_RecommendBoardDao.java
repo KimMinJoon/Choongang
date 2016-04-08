@@ -34,9 +34,13 @@ public class J_RecommendBoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "select count(*) from j_recommendboard jrb, j_member m where jrb.m_no=m.m_no and brd_del_yn='n'";
-		String sql2 = " and " +searchType + " like '%" + searchTxt + "%'";
+		String sql2 = " and " + searchType + " like '%" + searchTxt + "%'";
+		String sql3 = " and (brd_subject like '%" + searchTxt + "%' or brd_content like '%" + searchTxt + "%')";
 		if(!searchTxt.equals("")){
 			sql += sql2;
+		}
+		if(!searchTxt.equals("") && searchType.equals("all")) {
+			sql += sql3;
 		}
 		try {
 			conn = getConnection();
@@ -75,6 +79,10 @@ public class J_RecommendBoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql2 = " and " + searchType + " like '%" + searchTxt + "%' ";
+		String sql3 = " and (brd_subject like '%" + searchTxt + "%' or brd_content like '%" + searchTxt + "%') ";
+		if(searchType.equals("all")) {
+			sql2 = sql3;
+		}
 		if(searchTxt.equals("")){
 			sql2 = "";
 		}

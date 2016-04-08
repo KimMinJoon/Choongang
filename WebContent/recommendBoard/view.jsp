@@ -151,10 +151,12 @@ $(function() {
 			onclick="location.href='../module/main.jsp?pgm=/recommendBoard/updateForm.jsp?brd_no=<%=brd_no%>&pageNum=<%=pageNum%>'">수정</button>
 		<button
 			onclick="pwdpopup()">삭제</button>
+		<%
+			}
+		%>
 		<button
 			onclick="location.href='../module/main.jsp?pgm=/recommendBoard/writeForm.jsp?brd_no=<%=brd_no%>&pageNum=<%=pageNum%>'">답변</button>
 		<%
-			}
 		}
 		%>
 	</div>

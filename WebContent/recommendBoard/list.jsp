@@ -143,6 +143,15 @@
 		
 		<p>
 		<select id="searchType">
+			<option value="all" 
+			<%
+				if(searchType.equals("all")){
+			%>
+				selected="selected"
+			<%
+				}
+			%>
+			>제목+내용</option>
 			<option value="brd_subject" 
 			<%
 				if(searchType.equals("brd_subject")){

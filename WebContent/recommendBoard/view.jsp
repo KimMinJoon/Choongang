@@ -29,6 +29,10 @@ function pwdpopup(){
 	                "width=" + pwidth + ",height=" + pheight + ",left=" + pleft + ",top=" + ptop;
 	window.open(purl, pname, poption);
 }
+
+function chk() {
+	alert("로그인 후 사용하실 수 있습니다.");
+}
 </script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
@@ -115,28 +119,32 @@ $(function() {
 	
 	<p>
 	
+	<div align="center">
 	<%
 		if (m_no != null) {
 	%>
-			<div align="center">
-				<button id="btnLike">
-				<%
-					if(recommend > 0){
-				%>
-					좋아요 취소
-				<%
-					}else{
-				%>
-					좋아요
-				<%
-					}
-				%>
-				</button>
-				<input type="hidden" id="like_brd_no" value="<%=brd_no%>">
-			</div>
+			<button id="btnLike">
+			<%
+				if(recommend > 0){
+			%>
+				좋아요 취소
+			<%
+				}else{
+			%>
+				좋아요
+			<%
+				}
+			%>
+			</button>
+	<%
+		} else {
+		%>
+			<button id="disableBtnLike" onclick="chk()">좋아요</button>
 	<%
 		}
 	%>
+		<input type="hidden" id="like_brd_no" value="<%=brd_no%>">
+	</div>
 
 	<p>
 	

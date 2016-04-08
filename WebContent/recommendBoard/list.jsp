@@ -40,7 +40,7 @@
 		String searchType = request.getParameter("searchType");
 		String searchTxt = request.getParameter("searchTxt");
 		if(searchType == null || searchType.equals("null") || searchType.equals("")){
-			searchType = "brd_subject";
+			searchType = "all";
 		}
 		if(searchTxt == null || searchTxt.equals("null")){
 			searchTxt = "";
@@ -161,6 +161,15 @@
 				}
 			%>
 			>제목</option>
+			<option value="brd_content" 
+			<%
+				if(searchType.equals("brd_content")){
+			%>
+				selected="selected"
+			<%
+				}
+			%>
+			>내용</option>
 			<option value="m_nick"
 			<%
 				if(searchType.equals("m_nick")){

@@ -34,13 +34,14 @@ public class J_RecommendBoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "select count(*) from j_recommendboard jrb, j_member m where jrb.m_no=m.m_no and brd_del_yn='n'";
-		String sql2 = " and " + searchType + " like '%" + searchTxt + "%'";
-		String sql3 = " and (brd_subject like '%" + searchTxt + "%' or brd_content like '%" + searchTxt + "%')";
-		if(!searchTxt.equals("")){
-			sql += sql2;
+		String sql2 = "";
+		if(searchType.equals("all")) {
+			sql2 = "and (brd_subject like '%" + searchTxt + "%' or brd_content like '%" + searchTxt + "%') ";
+		}else {
+			sql2 = "and " + searchType + " like '%" + searchTxt + "%' ";
 		}
-		if(!searchTxt.equals("") && searchType.equals("all")) {
-			sql += sql3;
+		if(!searchTxt.equals("")) {
+			sql += sql2;
 		}
 		try {
 			conn = getConnection();
@@ -78,10 +79,11 @@ public class J_RecommendBoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql2 = " and " + searchType + " like '%" + searchTxt + "%' ";
-		String sql3 = " and (brd_subject like '%" + searchTxt + "%' or brd_content like '%" + searchTxt + "%') ";
+		String sql2 ="";
 		if(searchType.equals("all")) {
-			sql2 = sql3;
+			sql2 = "and (brd_subject like '%" + searchTxt + "%' or brd_content like '%" + searchTxt + "%') ";
+		}else {
+			sql2 = "and " + searchType + " like '%" + searchTxt + "%' ";
 		}
 		if(searchTxt.equals("")){
 			sql2 = "";
@@ -111,7 +113,7 @@ public class J_RecommendBoardDao {
 				recommendboard.setRc_value(rs.getString("rc_value"));
 				recommendboard.setRecocount(rs.getInt("recocount"));
 				list.add(recommendboard);
-			}				
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {

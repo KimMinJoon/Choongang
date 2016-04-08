@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 
 <script type="text/javascript">
+
 function chk(m_no) {
 		alert(m_no);
 		if(m_no == null || m_no == "" || m_no == "null"){
@@ -17,14 +18,14 @@ function chk(m_no) {
 				return;
 			}
 		}else{
-			location.href = "../module/main.jsp?pgm=/meetBoard/writeForm.do?pageNum="+${param.pageNum};
+			location.href = "../module/main.jsp?pgm=/meetBoard/writeForm.do?pageNum="+pageNum;
 		}
 }
 
 function locate(pageNum){
 	var searchType = document.getElementById("searchType");
 	var searchTxt = document.getElementById("searchTxt");
-	location.href="main.jsp?pgm=/meetBoard/list.jsp?pageNum=" + pageNum + "&searchType=" + searchType.value + "&searchTxt=" + searchTxt.value;
+	location.href="meetlist.do?pageNum=" + pageNum + "&searchType=" + searchType.value + "&searchTxt=" + searchTxt.value;
 }
 
 </script>
@@ -53,7 +54,7 @@ function locate(pageNum){
 		
 		<c:if test="${brd.brd_del_yn == 'n' }">
 		<td>
-			<a href="../module/main.jsp?pgm=/meetBoard/view.jsp?brd_no=${brd.brd_no}&pageNum=${nowPage}">
+			<a href="../module/main.jsp?pgm=/meetBoard/view.do?brd_no=${brd.brd_no}&pageNum=${nowPage}">
 			${brd.brd_subject}</a>
 			<!-- 페이지넘을 가지고 다녀야만이 수정이나 삭제를 할때 페이지가 완료후 되돌아오는 페이지를 수정햇던 페이지로 보낸다.--> 
 			<c:if test="${ brd_readcount > 1}">
@@ -71,13 +72,13 @@ function locate(pageNum){
 		<%-- <td><%=brd.getBrd_update_date() %></td> --%>
 	</tr>		
 	</c:if>
-
+	<c:set var="tot" value="${tot - 1 }"></c:set>
 	</c:forEach>
 	
 	</c:if>
 	
 	<c:if test="${empty list }">
- 	<c:set var="tot" value="${tot - 1 }"></c:set>
+ 	
 	<tr>
 		<th colspan="9">데이터가 없습니다.</th>
 	</tr> 
@@ -93,7 +94,7 @@ function locate(pageNum){
 
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 	<c:if test="${nowPage ne i }">
-	<a href="javascript:locate(${i}})">${i}</a>
+	<a href="javascript:locate(${i})">${i}</a>
 	</c:if>
 	
 	<!-- i를누르면 pageNum을 가지고 다시 그페이지로 넘어가라 -->
@@ -126,8 +127,6 @@ function locate(pageNum){
 			<c:if test="${searchType ne 'all' }">
 				<option value="all">제목 + 내용</option>
 			</c:if>
-				
-				
 				
 			<c:if test="${searchType eq brd_content }">	
 				<option value="brd_content" selected="selected">내용</option>

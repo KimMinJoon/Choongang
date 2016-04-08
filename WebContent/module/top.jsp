@@ -18,8 +18,8 @@
 			<c:set var="m_no" value="${sessionScope.m_no}"></c:set>
 			<c:if test="${empty m_no}">
 				<td width="80%" align="right"><a
-				href="main.jsp?pgm=/member/login.do">Login</a> &nbsp; <a
-				href="main.jsp?pgm=/member/join.do">Join</a></td>
+				href="main.jsp?pgm=/member/login.jsp">Login</a> &nbsp; <a
+				href="main.jsp?pgm=/member/join.jsp">Join</a></td>
 			</c:if>
 			<c:if test="${not empty m_no }">
 				<td width="80%" align="right"><a

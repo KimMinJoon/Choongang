@@ -11,7 +11,7 @@ import j_meetboard.J_MeetBoard;
 import j_meetboard.J_MeetBoardDao;
 import service.CommandProcess;
 
-public class ListAction implements CommandProcess {
+public class MeetListAction implements CommandProcess {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response){
@@ -63,7 +63,7 @@ public class ListAction implements CommandProcess {
 		request.setAttribute("totalPage", totalPage);
 		request.setAttribute("list", list);
 		
-		return "list.jsp";
+		return "meetlist.jsp";
 	}
 
 }

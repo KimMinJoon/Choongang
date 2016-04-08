@@ -1,11 +1,6 @@
-<%@page import="j_onelineboard.J_OneLineReply"%>
-<%@page import="j_onelineboard.J_OneLineBoardDAO"%>
-<%@page import="j_onelineboard.J_OneLineBoard"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -164,14 +159,14 @@
 	function locate(pageNum){
 		var searchType = document.getElementById("searchType");
 		var searchTxt = document.getElementById("searchTxt");
-		location.href="main.jsp?pgm=/oneLineBoard/oneLineBoard.jsp?pageNum=" + pageNum + "&searchType=" + searchType.value + "&searchTxt=" + searchTxt.value;
+		location.href="../oneLineBoard/list.do?pageNum=" + pageNum + "&searchType=" + searchType.value + "&searchTxt=" + searchTxt.value;
 	}
 </script>
 </head>
 <body>
 	<div style="border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
-		<form action="../oneLineBoard/insertOneline.jsp" name="wrtierFrm" onsubmit="return isSubmit(${sessionScope.m_no})">
+		<form action="oneLineBoard/insertOneline.do" name="wrtierFrm" onsubmit="return isSubmit(${sessionScope.m_no})">
 			<input type="hidden" name="m_no" value="${sessionScope.m_no}">
 			<textarea rows="3" cols="50" maxlength="150" id="content"
 				name="brd_content" required="required" onkeyup="textCheck()"></textarea>

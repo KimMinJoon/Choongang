@@ -33,6 +33,25 @@
 			frm.m_passwd.focus();
 			return false;
 	    }
+		if(frm.m_nick.value.length < 2) {
+			alert("닉네임은 2~10자로 입력해주세요");
+			frm.m_nick.value = "";
+			frm.m_nick.focus();
+			return false;
+		}
+		if(frm.m_nick.value.indexOf(" ")>=0) {
+			alert("닉네임은 공백없이 입력해 주세요.");
+			frm.m_nick.value = "";
+			frm.m_nick.focus();
+			return false;
+	    }
+		var regex = /^[가-힝A-Za-z0-9]{2,10}$/;
+		if (regex.test(frm.m_nick.value) === false) {
+			alert("닉네임이 한글 또는 영문 또는 숫자가 아닙니다. ");
+			frm.m_nick.value = "";
+			frm.m_nick.focus();
+			return false;
+		}
 		return true;
 	}
 
@@ -75,6 +94,17 @@
 		$('#m_nick').blur(function() { 
 			/* #은 밑에 input type id를 말한다. */
 			/* 포커스를 잃었을때를 실행하라 */
+			var regex = /^[가-힝A-Za-z0-9]{2,10}$/;
+			var str_space = /\s/;
+			if (regex.test($('#m_nick').val()) === false) {
+				$('#check').html("<font>한글,영문,숫자 2~10자</font>");
+				if($("#m_nick").val().length < 2) {
+					$('#check').html("<font>2~10자로 입력</font>");
+				}
+				if(str_space.test($('#m_nick').val())) {
+					$('#check').html("<font class=red>공백 불가능</font>");
+				}
+			}else {
 			$.ajax({
 				/* 아이작스를 쓰겟다는 구문 */
 				type : "POST",
@@ -91,6 +121,7 @@
 						$('#check').html("<font class=red>사용불가</font>");
 				}
 			});
+			}
 		});
 	});
 </script>

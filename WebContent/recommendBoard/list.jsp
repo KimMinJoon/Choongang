@@ -145,7 +145,7 @@
 		<select id="searchType">
 			<option value="brd_subject" 
 			<%
-				if(searchType.equals("brd_content")){
+				if(searchType.equals("brd_subject")){
 			%>
 				selected="selected"
 			<%

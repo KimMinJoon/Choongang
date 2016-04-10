@@ -1,28 +1,17 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="j_meetboard.*,j_code.*"%>
-    <%@ include file="../session/sessionChk.jsp"  %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../session/sessionChk.jsp"  %>
 <!DOCTYPE ><html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>WriteForm</title>
 <link rel="stylesheet" type="text/css" href="../css/projectcss.css">
-<%
-	//String m_no = "1";	
-	String pageNum = request.getParameter("pageNum");
-%>
-
-<%
-		J_CodeDao jcd = J_CodeDao.getInstance();
-		List<J_Code> list = jcd.selectList();
-		//String m_no = (String)session.getAttribute("m_no");
-		// 로그인없이 게시글 접근 시 막기 
-%>
-
 </head>
 <body>
-<form action="../meetBoard/write.jsp" method="post">
-<input type="hidden" name="pageNum" value="<%=pageNum%>">
-<input type="hidden" name="m_no" value="<%=m_no%>">
+<form action="../meetBoard/write.do" method="post">
+<input type="hidden" name="pageNum" value="${pageNum}">
+<input type="hidden" name="m_no" value="${m_no}">
  
 <table class="tab"><caption>게시판 작성</caption>
 	<tr>
@@ -34,17 +23,13 @@
 				<td>
 					<select name="mc_code">
 						<option value="0">해당없음</option>
-						<%
-							for (J_Code jmc : list) {
-								if (jmc.getC_major().equals("mc")) {
-						%>
-						<option value=<%=jmc.getC_minor()%>>
-							<%=jmc.getC_value()%>
+						<c:forEach var="jmc" items="${list}">
+						<c:if test="${jmc.c_major eq 'mc' }">
+						<option value="${jmc.c_minor}">
+							${jmc.c_value}
 						</option>
-						<%
-							}
-						}
-						%>
+						</c:if>
+						</c:forEach>
 					</select>
 				</td>
 			</tr>
@@ -54,17 +39,13 @@
 				<td>
 					<select name="l_code">
 						<option value="0">해당없음</option>
-						<%
-							for (J_Code jc : list) {
-								if (jc.getC_major().equals("l")) {
-						%>
-						<option value="<%=jc.getC_minor()%>">
-							<%=jc.getC_value()%>
+						<c:forEach var="jc" items="${list }">
+						<c:if test="${jc.c_major eq 'l' }">
+						<option value="${jc.c_minor}">
+							${jc.c_value}
 						</option>
-						<%
-							}
-						}
-						%>
+						</c:if>
+						</c:forEach>
 					</select>
 				</td>
 			</tr>

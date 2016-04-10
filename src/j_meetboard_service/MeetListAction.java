@@ -15,7 +15,6 @@ public class MeetListAction implements CommandProcess {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response){
-		
 		HttpSession session = request.getSession();
 		String m_no = (String) session.getAttribute("m_no");
 		//System.out.println(m_no);//이거0
@@ -23,16 +22,12 @@ public class MeetListAction implements CommandProcess {
 		J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
 		String searchType = request.getParameter("searchType");
 		String searchTxt = request.getParameter("searchTxt");
-		
 		if(searchType == null || searchType.equals("null") || searchType.equals("")){
 			searchType = "all";
 		}
-		
 		if(searchTxt == null || searchTxt.equals("null")){
 			searchTxt = "";
 		}
-		
-		
 		int rowPerPage = 15;//한페이지에 보여줄 게시글의 수
 		int pagePerBlock = 10;//한페이지에 보여줄 블락의 수 (블락은 10페이지)
 		if (pageNum == null || pageNum.equals("null")||pageNum.equals("")) pageNum = "1";//페이지는 1이다.
@@ -49,9 +44,7 @@ public class MeetListAction implements CommandProcess {
 			endPage = totalPage;
 		}
 		total = total - startRow +1;
-		
 		List<J_MeetBoard> list = bd.selectList(startRow, endRow, searchType, searchTxt);
-		
 		request.setAttribute("rowPerPage", rowPerPage);
 		request.setAttribute("pagePerBlock", pagePerBlock);
 		request.setAttribute("pageNum", pageNum);
@@ -61,9 +54,10 @@ public class MeetListAction implements CommandProcess {
 		request.setAttribute("endPage", endPage);
 		request.setAttribute("total", total);
 		request.setAttribute("totalPage", totalPage);
+		request.setAttribute("searchType", searchType);
+		request.setAttribute("searchTxt", searchTxt);
 		request.setAttribute("list", list);
 		
-		return "meetlist.jsp";
+		return "/meetBoard/meetlist.jsp";
 	}
-
 }

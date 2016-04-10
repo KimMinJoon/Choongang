@@ -41,6 +41,8 @@ public class Controller extends HttpServlet {
 	               Class<?> commandClass = Class.forName(className);
 	               Object commandInstance = commandClass.newInstance();
 	               commandMap.put(command, commandInstance);
+	               System.out.println("command : " + command);
+	               System.out.println("commandInstance : " + commandInstance);
 	          } catch (Exception e) {
 	               throw new ServletException(e);
 	          }
@@ -54,9 +56,11 @@ public class Controller extends HttpServlet {
 		      command = command.substring(request.getContextPath().length()+1);
 	          com = (CommandProcess)commandMap.get(command);  
 	          view = com.requestPro(request, response);
+	          System.out.println("뷰경로를 보여줘! : " + view);
+	          
 	    } catch(Throwable e) { throw new ServletException(e); } 
 	    RequestDispatcher dispatcher =
-	      	request.getRequestDispatcher(view);
+	      	request.getRequestDispatcher("/module/main.jsp?pgm=" + view);
 	   dispatcher.forward(request, response);
 	}
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

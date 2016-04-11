@@ -15,7 +15,6 @@ public class UpdateProAction implements CommandProcess {
 		jnb.setBrd_no(Integer.parseInt(request.getParameter("brd_no")));
 		jnb.setBrd_subject(request.getParameter("brd_subject"));
 		jnb.setBrd_content(request.getParameter("brd_content"));
-		jnb.setAdmin(request.getParameter("admin"));
 		String pageNum = request.getParameter("pageNum");
 		J_NoticeBoardDao jnbd = J_NoticeBoardDao.getInstance();
 		int result = jnbd.update(jnb);

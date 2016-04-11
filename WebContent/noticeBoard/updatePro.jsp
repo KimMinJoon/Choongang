@@ -11,7 +11,7 @@
 <body>
 	<c:if test="${result > 0}">
 		<script type="text/javascript">
-			location.href = "../module/main.jsp?pgm=/noticeBoard/noticeMenuTemp.jsp?nbpgm=/noticeBoard/list.jsp?pageNum=${pageNum}";
+			location.href = "../noticeBoard/list.do?pageNum=${pageNum}";
 		</script>
 	</c:if>
 	<c:if test="${result <= 0}">

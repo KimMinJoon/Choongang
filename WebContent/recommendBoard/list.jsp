@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="j_recommendboard.*, java.util.*" %>
+	pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +11,7 @@
 	function locate(pageNum){
 		var searchType = document.getElementById("searchType");
 		var searchTxt = document.getElementById("searchTxt");
-		location.href="main.jsp?pgm=/recommendBoard/list.jsp?pageNum="+pageNum+"&searchType="+searchType.value+"&searchTxt="+searchTxt.value;
+		location.href="list.do?pageNum="+pageNum+"&searchType="+searchType.value+"&searchTxt="+searchTxt.value;
 	}
 </script>
 </head>
@@ -30,158 +31,106 @@
 			<th width="4%">조회</th>
 			<th width="4%">추천</th>
 		</tr>
-<%
-		J_RecommendBoardDao jrbd = J_RecommendBoardDao.getInstance();
-
-		String pageNum = request.getParameter("pageNum");
-		if (pageNum == null || pageNum.equals("null") || pageNum.equals(""))
-			pageNum = "1";
 		
-		String searchType = request.getParameter("searchType");
-		String searchTxt = request.getParameter("searchTxt");
-		if(searchType == null || searchType.equals("null") || searchType.equals("")){
-			searchType = "all";
-		}
-		if(searchTxt == null || searchTxt.equals("null")){
-			searchTxt = "";
-		}
-		
-		int rowPerPage = 15;
-		int pagePerBlock = 10;
-		int nowPage = Integer.parseInt(pageNum);
-		int total = jrbd.selectTotal(searchType, searchTxt);
-		int totalPage = (int) Math.ceil((double)total/rowPerPage);
-		int startRow = (nowPage - 1) * rowPerPage + 1;
-		int endRow = startRow + rowPerPage - 1;
-		int totalBlk = (int) Math.ceil((double)totalPage/pagePerBlock);
-		int startPage = (nowPage - 1) / 10 * 10 + 1;
-		int endPage = startPage + pagePerBlock - 1;
-		if (endPage > totalPage)
-			endPage = totalPage;
-		total = total - startRow + 1;
-		
-		List<J_RecommendBoard> list = jrbd.selectList(startRow, endRow, searchType, searchTxt);
-		if (list.size() != 0) {
-			for (J_RecommendBoard jrb : list) {
-%>
+		<c:set var="tot" value="${total}" />
+		<c:if test="${not empty list}">
+			<c:forEach var="jrb" items="${list}">
 			<tr height="30" onMouseOver="this.style.backgroundColor='#E7E7E7'" onmouseout="this.style.backgroundColor=''">
-				<td class="default"><%=total--%></td>
+				<td class="default">${tot}</td>
 				<td class="default">
-					<%if(jrb.getRc_value().equals("말머리 없음")) { %>
+				<c:if test="${jrb.rc_value eq '말머리 없음'}">
 					<font class="category"> </font>
-					<% } else { %>			
-					<font class="category"> [<%=jrb.getRc_value()%>] </font>
-					<% } %>
+				</c:if>
+				<c:if test="${jrb.rc_value ne '말머리 없음'}">
+					<font class="category"> [${jrb.rc_value}] </font>
+				</c:if>
 				</td>
 				<td class="subject">
-<%
-					if (jrb.getRe_level() > 0) {
-						int w = jrb.getRe_level() * 10;
-%>
-					<img alt="" src="../images/level.gif" width="<%=w%>" height="10">
+				<c:if test="${jrb.re_level > 0}">
+					<c:set var="w" value="${jrb.re_level*10}"></c:set>
+					<img alt="" src="../images/level.gif" width="${w}" height="10">
 					<img alt="" src="../images/re.gif">
-<%
- 					}
-%>
-					<a href="../module/main.jsp?pgm=/recommendBoard/view.jsp?brd_no=<%=jrb.getBrd_no()%>&pageNum=<%=nowPage%>"><%=jrb.getBrd_subject()%></a>
-<%
-					if (jrb.getBrd_readcount() > 20)
-						out.println("<img src='../images/hot.gif'>");
-%>
+				</c:if>
+				<a href="view.do?brd_no=${jrb.brd_no}&pageNum=${nowPage}">${jrb.brd_subject}</a>
+				<c:if test="${jrb.brd_readcount > 20}">
+					<img src='images/hot.gif'>
+				</c:if>
 				</td>
-				<td class="nickname"><%=jrb.getM_nick()%></td>
-				<td class="default"><%=jrb.getBrd_reg_date()%></td>
-				<td class="default"><%=jrb.getBrd_readcount()%></td>
-				<td class="default"><%=jrb.getRecocount()%></td>
-			</tr>
-			<tr height="1" bgcolor="#e2e2e2"><td colspan="7"></td></tr>
-<%
-			}
-		} else {
-%>
+				<td class="nickname">${jrb.m_nick}</td>
+				<td class="default">${jrb.brd_reg_date}</td>
+				<td class="default">${jrb.brd_readcount}</td>
+				<td class="default">${jrb.recocount}</td>
+				</tr>
+				<tr height="1" bgcolor="#e2e2e2"><td colspan="7"></td></tr>
+				<c:set var="tot" value="${tot - 1}"></c:set>
+		</c:forEach>
+		</c:if>
+		<c:if test="${empty list}">
 			<tr height="1" bgcolor="#e2e2e2"><td colspan="7"></td></tr>
 			<tr height="30" onMouseOver="this.style.backgroundColor='#E7E7E7'" onmouseout="this.style.backgroundColor=''">
 				<td colspan="7" class="default">데이터가 없습니다</td>
 			</tr>
-<%
-		}
-%>
+		</c:if>
 	</table>
 	
 	<br>
 		
 	<div class="list">
-<%
-		if (startPage > pagePerBlock) {
-%>
-			<a href="javascript:locate(<%=startPage - pagePerBlock%>)">[이전] </a>
+		<c:if test="${startPage > pagePerBlock}">
+			<a href="javascript:locate(${startPage-pagePerBlock})">[이전] </a>
 			<a href="javascript:locate(1)">[1]</a>				
 			...
-<%
-		}
-		for (int i = startPage; i <= endPage; i++) {
-			if(i==nowPage){
-%>
-				<b class="b">[<%=i%>]</b>
-<%
-			} else {
-%>
-				<a href="javascript:locate(<%=i%>)">[<%=i%>]</a>
-<%
-			}
-		}
-		if (totalPage > endPage) {
-%>
+		</c:if>
+		<c:forEach var="i" begin="${startPage}" end="${endPage}">
+			<c:if test="${i eq nowPage}">
+				<b class="b">[${i}]</b>
+			</c:if>
+			<c:if test="${i ne nowPage}">
+				<a href="javascript:locate(${i})">[${i}]</a>
+			</c:if>
+		</c:forEach>
+		<c:if test="${totalPage > endPage}">
 			...
-			<a href="javascript:locate(<%=totalPage%>)">[<%=totalPage%>]</a>
-			<a href="javascript:locate(<%=startPage + pagePerBlock%>)">[다음]</a>
-<%
-		}
-%>
+			<a href="javascript:locate(${totalPage})">[${totalPage}]</a>
+			<a href="javascript:locate(${startPage+pagePerBlock})">[다음]</a>
+		</c:if>
+
 		<p>
-		<button onclick="location.href='../module/main.jsp?pgm=/recommendBoard/writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>
+		<button onclick="location.href='writeForm.do?pageNum=${pageNum}'">글쓰기</button>
 		
 		<p>
+		
 		<select id="searchType">
-			<option value="all" 
-			<%
-				if(searchType.equals("all")){
-			%>
-				selected="selected"
-			<%
-				}
-			%>
-			>제목+내용</option>
-			<option value="brd_subject" 
-			<%
-				if(searchType.equals("brd_subject")){
-			%>
-				selected="selected"
-			<%
-				}
-			%>
-			>제목</option>
-			<option value="brd_content" 
-			<%
-				if(searchType.equals("brd_content")){
-			%>
-				selected="selected"
-			<%
-				}
-			%>
-			>내용</option>
-			<option value="m_nick"
-			<%
-				if(searchType.equals("m_nick")){
-			%>
-				selected="selected"
-			<%
-				}
-			%>
-			>글쓴이</option>
-		</select>
-		<input type="text" id="searchTxt" value="<%=searchTxt%>">
-		<input type="submit" value="검색" onclick="locate(1)">
+			<c:if test="${searchType eq 'all'}">
+				<option value="all" selected="selected">제목 + 내용</option>
+			</c:if>
+			<c:if test="${searchType ne 'all'}">
+				<option value="all">제목 + 내용</option>
+			</c:if>
+				
+			<c:if test="${searchType eq 'brd_subject'}">
+				<option value="brd_subject" selected="selected">제목</option>
+			</c:if>
+			<c:if test="${searchType ne 'brd_subject'}">
+				<option value="brd_subject">제목</option>
+			</c:if>
+			
+			<c:if test="${searchType eq 'brd_content'}">	
+				<option value="brd_content" selected="selected">내용</option>
+			</c:if>
+			<c:if test="${searchType ne 'brd_content'}">
+				<option value="brd_content">내용</option>
+			</c:if>
+				
+			<c:if test="${searchType eq 'm_nick'}">
+				<option value="m_nick" selected="selected">글쓴이</option>
+			</c:if>
+			<c:if test="${searchType ne 'm_nick'}">
+				<option value="m_nick">글쓴이</option>
+			</c:if>
+			</select>
+			<input type="text" id="searchTxt" value="${searchTxt}">
+			<input type="submit" value="검색" onclick="locate(1)">
 	</div>
 
 </body>

@@ -31,6 +31,8 @@ public class ViewAction implements CommandProcess {
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("brd_no", brd_no);
 		request.setAttribute("brd", brd);
+		System.out.println(recommend);
+		request.setAttribute("recommend", recommend);
 		
 		return "/meetBoard/view.jsp";
 

@@ -1,30 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="j_meetboard.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../session/sessionChk.jsp"  %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html >
 <html>
 <head>
-<%
-	String pageNum = request.getParameter("pageNum");
-	int brd_no = Integer.parseInt(request.getParameter("brd_no"));
-	J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
-	int result = bd.delete(brd_no);
-	if (result > 0) {
-%>
+<c:if test="${result > 0}">
 <script type="text/javascript">
 	alert("삭제성공");
-	location.href="../module/main.jsp?pgm=/meetBoard/list.jsp?pageNum=<%=pageNum%>";
+	location.href="../meetBoard/meetlist.do?pageNum=${pageNum}";
 </script>
-<%
-	} else {
-%>
+</c:if>
+<c:if test="${result <= 0}">
 <script type="text/javascript">
 	alert("삭제실패...");
 	history.go(-1);
 </script>
-<%
-	}
-%>
-
+</c:if>
 </body>
 </html>

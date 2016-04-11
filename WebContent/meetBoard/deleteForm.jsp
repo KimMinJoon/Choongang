@@ -16,22 +16,12 @@
 	}
 </script>
 </head><body>
-<%
-	String pageNum = request.getParameter("pageNum");
-	int brd_no = Integer.parseInt(request.getParameter("brd_no"));
-	J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
-	J_MeetBoard meetboard = bd.passwdChk(brd_no);
-	String dbPass = meetboard.getM_passwd();
-	// 로그인없이 게시글 접근 시 막기 
-		
-%>
-<form action="../meetBoard/deletePro.jsp" name="frm" onsubmit="return chk()">
-	<input type="hidden" name="brd_no" value="<%=brd_no%>">
-	<input type="hidden" name="pageNum" value="<%=pageNum%>">
-	<input type="hidden" name="dbPass" value="<%=dbPass%>"> 
+<form action="../meetBoard/deletePro.do" name="frm" onsubmit="return chk()">
+	<input type="hidden" name="brd_no" value="${brd_no}">
+	<input type="hidden" name="pageNum" value="${pageNum}">
+	<input type="hidden" name="dbPass" value="${dbPass}"> 
 	암호 : <input type="password" name="password" required="required" autofocus="autofocus">
 	<input type="submit" value="확인">
 </form>
-
 </body>
 </html>

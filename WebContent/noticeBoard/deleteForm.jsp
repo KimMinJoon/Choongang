@@ -20,7 +20,7 @@
 </script>
 </head>
 <body>
-	<form action="../noticeBoard/deletePro.jsp" name="frm"
+	<form action="../noticeBoard/deletePro.do" name="frm"
 		onsubmit="return chk()">
 		<input type="hidden" name="brd_no" value="${brd_no}"> <input
 			type="hidden" name="pageNum" value="${pageNum}"> <input

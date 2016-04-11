@@ -9,13 +9,14 @@
 </head>
 <body>
 	<hr size="1" color="black">
-	<table height="5" width="100%">
+	<table height="4" width="100%">
 		<tr>
-			<td width="20%" align="center"><a href="${pageContext.request.contextPath}/noticeBoard/list.do">사이트소개/공지사항</a></td>
-			<td width="20%" align="center"><a href="${pageContext.request.contextPath}/meetBoard/meetlist.do">모임 게시판</a></td>
-			<td width="20%" align="center"><a href="main.jsp?pgm=/recommendBoard/list.jsp">추천 게시판</a></td>
-			<td width="20%" align="center"><a href="${pageContext.request.contextPath}/oneLineBoard/list.do">한줄 게시판</a></td>
-			<td width="20%" align="center">
+			<td width="15%" align="center"><a href="${pageContext.request.contextPath}/noticeBoard/exchangeLanguage.do">사이트소개</a></td>
+			<td width="15%" align="center"><a href="${pageContext.request.contextPath}/noticeBoard/list.do">공지사항</a></td>
+			<td width="15%" align="center"><a href="${pageContext.request.contextPath}/meetBoard/meetlist.do">모임 게시판</a></td>
+			<td width="15%" align="center"><a href="main.jsp?pgm=/recommendBoard/list.jsp">추천 게시판</a></td>
+			<td width="15%" align="center"><a href="${pageContext.request.contextPath}/oneLineBoard/list.do">한줄 게시판</a></td>
+			<td width="15%" align="center">
 			<input type="text" id="search" name="search" size=15 />
 			<input type="button" id="search" name="search" value="검색"/>
 			</td>

@@ -5,11 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.CommandProcess;
 
-public class WriteFormAction implements CommandProcess {
+public class ExchangeLanguageAction implements CommandProcess {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) {
-		return "/noticeBoard/writeForm.jsp";
+		return "/noticeBoard/exchangeLanguage.jsp";
 	}
 
 }

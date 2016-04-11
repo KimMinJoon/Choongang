@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.naming.Context;
@@ -52,31 +53,23 @@ public class J_OneLineBoardDAO {
 		int result = 0;//결과값
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		int brd_number = 0;//새로운 게시글 번호 저장
 		
-		String sql = "insert into J_OneLineBoard values(?,?,sysdate,null,?,'n',?,null)";
-		String sql1 = "select nvl(max(brd_no),0)+1 from J_OneLineBoard";
+		String sql = "insert into J_OneLineBoard values(NEW_BRD_NO_ONELINE,?,sysdate,null,?,'n',?,null)";
 
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement(sql1);
-			rs = pstmt.executeQuery();
-			if (rs.next())
-				brd_number = rs.getInt(1);//마지막 게시글 번호 + 1 된 번호
-			pstmt.close();
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, brd_number);
-			pstmt.setString(2, job.getBrd_content());
-			pstmt.setString(3, job.getBrd_ip());
-			pstmt.setInt(4, job.getM_no());
+			pstmt.setString(1, job.getBrd_content());
+			pstmt.setString(2, job.getBrd_ip());
+			pstmt.setInt(3, job.getM_no());
 			
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			dbClose(rs, pstmt, conn);
+			dbClose(pstmt, conn);
 		}
 		return result;
 	}//insertOneline
@@ -100,7 +93,7 @@ public class J_OneLineBoardDAO {
 		if(searchTxt.equals("")){
 			sql2 = "";
 		}//검색내용이 없다면 검색을 하지 않고 모든 게시글을 가져오는 것으로 판단
-		String sql = "SELECT * FROM (SELECT ROWNUM RN, A.* FROM(select m_nick, brd_no, fc_date_check(brd_reg_date) as dt, brd_content, brd_del_yn, a.m_no,(select count(*) from J_ONELINEREPLY c where c.brd_no = a.brd_no) rep_count from J_OneLineBoard a, j_member b where a.m_no = b.m_no and brd_del_yn = 'n' " + sql2 + "order by brd_no desc) A) WHERE RN BETWEEN ? AND ?";
+		String sql = "SELECT * FROM (SELECT ROWNUM RN, A.* FROM(select * from oneline_list_v " + sql2 + "order by brd_no desc) A) WHERE RN BETWEEN ? AND ?";
 		//System.out.println(sql);
 		try{
 			conn = getConnection();
@@ -309,28 +302,40 @@ public class J_OneLineBoardDAO {
 		return result;
 	}
 	
-	public List<J_OneLineReply> selectReply(int brd_no){
-		List<J_OneLineReply> list = new ArrayList<J_OneLineReply>();
+	public HashMap<Integer,List<J_OneLineReply>> selectReply(int brd_no){
+		HashMap<Integer,List<J_OneLineReply>> map = new HashMap<Integer,List<J_OneLineReply>>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT REPLY_NO,BRD_NO, CONTENT, FC_DATE_CHECK(REG_DATE) AS REG_DATE, M_NICK, A.M_NO FROM J_ONELINEREPLY A, J_MEMBER B WHERE A.M_NO = B.M_NO AND BRD_NO = ? AND DEL_YN = 'n'";
-		
+		String sql = "SELECT REPLY_NO,BRD_NO, CONTENT, FC_DATE_CHECK(REG_DATE) AS REG_DATE, M_NICK, A.M_NO FROM J_ONELINEREPLY A, J_MEMBER B WHERE A.M_NO = B.M_NO AND DEL_YN = 'n'";
+	
 		try{
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, brd_no);
 			rs = pstmt.executeQuery();
 			while(rs.next()){
-				J_OneLineReply jolr = new J_OneLineReply();
-				jolr.setReply_no(rs.getInt("REPLY_NO"));
-				jolr.setBrd_no(rs.getInt("BRD_NO"));
-				jolr.setContent(rs.getString("CONTENT"));
-				jolr.setReg_Date(rs.getString("REG_DATE"));
-				jolr.setM_nick(rs.getString("M_NICK"));
-				jolr.setM_no(rs.getInt("M_NO"));
-				list.add(jolr);
+				List<J_OneLineReply> list = new ArrayList<J_OneLineReply>();
+				int bno = rs.getInt("BRD_NO");
+				while(true){
+					J_OneLineReply jolr = new J_OneLineReply();
+					jolr.setReply_no(rs.getInt("REPLY_NO"));
+					jolr.setBrd_no(rs.getInt("BRD_NO"));
+					jolr.setContent(rs.getString("CONTENT"));
+					jolr.setReg_Date(rs.getString("REG_DATE"));
+					jolr.setM_nick(rs.getString("M_NICK"));
+					jolr.setM_no(rs.getInt("M_NO"));
+					if(jolr.getBrd_no() == bno){
+						list.add(jolr);
+						rs.next();
+					}
+					else{
+						bno = jolr.getBrd_no();
+						map.put(jolr.getBrd_no(), list);
+						break;
+					}
+				}
 			}
 			
 		} catch(Exception e){

@@ -11,15 +11,15 @@
 </head>
 <body>
 	<c:if test="${result > 0 }">
-	<script type="text/javascript">
-		location.href="${pageContext.request.contextPath}/oneLineBoard/list.do";
-	</script>
+		<script type="text/javascript">
+			location.href="${pageContext.request.contextPath}/oneLineBoard/list.do";
+		</script>
 	</c:if>
 	<c:if test="${result == 0 }">
 		<script type="text/javascript">
-		alert("한줄 글 등록 실패");
-		history.back();
-	</script>
+			alert("한줄 글 등록 실패");
+			history.back();
+		</script>
 	</c:if>
 </body>
 </html>

@@ -23,3 +23,18 @@ begin
   return v_result;
 end;
 /
+
+create or replace FUNCTION NEW_BRD_NO_ONELINE
+RETURN NUMBER
+IS
+  V_RESULT NUMBER;
+BEGIN
+  SELECT 
+    NVL(MAX(BRD_NO),0)+1
+  INTO
+    V_RESULT
+  FROM J_ONELINEBOARD;
+  
+  RETURN V_RESULT;
+END;
+/

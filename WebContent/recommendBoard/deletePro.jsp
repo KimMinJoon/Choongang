@@ -6,12 +6,13 @@
 <html>
 <head>
 
-		
 	<c:if test="${result > 0 }">
 		<script language=javascript>
-			self.window.alert("삭제 성공");
-			opener.parent.location.href = "list.do?pageNum=${pageNum}";
-			window.close();
+			alert("삭제 성공");
+			location.href="list.do?pageNum=${pageNum}";	
+			//self.window.alert("삭제 성공");
+			//opener.parent.location.href = "list.do?pageNum=${pageNum}";
+			//window.close();
 		</script>
 	</c:if>
 	<c:if test="${result <= 0 }">

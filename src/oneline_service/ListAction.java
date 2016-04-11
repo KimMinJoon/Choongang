@@ -64,7 +64,7 @@ public class ListAction implements CommandProcess {
 		request.setAttribute("searchType", searchType);
 		request.setAttribute("searchTxt", searchTxt);
 		
-		return "/module/main.jsp?pgm=/oneLineBoard/list.jsp";
+		return "/oneLineBoard/list.jsp";
 	}
 
 }

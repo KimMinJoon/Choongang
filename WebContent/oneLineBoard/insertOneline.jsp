@@ -12,7 +12,7 @@
 <body>
 	<c:if test="${result > 0 }">
 	<script type="text/javascript">
-		location.href="../oneLineBoard/list.do?searchType=${searchType}&searchTxt=${searchTxt}";
+		location.href="/oneLineBoard/list.do?searchType=${searchType}&searchTxt=${searchTxt}";
 	</script>
 	</c:if>
 	<c:if test="${result == 0 }">

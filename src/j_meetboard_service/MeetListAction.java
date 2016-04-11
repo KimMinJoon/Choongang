@@ -17,7 +17,7 @@ public class MeetListAction implements CommandProcess {
 	public String requestPro(HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
 		String m_no = (String) session.getAttribute("m_no");
-		//System.out.println(m_no);//이거0
+		System.out.println("ListAction : " + m_no);//이거0
 		String pageNum = request.getParameter("pageNum");//패이지를 읽어오지않으면!
 		J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
 		String searchType = request.getParameter("searchType");
@@ -56,6 +56,7 @@ public class MeetListAction implements CommandProcess {
 		request.setAttribute("totalPage", totalPage);
 		request.setAttribute("searchType", searchType);
 		request.setAttribute("searchTxt", searchTxt);
+		request.setAttribute("m_no", m_no);
 		request.setAttribute("list", list);
 		
 		return "/meetBoard/meetlist.jsp";

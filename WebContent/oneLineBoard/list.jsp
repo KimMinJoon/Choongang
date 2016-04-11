@@ -166,7 +166,7 @@
 <body>
 	<div style="border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
-		<form action="oneLineBoard/insertOneline.do" name="wrtierFrm" onsubmit="return isSubmit(${sessionScope.m_no})">
+		<form action="/oneLineBoard/insertOneline.do" name="wrtierFrm" onsubmit="return isSubmit(${sessionScope.m_no})">
 			<input type="hidden" name="m_no" value="${sessionScope.m_no}">
 			<textarea rows="3" cols="50" maxlength="150" id="content"
 				name="brd_content" required="required" onkeyup="textCheck()"></textarea>

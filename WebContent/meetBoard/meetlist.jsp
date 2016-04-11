@@ -9,10 +9,9 @@
 
 <script type="text/javascript">
 
-function chk(pageNum) {
+function chk(pageNum, m_no) {
 		alert(pageNum);
-		m_no=2;
-		alert(m_no);
+		//m_no=2;
 		if(m_no == null || m_no == "" || m_no == "null"){
 			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")==true) {
 				location.href = "../module/main.jsp?pgm=/member/login.jsp";
@@ -102,7 +101,10 @@ function locate(pageNum){
 
 	<%-- <br><button onclick="location.href='writeForm.jsp?pageNum=<%=pageNum%>'">글쓰기</button>  --%>
 	<!-- <br><input type="submit" value="글쓰기"> -->
-	<br><button onclick="chk(${nowPage})" name="writeBtn">글쓰기</button> 
+	<c:if test="${empty m_no}">
+		<c:set var="m_no" value="null"/>
+	</c:if>
+	<br><button onclick="chk(${nowPage},${m_no})" name="writeBtn">글쓰기</button> 
 <br>
 		<select id="searchType">
 			<c:if test="${searchType eq 'all' }">

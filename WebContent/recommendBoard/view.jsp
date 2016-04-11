@@ -8,8 +8,8 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="../projectcss.css">
 <script language="javascript">
-function pwdpopup(){
-	var purl = "../recommendBoard/deleteForm.jsp?brd_no="+${brd_no}+"&pageNum="+${pageNum};
+/* function pwdpopup(){
+	var purl = "deleteForm.do?brd_no="+${brd_no}+"&pageNum="+${pageNum};
 	var pname = "pwdpopup";
 	var pwidth = 250;
 	var pheight = 100;
@@ -18,7 +18,7 @@ function pwdpopup(){
 	var poption = "scrollbars=no,status=no,toolbar=no,resizable=0,location=no,menu=no," +
 	                "width=" + pwidth + ",height=" + pheight + ",left=" + pleft + ",top=" + ptop;
 	window.open(purl, pname, poption);
-}
+} */
 
 function chk() {
 	alert("로그인 후 사용하실 수 있습니다.");
@@ -131,7 +131,7 @@ $(function() {
 		<c:if test="${null ne m_no}">
 			<c:if test="${m_no == jrb.m_no}">
 				<button onclick="location.href='updateForm.do?brd_no=${brd_no}&pageNum=${pageNum}'">수정</button>
-				<button onclick="pwdpopup()">삭제</button>
+				<button onclick="location.href='deleteForm.do?brd_no=${brd_no}&pageNum=${pageNum}'">삭제</button>
 			</c:if>
 			<button onclick="location.href='writeForm.do?brd_no=${brd_no}&pageNum=${pageNum}'">답변</button>
 		</c:if>

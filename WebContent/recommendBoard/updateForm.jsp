@@ -12,7 +12,7 @@
 </head>
 <body>
 
-	<form action="${pageContext.request.contextPath}/recommendBoard/updatePro.do" method="post">
+	<form action="updatePro.do" method="post">
 		<input type="hidden" name="brd_no" value="${jrb.brd_no}">
 		<input type="hidden" name="pageNum" value="${pageNum}">
 		<table class="tab" cellpadding="10" align="center" width="50%">

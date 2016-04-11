@@ -20,10 +20,8 @@ public class InsertAction implements CommandProcess {
 		J_OneLineBoardDAO jold = J_OneLineBoardDAO.getInstance();
 		int result = jold.insertBoard(olb);
 		request.setAttribute("result", result);
-		request.setAttribute("searchType", searchType);
-		request.setAttribute("searchTxt", searchTxt);
 		
-		return "/module/main.jsp?pgm=/oneLineBoard/insertOneline.jsp";
+		return "/oneLineBoard/insertOneline.jsp";
 	}
 
 }

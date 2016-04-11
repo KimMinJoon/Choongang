@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import j_onelineboard.J_OneLineBoard;
 import j_onelineboard.J_OneLineBoardDAO;
+import j_onelineboard.J_OneLineReply;
 import service.CommandProcess;
 
 public class ListAction implements CommandProcess {
@@ -50,6 +51,7 @@ public class ListAction implements CommandProcess {
 		total = total - startRow + 1;
 
 		List<J_OneLineBoard> list = jobd.selectOneLine(startRow, endRow, searchType, searchTxt);
+		List<List<J_OneLineReply>> reList = jobd.selectOneLineReply();
 		
 		request.setAttribute("rowPerPage", rowPerPage);
 		request.setAttribute("pagePerBlock", pagePerBlock);

@@ -28,6 +28,40 @@
 	right: 5px;
 }
 
+.rows{
+	width: 70%;
+	
+}
+.row{
+	background : #FAED7D;
+	border: 1px solid black;
+}
+.updateForm{
+	background: #C4B73B;
+	border: 1px solid black;
+}
+.rowNum{
+	font-size: 10px;
+	font-weight: bold;
+	vertical-align: middle;
+}
+.rowNick{
+	font-size : 15px;
+	font-weight: bold;
+	font-style: italic;
+	color: green;
+}
+.rowDate{
+	font-size : 10px;
+	color: fuchsia;
+}
+pre{
+	margin : 10px;
+}
+pre > a{
+	color: #FFA7A7;
+}
+
 #update{
 	position : relative;
 }
@@ -92,7 +126,7 @@
 			$(this).parent().nextAll(".updateForm").hide();
 			$(this).parent().prevAll(".row").show();
 			$(this).parent().prevAll(".updateForm").hide();
-			$(this).parent().hide();
+			$(this).parent().hide("slow");
 			var text = $(this).parent().next().find(".originText").text();
 			$(this).parent().next().find(".updateContent").val(text);
 			$(this).parent().next().show("slow");
@@ -180,15 +214,14 @@
 	
 	<div
 		style=" border: 1px solid; padding: 10px 10px 10px 10px;"
-		class="wrap">
+		class="rows">
 		<c:set var="tot" value="${total}" />
 		<c:if test="${list != null}">
 			<c:if test="${not empty list}">
 				<c:forEach var="jolb" items="${list}">
 					<div class="row">
-						<p>${tot}&nbsp;${jolb.m_nick}&nbsp;${jolb.brd_reg_date}
-						<pre style="width:600px; white-space: pre-line;word-break:break-all;">${jolb.brd_content}</pre>
-						<a href="">[${jolb.rep_count}]</a>
+						<p><span class="rowNum">${tot}</span><span class="rowNick">${jolb.m_nick}</span>&nbsp;<span class="rowDate">${jolb.brd_reg_date}</span>
+						<pre class="rowContent" style="width:600px; white-space: pre-line;word-break:break-all;">${jolb.brd_content}<a href="">[${jolb.rep_count}]</a></pre>
 						<c:if test="${sessionScope.m_no != null}">
 							<c:if test="${jolb.m_no == sessionScope.m_no}">
 								<input type="button" class="btnUpdate" value="수정">
@@ -200,7 +233,7 @@
 					</div>
 					<div class="updateForm">
 						<form action="${pageContext.request.contextPath}/oneLineBoard/update.do" name="updateFrm" method="post" onsubmit="return isSubmit(${sessionScope.m_no})">
-							<input type="button" class="updateCancel" value="취소">
+							<input type="button" class="updateCancel" value="취소"><br>
 <%-- 							<input type="hidden" name="m_no" value="${sessionScope.m_no}"> --%>
 							<input type="hidden" name="pageNum" value="${pageNum}">
 							<input type="hidden" name="brd_no" value="${jolb.brd_no}">
@@ -209,11 +242,12 @@
 							<p class="originText" style="display: none;">${jolb.brd_content}</p>
 							<textarea rows="3" cols="100" maxlength="150" class="updateContent"
 									name="brd_content" required="required">${jolb.brd_content}</textarea>
+							
 							<input style="height: 50px; width: 120px;" type="submit" value="등록">
 						</form>
 					</div>
 					<div class="replyForm">
-						<form action="../oneLineBoard/insertReplyOneline.jsp" name="replyFrm" onsubmit="return isSubmit(${sessionScope.m_no })" method="post">
+						<form action="${pageContext.request.contextPath}/oneLineBoard/insertReply.do" name="replyFrm" onsubmit="return isSubmit(${sessionScope.m_no })" method="post">
 							<input type="hidden" name="m_no" value="${sessionScope.m_no }">
 							<input type="hidden" name="brd_no" value="${jolb.brd_no}">
 							<input type="hidden" name="pageNum" value="${pageNum}">
@@ -222,7 +256,7 @@
 								name="content" required="required"></textarea>
 					 		<input style="height: 50px; width: 120px;" type="submit" value="등록">
 						</form>
-						<%-- <div>
+						<div>
 							
 							<%
 							System.out.println(jolb.getBrd_no());
@@ -261,8 +295,9 @@
 									}
 								}
 							%>
-						</div> --%>
+						</div>
 					</div>
+					<c:set var="tot" value="${tot - 1 }"/>
 				</c:forEach>
 			</c:if>
 		</c:if>

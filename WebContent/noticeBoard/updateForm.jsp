@@ -1,4 +1,4 @@
-<%-- <%@ include file="../session/adminChk.jsp"%> --%>
+<%@ include file="../session/adminChk.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -11,9 +11,8 @@
 </head>
 <body>
 	<form action="../noticeBoard/updatePro.do" method="post">
-		<input type="hidden" name="brd_no" value="${jnb.brd_no}"> <input
-			type="hidden" name="pageNum" value="${pageNum}"> <input
-			type="hidden" name="admin" value="${sessionScope.m_no}">
+		<input type="hidden" name="brd_no" value="${jnb.brd_no}">
+		 <input type="hidden" name="pageNum" value="${pageNum}">
 
 		<table border="1">
 			<caption>게시판 수정</caption>

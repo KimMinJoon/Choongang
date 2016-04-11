@@ -55,10 +55,8 @@
 	<br>
 	<div align="center">
 		<c:if test="${startPage > pagePerBlock}">
-			<a
-				href="../noticeBoard/list.do?pageNum=${startPage-pagePerBlock}">[이전]</a>
-			<a
-				href="../noticeBoard/list.do?pageNum=1">[1]</a>
+			<a href="../noticeBoard/list.do?pageNum=${startPage-pagePerBlock}">[이전]</a>
+			<a href="../noticeBoard/list.do?pageNum=1">[1]</a>
 		...
 		</c:if>
 		<c:forEach var="i" begin="${startPage }" end="${endPage }">
@@ -67,26 +65,22 @@
 				<!-- i를누르면 pageNum을 가지고 다시 그페이지로 넘어가라 -->
 			</c:if>
 			<c:if test="${i != nowPage}">
-				<a
-					href="../noticeBoard/list.do?pageNum=${i}">[${i}]
-				</a>
+				<a href="../noticeBoard/list.do?pageNum=${i}">[${i}] </a>
 			</c:if>
 		</c:forEach>
 		<c:if test="${totalPage > endPage }">
 	
-		... <a
-				href="../noticeBoard/list.do?pageNum=${totalPage}">[${totalPage}]
+		... <a href="../noticeBoard/list.do?pageNum=${totalPage}">[${totalPage}]
 			</a>
-			<a
-				href="../noticeBoard/list.do?pageNum=${startPage+pagePerBlock}">[다음]</a>
+			<a href="../noticeBoard/list.do?pageNum=${startPage+pagePerBlock}">[다음]</a>
 		</c:if>
 		<p>
-			<%-- <c:set var="admin" value="${sessionScope.m_no}" />
-			<c:if 
-				test="${empty admin } || ${ admin eq ''} || ${ admin eq 'null'} || ${ admin ne '1'}"> --%>
+			<c:set var="admin" value="${sessionScope.m_no}"/>
+			<c:if
+				test="${admin eq '1'}">
 				<button
 					onclick="location.href='../noticeBoard/writeForm.do?pageNum=${pageNum}'">글쓰기</button>
-			<%-- </c:if> --%>
+			</c:if>
 	</div>
 </body>
 </html>

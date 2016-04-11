@@ -49,14 +49,14 @@
 		<button
 			onclick="location.href='../noticeBoard/list.do?pageNum=${pageNum}'">
 			목록</button>
-		<%-- <c:if
-			test="${empty admin } || ${ admin eq ''} || ${ admin eq 'null'} || ${ admin ne '1'}"> --%>
+		<c:if
+			test="${admin eq '1'}">
 			<button
 				onclick="location.href='../noticeBoard/updateForm.do?brd_no=${brd_no}&pageNum=${pageNum}'">수정</button>
 			<!-- 이렇게해야 수정을 누르면 수정클릭한 해당 페이지로 보내준다. -->
 			<button
 				onclick="location.href='../noticeBoard/deleteForm.do?brd_no=${brd_no}&pageNum=${pageNum}'">삭제</button>
-		<%-- </c:if> --%>
+		</c:if>
 	</div>
 </body>
 </html>

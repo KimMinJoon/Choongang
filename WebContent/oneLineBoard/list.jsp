@@ -119,22 +119,24 @@
 	});
 	function deleteChk(brd_no,pageNum){
 		if(confirm("정말 삭제하시겠습니까?")){
-			location.href="../oneLineBoard/deleteOneline.jsp?brd_no="+brd_no+"&pageNum="+pageNum;	
+			location.href="${pageContext.request.contextPath}/oneLineBoard/delete.do?brd_no="+brd_no+"&pageNum="+pageNum+"&searchType=" + searchType.value + "&searchTxt=" + searchTxt.value;	
 		}else{
 			return;
 		}
 	}
 	
 	function deleteRepChk(reply_no){
+		var searchType = document.getElementById("searchType");
+		var searchTxt = document.getElementById("searchTxt");
 		if(confirm("정말 삭제하시겠습니까?")){
-			location.href="../oneLineBoard/deleteRepOneline.jsp?reply="+reply_no;	
+			location.href="${pageContext.request.contextPath}/oneLineBoard/deleteRepOneline.jsp?reply="+reply_no;	
 		}else{
 			return;
 		}
 	}
 	
 	function isSubmit(number) {
-		alert(number);
+		alert("m_no : " + number);
  		if(number == null || number == "" || number == "null"){
  			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
  				location.href = "../module/main.jsp?pgm=/member/login.jsp";
@@ -166,7 +168,7 @@
 <body>
 	<div style="border: 1px solid; padding: 10px 10px 10px 10px;"
 		class="wrap">
-		<form action="/oneLineBoard/insertOneline.do" name="wrtierFrm" onsubmit="return isSubmit(${sessionScope.m_no})">
+		<form action="${pageContext.request.contextPath}/oneLineBoard/write.do" name="wrtierFrm" onsubmit="return isSubmit(${sessionScope.m_no})">
 			<input type="hidden" name="m_no" value="${sessionScope.m_no}">
 			<textarea rows="3" cols="50" maxlength="150" id="content"
 				name="brd_content" required="required" onkeyup="textCheck()"></textarea>
@@ -197,11 +199,13 @@
 						</p>
 					</div>
 					<div class="updateForm">
-						<form action="../oneLineBoard/updateOneline.jsp" name="updateFrm" method="post" onsubmit="return isSubmit(${sessionScope.m_no})">
+						<form action="${pageContext.request.contextPath}/oneLineBoard/update.do" name="updateFrm" method="post" onsubmit="return isSubmit(${sessionScope.m_no})">
 							<input type="button" class="updateCancel" value="취소">
-							<input type="hidden" name="m_no" value="${sessionScope.m_no}">
+<%-- 							<input type="hidden" name="m_no" value="${sessionScope.m_no}"> --%>
 							<input type="hidden" name="pageNum" value="${pageNum}">
 							<input type="hidden" name="brd_no" value="${jolb.brd_no}">
+							<input type="hidden" name="searchType" value="${searchType}">
+							<input type="hidden" name="searchTxt" value="${searchTxt}">
 							<p class="originText" style="display: none;">${jolb.brd_content}</p>
 							<textarea rows="3" cols="100" maxlength="150" class="updateContent"
 									name="brd_content" required="required">${jolb.brd_content}</textarea>
@@ -263,7 +267,7 @@
 			</c:if>
 		</c:if>
 		<c:if test="${empty list }">
-			<p>no data found</p>
+			<p>게시글이 없습니다.</p>
 		</c:if>
 				
 

@@ -6,12 +6,9 @@
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
 <script type="text/javascript">
 
 function chk(pageNum, m_no) {
-		alert(pageNum);
-		//m_no=2;
 		if(m_no == null || m_no == "" || m_no == "null"){
 			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")==true) {
 				location.href = "../module/main.jsp?pgm=/member/login.jsp";
@@ -19,7 +16,7 @@ function chk(pageNum, m_no) {
 				return;
 			}
 		}else{
-			location.href = "writeForm.do?pageNum="+pageNum;
+			location.href = "${pageContext.request.contextPath}/meetBoard/writeForm.do?pageNum="+pageNum;
 			/* ../module/main.jsp?pgm=/meetBoard/ */
 		}
 }
@@ -34,7 +31,6 @@ function locate(pageNum){
 <link type="text/css" rel="stylesheet" href="../css/projectcss.css">
 </head><body>
 <table border="1" width="100%"><caption>게시판</caption>
-
 	<tr>
 		<td>말머리</td><td>글번호</td><td>제목</td><td>닉네임</td><td>희망언어</td><td>조회수</td><td>추천수</td><td>작성일</td>
 	</tr>
@@ -115,27 +111,27 @@ function locate(pageNum){
 				<option value="all">제목 + 내용</option>
 			</c:if>
 				
-			<c:if test="${searchType eq brd_content }">	
+			<c:if test="${searchType eq 'brd_content' }">	
 				<option value="brd_content" selected="selected">내용</option>
 			</c:if>
 			
-			<c:if test="${searchType ne brd_content }">
-				<option value="content">내용</option>
+			<c:if test="${searchType ne 'brd_content' }">
+				<option value="brd_content">내용</option>
 			</c:if>
 				
-			<c:if test="${searchType eq brd_subject }">
+			<c:if test="${searchType eq 'brd_subject' }">
 				<option value="brd_subject" selected="selected">제목</option>
 			</c:if>
 			
-			<c:if test="${searchType ne brd_subject }">
+			<c:if test="${searchType ne 'brd_subject' }">
 				<option value="brd_subject">제목</option>
 			</c:if>
 				
-			<c:if test="${searchType eq m_nick }">
+			<c:if test="${searchType eq 'm_nick' }">
 				<option value="m_nick" selected="selected">글쓴이</option>
 			</c:if>
 			
-			<c:if test="${searchType ne m_nick }">
+			<c:if test="${searchType ne 'm_nick' }">
 				<option value="m_nick">글쓴이</option>
 			</c:if>
 			

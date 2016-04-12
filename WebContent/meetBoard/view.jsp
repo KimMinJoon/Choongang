@@ -90,19 +90,23 @@ $(function() {
 </c:if>
 
 <div align="center">
-<c:if test="${not empty m_no} }">
+
+	
+	<c:if test="${empty m_no}">
+		<button id="btnLike" onclick="chk()">좋아요</button>
+	</c:if>
+	<c:if test="${not empty m_no}">
+	<c:if test="${recommend > 0}">
 	<button id="btnLike">
-	<c:if test="${recommend > 0} }">
 		좋아요 취소
-	</c:if>
-	<c:if test="${recommend < 0} }">
-		좋아요
-	</c:if>
-	</c:if>
-<c:if test="${empty m_no} }">
-	<button id="disableBtnLike" onclick="chk()">좋아요</button>
-</c:if>
 	</button>
+	</c:if>
+	<c:if test="${recommend <= 0}">
+	<button id="btnLike">
+		좋아요
+	</button>
+	</c:if>
+	</c:if>
 	<input type="hidden" id="like_brd_no" value="${brd_no}">
 </div>
 <div align="center">

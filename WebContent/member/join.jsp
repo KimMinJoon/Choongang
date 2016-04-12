@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="j_code.*, java.util.*" %>
+	pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -128,12 +129,7 @@
 </head>
 <body>
 
-	<%
-		J_CodeDao jcd = J_CodeDao.getInstance();
-		List<J_Code> list = jcd.selectList();
-	%>
-
-	<form action="../member/joinPro.jsp" name="frm" onsubmit="return chk()">
+	<form action="joinPro.do" name="frm" onsubmit="return chk()">
 		<input type="hidden" name="check" value="false">
 		<table class="tab" cellpadding="10" align="center">
 			<caption>
@@ -162,34 +158,28 @@
 			</tr>
 			<tr height="50">
 				<td class="join1">국적</td>
-				<td><select name="c_code">
-						<%
-							for (J_Code jc : list) {
-								if (jc.getC_major().equals("c")) {
-						%>
-						<option value=<%=jc.getC_minor()%>>
-							<%=jc.getC_value()%>
-						</option>
-						<%
-							}
-						}
-						%>
+				<td>
+				<select name="c_code">
+						<c:forEach var="jc" items="${list}">
+							<c:if test="${jc.c_major eq 'c'}">
+								<option value="${jc.c_minor}">
+									${jc.c_value}
+								</option>
+							</c:if>
+						</c:forEach>							
 				</select></td>
 			</tr>
 			<tr height="50">
 				<td class="join1">희망언어</td>
-				<td><select name="l_code">
-						<%
-							for (J_Code jc : list) {
-								if (jc.getC_major().equals("l")) {
-						%>
-						<option value=<%=jc.getC_minor()%>>
-							<%=jc.getC_value()%>
-						</option>
-						<%
-							}
-						}
-						%>
+				<td>
+				<select name="l_code">
+						<c:forEach var="jc" items="${list}">
+							<c:if test="${jc.c_major eq 'l'}">
+								<option value="${jc.c_minor}">
+									${jc.c_value}
+								</option>
+							</c:if>
+						</c:forEach>							
 				</select></td>
 			</tr>
 			<tr>

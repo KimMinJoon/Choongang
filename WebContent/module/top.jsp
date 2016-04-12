@@ -12,19 +12,19 @@
 	<hr size="1" color="black">
 	<table width="100%">
 		<tr>
-			<td width="20%" align="left"><a href="main.jsp">
+			<td width="20%" align="left"><a href="../module/main.jsp">
 					<h2>Exchange Language</h2>
 			</a></td>
 			<c:set var="m_no" value="${sessionScope.m_no}"></c:set>
 			<c:if test="${empty m_no}">
 				<td width="80%" align="right"><a
-				href="../module/main.jsp?pgm=/member/login.jsp">Login</a> &nbsp; <a
-				href="../module/main.jsp?pgm=/member/join.jsp">Join</a></td>
+				href="${pageContext.request.contextPath}/member/login.do">Login</a> &nbsp; <a
+				href="${pageContext.request.contextPath}/member/join.do">Join</a></td>
 			</c:if>
 			<c:if test="${not empty m_no}">
 				<td width="80%" align="right"><a
 				href="../module/main.jsp?pgm=/member/mypagetemp.jsp">Mypage</a> &nbsp; <a
-				href="../module/main.jsp?pgm=/member/logout.jsp">Logout</a></td>
+				href="${pageContext.request.contextPath}/member/logout.do">Logout</a></td>
 			</c:if>
 		</tr>
 	</table>

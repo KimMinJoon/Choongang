@@ -19,7 +19,7 @@
 </head>
 <body>
 
-	<form name="frm" action="../member/mbdeletePro.jsp" method="post"
+	<form name="frm" action="mbdeletePro.do" method="post"
 		onsubmit="return dechk()">
 		<table class="tab" cellpadding="10" align="center">
 			<tr>

@@ -16,7 +16,7 @@
 		<td> <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/myinfo.jsp" > 내정보보기 </a> </td>
 		</tr>
 		<tr>
-		<td> <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/mbupdate.jsp" > 회원정보수정 </a> </td>
+		<td> <a href="${pageContext.request.contextPath}/member/mbupdate.do" > 회원정보수정 </a> </td>
 		</tr>
 		<tr>
 		<td> <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/friend.jsp" > 친구/관심글 </a> </td>
@@ -25,7 +25,7 @@
 		<td> <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/message.jsp" > 쪽지함 </a> </td>
 		</tr>
 		<tr > 
-		<td> <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/mbdelete.jsp"> 회원탈퇴 </a>
+		<td> <a href="${pageContext.request.contextPath}/member/mbdelete.do"> 회원탈퇴 </a>
 		</td>	
 		</tr>
 	</table>

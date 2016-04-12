@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="j_member.*, j_code.*, java.util.*" %>
+	pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../session/sessionChk.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -88,17 +89,10 @@
 </script>
 </head>
 <body>
-
-<%
-	J_CodeDao jcd = J_CodeDao.getInstance();
-	List<J_Code> list = jcd.selectList();
-	J_MemberDao mdo = J_MemberDao.getInstance();
-	J_Member mb = mdo.select(m_no);
-%>
 	
-	<form action="../member/mbupdatePro.jsp" name="frm" onsubmit="return chk()">
+	<form action="mbupdatePro.do" name="frm" onsubmit="return chk()">
 		<input type="hidden" name="check" value="false">
-		<input type="hidden" name="m_no" id="m_no" value="<%=m_no%>">
+		<input type="hidden" name="m_no" id="m_no" value="${m_no}">
 		<table class="tab" cellpadding="10" align="center">
 			<caption>
 				<h2>회원정보수정</h2>
@@ -106,12 +100,12 @@
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>이메일</td>
 				<td><input type="hidden" name="m_email"
-					value="<%=mb.getM_email()%>"> <label><%=mb.getM_email()%></label></td>
+					value="${jm.m_email}"> <label>${jm.m_email}</label></td>
 			</tr>
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>비밀번호</td>
 				<td><input type="password" name="m_passwd" id="m_passwd" 
-					value="<%=mb.getM_passwd()%>" required="required" maxlength="20">
+					value="${jm.m_passwd}" required="required" maxlength="20">
 				<span id="pass"></span>
 				</td>
 			</tr>
@@ -122,44 +116,40 @@
 			<tr height="50">
 				<td class="join1"><font class="red">*</font>닉네임</td>
 				<td><input type="text" name="m_nick" id="m_nick"
-					value="<%=mb.getM_nick()%>" required="required" maxlength="10">
+					value="${jm.m_nick}" required="required" maxlength="10">
 					<span id="check"></span>
 				</td>
 			</tr>
 			<tr height="50">
 				<td class="join1">국적</td>
-				<td><select name="c_code">
-						<%
-							for (J_Code jc : list) {
-								if (jc.getC_major().equals("c")) {
-						%>
-						<option value=<%=jc.getC_minor()%>
-							<%if (jc.getC_minor().equals(mb.getC_code())) {%>
-							selected="selected" <%}%>>
-							<%=jc.getC_value()%>
-						</option>
-						<%
-							}
-						}
-						%>
+				<td>
+				<select name="c_code">
+						<c:forEach var="jc" items="${list}">
+							<c:if test="${jc.c_major eq 'c'}">
+								<option value="${jc.c_minor}"
+									<c:if test="${jc.c_minor == jm.c_code}">
+										selected
+									</c:if>>
+									${jc.c_value}
+								</option>
+							</c:if>
+						</c:forEach>
 				</select></td>
 			</tr>
 			<tr height="50">
 				<td class="join1">희망언어</td>
-				<td><select name="l_code">
-						<%
-							for (J_Code jc : list) {
-								if (jc.getC_major().equals("l")) {
-						%>
-						<option value=<%=jc.getC_minor()%>
-							<%if (jc.getC_minor().equals(mb.getL_code())) {%>
-							selected="selected" <%}%>>
-							<%=jc.getC_value()%>
-						</option>
-						<%
-							}
-						}
-						%>
+				<td>
+				<select name="l_code">
+						<c:forEach var="jc" items="${list}">
+							<c:if test="${jc.c_major eq 'l'}">
+								<option value="${jc.c_minor}"
+									<c:if test="${jc.c_minor == jm.l_code}">
+										selected
+									</c:if>>
+									${jc.c_value}
+								</option>
+							</c:if>
+						</c:forEach>
 				</select></td>
 			</tr>
 			<tr>
@@ -169,6 +159,6 @@
 			</tr>
 		</table>
 	</form>
-
+	
 </body>
 </html>

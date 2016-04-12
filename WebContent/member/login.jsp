@@ -8,7 +8,8 @@
 <link rel="stylesheet" type="text/css" href="../css/projectcss.css">
 </head>
 <body>
-	<form action="../member/loginPro.jsp" name="frm">
+
+	<form action="loginPro.do" name="frm">
 		<table class="tab" cellpadding="10" align="center">
 			<caption>
 				<h2>로그인</h2>

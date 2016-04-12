@@ -12,7 +12,6 @@ public class DeleteProAction implements CommandProcess {
 		J_RecommendBoardDao jdbd = J_RecommendBoardDao.getInstance();
 		int result  = jdbd.delete(brd_no);
 		
-		request.setAttribute("brd_no", brd_no);
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("result", result);
 		

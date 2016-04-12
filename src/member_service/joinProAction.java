@@ -2,11 +2,9 @@ package member_service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import service.CommandProcess;
 import j_member.J_Member;
 import j_member.J_MemberDao;
-import service.CommandProcess;
 
 public class joinProAction implements CommandProcess {
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) {

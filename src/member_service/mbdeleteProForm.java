@@ -9,21 +9,20 @@ import j_member.J_MemberDao;
 
 public class mbdeleteProForm implements CommandProcess {
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) {
-		
+		int result = 0;
 		HttpSession session = request.getSession();
 		String m_no = (String) session.getAttribute("m_no");
 		String m_passwd = request.getParameter("m_passwd");
-		
+
 		J_MemberDao jmd = J_MemberDao.getInstance();
 		int chk = jmd.passwdChk(m_no, m_passwd);
-		int result = jmd.delete(Integer.parseInt(m_no));
-		
-		request.setAttribute("chk", chk);
+		if (chk == 1) {
+			result = jmd.delete(Integer.parseInt(m_no));
+			request.setAttribute("result", result);
+		}
 		request.setAttribute("result", result);
-		System.out.println(chk);
-		System.out.println(result);
 
 		return "/member/mbdeletePro.jsp";
-		
+
 	}
 }

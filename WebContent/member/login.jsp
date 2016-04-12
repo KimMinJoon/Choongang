@@ -28,7 +28,7 @@
 
 	<p>
 	<div align="center">
-		<a href="main.jsp?pgm=/member/join.jsp">
+		<a href="join.do">
 		<font style="text-decoration: underline;" size="2"> 회원가입 </font>
 		</a>
 	</div>

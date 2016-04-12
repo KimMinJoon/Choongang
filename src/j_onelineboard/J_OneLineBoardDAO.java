@@ -285,6 +285,29 @@ public class J_OneLineBoardDAO {
 		return result;
 	}//insertReply
 	
+	public int updateReply(J_OneLineReply jolr){
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = "UPDATE J_ONELINEREPLY SET CONTENT = ? WHERE REPLY_NO = ? AND DEL_YN = 'n'";
+		
+		try{
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, jolr.getContent());
+			pstmt.setInt(2, jolr.getReply_no());
+			
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}finally {
+			dbClose(pstmt, conn);
+		}
+		return result;
+	}
+	
 	public int deleteRep(int reply_no){
 		int result = 0;
 		Connection conn = null;
@@ -302,8 +325,8 @@ public class J_OneLineBoardDAO {
 		return result;
 	}
 	
-	public HashMap<Integer,List<J_OneLineReply>> selectReply(int brd_no){
-		HashMap<Integer,List<J_OneLineReply>> map = new HashMap<Integer,List<J_OneLineReply>>();
+	public List<J_OneLineReply> selectReply(){
+		List<J_OneLineReply> list = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -313,12 +336,8 @@ public class J_OneLineBoardDAO {
 		try{
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, brd_no);
 			rs = pstmt.executeQuery();
 			while(rs.next()){
-				List<J_OneLineReply> list = new ArrayList<J_OneLineReply>();
-				int bno = rs.getInt("BRD_NO");
-				while(true){
 					J_OneLineReply jolr = new J_OneLineReply();
 					jolr.setReply_no(rs.getInt("REPLY_NO"));
 					jolr.setBrd_no(rs.getInt("BRD_NO"));
@@ -326,18 +345,9 @@ public class J_OneLineBoardDAO {
 					jolr.setReg_Date(rs.getString("REG_DATE"));
 					jolr.setM_nick(rs.getString("M_NICK"));
 					jolr.setM_no(rs.getInt("M_NO"));
-					if(jolr.getBrd_no() == bno){
+					
 						list.add(jolr);
-						rs.next();
-					}
-					else{
-						bno = jolr.getBrd_no();
-						map.put(jolr.getBrd_no(), list);
-						break;
-					}
-				}
 			}
-			
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		}finally{
@@ -345,7 +355,7 @@ public class J_OneLineBoardDAO {
 		}
 		return list;
 	}//selectReply
-	
+
 	/**
 	 * DB 접근하기 위해 사용 되었던 Connection, PrepareStatement, ResultSet 을
 	 * 일괄 close 를 수행

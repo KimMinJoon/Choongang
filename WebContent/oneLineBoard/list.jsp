@@ -73,47 +73,6 @@ pre > a{
 	font-size: 0.75em;
 }
 </style>
-<%-- <%	
-		String mno = (String)session.getAttribute("m_no");
-		
-		String searchType = request.getParameter("searchType");
-		String searchTxt = request.getParameter("searchTxt");
-		
-		if(searchType == null || searchType.equals("null") || searchType.equals("")){
-			searchType = "brd_content";
-		}
-		
-		if(searchTxt == null || searchTxt.equals("null")){
-			searchTxt = "";
-		}
-		
-		int rowPerPage = 10;
-		int pagePerBlock = 10;
-		int nowPage = 0;
-		String pageNum = request.getParameter("pageNum");
-
-		if (pageNum == null || pageNum.equals("") || pageNum.equals("null")) {
-			pageNum = "1";
-		}
-		nowPage = Integer.parseInt(pageNum);
-
-		J_OneLineBoardDAO jobd = J_OneLineBoardDAO.getInstance();
-		int total = jobd.selectTotal(searchType, searchTxt);
-
-		int totalPage = (int) Math.ceil((double) total / rowPerPage);
-		int startRow = (nowPage - 1) * rowPerPage + 1;
-		int endRow = startRow + rowPerPage - 1;
-		int totalBlock = (int) Math.ceil((double) totalPage / pagePerBlock);
-		int startPage = (nowPage - 1) / 10 * 10 + 1;
-		int endPage = startPage + pagePerBlock - 1;
-		if (endPage > totalPage) {
-			endPage = totalPage;
-		}
-		total = total - startRow + 1;
-
-		List<J_OneLineBoard> list = jobd.selectOneLine(startRow, endRow, searchType, searchTxt);
-		
-%> --%>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -123,9 +82,9 @@ pre > a{
 		
 		$(".btnUpdate").click(function(){
 			$(this).parent().nextAll(".row").show();
-			$(this).parent().nextAll(".updateForm").hide();
+			$(this).parent().nextAll(".updateForm").hide("slow");
 			$(this).parent().prevAll(".row").show();
-			$(this).parent().prevAll(".updateForm").hide();
+			$(this).parent().prevAll(".updateForm").hide("slow");
 			$(this).parent().hide("slow");
 			var text = $(this).parent().next().find(".originText").text();
 			$(this).parent().next().find(".updateContent").val(text);
@@ -149,6 +108,22 @@ pre > a{
 		$(".replyCancel").click(function(){
 			$(this).parent().parent().hide("slow"); 
 			$(this).parent().parent().prev().prev().show("slow");	
+		});
+		
+		$(".btnRepUpdate").click(function(){
+			$(this).parent().nextAll(".replyRow").show();
+			$(this).parent().nextAll(".replyUpdate").hide();
+			$(this).parent().prevAll(".replyRow").show();
+			$(this).parent().prevAll(".replyUpdate").hide();
+			$(this).parent().hide("slow");
+			var text = $(this).parent().next().find(".originRepText").text();
+			$(this).parent().next().find(".updateReContent").val(text);
+			$(this).parent().next().show("slow");
+		});
+		
+		$(".repUpdateCancel").click(function(){
+			$(this).parent().parent().hide("slow"); 
+			$(this).parent().parent().prev().show("slow");
 		});
 	});
 	function deleteChk(brd_no,pageNum){
@@ -246,8 +221,14 @@ pre > a{
 							<input style="height: 50px; width: 120px;" type="submit" value="등록">
 						</form>
 					</div>
-					<div class="replyForm">
+					<div 
+						<c:if test="${brd_no == jolb.brd_no}">
+							style="display: inline;"	 
+						</c:if>
+						class="replyForm" 
+					>
 						<form action="${pageContext.request.contextPath}/oneLineBoard/insertReply.do" name="replyFrm" onsubmit="return isSubmit(${sessionScope.m_no })" method="post">
+							
 							<input type="hidden" name="m_no" value="${sessionScope.m_no }">
 							<input type="hidden" name="brd_no" value="${jolb.brd_no}">
 							<input type="hidden" name="pageNum" value="${pageNum}">
@@ -256,57 +237,45 @@ pre > a{
 								name="content" required="required"></textarea>
 					 		<input style="height: 50px; width: 120px;" type="submit" value="등록">
 						</form>
-						<div>
-							
-							<%
-							System.out.println(jolb.getBrd_no());
-								List<J_OneLineReply> reList = jobd.selectReply(jolb.getBrd_no());
-								if(reList != null){
-									System.out.println(reList.size());
-									for(J_OneLineReply jolr : reList){
-										System.out.println(jolr);
-							%>
+					<div>
+						<c:if test="${not empty reList}">
+							<c:forEach var="jolr" items="${reList}">
+								<c:if test="${jolr.brd_no == jolb.brd_no}">
 									<div class="replyRow">
-										<img src="../images/re.gif"><%=jolr.getM_nick()%><%=jolr.getReg_Date()%><%=jolr.getContent()%>
-										<%
-											if(mno != null){
-												System.out.println("mno : " + mno + ", rep 작성자 mno : " + jolr.getM_no());
-												if(Integer.parseInt(mno) == jolr.getM_no()){
-										%>
-												<input type="button" value="수정" id="btnRepUpdate">
-												<input type="button" value="삭제" onclick="deleteRepChk(<%=jolr.getReply_no()%>)">
-										<%
-												}
-											}
-										%>
-									
+								<img src="../images/re.gif">
+									<p>${jolr.m_nick}/${jolr.reg_Date}/${jolr.content}</p>
+									<c:if test="${not empty m_no}">
+										<c:if test="${m_no == jolr.m_no}">
+											<input type="button" value="수정" class="btnRepUpdate">
+											<input type="button" value="삭제" onclick="deleteRepChk(${jolr.reply_no})">
+										</c:if>
+									</c:if>
 									</div>
-									<div class="replyUpdate" style="display: none;">
-										<form action="../oneLineBoard/oneLineReplyUpdate.jsp" method="post" >
-											<input type="hidden" value="<%=jolr.getReply_no()%>">
-											<input type="hidden" value="<%=jolr.getBrd_no()%>">
-											<input type="button" id="repUpdateCancel" value="취소">
-											<textarea rows="3" cols="100" maxlength="150" class="updateReContent"
-												name="content" required="required"><%=jolr.getContent()%></textarea>
-											<input type="submit" value="등록">
-										</form>
-									</div>
-							<%
-									}
-								}
-							%>
-						</div>
+							<div class="replyUpdate" style="display: none;">
+								<form action="${pageContext.request.contextPath}/oneLineBoard/UpdateReply.do" method="post" >
+									<input type="hidden" name="reply_no" value="${jolr.reply_no}">
+									<input type="hidden" name="brd_no" value="${jolr.brd_no}">
+									<input type="hidden" name="pageNum" value="${pageNum}">
+									<input type="hidden" name="searchType" value="${searchType}">
+									<input type="hidden" name="searchTxt" value="${searchTxt}">
+									<input type="button" class="repUpdateCancel" value="취소">
+									<p class="originRepText" style="display: none;">${jolr.content}</p>
+									<textarea rows="3" cols="100" maxlength="150" class="updateReContent"
+											name="content" required="required">${jolr.content}</textarea>
+									<input type="submit" value="등록">											</form>
+							</div>
+								</c:if>
+							</c:forEach>
+						</c:if>	
 					</div>
-					<c:set var="tot" value="${tot - 1 }"/>
-				</c:forEach>
-			</c:if>
+				</div>
+				<c:set var="tot" value="${tot - 1 }"/>
+			</c:forEach>
 		</c:if>
-		<c:if test="${empty list }">
-			<p>게시글이 없습니다.</p>
-		</c:if>
-				
-
-		
+	</c:if>
+	<c:if test="${empty list }">
+		<p>게시글이 없습니다.</p>
+	</c:if>
 		<div align="center" id="pagingandsearch">
 			<c:if test="${startPage != 1}">
 				<a href="javascript:locate(1)">&lt;&lt;맨 앞으로</a>

@@ -28,6 +28,7 @@ public class InsertReplyAction implements CommandProcess {
 		int result = jobd.insertReply(olr);
 		
 		request.setAttribute("result", result);
+		request.setAttribute("brd_no", brd_no);
 		request.setAttribute("pageNum", pageNum);
 	
 		return "/oneLineBoard/insertReplyOneline.jsp";

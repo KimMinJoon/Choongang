@@ -13,7 +13,7 @@
 	<table class="tab" cellpadding="10" align="center">
 		<caption> <h2> 마이페이지 </h2> </caption>
 		<tr>
-		<td> <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/myinfo.jsp" > 내정보보기 </a> </td>
+		<td> <a href="${pageContext.request.contextPath}/member/myinfo.temp" > 내정보보기 </a> </td>
 		</tr>
 		<tr>
 		<td> <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/mbupdate.jsp" > 회원정보수정 </a> </td>

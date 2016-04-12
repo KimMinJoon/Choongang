@@ -1,5 +1,6 @@
 package oneline_service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,11 @@ public class ListAction implements CommandProcess {
 		
 		String searchType = request.getParameter("searchType");
 		String searchTxt = request.getParameter("searchTxt");
+		String brd_no = request.getParameter("brd_no");
+		
+		if(brd_no == null || brd_no.equals("null")||brd_no.equals("")){
+			brd_no = "0";
+		}
 		
 		if(searchType == null || searchType.equals("null") || searchType.equals("")){
 			searchType = "brd_content";
@@ -51,7 +57,8 @@ public class ListAction implements CommandProcess {
 		total = total - startRow + 1;
 
 		List<J_OneLineBoard> list = jobd.selectOneLine(startRow, endRow, searchType, searchTxt);
-		List<List<J_OneLineReply>> reList = jobd.selectOneLineReply();
+		List<J_OneLineReply> reList = jobd.selectReply();
+
 		
 		request.setAttribute("rowPerPage", rowPerPage);
 		request.setAttribute("pagePerBlock", pagePerBlock);
@@ -63,8 +70,10 @@ public class ListAction implements CommandProcess {
 		request.setAttribute("totalPage", totalPage);
 		request.setAttribute("total", total);
 		request.setAttribute("list", list);
+		request.setAttribute("reList", reList);
 		request.setAttribute("searchType", searchType);
 		request.setAttribute("searchTxt", searchTxt);
+		request.setAttribute("brd_no", brd_no);
 		
 		return "/oneLineBoard/list.jsp";
 	}

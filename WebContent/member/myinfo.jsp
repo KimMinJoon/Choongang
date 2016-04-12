@@ -8,10 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%
-		J_MemberDao jmd = J_MemberDao.getInstance();
-		J_Member jif = jmd.infoselect(m_no);
-	%>
 	<table class="tab" cellpadding="10" align="center" height="100%">
 		<caption>
 			<h2>내정보보기</h2>
@@ -22,19 +18,19 @@
 		</tr>
 		<tr height="15%">
 			<td class="join1">이메일</td>
-			<td><%=jif.getM_email()%></td>
+			<td>${jif.m_email}</td>
 		</tr>
 		<tr height="15%">
 			<td class="join1">닉네임</td>
-			<td><%=jif.getM_nick()%></td>
+			<td>${jif.m_nick}</td>
 		</tr>
 		<tr height="15%">
 			<td class="join1">국적</td>
-			<td><%=jif.getC_value() %></td>
+			<td>${jif.c_value}</td>
 		</tr>
 		<tr height="15%">
 			<td class="join1">희망언어</td>
-			<td><%=jif.getL_value() %></td>
+			<td>${jif.l_value}</td>
 		</tr>
 	</table>
 

@@ -9,17 +9,4 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  <!-- <servlet>
-    <servlet-name>Controller</servlet-name>
-    <servlet-class>controller.Controller</servlet-class>
-    <init-param>
-    	<param-name>config</param-name>
-    	<param-value>/WEB-INF/command.properties</param-value>
-    </init-param>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Controller</servlet-name>
-    <url-pattern>*.do</url-pattern>
-    두로끝나는 컨트롤러로 가서 컨트롤안에 컨트롤러를 실행해라
-  </servlet-mapping> -->
 </web-app>

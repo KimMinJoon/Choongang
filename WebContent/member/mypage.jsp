@@ -16,7 +16,7 @@
 		<td> <a href="${pageContext.request.contextPath}/member/myinfo.temp" > 내정보보기 </a> </td>
 		</tr>
 		<tr>
-		<td> <a href="${pageContext.request.contextPath}/member/mbupdate.do" > 회원정보수정 </a> </td>
+		<td> <a href="${pageContext.request.contextPath}/member/mbupdate.temp" > 회원정보수정 </a> </td>
 		</tr>
 		<tr>
 		<td> <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/friend.jsp" > 친구/관심글 </a> </td>

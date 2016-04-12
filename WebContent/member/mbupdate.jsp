@@ -68,7 +68,7 @@
 			}else {
 			$.ajax({
 				type : "POST",
-				url : "../member/nickChk.jsp",
+				url : "../member/nickChk.chk",
 				data : {
 					"m_nick" : $('#m_nick').val(),
 					"m_no" : $('#m_no').val()
@@ -90,7 +90,7 @@
 </head>
 <body>
 	
-	<form action="mbupdatePro.do" name="frm" onsubmit="return chk()">
+	<form action="mbupdatePro.temp" name="frm" onsubmit="return chk()">
 		<input type="hidden" name="check" value="false">
 		<input type="hidden" name="m_no" id="m_no" value="${m_no}">
 		<table class="tab" cellpadding="10" align="center">

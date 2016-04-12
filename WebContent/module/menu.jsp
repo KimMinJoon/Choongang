@@ -11,7 +11,7 @@
 	<hr size="1" color="black">
 	<table height="4" width="100%">
 		<tr>
-			<td width="15%" align="center"><a href="${pageContext.request.contextPath}/noticeBoard/exchangeLanguage.do">사이트소개</a></td>
+			<td width="15%" align="center"><a href="../module/main.jsp?pgm=/noticeBoard/exchangeLanguage.jsp">사이트소개</a></td>
 			<td width="15%" align="center"><a href="${pageContext.request.contextPath}/noticeBoard/list.do">공지사항</a></td>
 			<td width="15%" align="center"><a href="${pageContext.request.contextPath}/meetBoard/meetlist.do">모임 게시판</a></td>
 			<td width="15%" align="center"><a href="${pageContext.request.contextPath}/recommendBoard/list.do">추천 게시판</a></td>

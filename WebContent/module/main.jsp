@@ -19,7 +19,7 @@
 		<tr>
 			<td>
 			<c:if test="${empty param.pgm}">
-				<jsp:include page="home.jsp" />
+				<jsp:include page="home.jsp"/>
 			</c:if>
 			<c:if test="${not empty param.pgm}">
 				<jsp:include page="${param.pgm }" />

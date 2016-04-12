@@ -61,7 +61,7 @@
 		if (regex.test(frm.m_email.value) === false) {
 			alert("정확한 이메일 형식으로 입력해주세요");
 		} else {
-			var purl = "../member/emailChk.jsp?m_email=" + frm.m_email.value;
+			var purl = "../member/emailChk.chk?m_email=" + frm.m_email.value;
 			var pname = "emailpopup";
 			var pwidth = 300;
 			var pheight = 200;
@@ -109,7 +109,7 @@
 			$.ajax({
 				/* 아이작스를 쓰겟다는 구문 */
 				type : "POST",
-				url : "../member/nickChk.jsp",
+				url : "nickChk.chk",
 				data : {
 					"m_nick" : $('#m_nick').val(),
 					"m_no" : 0

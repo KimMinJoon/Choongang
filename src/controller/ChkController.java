@@ -1,0 +1,82 @@
+package controller;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import service.CommandProcess;
+
+@WebServlet(urlPatterns = "*.chk", initParams = {
+		@WebInitParam(name = "config2", value = "/WEB-INF/chk.properties") })
+public class ChkController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private Map<String, Object> commandMap = new HashMap<>();
+
+	public void init(ServletConfig config) throws ServletException {
+		String props = config.getInitParameter("config2");
+		Properties pr = new Properties();
+		FileInputStream f = null;
+		try {
+			String configFilePath = config.getServletContext().getRealPath(props);
+			f = new FileInputStream(configFilePath);
+			pr.load(f);
+		} catch (IOException e) {
+			throw new ServletException(e);
+		} finally {
+			if (f != null)
+				try {
+					f.close();
+				} catch (IOException ex) {
+				}
+		}
+		Iterator<Object> keyIter = pr.keySet().iterator();
+		while (keyIter.hasNext()) {
+			String command = (String) keyIter.next();
+			String className = pr.getProperty(command);
+			try {
+				Class<?> commandClass = Class.forName(className);
+				Object commandInstance = commandClass.newInstance();
+				commandMap.put(command, commandInstance);
+				System.out.println("command : " + command);
+				System.out.println("commandInstance : " + commandInstance);
+			} catch (Exception e) {
+				throw new ServletException(e);
+			}
+		}
+	}
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String view = null;
+		CommandProcess com = null;
+		try {
+			String command = request.getRequestURI();
+			command = command.substring(request.getContextPath().length() + 1);
+			com = (CommandProcess) commandMap.get(command);
+			view = com.requestPro(request, response);
+			System.out.println("뷰경로를 보여줘! : " + view);
+
+		} catch (Throwable e) {
+			throw new ServletException(e);
+		}
+		RequestDispatcher dispatcher = request.getRequestDispatcher(view);
+		dispatcher.forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		doGet(request, response);
+	}
+}

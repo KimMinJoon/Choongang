@@ -14,7 +14,7 @@
 			<td width="20%" height="50"><jsp:include page="mypage.jsp" /></td>
 			<td width="80%" class="mypagetemp">
 			<c:if test="${empty param.mypgm}">
-					<jsp:include page="myinfo.jsp"/>
+					<jsp:forward page="myinfo.temp"/>
 			</c:if> 
 			<c:if test="${not empty param.mypgm}">
 					<jsp:include page="${param.mypgm}"/>

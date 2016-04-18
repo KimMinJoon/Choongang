@@ -35,6 +35,7 @@
 .row{
 	background : #FAED7D;
 	border: 1px solid black;
+	position: relative;
 }
 .updateForm{
 	background: #C4B73B;
@@ -43,13 +44,14 @@
 .rowNum{
 	font-size: 10px;
 	font-weight: bold;
-	vertical-align: middle;
+	margin: 10px;	
 }
 .rowNick{
 	font-size : 15px;
 	font-weight: bold;
 	font-style: italic;
 	color: green;
+	margin : 5px;
 }
 .rowDate{
 	font-size : 10px;
@@ -102,7 +104,6 @@ pre > a{
 			$(this).parent().next().next().show("slow");
 		});
 		
-		
 		$(".updateCancel").click(function(){
 			$(this).parent().parent().hide("slow"); 
 			$(this).parent().parent().prev().show("slow");	
@@ -110,6 +111,10 @@ pre > a{
 		
 		$(".btnReply").click(function(){
 			$(this).parent().next().next().show("slow");
+		});
+		
+		$(".countClick").click(function(){
+			$(this).parent().parent().next().next().show("slow");
 		});
 		
 		$(".replyCancel").click(function(){
@@ -170,7 +175,8 @@ pre > a{
 	function textCheck() {
 		var counter = document.getElementById("counter");
 		var content = document.getElementById("content");
-		counter.innerHTML = content.value.length + "/" + content.maxLength;
+		counter.innerHTML = 
+			content.value.length + "/" + content.maxLength;
 		if(content.value.length >= content.maxLength){
 			alert("최대 " + content.maxLength + "글자 까지 작성할수 있습니다.");
 		}
@@ -205,7 +211,7 @@ pre > a{
 				<c:forEach var="jolb" items="${list}">
 					<div class="row">
 						<p><span class="rowNum">${tot}</span><span class="rowNick">${jolb.m_nick}</span>&nbsp;<span class="rowDate">${jolb.brd_reg_date}</span>
-						<pre class="rowContent" style="width:600px; white-space: pre-line;word-break:break-all;">${jolb.brd_content}<a href="">[${jolb.rep_count}]</a></pre>
+						<pre class="rowContent" style="width:600px; white-space: pre-line;word-break:break-all;">${jolb.brd_content}<a class="countClick">[${jolb.rep_count}]</a></pre>
 						<c:if test="${sessionScope.m_no != null}">
 							<c:if test="${jolb.m_no == sessionScope.m_no}">
 								<input type="button" class="btnUpdate" value="수정">

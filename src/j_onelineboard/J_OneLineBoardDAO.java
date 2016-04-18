@@ -233,16 +233,35 @@ public class J_OneLineBoardDAO {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		
 		String sql = "update j_onelineboard set brd_del_yn = 'y',brd_out_date = sysdate where brd_no = ? and brd_del_yn = 'n'";
+		String sql1 = "update j_onelinereply set del_yn = 'y', out_date = sysdate where brd_no = ? and del_yn = 'n'";
 		//삭제되지 않은 게시글의 삭제여부 컬럼을 y -> n 으로 변경하며 삭제일자를 현재일자로 변경 한다
+		
 		try{
 			conn = getConnection();
+			conn.setAutoCommit(false);
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, brd_no);
 			
 			result = pstmt.executeUpdate();
+			
+			pstmt.close();
+			
+			pstmt = conn.prepareStatement(sql1);
+			pstmt.setInt(1, brd_no);
+			
+			pstmt.executeUpdate();
+			conn.commit();
+			conn.setAutoCommit(true);
 		}catch(Exception e){
-			System.out.println(e.getMessage());
+			try {
+				conn.rollback();
+				System.out.println(e.getMessage());
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}finally {
 			dbClose(pstmt, conn);
 		}
@@ -306,7 +325,7 @@ public class J_OneLineBoardDAO {
 			dbClose(pstmt, conn);
 		}
 		return result;
-	}
+	}//updateReply
 	
 	public int deleteRep(int reply_no){
 		int result = 0;

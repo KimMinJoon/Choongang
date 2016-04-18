@@ -1,20 +1,16 @@
 package j_meetboard;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
+import java.io.Reader;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class J_MeetBoardDao {
 
 	// 싱글톤 생성
 	private static J_MeetBoardDao instance = new J_MeetBoardDao();
-
+	private static SqlSession session;
 	private J_MeetBoardDao() {
 	}
 
@@ -22,90 +18,54 @@ public class J_MeetBoardDao {
 		return instance;
 	}
 
-	// 커넥션 풀
-	public Connection getConnection() {
-		Connection conn = null;
-		try {
-			Context ctx = new InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/OracleDB");
-			conn = ds.getConnection();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return conn;
-	}// getConnection
-
-	// 게시판 글쓰기
-	public int insert(J_MeetBoard meetboard) {
-		int result = 0;
-		int number = 0;// brd_no이다~
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "insert into j_meetboard values(?,?,?,0,?,sysdate,null,'n',?,?,?)";
-		// brdno,subject,content,readcount,recommend,ip,regdate,updatedate,delyn,m_no,mccode,lcode
-		// 처음에 입력될때는 n으로 입력되야합니다~
-		String sql1 = "select nvl(max(brd_no),0)+1 from j_meetboard";
-		// num이 처음에 널일수잇으니nvl쓰고 시퀀스 오토 구분없이 오라클 mysql 통합으로 사용가능함
-
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql1);// 먼저 값을 읽어와야함
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				number = rs.getInt(1); // 값을 세팅
-			}
-			pstmt.close();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, number);
-			pstmt.setString(2, meetboard.getBrd_subject());
-			pstmt.setString(3, meetboard.getBrd_content());
-			pstmt.setString(4, meetboard.getBrd_ip());
-			pstmt.setInt(5, meetboard.getM_no());
-			pstmt.setString(6, meetboard.getMc_code());
-			pstmt.setString(7, meetboard.getL_code());
-			result = pstmt.executeUpdate();
-
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			dbClose(rs, pstmt, conn);
-		}
-		return result;
+	
+	// 커넥션 풀 대신해서 마이바티스 사용
+	static {
+	    try {
+	      Reader reader = 
+	    	Resources.getResourceAsReader("configuration.xml");
+	      SqlSessionFactory sf = new SqlSessionFactoryBuilder().build(reader); 
+	      session = sf.openSession(true);//이걸 안하면 커밋이안된다.!!!!!!왜? 트루가 커밋을 하겟다는의미이다.
+	      reader.close(); 
+	    } catch (Exception e) { System.out.println("sqlMap에러"); 
+	    
+	    }
 	}
-
+	
+	
+	
 	public int selectTotal(String searchType, String searchTxt){
 		int total = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+		
 		String sql = "select count(*) from j_meetboard mb, j_member m where mb.m_no = m.m_no and brd_del_yn='n'";
 		String sql2="";
-		if(searchType.equals("all")){
-			sql2 = " and (brd_content like '%" + searchTxt + "%' or brd_subject like '%" + searchTxt + "%')";	
-		} else if (searchType.equals("m_nick")){
-			sql2 = " and " + searchType + " like '%" + searchTxt + "%'";
-		} else {
-			sql2 = " and " + searchType + " like '%" + searchTxt + "%'";
-		} 
-		if(!searchTxt.equals("")){
-			sql += sql2;
-		} 
+		
+		
+		
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				total = rs.getInt(1);
-			}
+			
+			if(searchType.equals("all")){
+				sql2 = " and (brd_content like '%" + searchTxt + "%' or brd_subject like '%" + searchTxt + "%')";	
+			} else if (searchType.equals("m_nick")){
+				sql2 = " and " + searchType + " like '%" + searchTxt + "%'";
+			} else {
+				sql2 = " and " + searchType + " like '%" + searchTxt + "%'";
+			} 
+			if(!searchTxt.equals("")){
+				sql += sql2;
+			} 
+				total = (Integer) session.selectOne("selectTotal");
+				
 		} catch (Exception e) {
 			System.out.println("selectTotal : " + e.getMessage());
-		} finally {
-			dbClose(rs, pstmt, conn);
 		}
 		return total;
 	}
 
+
+	
+	
+	
 	public List<J_MeetBoard> selectList(int startRow, int endRow,String searchType, String searchTxt) {
 		List<J_MeetBoard> list = new ArrayList<J_MeetBoard>();
 		Connection conn = null;
@@ -154,6 +114,52 @@ public class J_MeetBoardDao {
 		}
 		return list;
 	}
+	
+	
+	
+	
+	
+
+/*	// 게시판 글쓰기
+	public int insert(J_MeetBoard meetboard) {
+		int result = 0;
+		int number = 0;// brd_no이다~
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "insert into j_meetboard values(?,?,?,0,?,sysdate,null,'n',?,?,?)";
+		// brdno,subject,content,readcount,recommend,ip,regdate,updatedate,delyn,m_no,mccode,lcode
+		// 처음에 입력될때는 n으로 입력되야합니다~
+		String sql1 = "select nvl(max(brd_no),0)+1 from j_meetboard";
+		// num이 처음에 널일수잇으니nvl쓰고 시퀀스 오토 구분없이 오라클 mysql 통합으로 사용가능함
+
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql1);// 먼저 값을 읽어와야함
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				number = rs.getInt(1); // 값을 세팅
+			}
+			pstmt.close();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, number);
+			pstmt.setString(2, meetboard.getBrd_subject());
+			pstmt.setString(3, meetboard.getBrd_content());
+			pstmt.setString(4, meetboard.getBrd_ip());
+			pstmt.setInt(5, meetboard.getM_no());
+			pstmt.setString(6, meetboard.getMc_code());
+			pstmt.setString(7, meetboard.getL_code());
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			dbClose(rs, pstmt, conn);
+		}
+		return result;
+	}
+
+	
 
 	public int recommendChk(int m_no, int brd_no) {
 		Connection conn = null;
@@ -382,5 +388,5 @@ public class J_MeetBoardDao {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-	}
+	}*/
 }

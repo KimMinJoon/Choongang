@@ -34,6 +34,7 @@ public class UpdateReplyAction implements CommandProcess {
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("searchType", searchType);
 		request.setAttribute("searchTxt", searchTxt);
+		request.setAttribute("brd_no", brd_no);
 		
 		return "/oneLineBoard/updateOneLineReply.jsp";
 	}

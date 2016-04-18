@@ -18,10 +18,10 @@
 		</script>
 	</c:if>
 	<c:if test="${result == 0}">
-	<script type="text/javascript">
-		alert("한줄 글 삭제 실패");
-		history.back();
-	</script>
-</c:if>
+		<script type="text/javascript">
+			alert("한줄 글 삭제 실패");
+			history.back();
+		</script>
+	</c:if>
 </body>
 </html>

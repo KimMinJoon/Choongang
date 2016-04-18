@@ -316,14 +316,18 @@ public class J_OneLineBoardDAO {
 		String sql = "UPDATE J_ONELINEREPLY SET OUT_DATE = SYSDATE, DEL_YN = 'y' WHERE REPLY_NO = ? AND DEL_YN = 'n'";
 		
 		try{
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, reply_no);
 			
+			result = pstmt.executeUpdate();
 		}catch(Exception e){
-			
+			System.out.println(e.getMessage());
 		}finally {
 			dbClose(pstmt, conn);
 		}
 		return result;
-	}
+	}//deleteRep
 	
 	public List<J_OneLineReply> selectReply(){
 		List<J_OneLineReply> list = new ArrayList<>();

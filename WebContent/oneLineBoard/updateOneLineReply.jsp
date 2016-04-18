@@ -9,7 +9,7 @@
 <body>
 	<c:if test="${result > 0}">
 		<script type="text/javascript">
-			location.href="${pageContext.request.contextPath}/oneLineBoard/list.do?pageNum=${pageNum}&searchType=${searchType}&searchTxt=${searchTxt}";
+			location.href="${pageContext.request.contextPath}/oneLineBoard/list.do?pageNum=${pageNum}&searchType=${searchType}&searchTxt=${searchTxt}&brd_no=${brd_no}";
 		</script>
 	</c:if>
 	<c:if test="${result == 0}">

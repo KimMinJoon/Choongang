@@ -9,3 +9,5 @@ create table J_OneLineReply(
   delete_date date
 );
 
+ALTER TABLE J_OneLineReply ADD CONSTRAINT fk_orl_brd_no
+FOREIGN KEY(brd_no) REFERENCES j_onelineboard(brd_no);

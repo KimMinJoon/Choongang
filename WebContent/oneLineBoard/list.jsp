@@ -73,13 +73,20 @@ pre > a{
 	font-size: 0.75em;
 }
 </style>
+<c:set var="bno" value="${param.brd_no}"/>
+<c:if test="${empty bno}">
+	<c:set var="bno" value="0"/>
+</c:if>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		
+		$('textarea').css('resize','none');
 		$(".updateForm").hide();
 		$(".replyForm").hide();
 		
+		if(${bno} != 0){
+			$(".${param.brd_no}").parent().parent().show();
+		}
 		$(".btnUpdate").click(function(){
 			$(this).parent().nextAll(".row").show();
 			$(this).parent().nextAll(".updateForm").hide("slow");
@@ -127,6 +134,8 @@ pre > a{
 		});
 	});
 	function deleteChk(brd_no,pageNum){
+		var searchType = document.getElementById("searchType");
+		var searchTxt = document.getElementById("searchTxt");
 		if(confirm("정말 삭제하시겠습니까?")){
 			location.href="${pageContext.request.contextPath}/oneLineBoard/delete.do?brd_no="+brd_no+"&pageNum="+pageNum+"&searchType=" + searchType.value + "&searchTxt=" + searchTxt.value;	
 		}else{
@@ -134,11 +143,11 @@ pre > a{
 		}
 	}
 	
-	function deleteRepChk(reply_no){
+	function deleteRepChk(reply_no, brd_no, pageNum){
 		var searchType = document.getElementById("searchType");
 		var searchTxt = document.getElementById("searchTxt");
 		if(confirm("정말 삭제하시겠습니까?")){
-			location.href="${pageContext.request.contextPath}/oneLineBoard/deleteRepOneline.jsp?reply="+reply_no;	
+			location.href="${pageContext.request.contextPath}/oneLineBoard/deleteReply.do?reply_no="+reply_no+"&brd_no="+brd_no+"&pageNum="+pageNum+"&searchType=" + searchType.value + "&searchTxt=" + searchTxt.value;	
 		}else{
 			return;
 		}
@@ -148,7 +157,7 @@ pre > a{
 		alert("m_no : " + number);
  		if(number == null || number == "" || number == "null"){
  			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
- 				location.href = "../module/main.jsp?pgm=/member/login.jsp";
+ 				location.href = "${pageContext.request.contextPath}/member/login.do";
  			} else {
  				return false;
  			}
@@ -216,21 +225,16 @@ pre > a{
 							<input type="hidden" name="searchTxt" value="${searchTxt}">
 							<p class="originText" style="display: none;">${jolb.brd_content}</p>
 							<textarea rows="3" cols="100" maxlength="150" class="updateContent"
-									name="brd_content" required="required">${jolb.brd_content}</textarea>
+									name="brd_content" required="required" >${jolb.brd_content}</textarea>
 							
 							<input style="height: 50px; width: 120px;" type="submit" value="등록">
 						</form>
 					</div>
-					<div 
-						<c:if test="${brd_no == jolb.brd_no}">
-							style="display: inline;"	 
-						</c:if>
-						class="replyForm" 
-					>
+					
+					<div class="replyForm">
 						<form action="${pageContext.request.contextPath}/oneLineBoard/insertReply.do" name="replyFrm" onsubmit="return isSubmit(${sessionScope.m_no })" method="post">
-							
 							<input type="hidden" name="m_no" value="${sessionScope.m_no }">
-							<input type="hidden" name="brd_no" value="${jolb.brd_no}">
+							<input type="hidden" name="brd_no" class= "${jolb.brd_no}" value="${jolb.brd_no}">
 							<input type="hidden" name="pageNum" value="${pageNum}">
 							<input type="button" class="replyCancel" value="취소"></p>
 							<textarea rows="3" cols="100" maxlength="150" class="replyContent"
@@ -242,12 +246,12 @@ pre > a{
 							<c:forEach var="jolr" items="${reList}">
 								<c:if test="${jolr.brd_no == jolb.brd_no}">
 									<div class="replyRow">
-								<img src="../images/re.gif">
+									<img src="../images/re.gif">
 									<p>${jolr.m_nick}/${jolr.reg_Date}/${jolr.content}</p>
 									<c:if test="${not empty m_no}">
 										<c:if test="${m_no == jolr.m_no}">
 											<input type="button" value="수정" class="btnRepUpdate">
-											<input type="button" value="삭제" onclick="deleteRepChk(${jolr.reply_no})">
+											<input type="button" value="삭제" onclick="deleteRepChk(${jolr.reply_no},${jolr.brd_no},${pageNum})">
 										</c:if>
 									</c:if>
 									</div>

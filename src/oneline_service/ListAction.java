@@ -58,7 +58,6 @@ public class ListAction implements CommandProcess {
 
 		List<J_OneLineBoard> list = jobd.selectOneLine(startRow, endRow, searchType, searchTxt);
 		List<J_OneLineReply> reList = jobd.selectReply();
-
 		
 		request.setAttribute("rowPerPage", rowPerPage);
 		request.setAttribute("pagePerBlock", pagePerBlock);

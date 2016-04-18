@@ -16,3 +16,5 @@ ALTER TABLE j_onelineboard ADD CONSTRAINT fk_ol_m_no
 FOREIGN KEY(m_no) REFERENCES j_member(m_no);
 
 
+
+

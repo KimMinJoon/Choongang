@@ -21,6 +21,7 @@ public class ViewAction implements CommandProcess {
 		J_MeetBoard brd = bd.select(brd_no);
 		// System.out.println("추천수 가져올때 값 : " + brd.getBrd_recommend());
 		int recommend = 0;
+		System.out.println("ViewAction에서 받아오는 m_no입니다. : " + m_no);
 		if (m_no != null) {
 			recommend = bd.selectRecommend(Integer.parseInt(m_no), brd_no);
 		}
@@ -31,7 +32,6 @@ public class ViewAction implements CommandProcess {
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("brd_no", brd_no);
 		request.setAttribute("brd", brd);
-		System.out.println(recommend);
 		request.setAttribute("recommend", recommend);
 		
 		return "/meetBoard/view.jsp";

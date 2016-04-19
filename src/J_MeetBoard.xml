@@ -41,9 +41,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   update j_meetboard set brd_readcount = brd_readcount+1 where brd_no=#{brd_no}
   </update>
   
-   <update id="selectRecommend" parameterType="Integer">
-  update j_meetboard set brd_readcount = brd_readcount+1 where brd_no=#{brd_no}
-  </update>
+  <select id="selectRecommend" parameterType="hashMap" resultType="Integer">
+  	select count(*) from j_recommend where m_no = #{m_no} and brd_no = #{brd_no}
+  </select>
   
   
   <select id="insertNumber" parameterType="Integer" resultType="Integer">
@@ -53,5 +53,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <insert id="insert" parameterType="J_MeetBoard">
   insert into j_meetboard values(#{brd_no},#{brd_subject},#{brd_content},0,#{brd_ip},sysdate,null,'n',#{m_no},#{mc_code},#{l_code})
   </insert>
+
+  <update id="update" parameterType="J_MeetBoard">
+  update j_meetboard set brd_subject=#{brd_subject},brd_content=#{brd_content},l_code=#{l_code},mc_code=#{mc_code},brd_update_date=sysdate where brd_no=#{brd_no}
+  </update>
+
+  <update id="delete" parameterType="Integer">
+  update j_meetboard set brd_del_yn='y' where brd_no=#{brd_no}
+  </update> 
+
+  <select id="passwdChk" parameterType="Integer" resultType="String">
+  select m.m_passwd from j_meetboard mb, j_member m where mb.m_no = m.m_no and brd_no=#{brd_no}
+  </select>
+ 
+  <select id="recommendChk1" parameterType="hashMap" resultType="Integer">
+  select count(*) from j_recommend where m_no = #{m_no} and brd_no = #{brd_no}
+  </select>
+  
+  <insert id="recommendChk2" parameterType="hashMap">
+  insert into j_recommend values(#{brd_no},#{m_no},sysdate,'n')
+  </insert>
+  
+  <delete id="recommendChk3" parameterType="hashMap">
+  delete from j_recommend where m_no = #{m_no} and brd_no = #{brd_no}
+  </delete> 
+
 
 </mapper>

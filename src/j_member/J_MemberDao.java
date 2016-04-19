@@ -41,29 +41,22 @@ public class J_MemberDao {
 
 	// 커넥션 풀 대신해서 마이바티스 사용
 
-	/*public int emailCheck(String m_email) {
+	public int emailCheck(String m_email) {
 		int result = 0;
-		Connection conn = null;
+		/*Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select m_email from j_member where m_email=? and m_del_yn='n'";
+		String sql = "select m_email from j_member where m_email=? and m_del_yn='n'";*/
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m_email);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				result = 1;
-			}
+			result = (int)session.selectOne("emailChk", m_email);
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
-			dbClose(rs, pstmt, conn);
-		}
+		} 
 		return result;
 	}
 
-	public int nickCheck(String m_nick, String m_no) {
+	/*public int nickCheck(String m_nick, String m_no) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -102,8 +95,7 @@ public class J_MemberDao {
 		} finally {
 			dbClose(rs, pstmt, conn);
 		}
-		return result;
-	}*/
+		return result;*/
 
 	public int insert(J_Member mb) {
 		int result = 0, m_number = 0, m_no = 0;
@@ -177,145 +169,74 @@ public class J_MemberDao {
 
 	}
 
-	/*public int loginChk(String m_email, String m_passwd) {
-		int result = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "select m_no, m_passwd from j_member where m_email=? and m_del_yn='n'";
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m_email);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				String dbPass = rs.getString("m_passwd"); // ("password")
-				if (dbPass.equals(m_passwd))
-					result = rs.getInt("m_no"); // 일치
-				else
-					result = 0; // 암호가 다름
-			} else
-				result = -1; // 데이터 읽기 실패
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			dbClose(rs, pstmt, conn);
-		}
-		return result;
-	}
-
-	public J_Member select(String m_no) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "select * from j_member where m_no=? and m_del_yn='n'";
-		J_Member mem = new J_Member();
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m_no);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				mem.setM_email(rs.getString("m_email"));
-				mem.setM_passwd(rs.getString("m_passwd"));
-				mem.setM_nick(rs.getString("m_nick"));
-				mem.setC_code(rs.getString("c_code"));
-				mem.setL_code(rs.getString("l_code"));
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			dbClose(rs, pstmt, conn);
-		}
-		return mem;
-	}
-
-	public J_Member infoselect(String m_no) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "select m_email, m_passwd, m_nick, (select c_value from j_code c where c.c_minor = m.c_code) as c_value, (select c_value from j_code c where c.c_minor = m.l_code) as l_value from j_member m where m_no=? and m_del_yn='n'";
-		J_Member jif = new J_Member();
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m_no);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				jif.setM_email(rs.getString("m_email"));
-				jif.setM_passwd(rs.getString("m_passwd"));
-				jif.setM_nick(rs.getString("m_nick"));
-				jif.setC_value(rs.getString("c_value"));
-				jif.setL_value(rs.getString("l_value"));
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			dbClose(rs, pstmt, conn);
-		}
-		return jif;
-	}
-
-	public int update(J_Member mem) {
-		int result = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = "update j_member set m_passwd=?, m_nick=?, c_code=?, l_code=? where m_email=? and m_del_yn='n'";
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, mem.getM_passwd());
-			pstmt.setString(2, mem.getM_nick());
-			pstmt.setString(3, mem.getC_code());
-			pstmt.setString(4, mem.getL_code());
-			pstmt.setString(5, mem.getM_email());
-			result = pstmt.executeUpdate();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			dbClose(pstmt, conn);
-		}
-		return result;
-	}
-
-	public int delete(int m_no) {
-		int result = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = "update j_member set m_del_yn='y', m_out_date=sysdate where m_no=? and m_del_yn='n'";
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, m_no);
-			result = pstmt.executeUpdate();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			dbClose(pstmt, conn);
-		}
-		return result;
-	}
-
-	public int passwdChk(String m_no, String m_passwd) {
-		int result = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "select m_passwd from j_member where m_no=? and m_passwd=?";
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m_no);
-			pstmt.setString(2, m_passwd);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				result = 1;
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			dbClose(rs, pstmt, conn);
-		}
-		return result;
-	}*/
+	/*
+	 * public int loginChk(String m_email, String m_passwd) { int result = 0;
+	 * Connection conn = null; PreparedStatement pstmt = null; ResultSet rs =
+	 * null; String sql =
+	 * "select m_no, m_passwd from j_member where m_email=? and m_del_yn='n'";
+	 * try { conn = getConnection(); pstmt = conn.prepareStatement(sql);
+	 * pstmt.setString(1, m_email); rs = pstmt.executeQuery(); if (rs.next()) {
+	 * String dbPass = rs.getString("m_passwd"); // ("password") if
+	 * (dbPass.equals(m_passwd)) result = rs.getInt("m_no"); // 일치 else result =
+	 * 0; // 암호가 다름 } else result = -1; // 데이터 읽기 실패 } catch (Exception e) {
+	 * System.out.println(e.getMessage()); } finally { dbClose(rs, pstmt, conn);
+	 * } return result; }
+	 * 
+	 * public J_Member select(String m_no) { Connection conn = null;
+	 * PreparedStatement pstmt = null; ResultSet rs = null; String sql =
+	 * "select * from j_member where m_no=? and m_del_yn='n'"; J_Member mem =
+	 * new J_Member(); try { conn = getConnection(); pstmt =
+	 * conn.prepareStatement(sql); pstmt.setString(1, m_no); rs =
+	 * pstmt.executeQuery(); if (rs.next()) {
+	 * mem.setM_email(rs.getString("m_email"));
+	 * mem.setM_passwd(rs.getString("m_passwd"));
+	 * mem.setM_nick(rs.getString("m_nick"));
+	 * mem.setC_code(rs.getString("c_code"));
+	 * mem.setL_code(rs.getString("l_code")); } } catch (Exception e) {
+	 * System.out.println(e.getMessage()); } finally { dbClose(rs, pstmt, conn);
+	 * } return mem; }
+	 * 
+	 * public J_Member infoselect(String m_no) { Connection conn = null;
+	 * PreparedStatement pstmt = null; ResultSet rs = null; String sql =
+	 * "select m_email, m_passwd, m_nick, (select c_value from j_code c where c.c_minor = m.c_code) as c_value, (select c_value from j_code c where c.c_minor = m.l_code) as l_value from j_member m where m_no=? and m_del_yn='n'"
+	 * ; J_Member jif = new J_Member(); try { conn = getConnection(); pstmt =
+	 * conn.prepareStatement(sql); pstmt.setString(1, m_no); rs =
+	 * pstmt.executeQuery(); if (rs.next()) {
+	 * jif.setM_email(rs.getString("m_email"));
+	 * jif.setM_passwd(rs.getString("m_passwd"));
+	 * jif.setM_nick(rs.getString("m_nick"));
+	 * jif.setC_value(rs.getString("c_value"));
+	 * jif.setL_value(rs.getString("l_value")); } } catch (Exception e) {
+	 * System.out.println(e.getMessage()); } finally { dbClose(rs, pstmt, conn);
+	 * } return jif; }
+	 * 
+	 * public int update(J_Member mem) { int result = 0; Connection conn = null;
+	 * PreparedStatement pstmt = null; String sql =
+	 * "update j_member set m_passwd=?, m_nick=?, c_code=?, l_code=? where m_email=? and m_del_yn='n'"
+	 * ; try { conn = getConnection(); pstmt = conn.prepareStatement(sql);
+	 * pstmt.setString(1, mem.getM_passwd()); pstmt.setString(2,
+	 * mem.getM_nick()); pstmt.setString(3, mem.getC_code()); pstmt.setString(4,
+	 * mem.getL_code()); pstmt.setString(5, mem.getM_email()); result =
+	 * pstmt.executeUpdate(); } catch (Exception e) {
+	 * System.out.println(e.getMessage()); } finally { dbClose(pstmt, conn); }
+	 * return result; }
+	 * 
+	 * public int delete(int m_no) { int result = 0; Connection conn = null;
+	 * PreparedStatement pstmt = null; String sql =
+	 * "update j_member set m_del_yn='y', m_out_date=sysdate where m_no=? and m_del_yn='n'"
+	 * ; try { conn = getConnection(); pstmt = conn.prepareStatement(sql);
+	 * pstmt.setInt(1, m_no); result = pstmt.executeUpdate(); } catch (Exception
+	 * e) { System.out.println(e.getMessage()); } finally { dbClose(pstmt,
+	 * conn); } return result; }
+	 * 
+	 * public int passwdChk(String m_no, String m_passwd) { int result = 0;
+	 * Connection conn = null; PreparedStatement pstmt = null; ResultSet rs =
+	 * null; String sql =
+	 * "select m_passwd from j_member where m_no=? and m_passwd=?"; try { conn =
+	 * getConnection(); pstmt = conn.prepareStatement(sql); pstmt.setString(1,
+	 * m_no); pstmt.setString(2, m_passwd); rs = pstmt.executeQuery(); if
+	 * (rs.next()) { result = 1; } } catch (Exception e) {
+	 * System.out.println(e.getMessage()); } finally { dbClose(rs, pstmt, conn);
+	 * } return result; }
+	 */
 }

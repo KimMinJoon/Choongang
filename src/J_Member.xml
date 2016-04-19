@@ -18,6 +18,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="c_value" column="c_value" />
 		<result property="l_value" column="l_value" />
 	</resultMap>
+	<select id="emailChk" parameterType="String" resultType="Integer">
+  select count(*) from j_member where m_email=#{m_email} and m_del_yn='n'
+  </select>
 	<select id="selectmno" parameterType="J_Member" resultType="Integer">
 		select m_no from j_member
 		where m_email=#{m_email} and m_del_yn='y'

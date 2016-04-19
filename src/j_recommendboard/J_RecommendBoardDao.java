@@ -1,31 +1,33 @@
 package j_recommendboard;
 
+import java.io.Reader;
 import java.sql.*;
 import java.util.*;
-
 import javax.naming.*;
 import javax.sql.*;
-
-import j_meetboard.J_MeetBoard;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class J_RecommendBoardDao {
 	
 	private static J_RecommendBoardDao instance = new J_RecommendBoardDao();
+	private static SqlSession session;
 	private J_RecommendBoardDao() {	}
 	public static J_RecommendBoardDao getInstance() {
 		return instance;
 	}
 	
-	public Connection getConnection() {
-		Connection conn = null;
-		try {
-			Context ctx = new InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/OracleDB");
-			conn = ds.getConnection();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return conn;
+	static {
+	    try {
+	      Reader reader = Resources.getResourceAsReader("configuration.xml");
+	      SqlSessionFactory sf = new SqlSessionFactoryBuilder().build(reader); 
+	      session = sf.openSession(true);
+	      reader.close(); 
+	    }catch (Exception e) {
+	    	System.out.println("sqlMap에러");
+	    }
 	}
 	
 	public int selectTotal(String searchType, String searchTxt) {

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="J_RecommendBoard">
+	<resultMap id="J_RecommendBoardResult" type="J_RecommendBoard">
+	<result property="brd_no" column="brd_no"/>
+    <result property="brd_subject" column="brd_subject"/>
+    <result property="brd_content" column="brd_content"/>
+    <result property="brd_readcount" column="brd_readcount"/>
+    <result property="brd_ip" column="brd_ip"/>
+    <result property="brd_reg_date" column="brd_reg_date"/>
+    <result property="brd_update_date" column="brd_update_date"/>
+    <result property="brd_del_yn" column="brd_del_yn"/>
+    <result property="ref" column="ref"/>
+    <result property="re_step" column="re_step"/>
+    <result property="re_level" column="re_level"/>
+    <result property="m_no" column="m_no"/>
+    <result property="m_nick" column="m_nick"/>
+    <result property="rc_code" column="rc_code"/>    
+    <result property="rc_value" column="rc_value"/>
+    <result property="recocount" column="recocount"/>
+    </resultMap>
+    
+    <select id="selectList" parameterType="hashMap" resultMap="J_MeetBoardResult">
+		select * from (select rowNum rn, a.* from (select jrb.*, m_nick, c.c_value as rc_value, (select count(*) from j_recommend2 jr2 where jr2.brd_no = jrb.brd_no) recocount from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor and brd_del_yn='n' order by ref desc, re_step) a) where rn between #{startRow} and #{endRow}
+  	</select>
+    
+</mapper>

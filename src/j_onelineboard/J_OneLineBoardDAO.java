@@ -45,7 +45,7 @@ public class J_OneLineBoardDAO {
 		      Reader reader = 
 		    	Resources.getResourceAsReader("configuration.xml");
 		      SqlSessionFactory sf = new SqlSessionFactoryBuilder().build(reader);
-		      //session = sf.openSession(true);//이걸 안하면 커밋이안된다.!!!!!!왜? 트루가 커밋을 하겟다는의미이다.
+		      session = sf.openSession(false);//이걸 안하면 커밋이안된다.!!!!!!왜? 트루가 커밋을 하겟다는의미이다.
 		      reader.close();
 		    } catch (Exception e) { 
 		    	System.out.println("sqlMap에러");
@@ -76,7 +76,7 @@ public class J_OneLineBoardDAO {
 		try{ 
 			list = session.selectList("selectOneLine",jolb);
 		}catch(Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("selectOneLine : " + e.getMessage());
 		}
 		return list;
 	}//selectOneLine
@@ -88,7 +88,7 @@ public class J_OneLineBoardDAO {
 			J_OneLineBoard jolb = new J_OneLineBoard();
 			jolb.setSearchType(searchType);
 			jolb.setSearchTxt(searchTxt);
-			total = (Integer)session.selectOne("selectTotal",jolb);
+			total = (Integer)session.selectOne("selectOnelineTotal",jolb);
 		}catch(Exception e){
 			System.out.println("selectTotal : " + e.getMessage());
 		}
@@ -110,65 +110,60 @@ public class J_OneLineBoardDAO {
 
 	public int deleteBoard(int brd_no){
 		int result = 0;
-		
 		try{
 			result = session.update("deleteOneline",brd_no);
 			session.update("deleteOnelineCascade",brd_no);
 			session.commit();
 		}catch(Exception e){
-			System.out.println("updateBoard : " + e.getMessage());
+			System.out.println("deleteBoard : " + e.getMessage());
 			session.rollback();
 		}
 		return result;
 	}//deleteBoard
 	
 	public int insertReply(J_OneLineReply jolr){
-		int result = 0;
-		int rpl_number = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		System.out.println(jolr);
-		
-		String sql = "insert into J_onelineReply values (?,?,?,sysdate,null,?,'n',null)";
-		String sql1 = "select nvl(max(REPLY_NO),0)+1 from J_onelineReply";
-		
-		
+		int result = 0;//결과값
+		try{
+			result = session.insert("insertOneLineRep",jolr);
+			session.commit();
+		}catch(Exception e) {
+			System.out.println("insertReply : " + e.getMessage());
+			session.rollback();
+		}
 		return result;
 	}//insertReply
 	
 	public int updateReply(J_OneLineReply jolr){
 		int result = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		
-		String sql = "UPDATE J_ONELINEREPLY SET CONTENT = ? WHERE REPLY_NO = ? AND DEL_YN = 'n'";
-		
-		
+		try{
+			result = session.update("updateReply",jolr);
+			session.commit();
+		}catch(Exception e){
+			System.out.println("updateReply : " + e.getMessage());
+			session.rollback();
+		}
 		return result;
 	}//updateReply
 	
 	public int deleteRep(int reply_no){
 		int result = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		
-		String sql = "UPDATE J_ONELINEREPLY SET OUT_DATE = SYSDATE, DEL_YN = 'y' WHERE REPLY_NO = ? AND DEL_YN = 'n'";
-		
-		
+		try{
+			result = session.update("deleteRep",reply_no);
+			session.commit();
+		}catch(Exception e){
+			System.out.println("deleteRep : " + e.getMessage());
+			session.rollback();
+		}
 		return result;
 	}//deleteRep
 	
 	public List<J_OneLineReply> selectReply(){
 		List<J_OneLineReply> list = new ArrayList<>();
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		String sql = "SELECT REPLY_NO,BRD_NO, CONTENT, FC_DATE_CHECK(REG_DATE) AS REG_DATE, M_NICK, A.M_NO FROM J_ONELINEREPLY A, J_MEMBER B WHERE A.M_NO = B.M_NO AND DEL_YN = 'n'";
-	
-		
+		try{
+			list = session.selectList("selectReply");
+		}catch(Exception e){
+			System.out.println("selectReply : " + e.getMessage());
+		}	 
 		return list;
 	}//selectReply
 }

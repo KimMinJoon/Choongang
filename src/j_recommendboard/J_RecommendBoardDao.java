@@ -1,16 +1,11 @@
 package j_recommendboard;
 
 import java.io.Reader;
-import java.sql.*;
 import java.util.*;
-import javax.naming.*;
-import javax.sql.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-import j_noticeboard.J_NoticeBoard;
 
 public class J_RecommendBoardDao {
 	
@@ -35,35 +30,41 @@ public class J_RecommendBoardDao {
 	public int selectTotal(String searchType, String searchTxt) {
 		int total = 0;
 		try {
-			total = (Integer) session.selectOne("selectTotal");
+			J_RecommendBoard jrb = new J_RecommendBoard();
+			jrb.setSearchType(searchType);
+			jrb.setSearchTxt(searchTxt);
+			total = (Integer) session.selectOne("selectrecoTotal");
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return total;
 	}
 	
-	public void updateHit(int brd_no) {
+	/*public void updateHit(int brd_no) {
 		try {
 			session.update("updateHit", brd_no);
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-	}
+	}*/
 	
 	public List<J_RecommendBoard> selectList(int startRow, int endRow, String searchType, String searchTxt) {
 		List<J_RecommendBoard> list = new ArrayList<J_RecommendBoard>();
-		HashMap<String, Integer> hm = new HashMap<>();
-		hm.put("startRow", startRow);
-		hm.put("endRow", endRow);
+		J_RecommendBoard jrb = new J_RecommendBoard();
+		jrb.setStartRow(startRow);
+		jrb.setEndRow(endRow);
+		jrb.setSearchType(searchType);
+		jrb.setSearchTxt(searchTxt);
+		
 		try {
-			list = session.selectList("selectList", hm);
+			list = session.selectList("selectrecoList", jrb);
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return list;
 	}
 	
-	public int insert(J_RecommendBoard recommendboard) {
+	/*public int insert(J_RecommendBoard recommendboard) {
 		int result = 0, number = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -104,19 +105,19 @@ public class J_RecommendBoardDao {
 			System.out.println(e.getMessage());
 		}
 		return result;
-	}
+	}*/
 	
-	public J_RecommendBoard select(int brd_no) {
+	/*public J_RecommendBoard select(int brd_no) {
 		J_RecommendBoard jrb = null;
 		try {
-			jrb = (J_RecommendBoard) session.selectOne("select", brd_no);
+			jrb = (J_RecommendBoard) session.selectOne("selectreco", brd_no);
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return jrb;
-	}
+	}*/
 	
-	public int update(J_RecommendBoard recommendboard) {
+	/*public int update(J_RecommendBoard recommendboard) {
 		int result = 0;
 		try {
 			result = session.update("update", recommendboard);
@@ -134,9 +135,9 @@ public class J_RecommendBoardDao {
 			System.out.println(e.getMessage());
 		}
 		return result;
-	}
+	}*/
 	
-	public J_RecommendBoard pwdCheck(int brd_no) {
+	/*public J_RecommendBoard pwdCheck(int brd_no) {
 		J_RecommendBoard recommendboard = new J_RecommendBoard();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -158,15 +159,11 @@ public class J_RecommendBoardDao {
 	
 	public int selectRecommend(String m_no, int brd_no) {
 		int result = 0;
+		HashMap<String, Integer> hm = new HashMap<>();
+		hm.put("m_no", m_no);
+		hm.put("brd_no", brd_no);
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m_no);
-			pstmt.setInt(2, brd_no);
-			rs = pstmt.executeQuery();
-			if(rs.next()){
-				result = 1;
-			}
+			result = (int)session.selectOne("selectRecommend",hm);
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -216,6 +213,6 @@ public class J_RecommendBoardDao {
 				e.printStackTrace();
 			}
 		return result; 
-	}
+	}*/
 	
 }

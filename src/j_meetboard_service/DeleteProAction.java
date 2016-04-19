@@ -15,6 +15,9 @@ public class DeleteProAction implements CommandProcess {
 		J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
 		int result = bd.delete(brd_no);
 		
+		//System.out.println("deleteProAction : "+result);
+		
+		
 		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("result", result);
 		

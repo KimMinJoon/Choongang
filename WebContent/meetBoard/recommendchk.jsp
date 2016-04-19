@@ -6,6 +6,9 @@
 	String brd_no = request.getParameter("brd_no");
 	String str = "";
 	J_MeetBoardDao jmb = J_MeetBoardDao.getInstance();
+	
+	System.out.println("recommendChk.jsp의 m_no 값입니다. : " + m_no);
+	
 	int result = jmb.recommendChk(Integer.parseInt(m_no),Integer.parseInt(brd_no));
 	//int resultValue = Integer.parseInt(result);
 	if(result > 0) {

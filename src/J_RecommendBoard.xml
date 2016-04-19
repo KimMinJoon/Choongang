@@ -46,9 +46,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  		</if>
   	</select>
   	
-	<!-- <update id="updateHit" parameterType="Integer">
+	<update id="updateHit" parameterType="Integer">
     	update j_recommendboard set brd_readcount=brd_readcount+1 where brd_no=#{brd_no}
-    </update> -->
+    </update>
     
     <select id="selectrecoList" resultMap="J_RecommendBoardResult" parameterType="J_RecommendBoard">
 		select * from (select rowNum rn, a.* from (select jrb.*, m_nick, c.c_value as rc_value, (select count(*) from j_recommend2 jr2 where jr2.brd_no = jrb.brd_no) recocount from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor and brd_del_yn='n' 

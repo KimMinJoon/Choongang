@@ -55,6 +55,9 @@ public class J_RecommendBoardDao {
 		HashMap<String, Integer> hm = new HashMap<>();
 		hm.put("startRow", startRow);
 		hm.put("endRow", endRow);
+		hm.put("searchType", searchType);
+		hm.put("searchTxt", searchTxt);
+		
 		try {
 			list = session.selectList("selectList", hm);
 		}catch (Exception e) {
@@ -63,7 +66,7 @@ public class J_RecommendBoardDao {
 		return list;
 	}
 	
-	public int insert(J_RecommendBoard recommendboard) {
+	/*public int insert(J_RecommendBoard recommendboard) {
 		int result = 0, number = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -104,7 +107,7 @@ public class J_RecommendBoardDao {
 			System.out.println(e.getMessage());
 		}
 		return result;
-	}
+	}*/
 	
 	public J_RecommendBoard select(int brd_no) {
 		J_RecommendBoard jrb = null;
@@ -136,7 +139,7 @@ public class J_RecommendBoardDao {
 		return result;
 	}
 	
-	public J_RecommendBoard pwdCheck(int brd_no) {
+	/*public J_RecommendBoard pwdCheck(int brd_no) {
 		J_RecommendBoard recommendboard = new J_RecommendBoard();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -158,15 +161,11 @@ public class J_RecommendBoardDao {
 	
 	public int selectRecommend(String m_no, int brd_no) {
 		int result = 0;
+		HashMap<String, Integer> hm = new HashMap<>();
+		hm.put("m_no", m_no);
+		hm.put("brd_no", brd_no);
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m_no);
-			pstmt.setInt(2, brd_no);
-			rs = pstmt.executeQuery();
-			if(rs.next()){
-				result = 1;
-			}
+			result = (int)session.selectOne("selectRecommend",hm);
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
@@ -216,6 +215,6 @@ public class J_RecommendBoardDao {
 				e.printStackTrace();
 			}
 		return result; 
-	}
+	}*/
 	
 }

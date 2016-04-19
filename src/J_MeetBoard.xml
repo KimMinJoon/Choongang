@@ -45,7 +45,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   update j_meetboard set brd_readcount = brd_readcount+1 where brd_no=#{brd_no}
   </update>
   
-  
   <select id="insertNumber" parameterType="Integer" resultType="Integer">
   select nvl(max(brd_no),0)+1 from j_meetboard
   </select>

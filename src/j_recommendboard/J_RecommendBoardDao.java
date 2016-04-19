@@ -45,13 +45,13 @@ public class J_RecommendBoardDao {
 		return total;
 	}
 	
-	public void updateHit(int brd_no) {
+	/*public void updateHit(int brd_no) {
 		try {
 			session.update("updateHit", brd_no);
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-	}
+	}*/
 	
 	public List<J_RecommendBoard> selectList(int startRow, int endRow, String searchType, String searchTxt) {
 		List<J_RecommendBoard> list = new ArrayList<J_RecommendBoard>();
@@ -115,14 +115,14 @@ public class J_RecommendBoardDao {
 	public J_RecommendBoard select(int brd_no) {
 		J_RecommendBoard jrb = null;
 		try {
-			jrb = (J_RecommendBoard) session.selectOne("select", brd_no);
+			jrb = (J_RecommendBoard) session.selectOne("selectreco", brd_no);
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return jrb;
 	}
 	
-	public int update(J_RecommendBoard recommendboard) {
+	/*public int update(J_RecommendBoard recommendboard) {
 		int result = 0;
 		try {
 			result = session.update("update", recommendboard);
@@ -140,7 +140,7 @@ public class J_RecommendBoardDao {
 			System.out.println(e.getMessage());
 		}
 		return result;
-	}
+	}*/
 	
 	/*public J_RecommendBoard pwdCheck(int brd_no) {
 		J_RecommendBoard recommendboard = new J_RecommendBoard();

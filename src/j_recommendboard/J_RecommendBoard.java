@@ -12,7 +12,7 @@ public class J_RecommendBoard {
 	private String brd_ip;
 	private Date brd_reg_date;
 	private Date brd_update_date;
-	private String brd_dey_yn;
+	private String brd_del_yn;
 	private int ref;
 	private int re_step;
 	private int re_level;
@@ -91,12 +91,12 @@ public class J_RecommendBoard {
 		this.brd_update_date = brd_update_date;
 	}
 
-	public String getBrd_dey_yn() {
-		return brd_dey_yn;
+	public String getBrd_del_yn() {
+		return brd_del_yn;
 	}
 
-	public void setBrd_dey_yn(String brd_dey_yn) {
-		this.brd_dey_yn = brd_dey_yn;
+	public void setBrd_del_yn(String brd_dey_yn) {
+		this.brd_del_yn = brd_dey_yn;
 	}
 
 	public int getRef() {

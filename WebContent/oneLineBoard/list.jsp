@@ -159,7 +159,7 @@ pre > a{
 	}
 	
 	function isSubmit(number) {
-		alert("m_no : " + number);
+		/* alert("m_no : " + number); */
  		if(number == null || number == "" || number == "null"){
  			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
  				location.href = "${pageContext.request.contextPath}/member/login.do";

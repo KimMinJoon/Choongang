@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="j_onelineboard.J_OneLineBoard" alias="J_OneLineBoard" />
 		<typeAlias type="j_noticeboard.J_NoticeBoard" alias="J_NoticeBoard" />
 		<typeAlias type="j_recommendboard.J_RecommendBoard" alias="J_RecommendBoard" />
+		<typeAlias type="j_onelineboard.J_OneLineReply" alias="J_OneLineReply"/>
 		<!-- <typeAlias type="j_member.J_Member" alias="J_Member" /> -->
 	</typeAliases>
 	<environments default="development">
@@ -28,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="J_MeetBoard.xml" />
 		<mapper resource="J_NoticeBoard.xml" />
 		<mapper resource="J_RecommendBoard.xml" />
+		<mapper resource="J_OneLineReply.xml"/>
 		<!-- <mapper resource="J_Member.xml" /> -->
 	</mappers>
 </configuration>

@@ -122,52 +122,48 @@ public class J_OneLineBoardDAO {
 	}//deleteBoard
 	
 	public int insertReply(J_OneLineReply jolr){
-		int result = 0;
-		int rpl_number = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		System.out.println(jolr);
-		
-		String sql = "insert into J_onelineReply values (?,?,?,sysdate,null,?,'n',null)";
-		String sql1 = "select nvl(max(REPLY_NO),0)+1 from J_onelineReply";
-		
-		
+		int result = 0;//결과값
+		try{
+			result = session.insert("insertOneLineRep",jolr);
+			session.commit();
+		}catch(Exception e) {
+			System.out.println("insertReply : " + e.getMessage());
+			session.rollback();
+		}
 		return result;
 	}//insertReply
 	
 	public int updateReply(J_OneLineReply jolr){
 		int result = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		
-		String sql = "UPDATE J_ONELINEREPLY SET CONTENT = ? WHERE REPLY_NO = ? AND DEL_YN = 'n'";
-		
-		
+		try{
+			result = session.update("updateReply",jolr);
+			session.commit();
+		}catch(Exception e){
+			System.out.println("updateReply : " + e.getMessage());
+			session.rollback();
+		}
 		return result;
 	}//updateReply
 	
 	public int deleteRep(int reply_no){
 		int result = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		
-		String sql = "UPDATE J_ONELINEREPLY SET OUT_DATE = SYSDATE, DEL_YN = 'y' WHERE REPLY_NO = ? AND DEL_YN = 'n'";
-		
-		
+		try{
+			result = session.update("deleteRep",reply_no);
+			session.commit();
+		}catch(Exception e){
+			System.out.println("deleteRep : " + e.getMessage());
+			session.rollback();
+		}
 		return result;
 	}//deleteRep
 	
 	public List<J_OneLineReply> selectReply(){
 		List<J_OneLineReply> list = new ArrayList<>();
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		String sql = "SELECT REPLY_NO,BRD_NO, CONTENT, FC_DATE_CHECK(REG_DATE) AS REG_DATE, M_NICK, A.M_NO FROM J_ONELINEREPLY A, J_MEMBER B WHERE A.M_NO = B.M_NO AND DEL_YN = 'n'";
-	
-		
+		try{
+			list = session.selectList("selectReply");
+		}catch(Exception e){
+			System.out.println("selectReply : " + e.getMessage());
+		}	 
 		return list;
 	}//selectReply
 }

@@ -40,13 +40,13 @@ public class J_RecommendBoardDao {
 		return total;
 	}
 	
-	/*public void updateHit(int brd_no) {
+	public void updateHit(int brd_no) {
 		try {
-			session.update("updateHit", brd_no);
+			session.update("updaterecoHit", brd_no);
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-	}*/
+	}
 	
 	public List<J_RecommendBoard> selectList(int startRow, int endRow, String searchType, String searchTxt) {
 		List<J_RecommendBoard> list = new ArrayList<J_RecommendBoard>();
@@ -107,7 +107,7 @@ public class J_RecommendBoardDao {
 		return result;
 	}*/
 	
-	/*public J_RecommendBoard select(int brd_no) {
+	public J_RecommendBoard select(int brd_no) {
 		J_RecommendBoard jrb = null;
 		try {
 			jrb = (J_RecommendBoard) session.selectOne("selectreco", brd_no);
@@ -115,7 +115,7 @@ public class J_RecommendBoardDao {
 			System.out.println(e.getMessage());
 		}
 		return jrb;
-	}*/
+	}
 	
 	/*public int update(J_RecommendBoard recommendboard) {
 		int result = 0;
@@ -155,22 +155,23 @@ public class J_RecommendBoardDao {
 			System.out.println(e.getMessage());
 		}
 		return recommendboard;
-	}
+	}*/
 	
 	public int selectRecommend(String m_no, int brd_no) {
 		int result = 0;
+		int mno = Integer.parseInt(m_no);
 		HashMap<String, Integer> hm = new HashMap<>();
-		hm.put("m_no", m_no);
+		hm.put("m_no", mno);
 		hm.put("brd_no", brd_no);
 		try {
-			result = (int)session.selectOne("selectRecommend",hm);
+			result = (int)session.selectOne("selectRecommend", hm);
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
 		return result;
 	}
 	
-	public int recoCheck(String m_no, int brd_no) {
+	/*public int recoCheck(String m_no, int brd_no) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;

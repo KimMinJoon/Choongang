@@ -54,7 +54,7 @@
 	}
 	
 	$(function() {
-		$('#m_nick').blur(function() {
+		$('#m_nick').keydown(function() {
 			var regex = /^[가-힝A-Za-z0-9]{2,10}$/;
 			var str_space = /\s/;
 			if (regex.test($('#m_nick').val()) === false) {

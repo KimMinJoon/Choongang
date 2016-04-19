@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <insert id="insertOneLine" parameterType="J_OneLineBoard">
   	insert into J_OneLineBoard values(NEW_BRD_NO_ONELINE,#{brd_content},sysdate,null,#{brd_ip},'n',#{m_no},null)
   </insert>
-  <select id="selectTotal" resultType="Integer" parameterType="J_OneLineBoard">
+  <select id="selectOnelineTotal" resultType="Integer" parameterType="J_OneLineBoard">
   	SELECT COUNT(*) FROM J_OneLineBoard a, j_member b WHERE a.m_no = b.m_no and BRD_DEL_YN = 'n'
   		<if test="searchTxt != null">
   			<choose>
@@ -53,16 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	ORDER BY BRD_NO DESC) A) WHERE RN BETWEEN #{startRow} AND #{endRow}
   </select>
   <update id="updateOneline" parameterType="J_OneLineBoard">
-  	update J_OneLineBoard 
-  	set 
-  		brd_content = #{brd_content}, 
-  		brd_update_date = sysdate 
-  	where 
-  		brd_no = #{brd_no} 
-  	and 
-  		m_no = #{m_no} 
-  	and 
-  		brd_del_yn = 'n'
+  	update J_OneLineBoard set brd_content = #{brd_content},brd_update_date = sysdate where brd_no = #{brd_no} and m_no = #{m_no} and brd_del_yn = 'n'
   </update>
   <update id="deleteOneline" parameterType="Integer">
   	update j_onelineboard set brd_del_yn = 'y',brd_out_date = sysdate where brd_no = #{brd_no} and brd_del_yn = 'n'

@@ -45,7 +45,7 @@ public class J_OneLineBoardDAO {
 		      Reader reader = 
 		    	Resources.getResourceAsReader("configuration.xml");
 		      SqlSessionFactory sf = new SqlSessionFactoryBuilder().build(reader);
-		      //session = sf.openSession(true);//이걸 안하면 커밋이안된다.!!!!!!왜? 트루가 커밋을 하겟다는의미이다.
+		      session = sf.openSession(false);//이걸 안하면 커밋이안된다.!!!!!!왜? 트루가 커밋을 하겟다는의미이다.
 		      reader.close();
 		    } catch (Exception e) { 
 		    	System.out.println("sqlMap에러");
@@ -76,7 +76,7 @@ public class J_OneLineBoardDAO {
 		try{ 
 			list = session.selectList("selectOneLine",jolb);
 		}catch(Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("selectOneLine : " + e.getMessage());
 		}
 		return list;
 	}//selectOneLine
@@ -88,7 +88,7 @@ public class J_OneLineBoardDAO {
 			J_OneLineBoard jolb = new J_OneLineBoard();
 			jolb.setSearchType(searchType);
 			jolb.setSearchTxt(searchTxt);
-			total = (Integer)session.selectOne("selectTotal",jolb);
+			total = (Integer)session.selectOne("selectOnelineTotal",jolb);
 		}catch(Exception e){
 			System.out.println("selectTotal : " + e.getMessage());
 		}
@@ -110,13 +110,12 @@ public class J_OneLineBoardDAO {
 
 	public int deleteBoard(int brd_no){
 		int result = 0;
-		
 		try{
 			result = session.update("deleteOneline",brd_no);
 			session.update("deleteOnelineCascade",brd_no);
 			session.commit();
 		}catch(Exception e){
-			System.out.println("updateBoard : " + e.getMessage());
+			System.out.println("deleteBoard : " + e.getMessage());
 			session.rollback();
 		}
 		return result;

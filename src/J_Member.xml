@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="J_Member">
+	<resultMap id="J_MemberResult" type="J_Member">
+		<!-- 마이바티스는 타입이다. 클래스아니고 -->
+		<!-- 밑에도 Class를 다 type으로 -->
+		<result property="m_no" column="m_no" />
+		<result property="m_email" column="m_email" />
+		<result property="m_passwd" column="m_passwd" />
+		<result property="m_nick" column="m_nick" />
+		<result property="m_reg_date" column="m_reg_date" />
+		<result property="m_out_date" column="m_out_date" />
+		<result property="m_del_yn" column="m_del_yn" />
+		<result property="c_code" column="c_code" />
+		<result property="l_code" column="l_code" />
+		<result property="c_value" column="c_value" />
+		<result property="l_value" column="l_value" />
+	</resultMap>
+	<select id="selectTotal" resultType="Integer">
+		select count(*) from
+		j_noticeboard where brd_del_yn='n'
+	</select>
+	<select id="selectListBoard" parameterType="hashMap" resultMap="J_NoticeBoardResult">
+		select * from (select rowNum rn, a.* from (select * from j_noticeboard
+		where brd_del_yn='n' order by brd_no desc) a ) where rn between
+		#{startRow} and #{endRow}
+	</select>
+	<insert id="insertBoard" parameterType="J_NoticeBoard">
+		insert into j_noticeboard
+		values(#{brd_no},#{brd_subject},#{brd_content},
+		0,sysdate,null,'n',#{admin})
+	</insert>
+	<select id="selectNum" resultType="Integer">
+		select nvl(max(brd_no),0)+1 from
+		j_noticeboard
+	</select>
+	<select id="selectBoard" parameterType="Integer" resultMap="J_NoticeBoardResult">
+		select * from j_noticeboard
+		where brd_no=#{brd_no}
+	</select>
+	<update id="updateBoardHit" parameterType="Integer">
+		update j_noticeboard
+		set brd_readcount = brd_readcount+1 where
+		brd_no=#{brd_no}
+	</update>
+	<update id="updateBoarData" parameterType="J_NoticeBoard">
+		update j_noticeboard
+		set brd_subject=#{brd_subject},brd_content=#{brd_content},
+		brd_update_date=sysdate where brd_no=#{brd_no}
+	</update>
+	<update id="deleteBoard" parameterType="Integer">
+		update j_noticeboard set
+		brd_del_yn='y' where brd_no=#{brd_no}
+	</update>
+</mapper>

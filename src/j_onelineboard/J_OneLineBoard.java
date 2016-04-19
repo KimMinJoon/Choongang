@@ -17,21 +17,42 @@ public class J_OneLineBoard {
 	private String brd_del_yn;		//게시글 삭제 여부
 	private int m_no;				//게시자 회원번호
 	private String m_nick;			//게시자 닉네임
-	private int grp;				//댓글 그룹
 	private int rep_count;			//해당 게시글에 대한 댓글의 총 수
+	private int startRow;
+	private int endRow;
+	private String searchType;
+	private String searchTxt;
 	
 	
+	public int getStartRow() {
+		return startRow;
+	}
+	public void setStartRow(int startRow) {
+		this.startRow = startRow;
+	}
+	public int getEndRow() {
+		return endRow;
+	}
+	public void setEndRow(int endRow) {
+		this.endRow = endRow;
+	}
+	public String getSearchType() {
+		return searchType;
+	}
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+	public String getSearchTxt() {
+		return searchTxt;
+	}
+	public void setSearchTxt(String searchTxt) {
+		this.searchTxt = searchTxt;
+	}
 	public int getRep_count() {
 		return rep_count;
 	}
 	public void setRep_count(int rep_count) {
 		this.rep_count = rep_count;
-	}
-	public int getGrp() {
-		return grp;
-	}
-	public void setGrp(int grp) {
-		this.grp = grp;
 	}
 	public String getM_nick() {
 		return m_nick;
@@ -90,6 +111,6 @@ public class J_OneLineBoard {
 	public String toString() {
 		return "J_OneLineBoard [brd_no=" + brd_no + ", brd_content=" + brd_content + ", brd_reg_date=" + brd_reg_date
 				+ ", brd_update_date=" + brd_update_date + ", brd_ip=" + brd_ip + ", brd_del_yn=" + brd_del_yn
-				+ ", m_no=" + m_no + ", m_nick=" + m_nick + ", grp=" + grp + ", rep_count=" + rep_count + "]";
+				+ ", m_no=" + m_no + ", m_nick=" + m_nick + ", rep_count=" + rep_count + "]";
 	}
 }

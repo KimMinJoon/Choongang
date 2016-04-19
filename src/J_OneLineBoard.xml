@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="J_OneLineBoard">
+  <resultMap id="J_OneLineBoardResult"  type="J_OneLineBoard">
+  <!-- 마이바티스는 타입이다. 클래스아니고 -->
+  <!-- 밑에도 Class를 다 type으로 -->
+  <result property="brd_no"           column="brd_no"/>
+    <result property="brd_content"      column="brd_content"/>
+    <result property="brd_reg_date"   column="brd_reg_date"/>
+    <result property="brd_update_date"  	   column="brd_update_date"/>
+    <result property="brd_ip" 	  column="brd_ip"/>
+    <result property="brd_del_yn" column="brd_del_yn"/>
+    <result property="m_no" 	  column="m_no"/>
+    <result property="m_nick" column="m_nick"/>
+    <result property="rep_count"  column="rep_count"/>
+    <result property="startRow"  column="startRow"/>
+    <result property="endRow"  column="endRow"/>
+    <result property="searchType"  column="searchType"/>
+    <result property="searchTxt"  column="searchTxt"/>
+  </resultMap>
+  <insert id="insertOneLine" parameterType="J_OneLineBoard">
+  	insert into J_OneLineBoard values(NEW_BRD_NO_ONELINE,#{brd_content},sysdate,null,#{brd_ip},'n',#{m_no},null)
+  </insert>
+  <select id="selectTotal" resultType="Integer" parameterType="J_OneLineBoard">
+  	SELECT COUNT(*) FROM J_OneLineBoard a, j_member b WHERE a.m_no = b.m_no and BRD_DEL_YN = 'n'
+  		<if test="searchTxt != null">
+  			<choose>
+  				<when test="searchType == 'brd_content'">
+  					and brd_content like '%'||#{searchTxt}||'%'
+  				</when>
+  				<when test="searchType == 'm_nick'">
+  					and m_nick like '%'||#{searchTxt}||'%'
+  				</when>
+  			</choose>
+  		</if>
+  </select>
+  <select id="selectOneLine" resultMap="J_OneLineBoardResult" parameterType="J_OneLineBoard">
+  	SELECT * FROM (SELECT ROWNUM RN, A.* FROM(select * from oneline_list_v
+  	<where>
+  		<if test="searchTxt != null">
+  			<choose>
+  				<when test="searchType == 'brd_content'">
+  					brd_content like '%'||#{searchTxt}||'%'
+  				</when>
+  				<when test="searchType == 'm_nick'">
+  					m_nick like '%'||#{searchTxt}||'%'
+  				</when>
+  			</choose>
+  		</if>
+  	</where>
+  	ORDER BY BRD_NO DESC) A) WHERE RN BETWEEN #{startRow} AND #{endRow}
+  </select>
+  <update id="updateOneline" parameterType="J_OneLineBoard">
+  	update J_OneLineBoard 
+  	set 
+  		brd_content = #{brd_content}, 
+  		brd_update_date = sysdate 
+  	where 
+  		brd_no = #{brd_no} 
+  	and 
+  		m_no = #{m_no} 
+  	and 
+  		brd_del_yn = 'n'
+  </update>
+  <update id="deleteOneline" parameterType="Integer">
+  	update j_onelineboard set brd_del_yn = 'y',brd_out_date = sysdate where brd_no = #{brd_no} and brd_del_yn = 'n'
+  </update>
+  <update id="deleteOnelineCascade" parameterType="Integer">
+  	update j_onelinereply set del_yn = 'y', out_date = sysdate where brd_no = #{brd_no} and del_yn = 'n'
+  </update>
+</mapper>

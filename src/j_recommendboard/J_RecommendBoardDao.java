@@ -117,10 +117,10 @@ public class J_RecommendBoardDao {
 		return jrb;
 	}
 	
-	/*public int update(J_RecommendBoard recommendboard) {
+	public int update(J_RecommendBoard recommendboard) {
 		int result = 0;
 		try {
-			result = session.update("update", recommendboard);
+			result = session.update("updatereco", recommendboard);
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -130,32 +130,23 @@ public class J_RecommendBoardDao {
 	public int delete(int brd_no) {
 		int result = 0;
 		try {
-			result = session.update("delete", brd_no);
+			result = session.update("deletereco", brd_no);
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return result;
-	}*/
+	}
 	
-	/*public J_RecommendBoard pwdCheck(int brd_no) {
+	public J_RecommendBoard pwdCheck(int brd_no) {
 		J_RecommendBoard recommendboard = new J_RecommendBoard();
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "select m.m_passwd from j_recommendboard jrb, j_member m where jrb.m_no = m.m_no and brd_no=?";
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, brd_no);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				recommendboard.setM_passwd(rs.getString("m_passwd"));
-			}
+			String m_passwd = (String)session.selectOne("pwdrecoCheck",brd_no);
+			recommendboard.setM_passwd(m_passwd);
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return recommendboard;
-	}*/
+	}
 	
 	public int selectRecommend(String m_no, int brd_no) {
 		int result = 0;
@@ -164,56 +155,40 @@ public class J_RecommendBoardDao {
 		hm.put("m_no", mno);
 		hm.put("brd_no", brd_no);
 		try {
-			result = (int)session.selectOne("selectRecommend", hm);
+			result = (int)session.selectOne("selectrecoRecommend", hm);
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
 		return result;
 	}
 	
-	/*public int recoCheck(String m_no, int brd_no) {
+	public int recoCheck(String m_no, int brd_no) {
 		int result = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql2 = "select * from j_recommend2 where m_no = ? and brd_no = ?";
-		String sql = "insert into j_recommend2 values(?,?,sysdate,'n')";
-		String sql3 = "delete from j_recommend2 where m_no = ? and brd_no = ?";	
-		conn = getConnection();
+		int mno = Integer.parseInt(m_no);
 			try {
-				pstmt = conn.prepareStatement(sql2);
-				pstmt.setString(1, m_no);
-				pstmt.setInt(2, brd_no);
-				rs = pstmt.executeQuery();
-				if(rs.next()){
-					rs.close();
-					pstmt.close();
-					pstmt = conn.prepareStatement(sql3);
-					pstmt.setString(1, m_no);
-					pstmt.setInt(2, brd_no);
-					result = pstmt.executeUpdate();
+				HashMap<String, Integer> hm = new HashMap<>();
+				hm.put("m_no", mno);
+				hm.put("brd_no", brd_no);
+				result = (int)session.selectOne("recoCheck1", hm);
+				if(result != 1){
+					result = (int)session.insert("recoCheck2", hm);
 					if(result > 0){
 						result = 1;
 					}else{
 						result = -1;
 					}
-				}else{
-					rs.close();
-					pstmt.close();
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, brd_no);
-					pstmt.setString(2, m_no);
-					result = pstmt.executeUpdate();
+				}else {
+					result = (int)session.delete("recoCheck3", hm);
 					if(result > 0){
 						result = 0;
 					}else{
 						result = -1;
 					}
 				}
-			}catch (SQLException e) {
-				e.printStackTrace();
+			}catch (Exception e) {
+				System.out.println("recoCheck : " + e.getMessage());
 			}
 		return result; 
-	}*/
+	}
 	
 }

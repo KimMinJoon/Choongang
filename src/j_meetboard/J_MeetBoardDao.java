@@ -142,11 +142,11 @@ public class J_MeetBoardDao {
 		// num이 처음에 널일수잇으니nvl쓰고 시퀀스 오토 구분없이 오라클 mysql 통합으로 사용가능함
 
 		try {
-			number = (int)session.selectOne("insertNum");
+			number = (int)session.selectOne("insertNumber");
 			meetboard.setBrd_no(number);
-			result = (int)session.insert("insertreco",meetboard);
+			result = (int)session.insert("insert",meetboard);
 		} catch (Exception e) {
-			System.out.println("insertreco : " + e.getMessage());
+			System.out.println("insert : " + e.getMessage());
 		} 
 		return result;
 	}

@@ -1,0 +1,16 @@
+diff a/src/j_meetboard/J_MeetBoardDao.java b/src/j_meetboard/J_MeetBoardDao.java	(rejected hunks)
+@@ -142,11 +142,11 @@
+ 		// num이 처음에 널일수잇으니nvl쓰고 시퀀스 오토 구분없이 오라클 mysql 통합으로 사용가능함
+ 
+ 		try {
+-			number = (int)session.selectOne("insertNumber");
++			number = (int)session.selectOne("insertNum");
+ 			meetboard.setBrd_no(number);
+-			result = (int)session.insert("insert",meetboard);
++			result = (int)session.insert("insertreco",meetboard);
+ 		} catch (Exception e) {
+-			System.out.println("insert : " + e.getMessage());
++			System.out.println("insertreco : " + e.getMessage());
+ 		} 
+ 		return result;
+ 	}

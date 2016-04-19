@@ -17,7 +17,6 @@ public class MeetListAction implements CommandProcess {
 	public String requestPro(HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
 		String m_no = (String) session.getAttribute("m_no");
-		System.out.println("ListAction : " + m_no);//이거0
 		String pageNum = request.getParameter("pageNum");//패이지를 읽어오지않으면!
 		J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
 		String searchType = request.getParameter("searchType");

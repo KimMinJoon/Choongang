@@ -1,19 +1,30 @@
 package j_noticeboard;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.io.Reader;
+import java.util.HashMap;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class J_NoticeBoardDao {
 	private static J_NoticeBoardDao instance = new J_NoticeBoardDao();// 싱글톤
-																		// 생성
+	private static SqlSession session; // 생성
+
+	static {
+		try {
+			Reader reader = Resources.getResourceAsReader("configuration.xml");
+			SqlSessionFactory sf = new SqlSessionFactoryBuilder().build(reader);
+			session = sf.openSession(true);// 이걸 안하면 커밋이안된다.!!!!!!왜? 트루가 커밋을
+											// 하겟다는의미이다.
+			reader.close();
+		} catch (Exception e) {
+			System.out.println("sqlMap에러");
+
+		}
+	}
 
 	private J_NoticeBoardDao() {
 	}
@@ -22,244 +33,79 @@ public class J_NoticeBoardDao {
 		return instance;
 	}
 
-	public Connection getConnection() {// 커넥션 풀
-		Connection conn = null;
-		try {
-			Context ctx = new InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/OracleDB");
-			conn = ds.getConnection();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return conn;
-	}// getConnection
+	// 커넥션 풀 대신해서 마이바티스 사용
 
 	public int selectTotal() {
 		int total = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "select count(*) from j_noticeboard where brd_del_yn='n'";
-
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				total = rs.getInt(1);
-			}
+			total = (Integer) session.selectOne("selectTotal");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-			}
 		}
 		return total;
 	}
 
 	public List<J_NoticeBoard> selectList(int startRow, int endRow) {
-		List<J_NoticeBoard> list = new ArrayList<J_NoticeBoard>();
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "select * from (select rowNum rn, a.* from (select * from j_noticeboard where brd_del_yn='n' order by brd_no desc) a ) where rn between ? and ?";
+		List<J_NoticeBoard> list = null;
+		HashMap<String, Integer> hm = new HashMap<>();
+		hm.put("startRow", startRow);
+		hm.put("endRow", endRow);
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				J_NoticeBoard nb = new J_NoticeBoard();
-				nb.setBrd_no(rs.getInt("brd_no"));
-				nb.setBrd_subject(rs.getString("brd_subject"));
-				nb.setBrd_content(rs.getString("brd_content"));
-				nb.setBrd_readcount(rs.getInt("brd_readcount"));
-				nb.setBrd_reg_date(rs.getDate("brd_reg_date"));
-				nb.setBrd_update_date(rs.getDate("brd_update_date"));
-				nb.setBrd_del_yn(rs.getString("brd_del_yn"));
-				nb.setAdmin(rs.getString("admin"));
-				list.add(nb);
-			}
-
+			list = session.selectList("selectListBoard", hm);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-			}
 		}
-
 		return list;
 	}
 
 	public int insert(J_NoticeBoard noticeboard) {
 		int result = 0;
 		int number = 0;// brd_no이다~
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "insert into j_noticeboard values(?,?,?,0,sysdate,null,'n',?)";
-		String sql1 = "select nvl(max(brd_no),0)+1 from j_noticeboard";
-
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql1);// 먼저 값을 읽어와야함
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				number = rs.getInt(1); // 값을 세팅
-			}
-			pstmt.close();
-
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, number);
-			pstmt.setString(2, noticeboard.getBrd_subject());
-			pstmt.setString(3, noticeboard.getBrd_content());
-			pstmt.setString(4, noticeboard.getAdmin());
-			result = pstmt.executeUpdate();
-
+			number = (int) session.selectOne("selectNum");
+			noticeboard.setBrd_no(number);
+			result = session.insert("insertBoard", noticeboard);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-			}
 		}
 		return result;
 	}
 
 	public J_NoticeBoard select(int brd_no) {
-		J_NoticeBoard nb = new J_NoticeBoard();
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "select * from j_noticeboard where brd_no=?";
+		J_NoticeBoard nb = null;
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
-			pstmt.setInt(1, brd_no);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				nb.setBrd_no(rs.getInt("brd_no")); // 공지사항 번호
-				nb.setBrd_subject(rs.getString("brd_subject")); // 제목
-				nb.setBrd_content(rs.getString("brd_content")); // 내용
-				nb.setBrd_readcount(rs.getInt("brd_readcount")); // 읽은수
-				nb.setBrd_reg_date(rs.getDate("brd_reg_date")); // 등록일
-				nb.setBrd_update_date(rs.getDate("brd_update_date")); // 수정일
-				nb.setBrd_del_yn(rs.getString("brd_del_yn")); // 삭제yn
-				nb.setAdmin(rs.getString("admin")); // 관리자
-			}
-
+			nb = (J_NoticeBoard) session.selectOne("selectBoard", brd_no);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-			}
 		}
 
 		return nb;
 	}
 
 	public void updateHit(int brd_no) {
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-
-		String sql = "update j_noticeboard set brd_readcount = brd_readcount+1 where brd_no=?";
-
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);// 먼저 값을 읽어와야함
-			pstmt.setInt(1, brd_no);
-			pstmt.executeUpdate();
+			session.update("updateBoardHit", brd_no);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-			}
 		}
 	}
 
 	public int update(J_NoticeBoard noticeboard) {
 		int result = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String sql = "update j_noticeboard set brd_subject=?, brd_content=?, brd_update_date=sysdate where brd_no=?";
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, noticeboard.getBrd_subject());
-			pstmt.setString(2, noticeboard.getBrd_content());
-			pstmt.setInt(3, noticeboard.getBrd_no());
-			result = pstmt.executeUpdate();
-
+			result = session.update("updateBoarData", noticeboard);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-			}
 		}
 		return result;
 	}
 
 	public int delete(int brd_no) {
 		int result = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		// String sql = "delete from board1 where num=?";
-		String sql = "update j_noticeboard set brd_del_yn='y' where brd_no=?";
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, brd_no);
-			result = pstmt.executeUpdate();
-
+			result = session.update("deleteBoard", brd_no);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-			}
 		}
 		return result;
 	}

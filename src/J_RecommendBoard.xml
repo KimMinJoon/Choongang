@@ -46,9 +46,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  		</if>
   	</select>
   	
-	<!-- <update id="updateHit" parameterType="Integer">
+	<update id="updaterecoHit" parameterType="Integer">
     	update j_recommendboard set brd_readcount=brd_readcount+1 where brd_no=#{brd_no}
-    </update> -->
+    </update>
     
     <select id="selectrecoList" resultMap="J_RecommendBoardResult" parameterType="J_RecommendBoard">
 		select * from (select rowNum rn, a.* from (select jrb.*, m_nick, c.c_value as rc_value, (select count(*) from j_recommend2 jr2 where jr2.brd_no = jrb.brd_no) recocount from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor and brd_del_yn='n' 
@@ -71,24 +71,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by ref desc, re_step) a) where rn between #{startRow} and #{endRow}
   	</select>
   	
-  	<!-- <insert id="insert" parameterType="J_RecommendBoard">
+  	<insert id="insertreco" parameterType="J_RecommendBoard">
   		insert into j_recommendboard values(#{brd_no},#{brd_subject},#{brd_content},0,#{brd_ip},sysdate,null,'n',#{ref},#{re_step},#{re_level},#{m_no},#{rc_code})
-  	</insert> -->
+  	</insert>
   	
-	<!-- <select id="selectreco" parameterType="Integer" resultMap="J_RecommendBoardResult">
+  	<select id="insertNum" parameterType="Integer" resultType="Integer">
+  		select nvl(max(brd_no),0)+1 from j_meetboard
+  	</select>
+  	
+  	<update id="stepreco" parameterType="J_RecommendBoard">
+	  	update j_recommendboard set re_step=re_step+1 where ref=${ref} and re_step>#{re_step}
+  	</update>
+  	
+	<select id="selectreco" parameterType="Integer" resultMap="J_RecommendBoardResult">
 		select jrb.*, m.m_nick, c.c_value as rc_value, (select count(*) from j_recommend2 jr2 where jr2.brd_no = jrb.brd_no) recocount from j_recommendboard jrb, j_member m, j_code c where jrb.brd_no=#{brd_no} and jrb.m_no=m.m_no and jrb.rc_code=c.c_minor
-	</select> -->
+	</select>
   	
-    <!-- <update id="update" parameterType="J_RecommendBoard">
+    <update id="updatereco" parameterType="J_RecommendBoard">
     	update j_recommendboard set brd_subject=#{brd_subject},brd_content=#{brd_content},rc_code=#{rc_code},brd_update_date=sysdate where brd_no=#{brd_no}
 	</update>
 	
-	<update id="delete" parameterType="Integer">
+	<update id="deletereco" parameterType="Integer">
 		update j_recommendboard set brd_del_yn='y' where brd_no=#{brd_no}
 	</update>
 	
-	<select id="selectRecommend" resultType="Integer">
-    	select * from j_recommend2 where m_no = #{m_no} and brd_no = #{brd_no}
-    </select> -->
+	<select id="pwdrecoCheck" parameterType="Integer" resultType="String">
+		select m.m_passwd from j_recommendboard jrb, j_member m where jrb.m_no=m.m_no and brd_no=#{brd_no}
+	</select>
+	
+	<select id="selectrecoRecommend" parameterType="hashMap" resultType="Integer">
+    	select count(*) from j_recommend2 where m_no=#{m_no} and brd_no=#{brd_no}
+    </select>
+    
+    <select id="recoCheck1" parameterType="hashMap" resultType="Integer">
+    	select count(*) from j_recommend2 where m_no=#{m_no} and brd_no=#{brd_no}
+    </select>
+    
+    <insert id="recoCheck2" parameterType="hashMap">
+    	insert into j_recommend2 values(#{brd_no},#{m_no},sysdate,'n')
+    </insert>
+    
+    <delete id="recoCheck3" parameterType="hashMap">
+    	delete from j_recommend2 where m_no=#{m_no} and brd_no=#{brd_no}
+    </delete>
     
 </mapper>

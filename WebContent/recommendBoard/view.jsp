@@ -36,9 +36,9 @@ $(function() {
 			},
 			success : function(data){
 				if ($.trim(data) == "TRUE") {
-					$('#btnLike').text("좋아요");
-				} else if($.trim(data) == "FALSE"){
 					$('#btnLike').text("좋아요 취소");
+				} else if($.trim(data) == "FALSE"){
+					$('#btnLike').text("좋아요");
 				}
 			} 
 		});

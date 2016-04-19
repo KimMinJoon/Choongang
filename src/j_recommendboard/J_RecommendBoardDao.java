@@ -1,16 +1,11 @@
 package j_recommendboard;
 
 import java.io.Reader;
-import java.sql.*;
 import java.util.*;
-import javax.naming.*;
-import javax.sql.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-import j_noticeboard.J_NoticeBoard;
 
 public class J_RecommendBoardDao {
 	

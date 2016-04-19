@@ -45,14 +45,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  			</choose>
 	  		</if>
   	</select>
-  <!-- 	
-	<update id="updateHit" parameterType="Integer">
+  	
+	<!-- <update id="updateHit" parameterType="Integer">
     	update j_recommendboard set brd_readcount=brd_readcount+1 where brd_no=#{brd_no}
     </update> -->
     
     <select id="selectrecoList" resultMap="J_RecommendBoardResult" parameterType="J_RecommendBoard">
 		select * from (select rowNum rn, a.* from (select jrb.*, m_nick, c.c_value as rc_value, (select count(*) from j_recommend2 jr2 where jr2.brd_no = jrb.brd_no) recocount from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor and brd_del_yn='n' 
-		<where>
 	  		<if test="searchTxt != null">
 	  			<choose>
 		  			<when test="searchType == 'all'">
@@ -68,8 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  					and m_nick like '%'||#{searchTxt}||'%'
 	  				</when>
 	  			</choose>
-	  		</if>
-  		</where>
+	  		</if>  
 		order by ref desc, re_step) a) where rn between #{startRow} and #{endRow}
   	</select>
   	
@@ -77,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		insert into j_recommendboard values(#{brd_no},#{brd_subject},#{brd_content},0,#{brd_ip},sysdate,null,'n',#{ref},#{re_step},#{re_level},#{m_no},#{rc_code})
   	</insert> -->
   	
-<!-- 	<select id="selectreco" parameterType="Integer" resultMap="J_RecommendBoardResult">
+	<!-- <select id="selectreco" parameterType="Integer" resultMap="J_RecommendBoardResult">
 		select jrb.*, m.m_nick, c.c_value as rc_value, (select count(*) from j_recommend2 jr2 where jr2.brd_no = jrb.brd_no) recocount from j_recommendboard jrb, j_member m, j_code c where jrb.brd_no=#{brd_no} and jrb.m_no=m.m_no and jrb.rc_code=c.c_minor
 	</select> -->
   	

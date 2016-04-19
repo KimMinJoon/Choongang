@@ -22,6 +22,10 @@ public class J_RecommendBoard {
 	private String rc_code;
 	private String rc_value;
 	private int recocount;
+	private int startRow;
+	private int endRow;
+	private String searchType;
+	private String searchTxt;
 
 	public int getBrd_no() {
 		return brd_no;
@@ -167,6 +171,38 @@ public class J_RecommendBoard {
 		this.recocount = recocount;
 	}
 
+	public int getStartRow() {
+		return startRow;
+	}
+
+	public void setStartRow(int startRow) {
+		this.startRow = startRow;
+	}
+
+	public int getEndRow() {
+		return endRow;
+	}
+
+	public void setEndRow(int endRow) {
+		this.endRow = endRow;
+	}
+
+	public String getSearchType() {
+		return searchType;
+	}
+
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+
+	public String getSearchTxt() {
+		return searchTxt;
+	}
+
+	public void setSearchTxt(String searchTxt) {
+		this.searchTxt = searchTxt;
+	}
+	
 	/*@Override
 	public String toString() {
 		return "J_RecommendBoard [brd_no=" + brd_no + ", brd_subject=" + brd_subject + ", brd_content=" + brd_content

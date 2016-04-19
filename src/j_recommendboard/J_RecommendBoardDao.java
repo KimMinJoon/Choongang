@@ -35,7 +35,10 @@ public class J_RecommendBoardDao {
 	public int selectTotal(String searchType, String searchTxt) {
 		int total = 0;
 		try {
-			total = (Integer) session.selectOne("selectTotal");
+			J_RecommendBoard jrb = new J_RecommendBoard();
+			jrb.setSearchType(searchType);
+			jrb.setSearchTxt(searchTxt);
+			total = (Integer) session.selectOne("selectrecoTotal");
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -52,14 +55,14 @@ public class J_RecommendBoardDao {
 	
 	public List<J_RecommendBoard> selectList(int startRow, int endRow, String searchType, String searchTxt) {
 		List<J_RecommendBoard> list = new ArrayList<J_RecommendBoard>();
-		HashMap<String, Integer> hm = new HashMap<>();
-		hm.put("startRow", startRow);
-		hm.put("endRow", endRow);
-		hm.put("searchType", searchType);
-		hm.put("searchTxt", searchTxt);
+		J_RecommendBoard jrb = new J_RecommendBoard();
+		jrb.setStartRow(startRow);
+		jrb.setEndRow(endRow);
+		jrb.setSearchType(searchType);
+		jrb.setSearchTxt(searchTxt);
 		
 		try {
-			list = session.selectList("selectList", hm);
+			list = session.selectList("selectrecoList", jrb);
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

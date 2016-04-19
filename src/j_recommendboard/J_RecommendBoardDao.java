@@ -112,7 +112,7 @@ public class J_RecommendBoardDao {
 		return result;
 	}*/
 	
-	public J_RecommendBoard select(int brd_no) {
+	/*public J_RecommendBoard select(int brd_no) {
 		J_RecommendBoard jrb = null;
 		try {
 			jrb = (J_RecommendBoard) session.selectOne("selectreco", brd_no);
@@ -120,7 +120,7 @@ public class J_RecommendBoardDao {
 			System.out.println(e.getMessage());
 		}
 		return jrb;
-	}
+	}*/
 	
 	/*public int update(J_RecommendBoard recommendboard) {
 		int result = 0;

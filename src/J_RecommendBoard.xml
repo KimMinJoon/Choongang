@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <result property="recocount" column="recocount"/>
     </resultMap>
     
-    <select id="selectList" parameterType="hashMap" resultMap="J_MeetBoardResult">
+    <select id="selectList" parameterType="hashMap" resultMap="J_RecommendBoardResult">
 		select * from (select rowNum rn, a.* from (select jrb.*, m_nick, c.c_value as rc_value, (select count(*) from j_recommend2 jr2 where jr2.brd_no = jrb.brd_no) recocount from j_recommendboard jrb, j_member m, j_code c where jrb.m_no=m.m_no and jrb.rc_code=c.c_minor and brd_del_yn='n' order by ref desc, re_step) a) where rn between #{startRow} and #{endRow}
   	</select>
     

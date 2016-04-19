@@ -104,6 +104,7 @@ public class J_NoticeBoardDao {
 		int result = 0;
 		try {
 			result = session.update("deleteBoard", brd_no);
+			/*System.out.println("result : " + result);*/
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

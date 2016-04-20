@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import j_noticeboard.J_NoticeBoard;
 import oracle.net.aso.e;
 
 public class J_MemberDao {
@@ -57,24 +58,42 @@ public class J_MemberDao {
 		return result;
 	}
 
-	/*
-	 * public int nickCheck(String m_nick, String m_no) { int result = 0;
-	 * Connection conn = null; PreparedStatement pstmt = null; ResultSet rs =
-	 * null; String sql2 = "select m_nick from j_member where m_no = ?"; String
-	 * sql =
-	 * "select m_nick from j_member where m_nick=? and m_del_yn='n' and m_no != ? union select m_nick from j_member where m_no = ? and m_nick = ?"
-	 * ; String orgNick = ""; try { conn = getConnection(); pstmt =
-	 * conn.prepareStatement(sql2); pstmt.setString(1, m_no); rs =
-	 * pstmt.executeQuery(); if (rs.next()) { orgNick = rs.getString("m_nick");
-	 * } pstmt.close(); rs.close(); pstmt = conn.prepareStatement(sql);
-	 * pstmt.setString(1, m_nick); pstmt.setString(2, m_no); pstmt.setString(3,
-	 * m_no); pstmt.setString(4, m_nick); rs = pstmt.executeQuery(); if
-	 * (rs.next()) { String db_nick = rs.getString("m_nick"); if
-	 * (db_nick.equals(orgNick)) { result = 0; } else { result = 1; } } else {
-	 * result = -1; } } catch (Exception e) {
-	 * System.out.println(e.getMessage()); } finally { dbClose(rs, pstmt, conn);
-	 * } return result;
-	 */
+	public int nickCheck(String m_nick, String m_no) {
+		int result = 0;
+		J_Member mb = new J_Member();
+		mb.setM_no(Integer.parseInt(m_no));
+		mb.setM_nick(m_nick);
+		String orgNick = "";
+		String db_nick = "";
+		try {
+			orgNick = (String) session.selectOne("nickChk", m_no);
+			db_nick = (String) session.selectOne("nickChk2", mb);
+			if (orgNick != null) {
+				/*
+				 * System.out.println("db_nick1 : " + db_nick);
+				 * System.out.println("orgNick1 : " + orgNick);
+				 */
+				if (db_nick.equals(orgNick))
+					result = 0;
+				else
+					result = 1;
+
+			} else {
+				/*
+				 * System.out.println("db_nick2 : " + db_nick);
+				 * System.out.println("orgNick2 : " + orgNick);
+				 */
+				if (db_nick != null)
+					result = 0;
+				else
+					result = -1;
+			}
+
+		} catch (Exception e) {
+			System.out.println("nickCheck : " + e.getMessage());
+		}
+		return result;
+	}
 
 	public int insert(J_Member mb) {
 		int result = 0, m_number = 0, m_no = 0;
@@ -89,7 +108,6 @@ public class J_MemberDao {
 		 * "update j_member set m_passwd=?, m_nick=?, m_reg_date=sysdate, m_del_yn='n', c_code=?, l_code=? where m_no=?"
 		 * ;
 		 */
-
 		try {
 
 			/*
@@ -97,18 +115,18 @@ public class J_MemberDao {
 			 * pstmt.setString(1, mb.getM_email()); rs = pstmt.executeQuery();
 			 * if (rs.next()) { m_no = rs.getInt(1); pstmt.close(); }
 			 */
-
-			m_no = (int) session.selectOne("selectmno", mb);
+			/*m_no = (int) session.selectOne("selectmno", mb);
+			System.out.println("m_no : "+m_no);*/
 			// HashMap<String, Integer> hm = new HashMap<>();
 
-			if (m_no > 0) {
+			/*if (m_no > 0) {
 				result = session.update("updateData", mb);
-			} else {
+			} else {*/
 				m_number = (int) session.selectOne("selectNum");
 				mb.setM_no(m_number);
 				result = session.insert("insertMember", mb);
-			}
-
+			/*}
+*/
 			/*
 			 * pstmt = conn.prepareStatement(sql3); pstmt.setString(1,
 			 * mb.getM_passwd()); pstmt.setString(2, mb.getM_nick());
@@ -138,11 +156,7 @@ public class J_MemberDao {
 
 		{
 			System.out.println(e.getMessage());
-		} /*
-			 * finally
-			 * 
-			 * { dbClose(rs, pstmt, conn); }
-			 */
+		}
 
 		return result;
 
@@ -186,117 +200,103 @@ public class J_MemberDao {
 		 */ return result;
 	}
 
+	public J_Member select(String m_no) {
+		J_Member mem = null;
+		try {
+			mem = (J_Member) session.selectOne("selectMember", m_no);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return mem;
+	}
+
 	
-	/*public J_Member select(String m_no) {
-		Connection conn = null;
+	public J_Member infoselect(int m_no) {
+		/*Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select  from j_member where m_no=? and m_del_yn='n'";
-		J_Member mem = new J_Member();
+		String sql = "select m_email, m_passwd, m_nick, (select c_value from j_code c where c.c_minor = m.c_code) as c_value, (select c_value from j_code c where c.c_minor = m.l_code) as l_value from j_member m where m_no=? and m_del_yn='n'";*/
+		J_Member jif = null;
 		try {
-			conn = getConnection();
+			System.out.println("m_no정보야와라 : "+ m_no);
+			jif = (J_Member)session.selectOne("selectInfoz", m_no);
+			System.out.println("jif정보야와라 : "+ jif);
+			/*conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, m_no);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				mem.setM_email(rs.getString("m_email"));
-				mem.setM_passwd(rs.getString("m_passwd"));
-				mem.setM_nick(rs.getString("m_nick"));
-				mem.setC_code(rs.getString("c_code"));
-				mem.setL_code(rs.getString("l_code"));
-			}
+				jif.setM_email(rs.getString("m_email"));
+				jif.setM_passwd(rs.getString("m_passwd"));
+				jif.setM_nick(rs.getString("m_nick"));
+				jif.setC_value(rs.getString("c_value"));
+				jif.setL_value(rs.getString("l_value"));*/
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
-			dbClose(rs, pstmt, conn);
-		}
-		return mem;
-	}*/
-	 
+		} 
+		return jif;
+	}
 
-	/*
-	 * public J_Member infoselect(String m_no) { Connection conn = null;
-	 * PreparedStatement pstmt = null; ResultSet rs = null; String sql =
-	 * "select m_email, m_passwd, m_nick, (select c_value from j_code c where c.c_minor = m.c_code) as c_value, (select c_value from j_code c where c.c_minor = m.l_code) as l_value from j_member m where m_no=? and m_del_yn='n'"
-	 * ; J_Member jif = new J_Member(); try { conn = getConnection(); pstmt =
-	 * conn.prepareStatement(sql); pstmt.setString(1, m_no); rs =
-	 * pstmt.executeQuery(); if (rs.next()) {
-	 * jif.setM_email(rs.getString("m_email"));
-	 * jif.setM_passwd(rs.getString("m_passwd"));
-	 * jif.setM_nick(rs.getString("m_nick"));
-	 * jif.setC_value(rs.getString("c_value"));
-	 * jif.setL_value(rs.getString("l_value")); } } catch (Exception e) {
-	 * System.out.println(e.getMessage()); } finally { dbClose(rs, pstmt, conn);
-	 * } return jif; }
-	 */
-
-	
-/*	public int update(J_Member mem) {
+	public int update(J_Member mem) {
 		int result = 0;
-		Connection conn = null;
+		/*Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "update j_member set m_passwd=?, m_nick=?, c_code=?, l_code=? where m_email=? and m_del_yn='n'";
+		String sql = "update j_member set m_passwd=?, m_nick=?, c_code=?, l_code=? where m_email=? and m_del_yn='n'";*/
 		try {
-			conn = getConnection();
+			result = session.update("updateInfo", mem);
+			/*conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mem.getM_passwd());
 			pstmt.setString(2, mem.getM_nick());
 			pstmt.setString(3, mem.getC_code());
 			pstmt.setString(4, mem.getL_code());
 			pstmt.setString(5, mem.getM_email());
-			result = pstmt.executeUpdate();
+			result = pstmt.executeUpdate();*/
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
+		} /*finally {
 			dbClose(pstmt, conn);
-		}
+		}*/
 		return result;
-	}*/
-	 
-
+	}
 	
-/*	public int delete(int m_no) {
+	public int delete(int m_no) {
 		int result = 0;
-		Connection conn = null;
+		/*Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "update j_member set m_del_yn='y', m_out_date=sysdate where m_no=? and m_del_yn='n'";
+		String sql = "update j_member set m_del_yn='y', m_out_date=sysdate where m_no=? and m_del_yn='n'";*/
 		try {
-			conn = getConnection();
+			result = session.update("deleteMem", m_no);
+			/*conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, m_no);
-			result = pstmt.executeUpdate();
+			result = pstmt.executeUpdate();*/
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
-			dbClose(pstmt, conn);
-		}
+		} 
 		return result;
-	}*/
-	 
-
-	
-/*	public int passwdChk(String m_no, String m_passwd) {
+	}
+	 	
+	public int passwdChk(String m_no, String m_passwd) {
 		int result = 0;
-		Connection conn = null;
+		String chk = "";
+		HashMap<String, String> hm = new HashMap<>();
+		hm.put("m_no", m_no);
+		hm.put("m_passwd", m_passwd);
+		/*Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "select m_passwd from j_member where m_no=? and m_passwd=?";
+		*/
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m_no);
-			pstmt.setString(2, m_passwd);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
+			chk = (String)session.selectOne("passwdChk",hm);
+			if (chk != null) {
 				result = 1;
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
-			dbClose(rs, pstmt, conn);
-		}
+		} 
 		return result;
-	}*/
-	 
+	}
 
 }

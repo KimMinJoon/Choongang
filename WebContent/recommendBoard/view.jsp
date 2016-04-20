@@ -67,6 +67,15 @@ function isSubmit(number) {
 		}
 		return false;	
 }
+
+function deleteRpChk(re_no, brd_no, pageNum){
+	if(confirm("정말 삭제하시겠습니까?")){
+		location.href="${pageContext.request.contextPath}/recommendBoard/deleteReply.do?re_no="+re_no+"&brd_no="+brd_no+"&pageNum="+pageNum;	
+	}else{
+		return;
+	}
+}
+
 </script>
 </head>
 <body>
@@ -171,7 +180,7 @@ function isSubmit(number) {
 					${jrr.m_nick}/${jrr.re_reg_Date}/${jrr.re_content}
 					<c:if test="${not empty m_no}">
 						<c:if test="${m_no == jrr.m_no}">
-							<input type="button" value="삭제">
+							<input type="button" value="삭제" onclick="deleteRpChk(${jrr.re_no},${brd_no},${pageNum})">
 						</c:if>
 						<hr>
 					</c:if>

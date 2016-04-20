@@ -76,6 +76,27 @@ input {
 	font-weight: 900;
 }
 
+.wrap {
+	width: 60%;
+	position: relative;
+	display: inline-block;
+}
+
+.wrap textarea {
+	width: 80%;
+	resize: none;
+	min-height: 4.5em;
+	line-height: 1.6em;
+	max-height: 9em;
+	vertical-align: top;
+}
+
+.wrap span {
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+}
+
 a:link {color:black; text-decoration:none}
 a:visited {color:black; text-decoration:none}
 a:active {color:black; text-decoration:none}

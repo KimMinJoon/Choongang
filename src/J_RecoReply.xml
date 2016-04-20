@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="J_RecoReply">
+  <resultMap id="J_RecoReplyResult" type="J_RecoReply">
+	  <result property="re_no" column="re_no"/>
+	  <result property="re_content" column="re_content"/>
+	  <result property="re_reg_Date" column="re_reg_Date"/>
+	  <result property="re_up_date" column="re_up_date"/>
+	  <result property="m_no" column="m_no"/>
+	  <result property="m_nick" column="m_nick"/>
+	  <result property="brd_no" column="brd_no"/>
+  </resultMap>
+  
+  <select id="selectrecoRp" resultMap="J_RecoReplyResult" parameterType="Integer">
+  	select re_no,re_content, fc_date_check(re_reg_date) as re_reg_date, m_nick, a.m_no from j_recoReply a, j_member m where a.m_no = m.m_no and re_del_yn = 'n' and brd_no = #{brd_no}
+  </select>
+
+  <insert id="insertrecoRp" parameterType="J_RecoReply">
+  	insert into j_recoReply values (#{re_no},#{re_content},sysdate,null,'n',null,#{m_no},#{brd_no})
+  </insert>
+  
+  <select id="insertRpNum" resultType="Integer">
+  		select nvl(max(re_no),0)+1 from j_recoReply
+  </select>
+  
+  <update id="updaterecoRp" parameterType="J_RecoReply">
+  	update j_recoReply set re_content = #{re_content} where re_no = #{re_no} and re_del_yn = 'n'
+  </update>
+  
+  <update id="deleterecoRp" parameterType="Integer">
+  	update j_recoReply set re_del_date = sysdate, re_del_yn = 'y' where re_no = #{re_no} and re_del_yn = 'n'
+  </update>
+</mapper>

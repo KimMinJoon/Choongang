@@ -39,7 +39,7 @@
 				</select></td>
 			</tr>
 			<tr>
-				<td class="inputleft"> <input type="text" name="brd_subject"required="required" autofocus="autofocus" size="50" placeholder="제목을 입력해 주세요"></td>
+				<td class="inputleft"> <input type="text" name="brd_subject" required="required" autofocus="autofocus" size="50" placeholder="제목을 입력해 주세요"></td>
 			</tr>
 			<tr>
 				<td><textarea rows="20" cols="90" name="brd_content" id="content" required="required"></textarea></td>

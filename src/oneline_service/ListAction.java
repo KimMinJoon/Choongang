@@ -24,8 +24,8 @@ public class ListAction implements CommandProcess {
 			brd_no = "0";
 		}
 		
-		if(searchType == null || searchType.equals("null") || searchType.equals("")){
-			searchType = "brd_content";
+		if(searchType == null || searchType.equals("null")){
+			searchType = "";
 		}
 		
 		if(searchTxt == null || searchTxt.equals("null")){

@@ -161,6 +161,9 @@ public class J_OneLineBoardDAO {
 		List<J_OneLineReply> list = new ArrayList<>();
 		try{
 			list = session.selectList("selectReply");
+			for(J_OneLineReply jor : list){
+				System.out.println(jor);
+			}
 		}catch(Exception e){
 			System.out.println("selectReply : " + e.getMessage());
 		}	 

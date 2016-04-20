@@ -67,15 +67,16 @@ public class J_RecommendBoardDao {
 	public int insert(J_RecommendBoard recommendboard) {
 		int result = 0, number = 0;
 		try {
-			number = (int)session.selectOne("insertNum");
-			recommendboard.setBrd_no(number);
-			if (recommendboard.getBrd_no() != 0) {
+			if (recommendboard.getBrd_no() > 0) {
+				System.out.println("stepreco");
 				session.update("stepreco", recommendboard);
 				recommendboard.setRe_level(recommendboard.getRe_level() + 1);
 				recommendboard.setRe_step(recommendboard.getRe_step() + 1);
 			} else {
 				recommendboard.setRef(number);
 			}
+			number = (int)session.selectOne("insertNum");
+			recommendboard.setBrd_no(number);
 			result = session.insert("insertreco", recommendboard);
 		}catch (Exception e) {
 			System.out.println(e.getMessage());

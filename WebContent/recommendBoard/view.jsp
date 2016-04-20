@@ -187,11 +187,7 @@ function deleteRpChk(re_no, brd_no, pageNum){
 				</c:forEach>
 			</c:if>		
 		</form>
-	</div>
-	
-	<p>
-	
-	<div style="border: 1px solid; padding: 10px 10px 10px 10px;" class="wrap">
+		
 		<form action="insertReply.do" name="frm" onsubmit="return isSubmit(${sessionScope.m_no})">
 			<input type="hidden" name="m_no" value="${sessionScope.m_no }">
 			<input type="hidden" name="brd_no" class= "${brd_no}" value="${brd_no}">
@@ -203,5 +199,6 @@ function deleteRpChk(re_no, brd_no, pageNum){
 		</form>
 	</div>
 	</center>
+	
 </body>
 </html>

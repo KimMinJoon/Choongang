@@ -4,8 +4,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="J_Member">
 	<resultMap id="J_MemberResult" type="J_Member">
-		<!-- 마이바티스는 타입이다. 클래스아니고 -->
-		<!-- 밑에도 Class를 다 type으로 -->
 		<result property="m_no" column="m_no" />
 		<result property="m_email" column="m_email" />
 		<result property="m_passwd" column="m_passwd" />
@@ -18,24 +16,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="c_value" column="c_value" />
 		<result property="l_value" column="l_value" />
 	</resultMap>
+	
 	<select id="emailChk" parameterType="String" resultType="Integer">
-  select count(*) from j_member where m_email=#{m_email} and m_del_yn='n'
-  </select>
-	<select id="selectmno" parameterType="J_Member" resultType="Integer">
-		select m_no from j_member
-		where m_email=#{m_email} and m_del_yn='y'
+		select count(*) from j_member where m_email=#{m_email} and m_del_yn='n'
 	</select>
+	
+	<select id="selectmno" parameterType="J_Member" resultType="Integer">
+		select m_no from j_member where m_email=#{m_email} and m_del_yn='y'
+	</select>
+	
 	<update id="updateData" parameterType="J_Member">
 		update j_member set
 		m_passwd=#{m_passwd}, m_nick=#{m_nick}, m_reg_date=sysdate,
 		m_del_yn='n', c_code=#{c_code},
 		l_code=#{l_code} where m_no=#{m_no}
 	</update>
+	
 	<insert id="insertMember" parameterType="J_Member">
 		insert into j_member
 		values(#{m_no},#{m_email},#{m_passwd},#{m_nick},sysdate,null,'n',#{c_code},#{l_code})
 	</insert>
+	
 	<select id="selectNum" resultType="Integer">
 		select nvl(max(m_no),0)+1 from j_member
 	</select>
+	
 </mapper>

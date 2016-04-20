@@ -67,6 +67,7 @@ public class J_RecommendBoardDao {
 	public int insert(J_RecommendBoard recommendboard) {
 		int result = 0, number = 0;
 		try {
+			number = (int)session.selectOne("insertNum");
 			if (recommendboard.getBrd_no() > 0) {
 				System.out.println("stepreco");
 				session.update("stepreco", recommendboard);
@@ -75,7 +76,6 @@ public class J_RecommendBoardDao {
 			} else {
 				recommendboard.setRef(number);
 			}
-			number = (int)session.selectOne("insertNum");
 			recommendboard.setBrd_no(number);
 			result = session.insert("insertreco", recommendboard);
 		}catch (Exception e) {

@@ -44,6 +44,29 @@ $(function() {
 		});
 	});
 });
+function textCheck() {
+	var counter = document.getElementById("counter");
+	var re_content = document.getElementById("re_content");
+	counter.innerHTML = 
+		re_content.value.length + "/" + re_content.maxLength;
+	if(re_content.value.length >= re_content.maxLength){
+		alert("최대 " + re_content.maxLength + "글자 까지 작성할수 있습니다.");
+	}
+}
+
+function isSubmit(number) {
+	/* alert("m_no : " + number); */
+		if(number == null || number == "" || number == "null"){
+			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
+				location.href = "${pageContext.request.contextPath}/member/login.do";
+			} else {
+				return false;
+			}
+		}else{
+			return true;
+		}
+		return false;	
+}
 </script>
 </head>
 <body>
@@ -136,6 +159,40 @@ $(function() {
 			<button onclick="location.href='writeForm.do?brd_no=${brd_no}&pageNum=${pageNum}'">답변</button>
 		</c:if>
 	</div>
-
+	
+	<p>
+	
+	<center>
+	<div style="border: 1px solid; padding: 10px 10px 10px 10px;" class="wrap">
+		<form action="">
+			<hr>
+			<c:if test="${not empty rpList}">
+				<c:forEach var="jrr" items="${rpList}">
+					${jrr.m_nick}/${jrr.re_reg_Date}/${jrr.re_content}
+					<c:if test="${not empty m_no}">
+						<c:if test="${m_no == jrr.m_no}">
+							<input type="button" value="삭제">
+						</c:if>
+						<hr>
+					</c:if>
+				</c:forEach>
+			</c:if>		
+		</form>
+	</div>
+	
+	<p>
+	
+	<div style="border: 1px solid; padding: 10px 10px 10px 10px;" class="wrap">
+		<form action="insertReply.do" name="frm" onsubmit="return isSubmit(${sessionScope.m_no})">
+			<input type="hidden" name="m_no" value="${sessionScope.m_no }">
+			<input type="hidden" name="brd_no" class= "${brd_no}" value="${brd_no}">
+			<input type="hidden" name="pageNum" value="${pageNum}">
+			<textarea rows="3" cols="50" maxlength="150" id="re_content"
+				name="re_content" required="required" onkeyup="textCheck()"></textarea>
+			<span id="counter">0/150</span> <input
+				style="height: 40px; width: 100px;" type="submit" value="등록">
+		</form>
+	</div>
+	</center>
 </body>
 </html>

@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import j_onelineboard.J_OneLineReply;
+
 public class J_RecommendBoardDao {
 	
 	private static J_RecommendBoardDao instance = new J_RecommendBoardDao();
@@ -167,5 +169,48 @@ public class J_RecommendBoardDao {
 			}
 		return result; 
 	}
+	
+	public List<J_RecoReply> selectReply(int brd_no){
+		List<J_RecoReply> list = new ArrayList<>();
+		try{
+			list = session.selectList("selectrecoRp", brd_no);
+		}catch(Exception e){
+			System.out.println("selectrecoRp : " + e.getMessage());
+		}	 
+		return list;
+	}//selectrecoReply
+	
+	public int insertReply(J_RecoReply jrr){
+		int result = 0;
+		int number = 0;
+		try {
+			number = (int)session.selectOne("insertRpNum");
+			jrr.setRe_no(number);
+			result = session.insert("insertrecoRp", jrr);
+		}catch(Exception e) {
+			System.out.println("insertrecoRp : " + e.getMessage());
+		}
+		return result;
+	}//insertrecoReply
+	
+	public int updateReply(J_RecoReply jrr){
+		int result = 0;
+		try {
+			result = session.update("updaterecoRp", jrr);
+		}catch(Exception e){
+			System.out.println("updaterecoRp : " + e.getMessage());
+		}
+		return result;
+	}//updaterecoReply
+	
+	public int deleteReply(int re_no){
+		int result = 0;
+		try {
+			result = session.update("deleterecoRp", re_no);
+		}catch(Exception e){
+			System.out.println("deleterecoRp : " + e.getMessage());
+		}
+		return result;
+	}//deleterecoReply
 	
 }

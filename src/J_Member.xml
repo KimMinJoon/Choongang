@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		count(*) from j_member where m_email=#{m_email} and m_del_yn='n'
 	</select>
 
-	<select id="selectmno" parameterType="J_Member" resultType="Integer">
+	<select id="selectmno" parameterType="String" resultType="Integer">
 		select m_no from j_member where m_email=#{m_email} and m_del_yn='y'
 	</select>
 
@@ -44,6 +44,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="loginChkk" parameterType="String" resultType="String">
-		select m_passwd from j_member where m_email=#{m_email} and m_del_yn='n'
+		select
+		m_passwd from j_member where m_email=#{m_email} and m_del_yn='n'
 	</select>
+
+	<select id="nickChk" parameterType="Integer" resultType="String">
+		select
+		m_nick from j_member where m_no = #{m_no}
+	</select>
+
+	<select id="nickChk2" parameterType="J_Member" resultType="String">
+		select m_nick from j_member where m_nick=#{m_nick} and m_del_yn='n'
+		and m_no != #{m_no}
+		union select m_nick from j_member where m_no =
+		#{m_no} and m_nick = #{m_nick}
+	</select>
+
+	<select id="selectMember" parameterType="Integer" resultMap="J_MemberResult">
+		select * from j_member where m_no=#{m_no} and m_del_yn='n'
+	</select>
+
+	<select id="selectInfoz" parameterType="Integer" resultType="J_Member">
+		select m_email, m_passwd, m_nick, (select c_value from j_code c where
+		c.c_minor = m.c_code) as c_value, (select c_value from j_code c where
+		c.c_minor = m.l_code) as l_value from j_member m where m_no=#{m_no}
+		and m_del_yn='n'
+	</select>
+
+	<update id="updateInfo" parameterType="J_Member">
+		update j_member set
+		m_passwd=?, m_nick=#{m_nick}, c_code=#{c_code}, l_code=#{l_code} where m_email=#{m_email} and
+		m_del_yn='n'
+	</update>
+	
+	<update id="deleteMem" parameterType="Integer">
+		update j_member set m_del_yn='y', m_out_date=sysdate where m_no=#{m_no} and m_del_yn='n'
+	</update>
+	
+	<select id="passwdChk" parameterType="J_Member" resultType="String">
+  select m_passwd from j_member where m_no=#{m_no} and m_passwd=#{m_passwd}
+  </select>
 </mapper>

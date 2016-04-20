@@ -29,6 +29,7 @@
 }
 
 .rows{
+	
 	width: 70%;
 	
 }
@@ -55,7 +56,7 @@
 }
 .rowDate{
 	font-size : 10px;
-	color: fuchsia;
+	color: blue;
 }
 pre{
 	margin : 10px;
@@ -210,7 +211,7 @@ pre > a{
 			<c:if test="${not empty list}">
 				<c:forEach var="jolb" items="${list}">
 					<div class="row">
-						<p><span class="rowNum">${tot}</span><span class="rowNick">${jolb.m_nick}</span>&nbsp;<span class="rowDate">${jolb.brd_reg_date}</span>
+						<p><span class="rowNum">${tot}</span><span class="rowNick">${jolb.m_nick}</span><span class="rowDate">${jolb.brd_reg_date}</span>
 						<pre class="rowContent" style="width:600px; white-space: pre-line;word-break:break-all;">${jolb.brd_content}<a class="countClick">[${jolb.rep_count}]</a></pre>
 						<c:if test="${sessionScope.m_no != null}">
 							<c:if test="${jolb.m_no == sessionScope.m_no}">

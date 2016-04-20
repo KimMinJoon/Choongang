@@ -65,6 +65,7 @@ public class J_NoticeBoardDao {
 			number = (int) session.selectOne("selectNumz");
 			noticeboard.setBrd_no(number);
 			result = session.insert("insertBoard", noticeboard);
+			System.out.println("result넌뭐니 : "+result);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

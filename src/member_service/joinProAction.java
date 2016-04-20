@@ -18,6 +18,7 @@ public class joinProAction implements CommandProcess {
 		
 		J_MemberDao jmd = J_MemberDao.getInstance();
 		int result = jmd.insert(jm);
+		System.out.println("result가입 : "+ result);
 		
 		request.setAttribute("result", result);
 		

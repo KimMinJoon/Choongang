@@ -38,18 +38,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   <select id="selectOneLine" resultMap="J_OneLineBoardResult" parameterType="J_OneLineBoard">
   	SELECT * FROM (SELECT ROWNUM RN, A.* FROM(select * from oneline_list_v
-  	<where>
-  		<if test="searchTxt != null">
-  			<choose>
-  				<when test="searchType == 'brd_content'">
-  					brd_content like '%'||#{searchTxt}||'%'
-  				</when>
-  				<when test="searchType == 'm_nick'">
-  					m_nick like '%'||#{searchTxt}||'%'
-  				</when>
-  			</choose>
-  		</if>
-  	</where>
+  	<if test="searchTxt != null">
+	  	<where>
+	  		<choose>
+	  			<when test="searchType == 'brd_content'">
+	  				brd_content like '%'||#{searchTxt}||'%'
+	  			</when>
+	  			<when test="searchType == 'm_nick'">
+	  				m_nick like '%'||#{searchTxt}||'%'
+	  			</when>
+	  		</choose>
+	  	</where>
+  	</if>
   	ORDER BY BRD_NO DESC) A) WHERE RN BETWEEN #{startRow} AND #{endRow}
   </select>
   <update id="updateOneline" parameterType="J_OneLineBoard">

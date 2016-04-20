@@ -6,9 +6,8 @@
 %>
 		<script type="text/javascript">
 			alert("로그인을 하셔야 이용할 수 있는 페이지입니다.");		
-			location.href="../module/main.jsp?pgm=/member/login.jsp";
+			location.href="${pageContext.request.contextPath}/member/login.do";
 		</script> 
 <%
 	}
 %>
-

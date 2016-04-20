@@ -24,4 +24,8 @@ drop constraint fk_m_no;
 alter table j_recommendboard add constraint fk_rc_code
 foreign key(rc_code) references j_code(c_minor);
 
+desc j_recommendboard;
+select * from j_recommendboard;
+select * from j_recommendboard order by brd_no desc;
+delete from j_recommendboard;
 

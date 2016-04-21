@@ -7,8 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+.insert{
+	width: 850px;
+	margin : 0px auto;
+}
 .wrap {
-	width: 70%;
+	width: 820px;
 	position: relative;
 	display: inline-block;
 }
@@ -29,9 +33,8 @@
 }
 
 .rows{
-	
-	width: 70%;
-	
+	width: 850px;
+	margin : 0 auto;
 }
 .row{
 	background : #FAED7D;
@@ -191,21 +194,19 @@ pre > a{
 </script>
 </head>
 <body>
-	<div style="border: 1px solid; padding: 10px 10px 10px 10px;"
-		class="wrap">
-		<form action="${pageContext.request.contextPath}/oneLineBoard/write.do" name="wrtierFrm" onsubmit="return isSubmit(${sessionScope.m_no})">
-			<input type="hidden" name="m_no" value="${sessionScope.m_no}">
-			<textarea rows="3" cols="50" maxlength="150" id="content"
-				name="brd_content" required="required" onkeyup="textCheck()"></textarea>
-			<span id="counter">0/150</span> <input
-				style="height: 50px; width: 120px;" type="submit" value="등록">
-		</form>
+	<div style="border: 1px solid; padding: 10px 10px 10px 10px;" class="insert">
+		<div style="border: 1px solid; padding: 10px 10px 10px 10px;" class="wrap">
+			<form action="${pageContext.request.contextPath}/oneLineBoard/write.do" name="wrtierFrm" onsubmit="return isSubmit(${sessionScope.m_no})">
+				<input type="hidden" name="m_no" value="${sessionScope.m_no}">
+				<textarea rows="3" cols="50" maxlength="150" id="content"
+					name="brd_content" required="required" onkeyup="textCheck()"></textarea>
+				<span id="counter">0/150</span> <input
+					style="height: 50px; width: 120px;" type="submit" value="등록">
+			</form>
+		</div>
 	</div>
 	<p>
-	
-	<div
-		style=" border: 1px solid; padding: 10px 10px 10px 10px;"
-		class="rows">
+	<div style="border: 1px solid; padding: 10px 10px 10px 10px;" class="rows">
 		<c:set var="tot" value="${total}" />
 		<c:if test="${list != null}">
 			<c:if test="${not empty list}">

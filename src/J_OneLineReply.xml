@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	insert into J_onelineReply values (NEW_BRD_NO_ONELINEREPLY,#{brd_no},#{content},sysdate,null,#{m_no},'n',null)
   </insert>
   <select id="selectReply" resultMap="J_OneLineReplyResult">
-  	SELECT REPLY_NO,BRD_NO, CONTENT, FC_DATE_CHECK(REG_DATE) AS REG_DATE, M_NICK, A.M_NO FROM J_ONELINEREPLY A, J_MEMBER B WHERE A.M_NO = B.M_NO AND DEL_YN = 'n' ORDER BY REPLY_NO DESC
+  	SELECT REPLY_NO,BRD_NO, CONTENT, FC_DATE_CHECK(REG_DATE) AS REG_DATE, M_NICK, A.M_NO FROM J_ONELINEREPLY A, J_MEMBER B WHERE A.M_NO = B.M_NO AND DEL_YN = 'n'
   </select>
   <update id="updateReply" parameterType="J_OneLineReply">
   	UPDATE J_ONELINEREPLY SET CONTENT = #{content} WHERE REPLY_NO = #{reply_no} AND DEL_YN = 'n'

@@ -23,7 +23,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectmno" parameterType="String" resultType="Integer">
-		select m_no from j_member where m_email=#{m_email} and m_del_yn='y'
+		select nvl(max(m_no),0) as m_no from j_member where m_email=#{m_email} and m_del_yn='y'
+	</select>
+	
+	<select id="selectmno2" parameterType="String" resultType="Integer">
+		select m_no from j_member where m_email=#{m_email} and m_del_yn='n'
 	</select>
 
 	<update id="updateData" parameterType="J_Member">
@@ -34,13 +38,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<insert id="insertMember" parameterType="J_Member">
-		insert into j_member
-		values(#{m_no},#{m_email},#{m_passwd},#{m_nick},sysdate,null,'n',#{c_code},#{l_code})
+		insert into j_member values(#{m_no},#{m_email},#{m_passwd},#{m_nick},sysdate,null,'n',#{c_code},#{l_code})
 	</insert>
 
 	<select id="selectNum" resultType="Integer">
-		select nvl(max(m_no),0)+1 from
-		j_member
+		select nvl(max(m_no),0)+1 from j_member
 	</select>
 
 	<select id="loginChkk" parameterType="String" resultType="String">

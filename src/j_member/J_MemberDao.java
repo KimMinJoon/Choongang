@@ -115,18 +115,18 @@ public class J_MemberDao {
 			 * pstmt.setString(1, mb.getM_email()); rs = pstmt.executeQuery();
 			 * if (rs.next()) { m_no = rs.getInt(1); pstmt.close(); }
 			 */
-			/*m_no = (int) session.selectOne("selectmno", mb);
-			System.out.println("m_no : "+m_no);*/
-			// HashMap<String, Integer> hm = new HashMap<>();
+			m_no = (int) session.selectOne("selectmno", mb);
+			System.out.println("m_nojoin : "+m_no);
+			
 
-			/*if (m_no > 0) {
+			if (m_no > 0) {
 				result = session.update("updateData", mb);
-			} else {*/
-				m_number = (int) session.selectOne("selectNum");
+			} else {
+			m_number = (int) session.selectOne("selectNum");
 				mb.setM_no(m_number);
 				result = session.insert("insertMember", mb);
-			/*}
-*/
+			}
+
 			/*
 			 * pstmt = conn.prepareStatement(sql3); pstmt.setString(1,
 			 * mb.getM_passwd()); pstmt.setString(2, mb.getM_nick());
@@ -179,7 +179,7 @@ public class J_MemberDao {
 			 */
 			System.out.println("dbpass : " + dbpass);
 			if (dbpass.equals(m_passwd)) {
-				result = 1;
+				result = (int)session.selectOne("selectmno2", m_email);
 			} else
 				result = 0;
 

@@ -80,58 +80,56 @@ function deleteRpChk(re_no, brd_no, pageNum){
 </head>
 <body>
 	
-	
 	<c:if test="${not empty jrb }">
-	<table class="tab" align="center" width="70%" cellspacing="0" cellpadding="0">
+	<table class="tab" align="center" width="20%" cellspacing="0" cellpadding="5">
 		<caption><h2>게시글 보기</h2></caption>
 		<tr>
-			<td>제목</td>
-			<td>${jrb.brd_subject}</td>
-		</tr>
-		<tr>
-			<td>닉네임</td>
+			<th>닉네임 : </th>
 			<td>${jrb.m_nick}</td>
 		</tr>
-
 		<tr>
-			<td>말머리</td>
-			<td>${jrb.rc_value}</td>
+			<th>추천수 : </th>
+			<td><b class="red">${jrb.recocount}</b></td>
 		</tr>
-
 		<tr>
-			<td>조회수</td>
+			<th>조회수 : </th>
 			<td>${jrb.brd_readcount}</td>
 		</tr>
-
 		<tr>
-			<td>추천수</td>
-			<td>${jrb.recocount}</td>
-		</tr>
-
-		<tr>
-			<td>IP</td>
+			<th>IP : </th>
 			<td>${jrb.brd_ip}</td>
+		</tr>
+		<tr>
+			<th>댓글 : </th>
+			<td> x </td>
 		</tr>
 
 		<c:if test="${null ne jrb.brd_update_date}">
 		<tr>
-			<td>작성일</td>
+			<th>작성일 : </th>
 			<td>${jrb.brd_reg_date}</td>
 		</tr>
 		<tr>
-			<td>최근수정일</td>
+			<th>최근수정일 : </th>
 			<td>${jrb.brd_update_date}</td>
 		</tr>
 		</c:if>
 		<c:if test="${null eq jrb.brd_update_date}">
 		<tr>
-			<td>작성일</td>
+			<th>작성일</th>
 			<td>${jrb.brd_reg_date}</td>
 		</tr>
 		</c:if>
+	</table>
+
+	<p>
+	<table class="tab" align="center" width="70%" cellspacing="0" cellpadding="10">
 		<tr>
-			<td>내용</td>
-			<td><pre>${jrb.brd_content}</pre></td>
+			<th width="10%">제목</th>
+			<td><font class="category">[${jrb.rc_value}]</font> ${jrb.brd_subject}</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center"><pre>${jrb.brd_content}</pre></td>
 		</tr>
 	</table>
 	</c:if>
@@ -183,8 +181,8 @@ function deleteRpChk(re_no, brd_no, pageNum){
 							<input type="button" value="수정">
 							<input type="button" value="삭제" onclick="deleteRpChk(${jrr.re_no},${brd_no},${pageNum})">
 						</c:if>
-						<hr>
 					</c:if>
+					<hr>
 				</c:forEach>
 			</c:if>		
 		</form>

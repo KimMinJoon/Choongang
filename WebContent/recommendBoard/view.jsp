@@ -24,7 +24,7 @@ function chk() {
 	alert("로그인 후 사용하실 수 있습니다.");
 }
 </script>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
 $(function() {
 	$('#btnLike').click(function(){
@@ -44,15 +44,6 @@ $(function() {
 		});
 	});
 });
-function textCheck() {
-	var counter = document.getElementById("counter");
-	var re_content = document.getElementById("re_content");
-	counter.innerHTML = 
-		re_content.value.length + "/" + re_content.maxLength;
-	if(re_content.value.length >= re_content.maxLength){
-		alert("최대 " + re_content.maxLength + "글자 까지 작성할수 있습니다.");
-	}
-}
 
 function isSubmit(number) {
 	/* alert("m_no : " + number); */
@@ -169,35 +160,40 @@ function deleteRpChk(re_no, brd_no, pageNum){
 	
 	<p>
 	
-	<center>
-	<div style="border: 1px solid; padding: 10px 10px 10px 10px;" class="wrap">
-		<form action="">
+	
+	<div style="border: 1px solid; padding: 10px 10px 10px 10px; margin:0 auto; width: 60%">
 			<hr>
 			<c:if test="${not empty rpList}">
 				<c:forEach var="jrr" items="${rpList}">
-					${jrr.m_nick}/${jrr.re_reg_Date}/${jrr.re_content}
+					<a class="re_nick">${jrr.m_nick}</a>
+					<span class="re_date">${jrr.re_reg_Date}</span>
 					<c:if test="${not empty m_no}">
 						<c:if test="${m_no == jrr.m_no}">
-							<input type="button" value="수정">
-							<input type="button" value="삭제" onclick="deleteRpChk(${jrr.re_no},${brd_no},${pageNum})">
+							<a class="re_a"> 답글 </a>
+							<span class="re_j">|</span>
+							<a class="re_a"> 수정 </a>
+							<span class="re_j">|</span>
+							<a class="re_a" onclick="deleteRpChk(${jrr.re_no},${brd_no},${pageNum})"> 삭제 </a>
 						</c:if>
 					</c:if>
+
+					<p>
+				
+					<dt class="re_content"> ${jrr.re_content} </dt>
+					
 					<hr>
 				</c:forEach>
-			</c:if>		
-		</form>
+			</c:if>
 		
 		<form action="insertReply.do" name="frm" onsubmit="return isSubmit(${sessionScope.m_no})">
 			<input type="hidden" name="m_no" value="${sessionScope.m_no }">
 			<input type="hidden" name="brd_no" class= "${brd_no}" value="${brd_no}">
 			<input type="hidden" name="pageNum" value="${pageNum}">
-			<textarea rows="3" cols="50" maxlength="150" id="re_content"
-				name="re_content" required="required" onkeyup="textCheck()"></textarea>
-			<span id="counter">0/150</span> <input
-				style="height: 40px; width: 100px;" type="submit" value="등록">
+			<textarea style="resize: none; width: 80%; vertical-align: top;" rows="4" cols="50" maxlength="1000" id="re_content"
+				name="re_content" required="required"></textarea>
+			<input style="height: 65px; width: 100px; text-align: center;" type="submit" value="등록">
 		</form>
 	</div>
-	</center>
 	
 </body>
 </html>

@@ -38,7 +38,7 @@
 			<tr align="center">
 				<td colspan="2">
 				<input type="submit" value="삭제">
-				<input type="button" value="취소" onclick="window.close()">
+				<input type="button" value="취소" onclick="history.back(-1)">
 				</td>
 			</tr>
 		</table>

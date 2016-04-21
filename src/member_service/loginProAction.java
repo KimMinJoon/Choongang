@@ -21,7 +21,6 @@ public class loginProAction implements CommandProcess {
 		if(result > 0 ) {
 			session.setAttribute("m_no", result+"");
 		}
-		
 		request.setAttribute("result", result);
 		
 		return "/member/loginPro.jsp";

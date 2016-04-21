@@ -82,7 +82,7 @@ function deleteRpChk(re_no, brd_no, pageNum){
 	
 	
 	<c:if test="${not empty jrb }">
-	<table border="1" width="70%" align="center">
+	<table class="tab" align="center" width="70%" cellspacing="0" cellpadding="0">
 		<caption><h2>게시글 보기</h2></caption>
 		<tr>
 			<td>제목</td>
@@ -180,6 +180,7 @@ function deleteRpChk(re_no, brd_no, pageNum){
 					${jrr.m_nick}/${jrr.re_reg_Date}/${jrr.re_content}
 					<c:if test="${not empty m_no}">
 						<c:if test="${m_no == jrr.m_no}">
+							<input type="button" value="수정">
 							<input type="button" value="삭제" onclick="deleteRpChk(${jrr.re_no},${brd_no},${pageNum})">
 						</c:if>
 						<hr>

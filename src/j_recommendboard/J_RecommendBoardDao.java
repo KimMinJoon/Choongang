@@ -71,7 +71,6 @@ public class J_RecommendBoardDao {
 		try {
 			number = (int)session.selectOne("insertNum");
 			if (recommendboard.getBrd_no() > 0) {
-				System.out.println("stepreco");
 				session.update("stepreco", recommendboard);
 				recommendboard.setRe_level(recommendboard.getRe_level() + 1);
 				recommendboard.setRe_step(recommendboard.getRe_step() + 1);

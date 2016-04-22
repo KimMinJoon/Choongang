@@ -5,11 +5,39 @@
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="../projectcss.css">
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
+
+
+function deleteRepChk(re_no, brd_no, pageNum){
+	if(confirm("정말 삭제하시겠습니까?")){
+		alert("2");
+		location.href="${pageContext.request.contextPath}/meetBoard/deleteFormReply.do?re_no="+re_no+"&brd_no="+brd_no+"&pageNum="+pageNum;	
+	}else{
+		return;
+	}
+}
+
+function isSubmit(number) {
+	/* alert("m_no : " + number); */
+		if(number == null || number == "" || number == "null"){
+			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
+				location.href = "${pageContext.request.contextPath}/member/login.do";
+			} else {
+				return false;
+			}
+		}else{
+			return true;
+		}
+		return false;
+}
+
+
 	function chk() {
 		alert("회원가입 후 사용하실 수 있습니다.")
 	}
+	
 $(function() {
 	$('#btnLike').click(function(){
 		$.ajax({
@@ -21,9 +49,9 @@ $(function() {
 			success : function(data){
 				alert($.trim(data));
 				if ($.trim(data) == "TRUE") {
-					$('#btnLike').text("좋아요");
-				} else if($.trim(data) == "FALSE"){
 					$('#btnLike').text("좋아요 취소");
+				} else if($.trim(data) == "FALSE"){
+					$('#btnLike').text("좋아요 ");
 				}
 			} 
 		});
@@ -31,58 +59,68 @@ $(function() {
 });
 
 </script>
-<link rel="stylesheet" type="text/css" href="../projectcss.css">
 </head>
 <body>
 	<c:if test="${not empty brd }">
-	<table border="1" width="80%"><caption>게시판 상세내용</caption>
+	<table border="1" width="80%" align="center">
+	<caption><h2>게시판 보기</h2></caption>
 		<tr>
-			<th>제목</th><td>${brd.brd_subject}</td>
-		</tr>
-		<tr>
-			<th>닉네임</th><td>${brd.m_nick}</td>
-		</tr>
-		
-		<tr>
-			<th>말머리</th><td>${brd.c_value_cate}</td>
+			<th>제목</th>
+			<td>${brd.brd_subject}</td>
 		</tr>
 		
 		<tr>
-			<th>조회수</th><td>${brd.brd_readcount}</td>
+			<th>닉네임</th>
+			<td>${brd.m_nick}</td>
 		</tr>
 		
 		<tr>
-			<th>추천수</th><td>${brd.brd_recommend}</td>
+			<th>말머리</th>
+			<td>${brd.c_value_cate}</td>
 		</tr>
 		
 		<tr>
-			<th>희망언어</th><td>${brd.c_value_lang}</td>
-		</tr>
-		
-		<%-- <tr>
-			<th>IP</th><td><%=brd.getBrd_ip() %></td>
-		</tr> --%>
-		
-		<c:if test="${not empty brd.brd_update_date }">
-		
-		<tr>
-			<th>작성일</th><td>${brd.brd_reg_date}</td>
+			<th>조회수</th>
+			<td>${brd.brd_readcount}</td>
 		</tr>
 		
 		<tr>
-			<th>최근수정일</th><td>${brd.brd_update_date}</td>
+			<th>추천수</th>
+			<td>${brd.brd_recommend}</td>
 		</tr>
-		</c:if>
-		<c:if test="${empty brd.brd_update_date }">
+		
 		<tr>
-			<th>작성일</th><td>${brd.brd_reg_date}</td>
+			<th>희망언어</th>
+			<td>${brd.c_value_lang}</td>
 		</tr>
-		</c:if>
+		
+	<c:if test="${not empty brd.brd_update_date }">
+		
 		<tr>
-			<th>내용</th><td><pre>${brd.brd_content}</pre></td>
-			<!-- pre는 입력한 내용을 잇는 그래도 보여줌  -->
+			<th>작성일</th>
+			<td>${brd.brd_reg_date}</td>
 		</tr>
+		
+		<tr>
+			<th>최근수정일</th>
+			<td>${brd.brd_update_date}</td>
+		</tr>
+	</c:if>
+		
+	<c:if test="${empty brd.brd_update_date }">
+		<tr>
+			<th>작성일</th>
+			<td>${brd.brd_reg_date}</td>
+		</tr>
+	</c:if>
+	
+		<tr>
+			<th>내용</th>
+			<td><pre>${brd.brd_content}</pre></td>
+		</tr>
+		
 </table>
+
 </c:if>
 
 <c:if test="${empty brd }">
@@ -90,8 +128,6 @@ $(function() {
 </c:if>
 
 <div align="center">
-
-	
 	<c:if test="${empty m_no}">
 		<button id="btnLike" onclick="chk()">좋아요</button>
 	</c:if>
@@ -114,12 +150,71 @@ $(function() {
 	<c:if test="${not empty m_no}">
 	<c:if test="${m_no eq brd.m_no }">
 	<button onclick="location.href='updateForm.do?brd_no=${brd_no}&pageNum=${pageNum}'">수정하기</button>
-	<!-- 이렇게해야 수정을 누르면 수정클릭한 해당 페이지로 보내준다. -->
 	<button onclick="location.href='deleteForm.do?brd_no=${brd_no}&pageNum=${pageNum}'">삭제하기</button>
 	</c:if>
 	</c:if>
-	<%-- <button onclick="location.href='writeForm.jsp?brd_no=<%=brd_no %>&pageNum=<%=pageNum%>'">답변</button> --%>
 </div>
+
+<hr>
+	<h2 align="center">댓글</h2>
+<hr>
+<form action="../meetBoard/insertReplyPro.do" onsubmit="return isSubmit(${sessionScope.m_no })" method="post">
+<input type="hidden" name="m_no" value="${sessionScope.m_no }">
+<input type="hidden" name="brd_no" value="${brd.brd_no}">
+<input type="hidden" name="pageNum" value="${pageNum}">
+<table border="1" align="center">
+		<tr>
+			<td>
+				<textarea rows="5" cols="50" name="re_content" required="required"></textarea>
+			</td>
+		</tr>
+		<tr>
+		<td colspan="2" align="center">
+			<input type="submit" value="확인">
+			<input type="reset"  value="취소">
+		</td>
+	</tr>
+</table>
+</form>
+<hr>
+
+<c:forEach var="jmbr" items="${list }"> 
+<c:if test="${not empty list }">
+<hr>
+<table  width="80%" align="center" >
+	<tr align="left">
+		<td>${jmbr.m_nick}</td>
+	</tr>
+	
+	<tr align="left">
+		<th>${jmbr.re_content}</th>
+	</tr>	
+	
+	<tr align="left">
+		<td>${jmbr.re_reg_date}</td>
+	</tr>
+	<c:if test="${not empty m_no}">
+	<c:if test="${m_no eq jmbr.m_no }">
+	<tr>
+		<td>
+			<!-- <input type="button" value="수정" class="btnRepUpdate"> -->
+			<input type="button" value="삭제" onclick="deleteRepChk(${jmbr.re_no},${jmbr.brd_no},${pageNum})">
+		</td>
+	</tr>
+	</c:if>
+	</c:if>
+	
+</table>
+</c:if>
+</c:forEach>
+
+<c:if test="${empty list }">
+	댓글이 없어요
+</c:if>
+
+<hr>
+
+
 
 </body>
 </html>

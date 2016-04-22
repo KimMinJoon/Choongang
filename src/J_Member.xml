@@ -73,9 +73,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and m_del_yn='n'
 	</select>
 
-	<update id="updateInfo" parameterType="J_Member">
+	<update id="updateInfoz" parameterType="J_Member">
 		update j_member set
-		m_passwd=?, m_nick=#{m_nick}, c_code=#{c_code}, l_code=#{l_code} where m_email=#{m_email} and
+		m_passwd=#{m_passwd}, m_nick=#{m_nick}, c_code=#{c_code}, l_code=#{l_code} where m_email=#{m_email} and
 		m_del_yn='n'
 	</update>
 	
@@ -83,7 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update j_member set m_del_yn='y', m_out_date=sysdate where m_no=#{m_no} and m_del_yn='n'
 	</update>
 	
-	<select id="passwdChk" parameterType="J_Member" resultType="String">
+	<select id="passwdChkk" parameterType="hashMap"  resultType="String">
   select m_passwd from j_member where m_no=#{m_no} and m_passwd=#{m_passwd}
   </select>
 </mapper>

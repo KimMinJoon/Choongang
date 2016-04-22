@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </resultMap>
   
   <select id="selectrecoRp" resultMap="J_RecoReplyResult" parameterType="Integer">
-  	select re_no,re_content, fc_date_check(re_reg_date) as re_reg_date, m_nick, a.m_no from j_recoReply a, j_member m where a.m_no = m.m_no and re_del_yn = 'n' and brd_no = #{brd_no}
+  	select re_no, re_content, to_char(re_reg_date, 'yyyy.mm.dd. hh24:mi') as re_reg_Date, m_nick, a.m_no from j_recoReply a, j_member m where a.m_no = m.m_no and re_del_yn = 'n' and brd_no = #{brd_no}
   </select>
 
   <insert id="insertrecoRp" parameterType="J_RecoReply">

@@ -24,7 +24,7 @@ function chk() {
 	alert("로그인 후 사용하실 수 있습니다.");
 }
 </script>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
 $(function() {
 	$('#btnLike').click(function(){
@@ -44,15 +44,6 @@ $(function() {
 		});
 	});
 });
-function textCheck() {
-	var counter = document.getElementById("counter");
-	var re_content = document.getElementById("re_content");
-	counter.innerHTML = 
-		re_content.value.length + "/" + re_content.maxLength;
-	if(re_content.value.length >= re_content.maxLength){
-		alert("최대 " + re_content.maxLength + "글자 까지 작성할수 있습니다.");
-	}
-}
 
 function isSubmit(number) {
 	/* alert("m_no : " + number); */
@@ -80,58 +71,56 @@ function deleteRpChk(re_no, brd_no, pageNum){
 </head>
 <body>
 	
-	
 	<c:if test="${not empty jrb }">
-	<table border="1" width="70%" align="center">
+	<table class="tab" align="center" width="20%" cellspacing="0" cellpadding="5">
 		<caption><h2>게시글 보기</h2></caption>
 		<tr>
-			<td>제목</td>
-			<td>${jrb.brd_subject}</td>
-		</tr>
-		<tr>
-			<td>닉네임</td>
+			<th>닉네임 : </th>
 			<td>${jrb.m_nick}</td>
 		</tr>
-
 		<tr>
-			<td>말머리</td>
-			<td>${jrb.rc_value}</td>
+			<th>추천수 : </th>
+			<td><b class="red">${jrb.recocount}</b></td>
 		</tr>
-
 		<tr>
-			<td>조회수</td>
+			<th>조회수 : </th>
 			<td>${jrb.brd_readcount}</td>
 		</tr>
-
 		<tr>
-			<td>추천수</td>
-			<td>${jrb.recocount}</td>
-		</tr>
-
-		<tr>
-			<td>IP</td>
+			<th>IP : </th>
 			<td>${jrb.brd_ip}</td>
+		</tr>
+		<tr>
+			<th>댓글 : </th>
+			<td> x </td>
 		</tr>
 
 		<c:if test="${null ne jrb.brd_update_date}">
 		<tr>
-			<td>작성일</td>
+			<th>작성일 : </th>
 			<td>${jrb.brd_reg_date}</td>
 		</tr>
 		<tr>
-			<td>최근수정일</td>
+			<th>최근수정일 : </th>
 			<td>${jrb.brd_update_date}</td>
 		</tr>
 		</c:if>
 		<c:if test="${null eq jrb.brd_update_date}">
 		<tr>
-			<td>작성일</td>
+			<th>작성일</th>
 			<td>${jrb.brd_reg_date}</td>
 		</tr>
 		</c:if>
+	</table>
+
+	<p>
+	<table class="tab" align="center" width="70%" cellspacing="0" cellpadding="10">
 		<tr>
-			<td>내용</td>
-			<td><pre>${jrb.brd_content}</pre></td>
+			<th width="10%">제목</th>
+			<td><font class="category">[${jrb.rc_value}]</font> ${jrb.brd_subject}</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center"><pre>${jrb.brd_content}</pre></td>
 		</tr>
 	</table>
 	</c:if>
@@ -171,34 +160,40 @@ function deleteRpChk(re_no, brd_no, pageNum){
 	
 	<p>
 	
-	<center>
-	<div style="border: 1px solid; padding: 10px 10px 10px 10px;" class="wrap">
-		<form action="">
+	
+	<div style="border: 1px solid; padding: 10px 10px 10px 10px; margin:0 auto; width: 60%">
 			<hr>
 			<c:if test="${not empty rpList}">
 				<c:forEach var="jrr" items="${rpList}">
-					${jrr.m_nick}/${jrr.re_reg_Date}/${jrr.re_content}
+					<a class="re_nick">${jrr.m_nick}</a>
+					<span class="re_date">${jrr.re_reg_Date}</span>
 					<c:if test="${not empty m_no}">
 						<c:if test="${m_no == jrr.m_no}">
-							<input type="button" value="삭제" onclick="deleteRpChk(${jrr.re_no},${brd_no},${pageNum})">
+							<a class="re_a"> 답글 </a>
+							<span class="re_j">|</span>
+							<a class="re_a"> 수정 </a>
+							<span class="re_j">|</span>
+							<a class="re_a" onclick="deleteRpChk(${jrr.re_no},${brd_no},${pageNum})"> 삭제 </a>
 						</c:if>
-						<hr>
 					</c:if>
+
+					<p>
+				
+					<dt class="re_content"> ${jrr.re_content} </dt>
+					
+					<hr>
 				</c:forEach>
-			</c:if>		
-		</form>
+			</c:if>
 		
 		<form action="insertReply.do" name="frm" onsubmit="return isSubmit(${sessionScope.m_no})">
 			<input type="hidden" name="m_no" value="${sessionScope.m_no }">
 			<input type="hidden" name="brd_no" class= "${brd_no}" value="${brd_no}">
 			<input type="hidden" name="pageNum" value="${pageNum}">
-			<textarea rows="3" cols="50" maxlength="150" id="re_content"
-				name="re_content" required="required" onkeyup="textCheck()"></textarea>
-			<span id="counter">0/150</span> <input
-				style="height: 40px; width: 100px;" type="submit" value="등록">
+			<textarea style="resize: none; width: 80%; vertical-align: top;" rows="4" cols="50" maxlength="1000" id="re_content"
+				name="re_content" required="required"></textarea>
+			<input style="height: 65px; width: 100px; text-align: center;" type="submit" value="등록">
 		</form>
 	</div>
-	</center>
 	
 </body>
 </html>

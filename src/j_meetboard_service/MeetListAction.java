@@ -38,7 +38,6 @@ public class MeetListAction implements CommandProcess {
 		int totalBlk = (int)Math.ceil((double)totalPage/pagePerBlock);//총블록 구하기 
 		int startPage = (nowPage - 1) / 10 * 10 + 1;
 		int endPage = startPage + pagePerBlock - 1;
-		
 		if (endPage > totalPage) {
 			endPage = totalPage;
 		}

@@ -76,6 +76,33 @@ input {
 	font-weight: 900;
 }
 
+.re_nick {
+	text-align: left;
+	color: red;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+.re_date {
+	text-align: left;
+	color: gray;
+	font-size: 12px;
+}
+
+.re_content {
+	text-align: left;
+	font-size: 13px;
+}
+
+.re_a {
+	font-size: 12px;	
+}
+
+.re_j {
+	font-size: 12px;
+	color: #C3C3C3;
+}
+
 a:link {color:black; text-decoration:none}
 a:visited {color:black; text-decoration:none}
 a:active {color:black; text-decoration:none}

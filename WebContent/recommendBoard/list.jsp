@@ -53,7 +53,7 @@
 				</c:if>
 				<a href="view.do?brd_no=${jrb.brd_no}&pageNum=${nowPage}">${jrb.brd_subject}</a>
 				<c:if test="${jrb.brd_readcount > 20}">
-					<img src='images/hot.gif'>
+					<img src='../images/hot.gif'>
 				</c:if>
 				</td>
 				<td class="nickname">${jrb.m_nick}</td>

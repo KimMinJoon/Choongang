@@ -24,7 +24,7 @@ function chk() {
 	alert("로그인 후 사용하실 수 있습니다.");
 }
 </script>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
 $(function() {
 	$('#btnLike').click(function(){
@@ -36,70 +36,91 @@ $(function() {
 			},
 			success : function(data){
 				if ($.trim(data) == "TRUE") {
-					$('#btnLike').text("좋아요");
-				} else if($.trim(data) == "FALSE"){
 					$('#btnLike').text("좋아요 취소");
+				} else if($.trim(data) == "FALSE"){
+					$('#btnLike').text("좋아요");
 				}
 			} 
 		});
 	});
 });
+
+function isSubmit(number) {
+	/* alert("m_no : " + number); */
+		if(number == null || number == "" || number == "null"){
+			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
+				location.href = "${pageContext.request.contextPath}/member/login.do";
+			} else {
+				return false;
+			}
+		}else{
+			return true;
+		}
+		return false;	
+}
+
+function deleteRpChk(re_no, brd_no, pageNum){
+	if(confirm("정말 삭제하시겠습니까?")){
+		location.href="${pageContext.request.contextPath}/recommendBoard/deleteReply.do?re_no="+re_no+"&brd_no="+brd_no+"&pageNum="+pageNum;	
+	}else{
+		return;
+	}
+}
+
 </script>
 </head>
 <body>
 	
-	
 	<c:if test="${not empty jrb }">
-	<table border="1" width="70%" align="center">
+	<table class="tab" align="center" width="20%" cellspacing="0" cellpadding="5">
 		<caption><h2>게시글 보기</h2></caption>
 		<tr>
-			<td>제목</td>
-			<td>${jrb.brd_subject}</td>
-		</tr>
-		<tr>
-			<td>닉네임</td>
+			<th>닉네임 : </th>
 			<td>${jrb.m_nick}</td>
 		</tr>
-
 		<tr>
-			<td>말머리</td>
-			<td>${jrb.rc_value}</td>
+			<th>추천수 : </th>
+			<td><b class="red">${jrb.recocount}</b></td>
 		</tr>
-
 		<tr>
-			<td>조회수</td>
+			<th>조회수 : </th>
 			<td>${jrb.brd_readcount}</td>
 		</tr>
-
 		<tr>
-			<td>추천수</td>
-			<td>${jrb.recocount}</td>
-		</tr>
-
-		<tr>
-			<td>IP</td>
+			<th>IP : </th>
 			<td>${jrb.brd_ip}</td>
+		</tr>
+		<tr>
+			<th>댓글 : </th>
+			<td> x </td>
 		</tr>
 
 		<c:if test="${null ne jrb.brd_update_date}">
 		<tr>
-			<td>작성일</td>
+			<th>작성일 : </th>
 			<td>${jrb.brd_reg_date}</td>
 		</tr>
 		<tr>
-			<td>최근수정일</td>
+			<th>최근수정일 : </th>
 			<td>${jrb.brd_update_date}</td>
 		</tr>
 		</c:if>
 		<c:if test="${null eq jrb.brd_update_date}">
 		<tr>
-			<td>작성일</td>
+			<th>작성일</th>
 			<td>${jrb.brd_reg_date}</td>
 		</tr>
 		</c:if>
+	</table>
+
+	<p>
+	<table class="tab" align="center" width="70%" cellspacing="0" cellpadding="10">
 		<tr>
-			<td>내용</td>
-			<td><pre>${jrb.brd_content}</pre></td>
+			<th width="10%">제목</th>
+			<td><font class="category">[${jrb.rc_value}]</font> ${jrb.brd_subject}</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center"><pre>${jrb.brd_content}</pre></td>
 		</tr>
 	</table>
 	</c:if>
@@ -136,6 +157,43 @@ $(function() {
 			<button onclick="location.href='writeForm.do?brd_no=${brd_no}&pageNum=${pageNum}'">답변</button>
 		</c:if>
 	</div>
+	
+	<p>
+	
+	
+	<div style="border: 1px solid; padding: 10px 10px 10px 10px; margin:0 auto; width: 60%">
+			<hr>
+			<c:if test="${not empty rpList}">
+				<c:forEach var="jrr" items="${rpList}">
+					<a class="re_nick">${jrr.m_nick}</a>
+					<span class="re_date">${jrr.re_reg_Date}</span>
+					<c:if test="${not empty m_no}">
+						<c:if test="${m_no == jrr.m_no}">
+							<a class="re_a"> 답글 </a>
+							<span class="re_j">|</span>
+							<a class="re_a"> 수정 </a>
+							<span class="re_j">|</span>
+							<a class="re_a" onclick="deleteRpChk(${jrr.re_no},${brd_no},${pageNum})"> 삭제 </a>
+						</c:if>
+					</c:if>
 
+					<p>
+				
+					<dt class="re_content"> ${jrr.re_content} </dt>
+					
+					<hr>
+				</c:forEach>
+			</c:if>
+		
+		<form action="insertReply.do" name="frm" onsubmit="return isSubmit(${sessionScope.m_no})">
+			<input type="hidden" name="m_no" value="${sessionScope.m_no }">
+			<input type="hidden" name="brd_no" class= "${brd_no}" value="${brd_no}">
+			<input type="hidden" name="pageNum" value="${pageNum}">
+			<textarea style="resize: none; width: 80%; vertical-align: top;" rows="4" cols="50" maxlength="1000" id="re_content"
+				name="re_content" required="required"></textarea>
+			<input style="height: 65px; width: 100px; text-align: center;" type="submit" value="등록">
+		</form>
+	</div>
+	
 </body>
 </html>

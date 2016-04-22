@@ -62,9 +62,10 @@ public class J_NoticeBoardDao {
 		int result = 0;
 		int number = 0;// brd_no이다~
 		try {
-			number = (int) session.selectOne("selectNum");
+			number = (int) session.selectOne("selectNumz");
 			noticeboard.setBrd_no(number);
 			result = session.insert("insertBoard", noticeboard);
+			System.out.println("result넌뭐니 : "+result);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

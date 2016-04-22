@@ -79,7 +79,7 @@
 	}
 	
 	$(function() {
-		$('#m_passwd').blur(function() {
+		$('#m_passwd').keydown(function() {
 			var re = /s$/;
 			var str_space = /\s/;
 			if($("#m_passwd").val().length < 6) {
@@ -92,7 +92,7 @@
 	});
 	
 	$(function() {
-		$('#m_nick').blur(function() { 
+		$('#m_nick').keyup(function() { 
 			/* #은 밑에 input type id를 말한다. */
 			/* 포커스를 잃었을때를 실행하라 */
 			var regex = /^[가-힝A-Za-z0-9]{2,10}$/;

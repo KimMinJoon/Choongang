@@ -14,8 +14,9 @@ public class MyInfoAction implements CommandProcess{
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String m_no  = (String)session.getAttribute("m_no");
+		System.out.println("m_no액션!"+m_no);
 		J_MemberDao jmd = J_MemberDao.getInstance();
-		J_Member jif = jmd.infoselect(m_no);
+		J_Member jif = jmd.infoselect(Integer.parseInt(m_no));
 		request.setAttribute("jif", jif);
 		
 		return "/member/myinfo.jsp";

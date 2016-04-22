@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="J_MeetBoardReply">
+  <resultMap id="J_MeetBoardReplyResult"  type="J_MeetBoardReply">
+  <!-- 마이바티스는 타입이다. 클래스아니고 -->
+  <!-- 밑에도 Class를 다 type으로 -->
+  <result property="re_no"         		  column="re_no"/>
+    <result property="brd_no"    		  column="brd_no"/>
+    <result property="re_content"  		 column="re_content"/>
+    <result property="re_reg_date"  	   column="re_reg_date"/>
+    <result property="re_update_date" 	  column="re_update_date"/>
+    <result property="m_nick" 				column="m_nick"/>
+    <result property="m_no" 			  column="m_no"/>
+  </resultMap>
+  
+  <select id="insertNumberReply" parameterType="Integer" resultType="Integer">
+  select nvl(max(re_no),0)+1 from j_meetboardreply
+  </select>
+  
+  <insert id="insertReply" parameterType="J_MeetBoardReply">
+  	insert into j_meetboardreply values (#{re_no},#{m_no},#{brd_no},#{re_content},sysdate,null,'n')
+  </insert>
+  
+  <select id="selectListReply" parameterType="Integer" resultMap="J_MeetBoardReplyResult">
+  select jmbr.*, jm.m_nick as m_nick from j_meetboardreply jmbr,j_member jm where jmbr.brd_no = #{brd_no} and jmbr.m_no=jm.m_no and jmbr.del_yn = 'n' order by re_no desc
+  </select>
+  
+  <update id="updateMeetboardReply" parameterType="J_MeetBoardReply">
+  update j_meetboardreply set re_content = #{re_content} where re_no = #{re_no} and del_yn = 'n'
+  </update>
+  
+  <update id="deleteReply" parameterType="Integer">
+  	update j_meetboardreply set del_yn = 'y' where re_no = #{re_no} and del_yn = 'n'
+  </update>
+  
+ <!--  <select id="selectReply" resultMap="J_OneLineReplyResult">
+  	SELECT REPLY_NO,BRD_NO, CONTENT, FC_DATE_CHECK(REG_DATE) AS REG_DATE, M_NICK, A.M_NO FROM J_ONELINEREPLY A, J_MEMBER B WHERE A.M_NO = B.M_NO AND DEL_YN = 'n'
+  </select>
+  <update id="updateReply" parameterType="J_OneLineReply">
+  	UPDATE J_ONELINEREPLY SET CONTENT = #{content} WHERE REPLY_NO = #{reply_no} AND DEL_YN = 'n'
+  </update>
+  <update id="deleteRep" parameterType="Integer">
+  	UPDATE J_ONELINEREPLY SET OUT_DATE = SYSDATE, DEL_YN = 'y' WHERE REPLY_NO = #{reply_no} AND DEL_YN = 'n'
+  </update> -->
+</mapper>

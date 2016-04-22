@@ -11,3 +11,4 @@
 <%
 	}
 %>
+<input type="hidden" value="<%=m_no%>" id="sessionID">

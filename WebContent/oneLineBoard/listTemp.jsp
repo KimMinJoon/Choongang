@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-table{
+table.listContainer{
 	width: 875px;
 	border: 1px solid black;
 	border-collapse: collapse;
@@ -16,6 +16,11 @@ table{
 }
 table.insertContainer{
 	position : relative;
+	width: 875px;
+	border: 1px solid black;
+	border-collapse: collapse;
+	border-spacing:0;
+	margin: 0 auto;
 }
 span.counter{
 	position: absolute;
@@ -41,31 +46,73 @@ span.counter{
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
 	$(function(){
-		$.getJSON('http://localhost:8181/j_onelineboard/OnelineJsonList?pageNum=${pageNum}&searchType=${searchType}&searchTxt=${searchTxt}',
+		var id = "<%=session.getAttribute("m_no")%>";		
+		$.getJSON('http://localhost:8181/${pageContext.request.contextPath}/OnelineJsonList?pageNum=${pageNum}&searchType=${searchType}&searchTxt=${searchTxt}',
 				function(data){
 			$.each(data,function(){
-				$('.listContainer').append('<tr><td>'+this.empno+
-					'</td><td>'+this.ename+'</td><td>'+
-					this.job+'</td><td align=right>'+this.sal+"</td></tr>");
+				var text = (id == this.m_no) ? "<a class='update'>수정</a><a class='delete'>삭제</a>" : "";
+				$('.listContainer').append('<tr><td>'+this.m_nick+
+					'</td><td>'+this.brd_content+'</td><td>'+
+					this.brd_reg_date+"</td><td>"
+					+ text +
+					"</td></tr>");
 			});
 		});
-		
-		
 		$('.brd_content').keyup(function(){ 
 			var text = $('.brd_content').val().length;
 			$('.counter').text(text + '/150');			
 		});
+		/* $('.brd_content').focus(function(){ 
+			var text = $('.brd_content').val().length;
+			$('.counter').text(text + '/150');			
+		}); */
 		
-		$('.writeOne').click(function(){
+	 	$('.writeOne').click(function(){
+			//if(number == null || number == "" || number == "null"){
+	 		//	if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
+	 		//		location.href = "${pageContext.request.contextPath}/member/login.do";
+	 		//	} else {
+	 		//		return;
+	 		//	}
+	 		//}else{
+	 			$('#writeFrm').attr('action','${pageContext.request.contextPath}/oneLineBoard/write.do').attr('method', 'post').submit();
+	 		//}
+	 		//return;
+		});
+		$(document).on("click",".update",function(){
 			
 		});
 	});
+	
+	function locate(pageNum){
+		var searchType = document.getElementById("searchType");
+		var searchTxt = document.getElementById("searchTxt");
+		
+		$.getJSON("http://localhost:8181/${pageContext.request.contextPath}/OnelineJsonList?pageNum=" + pageNum + "&searchType=" + searchType.value + "&searchTxt=" + searchTxt.value,
+				function(data){
+			$.each(data,function(){
+				var text = (id == this.m_no) ? "<a class='update'>수정</a><a class='delete'>삭제</a>" : "";
+				$('.listContainer').append('<tr><td>'+this.m_nick+
+					'</td><td>'+this.brd_content+'</td><td>'+
+					this.brd_reg_date+"</td><td>"
+					+ text +
+					"</td></tr>");
+			});
+		});
+	}
+	
+	
 </script>
 </head>
 <body>
 	<table class="insertContainer">
 		<tr>
-			<td><textarea rows="3" cols="120" maxlength="150" class="brd_content" required="required"></textarea><span class="counter">0/150</span></td>
+			<td>
+				<form id="writeFrm">
+					<input type="hidden" name="m_no" value="${sessionScope.m_no}">
+					<textarea rows="3" cols="120" maxlength="150" class="brd_content" required="required" name="brd_content"></textarea><span class="counter">0/150</span>
+				</form>
+			</td>
 			<td><button class="writeOne">글쓰기</button></td>
 		</tr>
 	</table>
@@ -80,12 +127,7 @@ span.counter{
 				<a href="javascript:locate(${startPage - pagePerBlock})">&lt;이전</a>
 			</c:if>
  			<c:forEach var="i" begin="${startPage}" end="${endPage}">
- 				<c:if test="${nowPage != i}">
  					<a href="javascript:locate(${i})">${i}</a>
- 				</c:if>
- 				<c:if test="${nowPage == i}">
- 					<strong>[${i}]</strong>
- 				</c:if>
 			</c:forEach>
 			<c:if test="${totalPage > endPage}">
 				<a href="javascript:locate(${startPage + pagePerBlock})">다음&gt;</a>

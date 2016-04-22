@@ -6,15 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="../../css/projectcss.css">
+	<!-- <link rel="stylesheet" type="text/css" href="../../css/projectcss.css"> -->
 </head>
 <body>
+    
 	<table align="center">
 		<tr>
-			<td width="1100" height="50"><jsp:include page="top.jsp" /></td>
-		</tr>
-		<tr>
-			<td><jsp:include page="menu.jsp" /></td>
+			<td width="1100" height="600"><jsp:include page="top.jsp" /></td>
 		</tr>
 		<tr>
 			<td>

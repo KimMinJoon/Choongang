@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="../projectcss.css">
+<link rel="stylesheet" type="text/css" href="../css/projectcss.css">
 <script language="javascript">
 /* function pwdpopup(){
 	var purl = "deleteForm.do?brd_no="+${brd_no}+"&pageNum="+${pageNum};

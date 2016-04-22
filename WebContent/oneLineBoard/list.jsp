@@ -25,11 +25,18 @@
 	max-height: 9em;
 	vertical-align: top;
 }
+textarea{
+	vertical-align: top;
+}
 
 .wrap span {
 	position: absolute;
 	bottom: 5px;
 	right: 5px;
+}
+
+.replyForm{
+	position: relative;;
 }
 
 .rows{
@@ -40,10 +47,18 @@
 	background : #FAED7D;
 	border: 1px solid black;
 	position: relative;
+	height: 100px;
 }
 .updateForm{
 	background: #C4B73B;
 	border: 1px solid black;
+	height: 100px;
+}
+.replyUpdate{
+	height: 100px;
+}
+.replyRow{
+	height: 100px;
 }
 .rowNum{
 	font-size: 10px;
@@ -142,6 +157,7 @@ pre > a{
 			$(this).parent().parent().prev().show("slow");
 		});
 	});
+	
 	function deleteChk(brd_no,pageNum){
 		var searchType = document.getElementById("searchType");
 		var searchTxt = document.getElementById("searchTxt");
@@ -159,6 +175,16 @@ pre > a{
 			location.href="${pageContext.request.contextPath}/oneLineBoard/deleteReply.do?reply_no="+reply_no+"&brd_no="+brd_no+"&pageNum="+pageNum+"&searchType=" + searchType.value + "&searchTxt=" + searchTxt.value;	
 		}else{
 			return;
+		}
+	}
+	
+	function sessionChk(number){
+		if(number == null || number == "" || number == "null"){
+ 			if (confirm("이 서비스는 로그인이 필요한 서비스 입니다. 로그인 하시겠습니까?")) {
+ 				location.href = "${pageContext.request.contextPath}/member/login.do";
+ 			} else {
+ 				return;
+ 			}
 		}
 	}
 	
@@ -199,7 +225,7 @@ pre > a{
 			<form action="${pageContext.request.contextPath}/oneLineBoard/write.do" name="wrtierFrm" onsubmit="return isSubmit(${sessionScope.m_no})">
 				<input type="hidden" name="m_no" value="${sessionScope.m_no}">
 				<textarea rows="3" cols="50" maxlength="150" id="content"
-					name="brd_content" required="required" onkeyup="textCheck()"></textarea>
+					name="brd_content" required="required" onkeyup="textCheck()" onfocus="sessionChk(${sessionScope.m_no})"></textarea>
 				<span id="counter">0/150</span> <input
 					style="height: 50px; width: 120px;" type="submit" value="등록">
 			</form>
@@ -226,7 +252,7 @@ pre > a{
 					<div class="updateForm">
 						<form action="${pageContext.request.contextPath}/oneLineBoard/update.do" name="updateFrm" method="post" onsubmit="return isSubmit(${sessionScope.m_no})">
 							<input type="button" class="updateCancel" value="취소"><br>
-<%-- 							<input type="hidden" name="m_no" value="${sessionScope.m_no}"> --%>
+ 							<input type="hidden" name="m_no" value="${sessionScope.m_no}">
 							<input type="hidden" name="pageNum" value="${pageNum}">
 							<input type="hidden" name="brd_no" value="${jolb.brd_no}">
 							<input type="hidden" name="searchType" value="${searchType}">
@@ -234,11 +260,9 @@ pre > a{
 							<p class="originText" style="display: none;">${jolb.brd_content}</p>
 							<textarea rows="3" cols="100" maxlength="150" class="updateContent"
 									name="brd_content" required="required" >${jolb.brd_content}</textarea>
-							
 							<input style="height: 50px; width: 120px;" type="submit" value="등록">
 						</form>
 					</div>
-					
 					<div class="replyForm">
 						<form action="${pageContext.request.contextPath}/oneLineBoard/insertReply.do" name="replyFrm" onsubmit="return isSubmit(${sessionScope.m_no })" method="post">
 							<input type="hidden" name="m_no" value="${sessionScope.m_no }">
@@ -249,37 +273,35 @@ pre > a{
 								name="content" required="required"></textarea>
 					 		<input style="height: 50px; width: 120px;" type="submit" value="등록">
 						</form>
-					<div>
-						<c:if test="${not empty reList}">
+						 <c:if test="${not empty reList}"> 
 							<c:forEach var="jolr" items="${reList}">
 								<c:if test="${jolr.brd_no == jolb.brd_no}">
 									<div class="replyRow">
-									<img src="../images/re.gif">
-									<p>${jolr.m_nick}/${jolr.reg_Date}/${jolr.content}</p>
-									<c:if test="${not empty m_no}">
-										<c:if test="${m_no == jolr.m_no}">
-											<input type="button" value="수정" class="btnRepUpdate">
-											<input type="button" value="삭제" onclick="deleteRepChk(${jolr.reply_no},${jolr.brd_no},${pageNum})">
+										<p>${jolr.m_nick}/${jolr.reg_Date}/${jolr.content}</p>
+										<c:if test="${not empty m_no}">
+											<c:if test="${m_no == jolr.m_no}">
+												<input type="button" value="수정" class="btnRepUpdate">
+												<input type="button" value="삭제" onclick="deleteRepChk(${jolr.reply_no},${jolr.brd_no},${pageNum})">
+											</c:if>
 										</c:if>
-									</c:if>
 									</div>
-							<div class="replyUpdate" style="display: none;">
-								<form action="${pageContext.request.contextPath}/oneLineBoard/UpdateReply.do" method="post" >
-									<input type="hidden" name="reply_no" value="${jolr.reply_no}">
-									<input type="hidden" name="brd_no" value="${jolr.brd_no}">
-									<input type="hidden" name="pageNum" value="${pageNum}">
-									<input type="hidden" name="searchType" value="${searchType}">
-									<input type="hidden" name="searchTxt" value="${searchTxt}">
-									<input type="button" class="repUpdateCancel" value="취소">
-									<p class="originRepText" style="display: none;">${jolr.content}</p>
-									<textarea rows="3" cols="100" maxlength="150" class="updateReContent"
-											name="content" required="required">${jolr.content}</textarea>
-									<input type="submit" value="등록">											</form>
-							</div>
+									<div class="replyUpdate" style="display: none;">
+										<form action="${pageContext.request.contextPath}/oneLineBoard/UpdateReply.do" method="post" >
+											<input type="hidden" name="reply_no" value="${jolr.reply_no}">
+											<input type="hidden" name="brd_no" value="${jolr.brd_no}">
+											<input type="hidden" name="pageNum" value="${pageNum}">
+											<input type="hidden" name="searchType" value="${searchType}">
+											<input type="hidden" name="searchTxt" value="${searchTxt}">
+											<input type="button" class="repUpdateCancel" value="취소">
+											<p class="originRepText" style="display: none;">${jolr.content}</p>
+											<textarea rows="3" cols="100" maxlength="150" class="updateReContent"
+													name="content" required="required">${jolr.content}</textarea>
+											<input type="submit" value="등록">											
+										</form>
+									</div>
 								</c:if>
 							</c:forEach>
-						</c:if>	
-					</div>
+						 </c:if> 	
 				</div>
 				<c:set var="tot" value="${tot - 1 }"/>
 			</c:forEach>

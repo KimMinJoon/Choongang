@@ -12,7 +12,7 @@
 <body>
 	<c:if test="${result > 0 }">
 		<script type="text/javascript">
-			location.href="${pageContext.request.contextPath}/oneLineBoard/list.do";
+			location.href="${pageContext.request.contextPath}/oneLineBoard/listTemp.do";
 		</script>
 	</c:if>
 	<c:if test="${result == 0 }">

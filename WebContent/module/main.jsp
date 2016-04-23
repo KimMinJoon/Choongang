@@ -10,10 +10,9 @@
 </head>
 <body>
     
+    <jsp:include page="top.jsp" />
+    
 	<table align="center">
-		<tr>
-			<td width="1100" height="600"><jsp:include page="top.jsp" /></td>
-		</tr>
 		<tr>
 			<td>
 			<c:if test="${empty param.pgm}">
@@ -24,9 +23,9 @@
 			</c:if>
 			</td>
 		</tr>
-		<tr>
-			<td colspan="2" height="40"><jsp:include page="bottom.jsp" /></td>
-		</tr>
 	</table>
+	
+	<jsp:include page="bottom.jsp" />
+	
 </body>
 </html>

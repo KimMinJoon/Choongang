@@ -9,7 +9,6 @@
 	<!-- <link rel="stylesheet" type="text/css" href="../../css/projectcss.css"> -->
 </head>
 <body>
-    
     <jsp:include page="top.jsp" />
     
 	<table align="center">

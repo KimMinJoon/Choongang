@@ -175,5 +175,42 @@ public class J_MeetBoardDao {
 			}
 		return result; 
 	}
+	
+	
+	public List<J_MeetBoard> selectList_home_reco() {
+		List<J_MeetBoard> list1 = new ArrayList<J_MeetBoard>();
+		
+		try {
+			list1 = session.selectList("selectListJ_MeetBoard_home_reco");
+			
+		} catch (Exception e) {
+			System.out.println("selectListJ_MeetBoard_home_reco : " + e.getMessage());
+		} 
+		return list1;
+	}
+	
+	public List<J_MeetBoard> selectList_home_new() {
+		List<J_MeetBoard> list2 = new ArrayList<J_MeetBoard>();
+		
+		try {
+			list2 = session.selectList("selectListJ_MeetBoard_home_new");
+			
+		} catch (Exception e) {
+			System.out.println("selectListJ_MeetBoard_home_new : " + e.getMessage());
+		} 
+		return list2;
+	}
+	
+	public List<J_MeetBoard> selectList_home_read() {
+		List<J_MeetBoard> list3 = new ArrayList<J_MeetBoard>();
+		
+		try {
+			list3 = session.selectList("selectListJ_MeetBoard_home_read");
+			
+		} catch (Exception e) {
+			System.out.println("selectListJ_MeetBoard_home_read : " + e.getMessage());
+		} 
+		return list3;
+	}
 
 }

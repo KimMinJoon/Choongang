@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,16 +10,16 @@
 <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	
-	<div class="container">
-		<footer>
-			<div class="row">
-				<div class="col-lg-12">
-					<p><b>Copyright &copy;</b> Language Exchange WebSite 2016</p>
-				</div>
-			</div>
-		</footer>
-	</div>
-	
+   
+   <div class="container">
+      <footer>
+         <div class="row">
+            <div class="col-lg-12">
+               <p><b>Copyright &copy;</b> Language Exchange WebSite 2016</p>
+            </div>
+         </div>
+      </footer>
+   </div>
+   
 </body>
 </html>

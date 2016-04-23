@@ -11,10 +11,9 @@
 <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
-            <div class="navbar-header">
+           	<div class="navbar-header">
 	            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 	                    <span class="sr-only">Toggle navigation</span>
 	                    <span class="icon-bar"></span>
@@ -70,15 +69,15 @@
     </nav>
 
 	 <!-- Header Carousel -->
-    <header id="myCarousel" class="carousel slide">
-        <!-- Indicators -->
+   <!--  <header id="myCarousel" class="carousel slide">
+        Indicators
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
             <li data-target="#myCarousel" data-slide-to="1"></li>
             <li data-target="#myCarousel" data-slide-to="2"></li>
         </ol>
 
-        <!-- Wrapper for slides -->
+        Wrapper for slides
         <div class="carousel-inner">
             <div class="item active">
                 <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide One');"></div>
@@ -98,24 +97,22 @@
                     <h2>Caption 3</h2>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Controls -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+        <!-- <a class="left carousel-control" href="#myCarousel" data-slide="prev">
             <span class="icon-prev"></span>
         </a>
         <a class="right carousel-control" href="#myCarousel" data-slide="next">
             <span class="icon-next"></span>
         </a>
     </header>
-    
     <script src="../js/jquery.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script>
 	$('.carousel').carousel({
 	    interval: 5000 //changes the speed
 	})
-	</script>
-
+	</script> -->
 </body>
 </html>

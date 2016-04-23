@@ -11,10 +11,9 @@
 <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
-            <div class="navbar-header">
+           	<div class="navbar-header">
 	            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 	                    <span class="sr-only">Toggle navigation</span>
 	                    <span class="icon-bar"></span>
@@ -68,14 +67,5 @@
         </div>
         <!-- /.container -->
     </nav>
-    
-    <script src="../js/jquery.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
-	<script>
-	$('.carousel').carousel({
-	    interval: 5000 //changes the speed
-	})
-	</script>
-
 </body>
 </html>

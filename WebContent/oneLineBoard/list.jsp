@@ -8,11 +8,12 @@
 <title>Insert title here</title>
 <style type="text/css">
 .insert{
-	width: 850px;
+	width: 950px;
 	margin : 0px auto;
 }
 .wrap {
-	width: 820px;
+	background : #A5C8DE;
+	width: 920px;
 	position: relative;
 	display: inline-block;
 }
@@ -39,44 +40,47 @@ textarea{
 	position: relative;;
 }
 
-.rows{
-	width: 850px;
+.Rows{
+	width: 950px;
 	margin : 0 auto;
 }
-.row{
-	background : #FAED7D;
+.Row{
+	width: 920px;
+	background : #A5C8DE;
 	border: 1px solid black;
 	position: relative;
-	height: 100px;
+	height: 120px;
 }
 .updateForm{
-	background: #C4B73B;
+	background : #A5C8DE;
 	border: 1px solid black;
-	height: 100px;
+	height: 120px;
+	width: 920px;
 }
 .replyUpdate{
-	height: 100px;
+	height: 120px;
 }
 .replyRow{
-	height: 100px;
+	height: 120px;
 }
-.rowNum{
+.RowNum{
 	font-size: 10px;
 	font-weight: bold;
 	margin: 10px;	
 }
-.rowNick{
+.RowNick{
 	font-size : 15px;
 	font-weight: bold;
 	font-style: italic;
 	color: green;
 	margin : 5px;
 }
-.rowDate{
+.RowDate{
 	font-size : 10px;
 	color: blue;
 }
 pre{
+	width : 900px;
 	margin : 10px;
 }
 pre > a{
@@ -109,9 +113,9 @@ pre > a{
 			$(".${param.brd_no}").parent().parent().show();
 		}
 		$(".btnUpdate").click(function(){
-			$(this).parent().nextAll(".row").show();
+			$(this).parent().nextAll(".Row").show();
 			$(this).parent().nextAll(".updateForm").hide("slow");
-			$(this).parent().prevAll(".row").show();
+			$(this).parent().prevAll(".Row").show();
 			$(this).parent().prevAll(".updateForm").hide("slow");
 			$(this).parent().hide("slow");
 			var text = $(this).parent().next().find(".originText").text();
@@ -224,7 +228,7 @@ pre > a{
 		<div style="border: 1px solid; padding: 10px 10px 10px 10px;" class="wrap">
 			<form action="${pageContext.request.contextPath}/oneLineBoard/write.do" name="wrtierFrm" onsubmit="return isSubmit(${sessionScope.m_no})">
 				<input type="hidden" name="m_no" value="${sessionScope.m_no}">
-				<textarea rows="3" cols="50" maxlength="150" id="content"
+				<textarea Rows="3" cols="50" maxlength="150" id="content"
 					name="brd_content" required="required" onkeyup="textCheck()" onfocus="sessionChk(${sessionScope.m_no})"></textarea>
 				<span id="counter">0/150</span> <input
 					style="height: 50px; width: 120px;" type="submit" value="등록">
@@ -232,14 +236,14 @@ pre > a{
 		</div>
 	</div>
 	<p>
-	<div style="border: 1px solid; padding: 10px 10px 10px 10px;" class="rows">
+	<div style="border: 1px solid; padding: 10px 10px 10px 10px;" class="Rows">
 		<c:set var="tot" value="${total}" />
 		<c:if test="${list != null}">
 			<c:if test="${not empty list}">
 				<c:forEach var="jolb" items="${list}">
-					<div class="row">
-						<p><span class="rowNum">${tot}</span><span class="rowNick">${jolb.m_nick}</span><span class="rowDate">${jolb.brd_reg_date}</span>
-						<pre class="rowContent" style="width:600px; white-space: pre-line;word-break:break-all;">${jolb.brd_content}<a class="countClick">[${jolb.rep_count}]</a></pre>
+					<div class="Row">
+						<p><span class="RowNum">${tot}</span><span class="RowNick">${jolb.m_nick}</span><span class="RowDate">${jolb.brd_reg_date}</span>
+						<pre class="RowContent" style="white-space: pre-line;word-break:break-all;">${jolb.brd_content}<a class="countClick">[${jolb.rep_count}]</a></pre>
 						<c:if test="${sessionScope.m_no != null}">
 							<c:if test="${jolb.m_no == sessionScope.m_no}">
 								<input type="button" class="btnUpdate" value="수정">
@@ -258,7 +262,7 @@ pre > a{
 							<input type="hidden" name="searchType" value="${searchType}">
 							<input type="hidden" name="searchTxt" value="${searchTxt}">
 							<p class="originText" style="display: none;">${jolb.brd_content}</p>
-							<textarea rows="3" cols="100" maxlength="150" class="updateContent"
+							<textarea Rows="3" cols="100" maxlength="150" class="updateContent"
 									name="brd_content" required="required" >${jolb.brd_content}</textarea>
 							<input style="height: 50px; width: 120px;" type="submit" value="등록">
 						</form>
@@ -269,7 +273,7 @@ pre > a{
 							<input type="hidden" name="brd_no" class= "${jolb.brd_no}" value="${jolb.brd_no}">
 							<input type="hidden" name="pageNum" value="${pageNum}">
 							<input type="button" class="replyCancel" value="취소"></p>
-							<textarea rows="3" cols="100" maxlength="150" class="replyContent"
+							<textarea Rows="3" cols="100" maxlength="150" class="replyContent"
 								name="content" required="required"></textarea>
 					 		<input style="height: 50px; width: 120px;" type="submit" value="등록">
 						</form>
@@ -277,7 +281,7 @@ pre > a{
 							<c:forEach var="jolr" items="${reList}">
 								<c:if test="${jolr.brd_no == jolb.brd_no}">
 									<div class="replyRow">
-										<p>${jolr.m_nick}/${jolr.reg_Date}/${jolr.content}</p>
+										<span class="RowNick">${jolr.m_nick}</span><span class="RowDate">${jolr.reg_Date}</span><pre>${jolr.content}</pre>
 										<c:if test="${not empty m_no}">
 											<c:if test="${m_no == jolr.m_no}">
 												<input type="button" value="수정" class="btnRepUpdate">
@@ -294,7 +298,7 @@ pre > a{
 											<input type="hidden" name="searchTxt" value="${searchTxt}">
 											<input type="button" class="repUpdateCancel" value="취소">
 											<p class="originRepText" style="display: none;">${jolr.content}</p>
-											<textarea rows="3" cols="100" maxlength="150" class="updateReContent"
+											<textarea Rows="3" cols="100" maxlength="150" class="updateReContent"
 													name="content" required="required">${jolr.content}</textarea>
 											<input type="submit" value="등록">											
 										</form>

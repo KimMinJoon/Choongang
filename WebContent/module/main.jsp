@@ -9,24 +9,21 @@
    <!-- <link rel="stylesheet" type="text/css" href="../../css/projectcss.css"> -->
 </head>
 <body>
-    <jsp:include page="top.jsp" />
+
+	<jsp:include page="top.jsp" />
     
-   <table align="center">
-      <tr>
-         <c:if test="${empty param.pgm}">
-         	<td width="1500" height="700">
-         		<jsp:include page="home.jsp"/>
-         	</td>
-         </c:if>
-         <c:if test="${not empty param.pgm}">
-        	<td>
-        		<jsp:include page="${param.pgm }" />
-        	</td>
-        </c:if>
-      </tr>
-   </table>
-   
-   <jsp:include page="bottom.jsp" />
+    <c:if test="${empty param.pgm}">
+    <span>
+	    <jsp:include page="home.jsp"/>
+    </span>
+    </c:if>
+	<c:if test="${not empty param.pgm}">
+    <span>
+	    <jsp:include page="${param.pgm }" />
+    </span>
+    </c:if>
+    
+    <jsp:include page="bottom.jsp" />
    
 </body>
 </html>

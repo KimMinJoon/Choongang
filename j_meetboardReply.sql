@@ -5,7 +5,7 @@ create table j_meetboardReply(
   re_content varchar2(500) not null,
   re_reg_date date default sysdate,
   re_update_date date,
-  del_yn char(1) default 'n',
+  del_yn char(1) default 'n'
 );
 
 ALTER TABLE j_meetboardReply ADD CONSTRAINT fk_re_brd_no

@@ -25,21 +25,21 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                   <li>
-                  <a href="../module/main.jsp?pgm=/noticeBoard/exchangeLanguage.jsp">Introduce</a>
-               </li>
-                  <li>
-                      <a href="${pageContext.request.contextPath}/noticeBoard/list.do">Notice</a>
-                  </li>
-                  <li>
-                      <a href="${pageContext.request.contextPath}/meetBoard/meetlist.do">Meet</a>
-                  </li>
-                  <li>
-                      <a href="${pageContext.request.contextPath}/recommendBoard/list.do">Recommend</a>
-                  </li>
-                  <li>
-                      <a href="${pageContext.request.contextPath}/oneLineBoard/list.do">OneLine</a>
-                  </li>
+                 	<li>
+                 		<a href="../module/main.jsp?pgm=/noticeBoard/exchangeLanguage.jsp">Introduce</a>
+					</li>
+					<li>
+						<a href="${pageContext.request.contextPath}/noticeBoard/list.do">Notice</a>
+					</li>
+					<li>
+						<a href="${pageContext.request.contextPath}/meetBoard/meetlist.do">Meet</a>
+					</li>
+					<li>
+						<a href="${pageContext.request.contextPath}/recommendBoard/list.do">Recommend</a>
+					</li>
+					<li>
+						<a href="${pageContext.request.contextPath}/oneLineBoard/list.do">OneLine</a>
+					</li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Member<b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -75,6 +75,7 @@
    $('.carousel').carousel({
        interval: 5000 //changes the speed
    })
+   $(".dropdown-toggle").dropdown();
    </script>
 
 </body>

@@ -13,14 +13,16 @@
     
    <table align="center">
       <tr>
-         <td>
          <c:if test="${empty param.pgm}">
-            <jsp:include page="home.jsp"/>
+         	<td width="1500" height="700">
+         		<jsp:include page="home.jsp"/>
+         	</td>
          </c:if>
          <c:if test="${not empty param.pgm}">
-            <jsp:include page="${param.pgm }" />
-         </c:if>
-         </td>
+        	<td>
+        		<jsp:include page="${param.pgm }" />
+        	</td>
+        </c:if>
       </tr>
    </table>
    

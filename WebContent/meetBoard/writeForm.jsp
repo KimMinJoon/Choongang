@@ -22,7 +22,6 @@
 				<td class="join1">말머리</td>
 				<td>
 					<select name="mc_code">
-						<option value="0">해당없음</option>
 						<c:forEach var="jmc" items="${list}">
 						<c:if test="${jmc.c_major eq 'mc' }">
 						<option value="${jmc.c_minor}">
@@ -38,7 +37,6 @@
 				<td class="join1">희망언어</td>
 				<td>
 					<select name="l_code">
-						<option value="0">해당없음</option>
 						<c:forEach var="jc" items="${list }">
 						<c:if test="${jc.c_major eq 'l' }">
 						<option value="${jc.c_minor}">

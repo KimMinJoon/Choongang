@@ -49,7 +49,7 @@ function locate(pageNum){
 		</tr>
 		<c:set var="tot" value="${total }"></c:set>
 
-		<c:forEach var="brd" items="${list }">
+		<c:forEach var="brd" items="${list}">
 		
 		<c:if test="${ not empty list}">
 		

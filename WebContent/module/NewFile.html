@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="KO">
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=euc-kr">
+<style type="text/css">
+html, body {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+#header {
+	width: 100%;
+	height: 100px;
+	background-color: #dddddd;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+}
+
+#nav {
+	position: absolute;
+	bottom: 10px;
+	left: 50%;
+	margin: 0px 0px 0px -250px;
+	padding: 0px;
+}
+
+#nav dd {
+	width: 100px;
+	height: 30px;
+	margin: 0px;
+	padding: 0px;
+	float: left;
+	border: 1px solid black;
+	line-height: 30px;
+	cursor: pointer;
+	background-color: #ddddff;
+	text-align: center;
+}
+
+#content {
+	width: 100%;
+	height: 100%;
+	padding-top: 100px;
+}
+
+.con {
+	font-family: Georgia;
+	font-size: 150px;
+	text-align: center;
+}
+
+#con_01 {
+	width: 100%;
+	height: 600px;
+	background-color: #ffdddd;
+}
+
+#con_02 {
+	width: 100%;
+	height: 800px;
+	background-color: #ddffdd;
+}
+
+#con_03 {
+	width: 100%;
+	height: 1300px;
+	background-color: #ddddff;
+}
+
+#con_04 {
+	width: 100%;
+	height: 500px;
+	background-color: #ffaadd;
+}
+
+#con_05 {
+	width: 100%;
+	height: 700px;
+	background-color: #ddffaa;
+}
+</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		var he_arr = new Array();
+		he_arr[0] = 0;
+		he_arr[1] = $("#con_01").height();
+		he_arr[2] = he_arr[1] + $("#con_02").height();
+		he_arr[3] = he_arr[2] + $("#con_03").height();
+		he_arr[4] = he_arr[3] + $("#con_04").height();
+
+		$("#nav dd").each(function(i) {
+			$(this).attr("idx", i);
+		}).click(function() {
+			$('html, body').animate({
+				scrollTop : he_arr[$(this).attr("idx")]
+			});
+		}).hover(function() {
+			$(this).css('background-Color', '#ddffdd');
+		}, function() {
+			$(this).css('background-Color', '#ddddff');
+		});
+	});
+</script>
+</head>
+<body>
+
+	<div id="header">
+		<dl id="nav">
+			<dd>메뉴01</dd>
+			<dd>메뉴02</dd>
+			<dd>메뉴03</dd>
+			<dd>메뉴04</dd>
+			<dd>메뉴05</dd>
+		</dl>
+	</div>
+
+	<div id="content">
+		<div id="con_01" class="con">11111</div>
+		<div id="con_02" class="con">2222</div>
+		<div id="con_03" class="con">3333</div>
+		<div id="con_04" class="con">4444</div>
+		<div id="con_05" class="con">5555</div>
+	</div>
+
+</body>
+</html>

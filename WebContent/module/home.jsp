@@ -28,7 +28,7 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
             <div class="item active">
-                <div class="fill" style="background-image:url('../images/le_img.png');"></div>
+                <div class="fill" style="background-image:url('../images/le_img1.jpg');"></div>
                 <div class="carousel-caption">
                 </div>
             </div>
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="item">
-                <div class="fill" style="background-image:url('../images/le_img3.png');"></div>
+                <div class="fill" style="background-image:url('../images/le_img3.jpg');"></div>
                 <div class="carousel-caption">
                 </div>
             </div>

@@ -2,8 +2,6 @@ package j_meetboard_service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import j_code.J_Code;
 import j_meetboard.J_MeetBoard;
 import j_meetboard.J_MeetBoardDao;
 import service.CommandProcess;

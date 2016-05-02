@@ -2,9 +2,7 @@ package j_meetboard_service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import j_meetboard.J_MeetBoardReplyDao;
-import j_onelineboard.J_OneLineBoardDAO;
 import service.CommandProcess;
 
 public class DeleteFormReplyAction implements CommandProcess {

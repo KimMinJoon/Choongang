@@ -9,7 +9,6 @@
 <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 	/* 에이작스로 두에서 뷰를 받아서 뿌려버림 개 편리하고 좋음 */
-	
 </script>
 
 </head>
@@ -52,14 +51,14 @@
             <span class="icon-next"></span>
         </a>
     </header>
-
+    
 	<center>
 	
 	<table>
 		<tr>
 			<td id="homemeetlist_new"></td>
-			<td id="homemeetlist_reco"></td>
-			<td id="homemeetlist_read"></td>
+			<!-- <td id="homemeetlist_reco"></td>
+			<td id="homemeetlist_read"></td> -->
 		</tr>
 	</table>
 	</center>

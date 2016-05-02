@@ -28,13 +28,13 @@
 
 		<div class="row">
             <div class="col-md-6">
-                <img class="img-responsive" src="http://placehold.it/750x450" alt="">
+                <img class="img-responsive" src="../images/intro_img.jpg" alt="">
             </div>
             <div class="col-md-6">
                 <h2>Language Exchange</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed voluptate nihil eum consectetur similique? Consectetur, quod, incidunt, harum nisi dolores delectus reprehenderit voluptatem perferendis dicta dolorem non blanditiis ex fugiat.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, magni, aperiam vitae illum voluptatum aut sequi impedit non velit ab ea pariatur sint quidem corporis eveniet. Odit, temporibus reprehenderit dolorum!</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, consequuntur, modi mollitia corporis ipsa voluptate corrupti eum ratione ex ea praesentium quibusdam? Aut, in eum facere corrupti necessitatibus perspiciatis quis?</p>
+                <p>A method of language learning based on mutual language practicing by learning partners who speak different languages.</p>
+                <p>Language exchange is a method of language learning based on mutual language practicing by learning partners who are speakers of different languages. Language exchange is sometimes called Tandem language learning.</p>
+                <p>In modern contexts, "language exchange" most often refers to the mutual teaching of partners' first languages. Language exchanges are generally considered helpful for developing language proficiency, especially in speaking fluency and listening comprehension. Language exchanges that take place through writing or text chats also improve reading comprehension and writing ability. Given that language exchanges generally take place between native speakers of different languages, there is also the side benefit of improving cross-cultural communication.</p>
             </div>
         </div>
         <!-- /.row -->
@@ -88,15 +88,9 @@
                 <form name="sentMessage" id="contactForm">
                     <div class="control-group form-group">
                         <div class="controls">
-                            <label>Full Name:</label>
+                            <label>Name:</label>
                             <input type="text" class="form-control" id="name" required data-validation-required-message="Please enter your name.">
                             <p class="help-block"></p>
-                        </div>
-                    </div>
-                    <div class="control-group form-group">
-                        <div class="controls">
-                            <label>Phone Number:</label>
-                            <input type="tel" class="form-control" id="phone" data-validation-required-message="Please enter your phone number.">
                         </div>
                     </div>
                     <div class="control-group form-group">

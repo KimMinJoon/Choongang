@@ -3,7 +3,7 @@ as
 select 
   m_nick, 
   brd_no, 
-  fc_date_check(brd_reg_date) as dt, 
+  fc_date_check(brd_reg_date) as brd_reg_date, 
   brd_content, 
   brd_del_yn, 
   a.m_no,

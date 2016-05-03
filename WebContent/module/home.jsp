@@ -52,13 +52,13 @@
         </a>
     </header>
     
-	<center>
-	
+    <div id="homemeetlist_new"> </div>
+    
+	<center>	
 	<table>
 		<tr>
-			<td id="homemeetlist_new"></td>
-			<!-- <td id="homemeetlist_reco"></td>
-			<td id="homemeetlist_read"></td> -->
+			<td id="homemeetlist_reco"></td>
+			<td id="homemeetlist_read"></td>
 		</tr>
 	</table>
 	</center>

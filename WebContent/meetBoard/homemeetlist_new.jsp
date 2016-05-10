@@ -33,9 +33,7 @@
 							${brd.brd_subject}
 						</c:if>
 						</a> </h4>
-						<div class="text-right">
-							<h5>${brd.m_nick}&nbsp;&nbsp;&nbsp;&nbsp;</h5>
-						</div>
+						 <div class="text-right"><h5>${brd.m_nick}&nbsp;&nbsp;&nbsp;&nbsp;</h5></div>
 					</div>
 					<div class="panel-body">
 					<c:if test="${fn:length(brd.brd_content) > 80}">

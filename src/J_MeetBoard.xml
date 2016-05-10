@@ -102,20 +102,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   select * from (select rowNum rn, a.* 
   from (select mb.*, m.m_nick, c.c_value as c_value_cate, d.c_value as c_value_lang, nvl(rc.brd_recommend,0) as brd_recommend from j_meetboard mb, j_member m, j_code c, j_code d, (select brd_no, count(*) as brd_recommend from j_recommend group by brd_no) rc 
   where rc.brd_no(+) = mb.brd_no and mb.m_no = m.m_no and mb.mc_code = c.c_minor and mb.l_code = d.c_minor and brd_del_yn='n'
-  order by brd_recommend desc, mb.brd_no desc) a) where rn between 1 and 3
+  order by brd_recommend desc, mb.brd_no desc) a) where rn between 1 and 5
   </select>
   
   <select id="selectListJ_MeetBoard_home_new" parameterType="hashMap" resultMap="J_MeetBoardResult">
   select * from (select rowNum rn, a.* from (select mb.*, m.m_nick, c.c_value as c_value_cate, d.c_value as c_value_lang, nvl(rc.brd_recommend,0) as brd_recommend from j_meetboard mb, j_member m, j_code c, j_code d, (select brd_no, count(*) as brd_recommend from j_recommend group by brd_no) rc 
   where rc.brd_no(+) = mb.brd_no and mb.m_no = m.m_no and mb.mc_code = c.c_minor and mb.l_code = d.c_minor and brd_del_yn='n'
-  order by mb.brd_no desc) a) where rn between 1 and 3
+  order by mb.brd_no desc) a) where rn between 1 and 6
   </select>
   
   <select id="selectListJ_MeetBoard_home_read" parameterType="hashMap" resultMap="J_MeetBoardResult">
   select * from (select rowNum rn, a.* 
   from (select mb.*, m.m_nick, c.c_value as c_value_cate, d.c_value as c_value_lang, nvl(rc.brd_recommend,0) as brd_recommend from j_meetboard mb, j_member m, j_code c, j_code d, (select brd_no, count(*) as brd_recommend from j_recommend group by brd_no) rc 
   where rc.brd_no(+) = mb.brd_no and mb.m_no = m.m_no and mb.mc_code = c.c_minor and mb.l_code = d.c_minor and brd_del_yn='n'
-  order by mb.brd_readcount desc, mb.brd_no desc) a) where rn between 1 and 3
+  order by mb.brd_readcount desc, mb.brd_no desc) a) where rn between 1 and 5
   </select>
 
 </mapper>

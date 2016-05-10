@@ -14,14 +14,14 @@
 	<p>
 	<p>
 	
-	<table width="100%" class="text-center">
+	<table class="table text-center">
 		<caption>
-			<h4 class="modal-header">추천수 많은 게시물 5개</h4>
+			<h4 class="modal-header">추천수 많은 모임</h4>
 		</caption>
 		<tr>
-			<td width="65%">제목</td>
-			<td width="20%">글쓴이</td>
-			<td width="15%">추천수</td>
+			<th width="65%">제목</th>
+			<th width="20%">글쓴이</th>
+			<th width="15%">추천수</th>
 		</tr>
 		<c:forEach var="brd" items="${list1 }">
 		<c:if test="${ not empty list1}">
@@ -33,7 +33,6 @@
 					<td>${brd.brd_recommend}</td>
 			</tr>
 		</c:if>
-		<tr height="1" bgcolor="#e2e2e2"><td colspan="3"></td></tr>
 		
 		<c:if test="${empty list1 }">
 			<tr height="1" bgcolor="#e2e2e2"><td colspan="3"></td></tr>

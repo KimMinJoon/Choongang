@@ -10,10 +10,8 @@
 <script type="text/javascript">
 	/* 에이작스로 두에서 뷰를 받아서 뿌려버림 개 편리하고 좋음 */
 </script>
-
 </head>
-<body>
-	
+<body>	
 	
     <!-- Header Carousel -->
     <header id="myCarousel" class="carousel slide">
@@ -52,18 +50,16 @@
         </a>
     </header>
     
-
     <div id="homemeetlist_new"> </div>
 	
 	<div class="container">
-	<table>
-		<tr>
-			<td> <div id="homemeetlist_reco" class="table"> </div> </td>
-			<td> <div id="homemeetlist_read" class="table"> </div> </td>
-		</tr>
-	</table>
-   </div>
-
+		<table>
+			<tr>
+				<td> <div id="homemeetlist_reco" class="table"> </div> </td>
+				<td> <div id="homemeetlist_read" class="table"> </div> </td>
+			</tr>
+		</table>
+	</div>
 	
 	<script src="../js/jquery.js"></script>
 	<script src="../js/bootstrap.min.js"></script>

@@ -77,7 +77,7 @@
 		
 	<div class="list">
 		<c:if test="${startPage > pagePerBlock}">
-			<a href="javascript:locate(${startPage-pagePerBlock})">[이전] </a>
+			<a href="javascript:locate(${startPage-pagePerBlock})">[이전]</a>
 			<a href="javascript:locate(1)">[1]</a>				
 			...
 		</c:if>

@@ -15,10 +15,20 @@
 </head>
 <body>
 
+	<script type="text/javascript">
+		function googleTranslateElementInit() {
+			new google.translate.TranslateElement({pageLanguage: 'cn', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+		}
+	</script>
+	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+		
+
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header"> Welcome to Meet the New </h1>
+				<h1 class="page-header"> Welcome to Meet the New
+				<span id="google_translate_element" class="text-right"></span>
+				</h1>
 			</div>
 		<c:forEach var="brd" items="${list2 }">
 			<c:if test="${not empty list2 }">

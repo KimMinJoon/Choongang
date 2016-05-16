@@ -23,9 +23,10 @@ input {
 }
 
 .tab {
-	border: 1px solid black;
+	background-color: #fff;
 	border-collapse: collapse;
 }
+
 .join1 {
 	font-weight: bold;
 	border-right: solid 1px;

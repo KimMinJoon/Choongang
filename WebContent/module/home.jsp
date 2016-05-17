@@ -53,7 +53,7 @@
     <div id="homemeetlist_new"> </div>
 	
 	<div class="container">
-		<table>
+		<table align="center">
 			<tr>
 				<td> <div id="homemeetlist_reco" class="table"> </div> </td>
 				<td> <div id="homemeetlist_read" class="table"> </div> </td>

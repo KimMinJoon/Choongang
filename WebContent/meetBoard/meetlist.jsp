@@ -89,14 +89,13 @@ function locate(pageNum){
 		</c:if>
 		<tr height="1" bgcolor="#e2e2e2"><td colspan="8"></td></tr>
 		<c:set var="tot" value="${tot - 1 }"></c:set>
-		
+		</c:forEach>
 		<c:if test="${empty list }">
 			<tr height="1" bgcolor="#e2e2e2"><td colspan="7"></td></tr>
 			<tr height="30" onMouseOver="this.style.backgroundColor='#E7E7E7'" onmouseout="this.style.backgroundColor=''">
 				<td colspan="7" class="default">데이터가 없습니다</td>
 			</tr>
 		</c:if>
-		</c:forEach>
 	</table>
 	<div class="list">
 

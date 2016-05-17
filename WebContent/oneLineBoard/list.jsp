@@ -97,6 +97,14 @@ pre > a{
 	padding: 0 .5em 0 .5em;
 	font-size: 0.75em;
 }
+.b {
+	color: #004080;
+	font-weight: 900;
+}
+a:link {color:black; text-decoration:none}
+a:visited {color:black; text-decoration:none}
+a:active {color:black; text-decoration:none}
+a:hover {color:#8f8f8f;}
 </style>
 <c:set var="bno" value="${param.brd_no}"/>
 <c:if test="${empty bno}">
@@ -224,6 +232,29 @@ pre > a{
 </script>
 </head>
 <body>
+
+	
+	<!-- Page Content -->
+    <div class="container">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">OneLine
+                    <small>한줄</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="../module/main.jsp">Home</a>
+                    </li>
+                    <li class="active">OneLine</li>
+                </ol>
+            </div>
+        </div>
+	</div>
+	
+	<p>
+	<p>
+	
 	<div style="border: 1px solid; padding: 10px 10px 10px 10px;" class="insert">
 		<div style="border: 1px solid; padding: 10px 10px 10px 10px;" class="wrap">
 			<form action="${pageContext.request.contextPath}/oneLineBoard/write.do" name="wrtierFrm" onsubmit="return isSubmit(${sessionScope.m_no})">
@@ -314,28 +345,34 @@ pre > a{
 	<c:if test="${empty list }">
 		<p>게시글이 없습니다.</p>
 	</c:if>
+	
+	<br>
+	
 		<div align="center" id="pagingandsearch">
 			<c:if test="${startPage != 1}">
 				<a href="javascript:locate(1)">&lt;&lt;맨 앞으로</a>
 			</c:if>
 			<c:if test="${startPage > pagePerBlock}">
-				<a href="javascript:locate(${startPage - pagePerBlock})">&lt;이전</a>
+				<a href="javascript:locate(${startPage-pagePerBlock})">&lt;이전</a>
 			</c:if>
  			<c:forEach var="i" begin="${startPage}" end="${endPage}">
- 				<c:if test="${nowPage != i}">
- 					<a href="javascript:locate(${i})">${i}</a>
+ 				<c:if test="${i != nowPage}">
+ 					<a href="javascript:locate(${i})">[${i}]</a>
  				</c:if>
- 				<c:if test="${nowPage == i}">
- 					<strong>[${i}]</strong>
+ 				<c:if test="${i == nowPage}">
+ 					<b class="b">[${i}]</b>
  				</c:if>
 			</c:forEach>
 			<c:if test="${totalPage > endPage}">
-				<a href="javascript:locate(${startPage + pagePerBlock})">다음&gt;</a>
+				<a href="javascript:locate(${startPage+pagePerBlock})">다음&gt;</a>
 			</c:if>
 			<c:if test="${endPage != totalPage}">
 				<a href="javascript:locate(${totalPage})">맨 뒤로&gt;&gt;</a>
 			</c:if>
-			<br>
+			
+			<p>
+			<p>
+			
 			<select id="searchType">
 				<c:set var="brd_content" value="brd_contents"/>
 				<c:if test="${searchType eq brd_content}">
@@ -356,5 +393,6 @@ pre > a{
 			<input type="submit" value="검색" onclick="locate(1)">
 		</div>
 	</div>
+	
 </body>
 </html>

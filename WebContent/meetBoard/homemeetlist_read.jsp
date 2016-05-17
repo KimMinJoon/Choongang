@@ -19,9 +19,9 @@
 			<h4 class="modal-header">조회수 많은 모임</h4>
 		</caption>
 		<tr>
-			<th width="65%">제목</th>
+			<th width="62%">제목</th>
 			<th width="20%">글쓴이</th>
-			<th width="12%">조회수</th>
+			<th width="15%">조회수</th>
 		</tr>
 		<c:forEach var="brd" items="${list3 }">
 		<c:if test="${ not empty list3}">

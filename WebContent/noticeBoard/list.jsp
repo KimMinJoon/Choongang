@@ -1,7 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -30,6 +29,7 @@
 	
 	<p>
 	<p>
+	
 	<table class="tab" align="center" width="50%">
 		<tr height="30">
 			<th width="2%"> </th>
@@ -72,7 +72,7 @@
 		</c:if>
 		<c:forEach var="i" begin="${startPage}" end="${endPage}">
 			<c:if test="${i == nowPage}">
-				<b> [${i}] </b>
+				<b class="b">[${i}]</b>
 			</c:if>
 			<c:if test="${i != nowPage}">
 				<a href="../noticeBoard/list.do?pageNum=${i}">[${i}]</a>

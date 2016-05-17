@@ -9,10 +9,10 @@
 		J_MeetBoardDao bd = J_MeetBoardDao.getInstance();
 		int ref = 0, re_step = 0, re_level = 0;
 		String ip = request.getRemoteAddr();//아이피주소를 남기기위해 씀
-		for (int i = 0; i <= 300; i++) {
+		for (int i = 0; i <= 1000; i++) {
 			J_MeetBoard meetboard = new J_MeetBoard();
-			meetboard.setBrd_subject("대박"+i);
-			meetboard.setBrd_content("왜 안끝나지 아이씨 "+i);
+			meetboard.setBrd_subject("모임게시판 제목"+i);
+			meetboard.setBrd_content("모임게시판 내용"+i);
 			 meetboard.setBrd_ip("127.0.0.1");
 			 meetboard.setM_no(2);
 			 meetboard.setMc_code("mc_study");

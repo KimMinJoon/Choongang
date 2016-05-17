@@ -56,9 +56,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	update J_OneLineBoard set brd_content = #{brd_content},brd_update_date = sysdate where brd_no = #{brd_no} and m_no = #{m_no} and brd_del_yn = 'n'
   </update>
   <update id="deleteOneline" parameterType="Integer">
-  	update j_onelineboard set brd_del_yn = 'y',brd_out_date = sysdate where brd_no = #{brd_no} and brd_del_yn = 'n'
+  	update j_onelineboard set brd_del_yn = 'y', brd_out_date = sysdate where brd_no = #{brd_no} and brd_del_yn = 'n'
   </update>
   <update id="deleteOnelineCascade" parameterType="Integer">
-  	update j_onelinereply set del_yn = 'y', out_date = sysdate where brd_no = #{brd_no} and del_yn = 'n'
+  	update j_onelinereply set del_yn = 'y', delete_date = sysdate where brd_no = #{brd_no} and del_yn = 'n'
   </update>
 </mapper>

@@ -24,6 +24,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	UPDATE J_ONELINEREPLY SET CONTENT = #{content} WHERE REPLY_NO = #{reply_no} AND DEL_YN = 'n'
   </update>
   <update id="deleteRep" parameterType="Integer">
-  	UPDATE J_ONELINEREPLY SET OUT_DATE = SYSDATE, DEL_YN = 'y' WHERE REPLY_NO = #{reply_no} AND DEL_YN = 'n'
+  	UPDATE J_ONELINEREPLY SET delete_DATE = SYSDATE, DEL_YN = 'y' WHERE REPLY_NO = #{reply_no} AND DEL_YN = 'n'
   </update>
 </mapper>

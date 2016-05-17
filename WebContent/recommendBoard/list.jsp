@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -17,19 +16,36 @@
 </head>
 <body>
 	
+	<!-- Page Content -->
+    <div class="container">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Recommend
+                    <small>추천</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="../module/main.jsp">Home</a>
+                    </li>
+                    <li class="active">Recommend</li>
+                </ol>
+            </div>
+        </div>
+	</div>	
+	
 	<p>
 	<p>
 	
-	<table class="tab" align="center" width="70%" cellspacing="0" cellpadding="0">
-		<caption><h2>추천 게시판</h2></caption>
+	<table class="tab" align="center" width="60%">
 		<tr height="30">
-			<th width="3%"></th>
+			<th width="4%"></th>
 			<th width="10%">말머리</th>
-			<th width="31%">제목</th>
-			<th width="8%">글쓴이</th>
-			<th width="8%">작성일</th>
-			<th width="4%">조회</th>
-			<th width="4%">추천</th>
+			<th width="20%">제목</th>
+			<th width="7%">글쓴이</th>
+			<th width="9%">작성일</th>
+			<th width="5%">조회</th>
+			<th width="5%">추천</th>
 		</tr>
 		
 		<c:set var="tot" value="${total}" />
@@ -78,7 +94,7 @@
 	<div class="list">
 		<c:if test="${startPage > pagePerBlock}">
 			<a href="javascript:locate(${startPage-pagePerBlock})">[이전]</a>
-			<a href="javascript:locate(1)">[1]</a>				
+			<a href="javascript:locate(1)">[1]</a>
 			...
 		</c:if>
 		<c:forEach var="i" begin="${startPage}" end="${endPage}">
@@ -94,10 +110,10 @@
 			<a href="javascript:locate(${totalPage})">[${totalPage}]</a>
 			<a href="javascript:locate(${startPage+pagePerBlock})">[다음]</a>
 		</c:if>
-
+		
+		<p>
 		<p>
 		<button onclick="location.href='writeForm.do?pageNum=${pageNum}'">글쓰기</button>
-		
 		<p>
 		
 		<select id="searchType">
@@ -128,9 +144,9 @@
 			<c:if test="${searchType ne 'm_nick'}">
 				<option value="m_nick">글쓴이</option>
 			</c:if>
-			</select>
-			<input type="text" id="searchTxt" value="${searchTxt}">
-			<input type="submit" value="검색" onclick="locate(1)">
+		</select>
+		<input type="text" id="searchTxt" value="${searchTxt}">
+		<input type="submit" value="검색" onclick="locate(1)">
 	</div>
 
 </body>

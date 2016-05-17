@@ -11,7 +11,7 @@ select
     count(*) 
    from J_ONELINEREPLY c 
    where 
-    c.brd_no = a.brd_no) rep_count 
+    c.brd_no = a.brd_no and del_yn = 'n') rep_count 
 from J_OneLineBoard a, j_member b 
 where 
   a.m_no = b.m_no 

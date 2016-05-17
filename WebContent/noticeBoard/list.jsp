@@ -55,8 +55,9 @@
 			</c:forEach>
 		</c:if>
 		<c:if test="${empty list}">
-			<tr>
-				<th colspan="4">데이터가 없습니다.</th>
+			<tr height="1" bgcolor="#e2e2e2"><td colspan="7"></td></tr>
+			<tr height="30" onMouseOver="this.style.backgroundColor='#E7E7E7'" onmouseout="this.style.backgroundColor=''">
+				<td colspan="4" class="default">데이터가 없습니다</td>
 			</tr>
 		</c:if>
 	</table>

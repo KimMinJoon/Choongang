@@ -30,10 +30,10 @@
 	<p>
 	<p>
 	
-	<table class="tab" align="center" width="50%">
+	<table class="tab" align="center" width="45%">
 		<tr height="30">
 			<th width="2%"> </th>
-			<th width="34%">제목</th>
+			<th width="29%">제목</th>
 			<th width="8%">작성일</th>
 			<th width="6%">조회수</th>
 		</tr>

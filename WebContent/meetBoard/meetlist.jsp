@@ -50,10 +50,10 @@
 
 	<table class="tab" align="center" width="70%">
 		<tr height="30">
-			<th width="4%"></th>
+			<th width="5%"></th>
 			<th width="8%">말머리</th>
 			<th width="23%">제목</th>
-			<th width="9%">글쓴이</th>
+			<th width="8%">글쓴이</th>
 			<th width="8%">작성일</th>
 			<th width="8%">희망언어</th>
 			<th width="5%">조회수</th>

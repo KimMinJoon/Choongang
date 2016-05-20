@@ -195,67 +195,6 @@
 			</div>
 		</div>
 	</div>
-
-	<%-- <form action="joinPro.do" name="frm" onsubmit="return chk()">
-		<input type="hidden" name="check" value="false">
-		<table class="tab" cellpadding="10" align="center">
-			<caption>
-				<h2>회원가입</h2>
-			</caption>
-			<tr height="50">
-				<td class="join1"><font class="red">*</font>이메일</td>
-				<td><input type="email" name="m_email" required="required">
-					<input type="button" value="중복체크" onclick="emailchk()"></td>
-			</tr>
-			<tr height="50">
-				<td class="join1"><font class="red">*</font>비밀번호</td>
-				<td><input type="password" name="m_passwd" id="m_passwd" required="required" maxlength="20">
-				<span id="pass"></span>
-				</td>
-			</tr>
-			<tr height="50">
-				<td class="join1"><font class="red">*</font>비밀번호 확인</td>
-				<td><input type="password" name="m_passwd2" required="required" maxlength="20"></td>
-			</tr>
-			<tr height="50">
-				<td class="join1"><font class="red">*</font>닉네임</td>
-				<td><input type="text" name="m_nick" id="m_nick" required="required" maxlength="10">
-				<span id="check"></span>
-				</td>
-			</tr>
-			<tr height="50">
-				<td class="join1">국적</td>
-				<td>
-				<select name="c_code">
-						<c:forEach var="jc" items="${list}">
-							<c:if test="${jc.c_major eq 'c'}">
-								<option value="${jc.c_minor}">
-									${jc.c_value}
-								</option>
-							</c:if>
-						</c:forEach>							
-				</select></td>
-			</tr>
-			<tr height="50">
-				<td class="join1">희망언어</td>
-				<td>
-				<select name="l_code">
-						<c:forEach var="jc" items="${list}">
-							<c:if test="${jc.c_major eq 'l'}">
-								<option value="${jc.c_minor}">
-									${jc.c_value}
-								</option>
-							</c:if>
-						</c:forEach>							
-				</select></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center"><input type="submit" value="확인">
-					&nbsp; <input type="button" value="취소" onclick="history.back(-1)">
-				</td>
-			</tr>
-		</table>
-	</form> --%>
-
+	
 </body>
 </html>

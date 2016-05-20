@@ -36,7 +36,6 @@ create table j_boardcode ( -- 게시판코드 테이블 생성
 ALTER TABLE j_board ADD CONSTRAINT fk_m_no
 FOREIGN KEY(m_no) REFERENCES j_member(m_no);
 
-
 -- 게시판에 c_minor를 l_code에 외래키 설정
 ALTER TABLE j_board ADD CONSTRAINT fk_l_code
 FOREIGN KEY(l_code) REFERENCES j_code(c_minor);
@@ -48,9 +47,6 @@ FOREIGN KEY(b_code) REFERENCES j_code(c_minor);
 -- 게시판에 code 외래키 설정
 ALTER TABLE 컨트리 랭귀지 ADD CONSTRAINT fk_code
 FOREIGN KEY(code) REFERENCES 컨트리랭귀지(code);
-
-
-
 
 --boardcode 외래키 설정 삭제 예제
 ALTER TABLE j_board DROP CONSTRAINT fk_boardcode;

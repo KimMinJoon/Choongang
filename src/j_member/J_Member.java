@@ -3,6 +3,7 @@ package j_member;
 import java.sql.Date;
 
 public class J_Member {
+
 	private int m_no;
 	private String m_email;
 	private String m_passwd;
@@ -86,7 +87,7 @@ public class J_Member {
 	public void setC_code(String c_code) {
 		this.c_code = c_code;
 	}
-	
+
 	public String getC_value() {
 		return c_value;
 	}
@@ -102,10 +103,11 @@ public class J_Member {
 	public void setL_value(String l_value) {
 		this.l_value = l_value;
 	}
-
-	/*@Override
-	public String toString() { // 스프링할때 로그포지라는걸 쓴다 일단 좋은거 설정해주는게 좋습니다.
+/*
+	@Override
+	public String toString() {
 		return "J_Member [m_no=" + m_no + ", m_email=" + m_email + ", m_reg_date=" + m_reg_date + ", m_passwd="
 				+ m_passwd + ", m_del_yn=" + m_del_yn + ", l_code=" + l_code + ", c_code=" + c_code + "]";
-	}*/
+	}
+*/
 }

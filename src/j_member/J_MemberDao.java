@@ -1,54 +1,39 @@
 package j_member;
 
 import java.io.Reader;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
-
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import j_noticeboard.J_NoticeBoard;
-import oracle.net.aso.e;
-
 public class J_MemberDao {
-	// 싱글톤 객체 생성을 낭비하지 않기위해
-	private static J_MemberDao instance = new J_MemberDao();
+	
+	private static J_MemberDao instance = new J_MemberDao(); // 싱글톤 객체 생성을 낭비하지 않기위해
 	private static SqlSession session; // 생성
 
 	static {
 		try {
 			Reader reader = Resources.getResourceAsReader("configuration.xml");
 			SqlSessionFactory sf = new SqlSessionFactoryBuilder().build(reader);
-			session = sf.openSession(true);// 이걸 안하면 커밋이안된다.!!!!!!왜? 트루가 커밋을
-											// 하겟다는의미이다.
+			session = sf.openSession(true); // true로 안하면 커밋이 안된다. true=커밋을 하겠다는 의미
 			reader.close();
-		} catch (Exception e) {
+		}catch (Exception e) {
 			System.out.println("sqlMap에러");
-
 		}
 	}
 
-	private J_MemberDao() {
-	}
+	private J_MemberDao() { }
 
 	public static J_MemberDao getInstance() {
 		return instance;
 	}
-
-	// 커넥션 풀 대신해서 마이바티스 사용
-
+	
 	public int emailCheck(String m_email) {
 		int result = 0;
-
 		try {
 			result = (int) session.selectOne("emailChk", m_email);
-
-		} catch (Exception e) {
+		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return result;
@@ -65,21 +50,17 @@ public class J_MemberDao {
 			orgNick = (String) session.selectOne("nickChk", m_no);
 			db_nick = (String) session.selectOne("nickChk2", mb);
 			if (orgNick != null) {
-
 				if (db_nick.equals(orgNick))
 					result = 0;
 				else
 					result = 1;
-
-			} else {
-
+			}else {
 				if (db_nick != null)
 					result = 0;
 				else
 					result = -1;
 			}
-
-		} catch (Exception e) {
+		}catch (Exception e) {
 			System.out.println("nickCheck : " + e.getMessage());
 		}
 		return result;
@@ -87,46 +68,34 @@ public class J_MemberDao {
 
 	public int insert(J_Member mb) {
 		int result = 0, m_number = 0, m_no = 0;
-
 		try {
 			m_no = (int) session.selectOne("selectmno", mb);
 			System.out.println("m_nojoin : " + m_no);
-
 			if (m_no > 0) {
 				result = session.update("updateData", mb);
-			} else {
+			}else {
 				m_number = (int) session.selectOne("selectNum");
 				mb.setM_no(m_number);
 				result = session.insert("insertMember", mb);
 			}
-
-		} catch (Exception e)
-
-		{
+		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-
 		return result;
-
 	}
 
 	public int loginChk(String m_email, String m_passwd) {
 		int result = 0;
-
 		try {
 			String dbpass = (String) session.selectOne("loginChkk", m_email);
-
 			System.out.println("dbpass : " + dbpass);
 			if (dbpass.equals(m_passwd)) {
 				result = (int) session.selectOne("selectmno2", m_email);
 			} else
 				result = 0;
-		} catch (Exception e)
-
-		{
+		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-
 		return result;
 	}
 
@@ -134,7 +103,7 @@ public class J_MemberDao {
 		J_Member mem = null;
 		try {
 			mem = (J_Member) session.selectOne("selectMember", m_no);
-		} catch (Exception e) {
+		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return mem;
@@ -143,10 +112,8 @@ public class J_MemberDao {
 	public J_Member infoselect(int m_no) {
 		J_Member jif = null;
 		try {
-
 			jif = (J_Member) session.selectOne("selectInfoz", m_no);
-
-		} catch (Exception e) {
+		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return jif;
@@ -156,7 +123,7 @@ public class J_MemberDao {
 		int result = 0;
 		try {
 			result = session.update("updateInfoz", mem);
-		} catch (Exception e) {
+		}catch (Exception e) {
 			System.out.println("정보수정:"+e.getMessage());
 		}
 		return result;
@@ -166,7 +133,7 @@ public class J_MemberDao {
 		int result = 0;
 		try {
 			result = session.update("deleteMem", m_no);
-		} catch (Exception e) {
+		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return result;

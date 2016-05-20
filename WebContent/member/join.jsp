@@ -6,7 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="../css/projectcss.css">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/modern-business.css" rel="stylesheet">
+<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<!-- <link rel="stylesheet" type="text/css" href="../css/projectcss.css"> -->
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
 	function chk() {
@@ -130,7 +133,70 @@
 </head>
 <body>
 
-	<form action="joinPro.do" name="frm" onsubmit="return chk()">
+	<div class="container">
+		<div class="col-md-offset-14 col-md-5">
+   			<div class="form-area">
+   				<form action="joinPro.do" name="frm" role="form" onsubmit="return chk()">
+   					<input type="hidden" name="check" value="false">
+		        	<br style="clear:both">
+		        	<h3 style="margin-bottom: 25px; text-align: center;">회원가입</h3>
+		        	<strong>이메일:</strong>
+					<div class="form-group">
+						<input type="email" class="form-control-75" id="m_email" name="m_email" required>
+						<input type="button" value="중복체크" onclick="emailchk()">
+					</div>
+					<div class="form-group">
+						<strong>비밀번호:</strong>
+						<input type="password" class="form-control" id="m_passwd" name="m_passwd" required maxlength="20">
+						<span id="pass"></span>
+					</div>
+					<div class="form-group">
+						<strong>비밀번호 재확인:</strong>
+						<input type="password" class="form-control" id="m_passwd2" name="m_passwd2" required maxlength="20">
+					</div>
+					<div class="form-group">
+						<strong>닉네임:</strong>
+						<input type="text" class="form-control-60" id="m_nick" name="m_nick" required maxlength="10">
+						<span id="check"></span>
+					</div>
+					<div class="form-group">
+						<strong>국적:</strong>
+						<div>
+							<select name="c_code" class="form-control-60">
+							<c:forEach var="jc" items="${list}">
+								<c:if test="${jc.c_major eq 'c'}">
+								<option value="${jc.c_minor}">
+									${jc.c_value}
+								</option>
+								</c:if>
+							</c:forEach>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<strong>희망언어:</strong>
+						<div>
+							<select name="l_code" class="form-control-60">
+							<c:forEach var="jc" items="${list}">
+								<c:if test="${jc.c_major eq 'l'}">
+									<option value="${jc.c_minor}">
+										${jc.c_value}
+									</option>
+								</c:if>
+							</c:forEach>							
+							</select>
+						</div>
+					</div>
+					<div style="margin-top: 40px; text-align: center;">
+						<button type="submit" id="submit" name="submit" class="btn btn-primary">가입하기</button>
+						<!-- <input type="button" value="취소" onclick="history.back(-1)"> -->
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<%-- <form action="joinPro.do" name="frm" onsubmit="return chk()">
 		<input type="hidden" name="check" value="false">
 		<table class="tab" cellpadding="10" align="center">
 			<caption>
@@ -189,7 +255,7 @@
 				</td>
 			</tr>
 		</table>
-	</form>
+	</form> --%>
 
 </body>
 </html>

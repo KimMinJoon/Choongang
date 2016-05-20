@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="J_Member">
 	<resultMap id="J_MemberResult" type="J_Member">
 		<result property="m_no" column="m_no" />
@@ -18,23 +16,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<select id="emailChk" parameterType="String" resultType="Integer">
-		select
-		count(*) from j_member where m_email=#{m_email} and m_del_yn='n'
+		select count(*) from j_member where m_email=#{m_email} and m_del_yn='n'
 	</select>
 
 	<select id="selectmno" parameterType="String" resultType="Integer">
 		select nvl(max(m_no),0) as m_no from j_member where m_email=#{m_email} and m_del_yn='y'
 	</select>
-	
+
 	<select id="selectmno2" parameterType="String" resultType="Integer">
 		select m_no from j_member where m_email=#{m_email} and m_del_yn='n'
 	</select>
 
 	<update id="updateData" parameterType="J_Member">
-		update j_member set
-		m_passwd=#{m_passwd}, m_nick=#{m_nick}, m_reg_date=sysdate,
-		m_del_yn='n', c_code=#{c_code},
-		l_code=#{l_code} where m_no=#{m_no}
+		update j_member set m_passwd=#{m_passwd},m_nick=#{m_nick},m_reg_date=sysdate,m_del_yn='n',c_code=#{c_code},l_code=#{l_code} where m_no=#{m_no}
 	</update>
 
 	<insert id="insertMember" parameterType="J_Member">
@@ -46,20 +40,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="loginChkk" parameterType="String" resultType="String">
-		select
-		m_passwd from j_member where m_email=#{m_email} and m_del_yn='n'
+		select m_passwd from j_member where m_email=#{m_email} and m_del_yn='n'
 	</select>
 
 	<select id="nickChk" parameterType="Integer" resultType="String">
-		select
-		m_nick from j_member where m_no = #{m_no}
+		select m_nick from j_member where m_no = #{m_no}
 	</select>
 
 	<select id="nickChk2" parameterType="J_Member" resultType="String">
-		select m_nick from j_member where m_nick=#{m_nick} and m_del_yn='n'
-		and m_no != #{m_no}
-		union select m_nick from j_member where m_no =
-		#{m_no} and m_nick = #{m_nick}
+		select m_nick from j_member where m_nick=#{m_nick} and m_del_yn='n' and m_no != #{m_no} union select m_nick from j_member where m_no=#{m_no} and m_nick=#{m_nick}
 	</select>
 
 	<select id="selectMember" parameterType="Integer" resultMap="J_MemberResult">
@@ -74,16 +63,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<update id="updateInfoz" parameterType="J_Member">
-		update j_member set
-		m_passwd=#{m_passwd}, m_nick=#{m_nick}, c_code=#{c_code}, l_code=#{l_code} where m_email=#{m_email} and
-		m_del_yn='n'
+		update j_member set m_passwd=#{m_passwd},m_nick=#{m_nick},c_code=#{c_code},l_code=#{l_code} where m_email=#{m_email} and m_del_yn='n'
 	</update>
-	
+
 	<update id="deleteMem" parameterType="Integer">
-		update j_member set m_del_yn='y', m_out_date=sysdate where m_no=#{m_no} and m_del_yn='n'
+		update j_member set	m_del_yn='y', m_out_date=sysdate where m_no=#{m_no} and m_del_yn='n'
 	</update>
-	
-	<select id="passwdChkk" parameterType="hashMap"  resultType="String">
-  select m_passwd from j_member where m_no=#{m_no} and m_passwd=#{m_passwd}
-  </select>
+
+	<select id="passwdChkk" parameterType="hashMap" resultType="String">
+		select m_passwd from j_member where m_no=#{m_no} and m_passwd=#{m_passwd}
+	</select>
 </mapper>

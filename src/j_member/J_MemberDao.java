@@ -72,6 +72,7 @@ public class J_MemberDao {
 			m_no = (int) session.selectOne("selectmno", mb);
 			System.out.println("m_nojoin : " + m_no);
 			if (m_no > 0) {
+				mb.setM_no(m_no);
 				result = session.update("updateData", mb);
 			}else {
 				m_number = (int) session.selectOne("selectNum");

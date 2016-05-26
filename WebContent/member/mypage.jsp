@@ -9,8 +9,16 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 </head>
 <body>
+
+	<div class="list-group">
+		<a href="${pageContext.request.contextPath}/member/myinfo.temp" class="list-group-item">내정보보기</a>
+		<a href="${pageContext.request.contextPath}/member/mbupdate.temp" class="list-group-item">회원정보수정</a>
+		<!-- <a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/friend.jsp" class="list-group-item">친구/관심글</a>
+		<a href="main.jsp?pgm=/member/mypagetemp.jsp?mypgm=/member/message.jsp" class="list-group-item">쪽지함</a> -->
+		<a href="${pageContext.request.contextPath}/member/mbdelete.temp" class="list-group-item">회원탈퇴</a>
+	</div>
 	
-	<table class="tab" cellpadding="10" align="center">
+	<%-- <table class="tab" cellpadding="10" align="center">
 		<caption> <h2> 마이페이지 </h2> </caption>
 		<tr>
 		<td> <a href="${pageContext.request.contextPath}/member/myinfo.temp" > 내정보보기 </a> </td>
@@ -28,7 +36,7 @@
 		<td> <a href="${pageContext.request.contextPath}/member/mbdelete.do"> 회원탈퇴 </a>
 		</td>	
 		</tr>
-	</table>
+	</table> --%>
 
 </body>
 </html>

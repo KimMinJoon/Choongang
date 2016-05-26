@@ -19,7 +19,7 @@
 </head>
 <body>
 
-	<form name="frm" action="mbdeletePro.do" method="post" onsubmit="return dechk()">
+	<form name="frm" action="mbdeletePro.temp" method="post" onsubmit="return dechk()">
 		<table class="tab" cellpadding="10" align="center">
 			<tr>
 				<td class="join1">암호</td>

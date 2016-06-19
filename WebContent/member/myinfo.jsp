@@ -9,31 +9,47 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<table class="tab" cellpadding="10" align="center" height="100%">
-		<caption>
-			<h2>내정보보기</h2>
-		</caption>
-		<tr height="40%">
-			<td colspan="2"><img alt="pic" src="../images/1P.jpg"
-				height="150"></td>
-		</tr>
-		<tr height="15%">
-			<td class="join1">이메일</td>
-			<td>${jif.m_email}</td>
-		</tr>
-		<tr height="15%">
-			<td class="join1">닉네임</td>
-			<td>${jif.m_nick}</td>
-		</tr>
-		<tr height="15%">
-			<td class="join1">국적</td>
-			<td>${jif.c_value}</td>
-		</tr>
-		<tr height="15%">
-			<td class="join1">희망언어</td>
-			<td>${jif.l_value}</td>
-		</tr>
-	</table>
-
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4 col-md-offset-2 toppad">
+				<div class="panel panel-default panel-table">
+					<form action="mbupdatePro.temp" name="frm" onsubmit="return chk()" class="form-horizontal">	
+						<fieldset>
+							<br style="clear: both">
+							<h3 style="margin-bottom: 25px; text-align: center;">
+								<img alt="pic" src="../images/1P.jpg" height="150">
+							</h3>
+							<div class="form-group">
+								<label for="m_email" class="col-lg-4 control-label"><b>이메일</b></label>
+								<div class="col-lg-8">
+									<label>${jif.m_email}</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="m_nick" class="col-lg-4 control-label"><b>닉네임</b></label>
+								<div class="col-lg-8">
+									<label>${jif.m_nick}</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="c_code" class="col-lg-4 control-label"><b>국적</b></label>
+								<div class="col-lg-8">
+									<label>${jif.c_value}</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="l_code" class="col-lg-4 control-label"><b>희망언어</b></label>
+								<div class="col-lg-8">
+									<label>${jif.l_value}</label>
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 </body>
 </html>

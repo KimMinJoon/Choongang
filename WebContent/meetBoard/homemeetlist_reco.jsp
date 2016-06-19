@@ -16,7 +16,7 @@
 	
 	<table class="table text-center">
 		<caption>
-			<h4 class="modal-header">추천수 많은 모임</h4>
+			<h3 class="modal-header" style="font-size: 18px;">#추천수 많은 모임</h3>
 		</caption>
 		<tr>
 			<th width="62%">제목</th>

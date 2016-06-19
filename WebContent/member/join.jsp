@@ -13,15 +13,15 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.js"></script>
 <script type="text/javascript">
 	function chk() {
+		if (frm.check.value == "false") {
+			alert("아이디 중복확인을 하세요");
+			return false;
+		}
 		if (frm.m_passwd.value != frm.m_passwd2.value) {
 			alert("비밀번호를 다시 입력하세요");
 			frm.m_passwd.value = "";
 			frm.m_passwd2.value = "";
 			frm.m_passwd.focus();
-			return false;
-		}
-		if (frm.check.value == "false") {
-			alert("아이디 중복확인을 하세요");
 			return false;
 		}
 		if(frm.m_passwd.value.length < 6) {
@@ -54,6 +54,11 @@
 		if (regex.test(frm.m_nick.value) === false) {
 			alert("닉네임이 한글 또는 영문 또는 숫자가 아닙니다. ");
 			frm.m_nick.value = "";
+			frm.m_nick.focus();
+			return false;
+		}
+		if (frm.nickChk.value == "false") {
+			alert("닉네임을 다시 확인하세요");
 			frm.m_nick.focus();
 			return false;
 		}
@@ -122,8 +127,11 @@
 				success : function(data) {
 					if ($.trim(data) == "FALSE") {
 						$('#check').html("<font>사용가능</font>");
-					} else
+						frm.nickChk.value = "true";
+					} else {
 						$('#check').html("<font class=red>사용불가</font>");
+						frm.nickChk.value = "false";
+					}
 				}
 			});
 			}
@@ -138,6 +146,7 @@
    			<div class="form-area">
    				<form action="joinPro.do" name="frm" role="form" onsubmit="return chk()">
    					<input type="hidden" name="check" value="false">
+   					<input type="hidden" name="nickChk" value="false">
 		        	<br style="clear:both">
 		        	<h3 style="margin-bottom: 25px; text-align: center;">회원가입</h3>
 		        	<strong>이메일:</strong>

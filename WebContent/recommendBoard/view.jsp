@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="../css/projectcss.css">
 <script language="javascript">
 /* function pwdpopup(){
 	var purl = "deleteForm.do?brd_no="+${brd_no}+"&pageNum="+${pageNum};
@@ -71,37 +70,52 @@ function deleteRpChk(re_no, brd_no, pageNum){
 </head>
 <body>
 	
+	<!-- Page Content -->
+    <div class="container">
+        <!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Recommend
+                    <small>추천</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="../module/main.jsp">Home</a>
+                    </li>
+                    <li class="active">Recommend</li>
+                </ol>
+            </div>
+        </div>
+	</div>	
+	
+	<p>
+	<p>
+	
 	<c:if test="${not empty jrb }">
-	<table class="tab" align="center" width="20%" cellspacing="0" cellpadding="5">
-		<caption><h2>게시글 보기</h2></caption>
+	<table border="1" width="70%" align="center">
 		<tr>
-			<th>닉네임 : </th>
+			<th>닉네임</th>
 			<td>${jrb.m_nick}</td>
 		</tr>
 		<tr>
-			<th>추천수 : </th>
+			<th>추천수</th>
 			<td><b class="red">${jrb.recocount}</b></td>
 		</tr>
 		<tr>
-			<th>조회수 : </th>
+			<th>조회수</th>
 			<td>${jrb.brd_readcount}</td>
 		</tr>
 		<tr>
-			<th>IP : </th>
+			<th>IP</th>
 			<td>${jrb.brd_ip}</td>
-		</tr>
-		<tr>
-			<th>댓글 : </th>
-			<td> x </td>
 		</tr>
 
 		<c:if test="${null ne jrb.brd_update_date}">
 		<tr>
-			<th>작성일 : </th>
+			<th>작성일</th>
 			<td>${jrb.brd_reg_date}</td>
 		</tr>
 		<tr>
-			<th>최근수정일 : </th>
+			<th>최근수정일</th>
 			<td>${jrb.brd_update_date}</td>
 		</tr>
 		</c:if>
@@ -111,10 +125,6 @@ function deleteRpChk(re_no, brd_no, pageNum){
 			<td>${jrb.brd_reg_date}</td>
 		</tr>
 		</c:if>
-	</table>
-
-	<p>
-	<table class="tab" align="center" width="70%" cellspacing="0" cellpadding="10">
 		<tr>
 			<th width="10%">제목</th>
 			<td><font class="category">[${jrb.rc_value}]</font> ${jrb.brd_subject}</td>
@@ -160,8 +170,8 @@ function deleteRpChk(re_no, brd_no, pageNum){
 	
 	<p>
 	
-	
 	<div style="border: 1px solid; padding: 10px 10px 10px 10px; margin:0 auto; width: 60%">
+			<b style="font-size: 16px;">#댓글 </b>
 			<hr>
 			<c:if test="${not empty rpList}">
 				<c:forEach var="jrr" items="${rpList}">
@@ -176,11 +186,9 @@ function deleteRpChk(re_no, brd_no, pageNum){
 							<a class="re_a" onclick="deleteRpChk(${jrr.re_no},${brd_no},${pageNum})"> 삭제 </a>
 						</c:if>
 					</c:if>
-
 					<p>
-				
-					<dt class="re_content"> ${jrr.re_content} </dt>
-					
+					<p>
+					${jrr.re_content}
 					<hr>
 				</c:forEach>
 			</c:if>

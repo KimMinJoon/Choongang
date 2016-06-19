@@ -26,7 +26,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header"> Welcome to Meet the New
+				<h1 class="page-header" style="font-size: 34px;"> Welcome to Meet the New
 				<span id="google_translate_element" class="text-right"></span>
 				</h1>
 			</div>
@@ -35,14 +35,15 @@
 			<div class="col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h4> <i class="fa fa-fw fa-user"></i><a href="../meetBoard/view.do?brd_no=${brd.brd_no}">
+						<b style="font-size: 18px;">
+						<i class="fa fa-fw fa-user"></i><a href="../meetBoard/view.do?brd_no=${brd.brd_no}">
 						<c:if test="${fn:length(brd.brd_subject) > 35}">
 							<c:out value="${fn:substring(brd.brd_subject, 0, 35)}" /> ...
 						</c:if>
 						<c:if test="${fn:length(brd.brd_subject) <= 35}">
 							${brd.brd_subject}
 						</c:if>
-						</a> </h4>
+						</a></b>
 						 <div class="text-right"><h5>${brd.m_nick}&nbsp;&nbsp;&nbsp;&nbsp;</h5></div>
 					</div>
 					<div class="panel-body">

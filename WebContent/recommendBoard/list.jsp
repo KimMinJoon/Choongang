@@ -40,11 +40,11 @@
 		<tr height="30">
 			<th width="4%"></th>
 			<th width="10%">말머리</th>
-			<th width="20%">제목</th>
+			<th width="23%">제목</th>
 			<th width="7%">글쓴이</th>
-			<th width="9%">작성일</th>
-			<th width="5%">조회</th>
-			<th width="5%">추천</th>
+			<th width="8%">작성일</th>
+			<th width="4%">조회</th>
+			<th width="4%">추천</th>
 		</tr>
 		
 		<c:set var="tot" value="${total}" />
@@ -67,7 +67,7 @@
 					<img alt="" src="../images/re.gif">
 				</c:if>
 				<a href="view.do?brd_no=${jrb.brd_no}&pageNum=${nowPage}">${jrb.brd_subject}</a>
-				<c:if test="${jrb.brd_readcount > 20}">
+				<c:if test="${jrb.brd_readcount > 500}">
 					<img src='../images/hot.gif'>
 				</c:if>
 				</td>

@@ -35,7 +35,7 @@ public class J_RecommendBoardDao {
 			J_RecommendBoard jrb = new J_RecommendBoard();
 			jrb.setSearchType(searchType);
 			jrb.setSearchTxt(searchTxt);
-			total = (Integer) session.selectOne("selectrecoTotal");
+			total = (Integer) session.selectOne("selectrecoTotal", jrb);
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

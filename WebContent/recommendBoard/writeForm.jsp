@@ -11,6 +11,7 @@
 <script type="text/javascript">
 	window.onload = function(){
 		CKEDITOR.replace('content');
+		CKEDITOR.config.height = '500px';
 	}
 </script>
 </head>
@@ -24,29 +25,36 @@
 		<input type="hidden" name="pageNum" value="${pageNum}">
 		<input type="hidden" name="m_no" value="${m_no}">
 
-		<table class="tab" cellpadding="10" align="center" width="50%">
+		<table class="tab" align="center" width="50%">
 			<caption><h2>게시판 작성</h2></caption>
 			<tr>
 				<td class="inputleft">
-				<select name="rc_code">
+					<select name="rc_code">
 						<c:forEach var="jc" items="${list}">
-							<c:if test="${jc.c_major eq 'rc'}">
-								<option value="${jc.c_minor}">
-									${jc.c_value}
-								</option>
-							</c:if>
+						<c:if test="${jc.c_major eq 'rc'}">
+						<option value="${jc.c_minor}">
+							${jc.c_value}
+						</option>
+						</c:if>
 						</c:forEach>							
-				</select></td>
+					</select>
+				</td>
 			</tr>
 			<tr>
-				<td class="inputleft"> <input type="text" name="brd_subject" required="required" autofocus="autofocus" size="50" placeholder="제목을 입력해 주세요"></td>
+				<td class="inputleft">
+					<input type="text" name="brd_subject" required="required" autofocus="autofocus" size="50" placeholder="제목을 입력해 주세요">
+				</td>
 			</tr>
 			<tr>
-				<td><textarea rows="20" cols="90" name="brd_content" id="content" required="required"></textarea></td>
+				<td>
+					<textarea rows="20" cols="90" name="brd_content" id="content" required="required"></textarea>
+				</td>
 			</tr>
 			<tr>
-				<td align="center"><input type="submit" value="확인"> &nbsp;
-				<input type="button" value="취소" onclick="history.back(-1)"></td>
+				<td align="center">
+					<input type="submit" value="확인"> &nbsp;
+					<input type="button" value="취소" onclick="history.back(-1)">
+				</td>
 			</tr>
 		</table>
 	</form>

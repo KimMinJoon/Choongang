@@ -34,16 +34,16 @@ public class J_MeetBoardDao {
 	public int selectTotal(String searchType, String searchTxt){
 		int total = 0;
 		try {
-			total = (Integer) session.selectOne("selectTotalJ_MeetBoard");
-				
+			J_MeetBoard jmb = new J_MeetBoard();
+			jmb.setSearchType(searchType);
+			jmb.setSearchTxt(searchTxt);
+			total = (Integer) session.selectOne("selectTotalJ_MeetBoard", jmb);
 		} catch (Exception e) {
 			System.out.println("selectTotal : " + e.getMessage());
 		}
 		return total;
 	}
 
-
-	
 	public List<J_MeetBoard> selectList(int startRow, int endRow, String searchType, String searchTxt) {
 		List<J_MeetBoard> list = new ArrayList<J_MeetBoard>();
 		HashMap<String, Object> hm = new HashMap<>();
@@ -56,10 +56,9 @@ public class J_MeetBoardDao {
 			list = session.selectList("selectListJ_MeetBoard",hm);
 		} catch (Exception e) {
 			System.out.println("selectList : " + e.getMessage());
-		} 
+		}
 		return list;
 	}
-	
 	
 	public J_MeetBoard select(int brd_no) {
 		J_MeetBoard meetboard = null;
@@ -79,7 +78,6 @@ public class J_MeetBoardDao {
 			System.out.println("updateHit : " + e.getMessage());
 		}
 	}
-
 	
 	public int selectRecommend(int m_no, int brd_no){
 		int result = 0;
@@ -95,7 +93,6 @@ public class J_MeetBoardDao {
 		return result;
 	}
 	
-	
 	public int insert(J_MeetBoard meetboard) {
 		int result = 0;
 		int number = 0;// brd_no이다~
@@ -109,7 +106,6 @@ public class J_MeetBoardDao {
 		return result;
 	}
 
-
 	public int update(J_MeetBoard meetboard) {
 		int result = 0;
 		try {
@@ -121,7 +117,6 @@ public class J_MeetBoardDao {
 		return result;
 	}
 	
-	
 	public int delete(int brd_no) {
 		int result = 0;
 		try {
@@ -132,7 +127,6 @@ public class J_MeetBoardDao {
 		}
 		return result;
 	}
-	
 
 	public J_MeetBoard passwdChk(int brd_no) {
 		J_MeetBoard meetboard = new J_MeetBoard();
@@ -145,7 +139,6 @@ public class J_MeetBoardDao {
 		}
 		return meetboard;
 	}
-
 
 	public int recommendChk(int m_no, int brd_no) {
 		int result = 0;
@@ -175,7 +168,6 @@ public class J_MeetBoardDao {
 			}
 		return result; 
 	}
-	
 	
 	public List<J_MeetBoard> selectList_home_reco() {
 		List<J_MeetBoard> list1 = new ArrayList<J_MeetBoard>();
